@@ -1,0 +1,527 @@
+/*
+Created by: Ressil M. Zafra
+*/
+
+body {
+	background:#000000 url(../img/bg-header.jpg) top center repeat-x;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:12px;
+	margin:0;
+	padding:0;
+	color:#000000;
+	font-weight:100;
+	}
+
+a img {border:none; outline:none;}
+Object { outline:none; }
+img {border:none;}
+p {margin-top:0;}
+.fl {float:left;}
+.fr {float:right;}
+.re {position:relative;}
+.ab {position:absolute;}
+.block {display:block;}
+.textindent {text-indent:-99999px;}
+.clear {clear: both; height: 0; line-height: 0.0; font-size: 0;}
+.vhidden {visibility:hidden;}
+.dnone {display:none;}
+
+/** Heading Style **/
+h1, h2, h3, h4, h5, h6 {margin:0; padding:0; font-weight:normal;}
+
+/** Link Style **/
+a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
+
+/* Header */
+.header {
+	margin:0 auto;
+	width:810px;
+	}
+	.logo {
+		background:url(../img/logo.jpg) no-repeat;
+		height:93px;
+		padding-left:30px;
+    	top:17px;
+		width:263px;
+		}
+		
+		ul.main-nav {
+			float:left;
+			list-style-type:none;
+			margin:0;
+			padding:0;
+			}
+			ul.main-nav li {
+				float:left;
+				display:block;
+				}	
+				ul.main-nav li a {
+					float:left;
+					display:block;
+					text-indent:-99999px;
+					}
+					/* Link */
+					a.home {background:url(../img/navigation.jpg) 0 0 no-repeat; width:84px; height:121px;}
+					a.about-us {background:url(../img/navigation.jpg) -84px 0 no-repeat; width:82px; height:121px;}
+					a.everyday-law {background:url(../img/navigation.jpg) -166px 0 no-repeat; width:84px; height:121px;}
+					a.law-society {background:url(../img/navigation.jpg) -250px 0 no-repeat; width:85px; height:121px;}
+					a.law-updates {background:url(../img/navigation.jpg) -335px 0 no-repeat; width:84px; height:121px;}
+					a.online-legal-consultation {background:url(../img/navigation.jpg) -419px 0 no-repeat; width:97px; height:121px;}
+					/* Hover and Selected */
+					a.home-selected, a.home:hover {background:url(../img/navigation.jpg) 0 -121px no-repeat; width:84px; height:121px;}
+					a.about-us-selected, a.about-us:hover {background:url(../img/navigation.jpg) -84px -121px no-repeat; width:82px; height:121px;}
+					a.everyday-law-selected, a.everyday-law:hover {background:url(../img/navigation.jpg) -166px -121px no-repeat; width:84px; height:121px;}
+					a.law-society-selected, a.law-society:hover {background:url(../img/navigation.jpg) -250px -121px no-repeat; width:85px; height:121px;}
+					a.law-updates-selected, a.law-updates:hover {background:url(../img/navigation.jpg) -335px -121px no-repeat; width:84px; height:121px;}
+					a.online-legal-consultation-selected, a.online-legal-consultation:hover {background:url(../img/navigation.jpg) -419px -121px no-repeat; width:97px; height:121px;}
+/* Header */
+
+/* Banner */
+.banner {
+	margin:0 auto 6px;
+	width:810px;
+	}
+	/* Sub Navigations */
+	ul.sub-nav {
+		list-style-type:none;
+		margin:0;
+		padding:0;
+		width:211px;
+		}
+		ul.sub-nav li a {
+			float:left;
+			display:block;
+			text-indent:-99999px;
+			}
+			/* Link */
+			a.lawyers-profile {background:url(../img/sub-navigation.jpg) 0 0 no-repeat; width:211px; height:31px;}
+			a.our-services {background:url(../img/sub-navigation.jpg) 0 -31px no-repeat; width:211px; height:26px;}
+			a.outrageous-laws {background:url(../img/sub-navigation.jpg) 0 -57px no-repeat; width:211px; height:27px;}
+			a.lawyers-quotes {background:url(../img/sub-navigation.jpg) 0 -84px no-repeat; width:211px; height:26px;}
+			a.case-studies {background:url(../img/sub-navigation.jpg) 0 -110px no-repeat; width:211px; height:27px;}
+			a.elegal-news {background:url(../img/sub-navigation.jpg) 0 -137px no-repeat; width:211px; height:26px;}
+			a.contact-us {background:url(../img/sub-navigation.jpg) 0 -163px no-repeat; width:211px; height:27px;}
+			/* Hover and Selected */
+			a.lawyers-profile-selected, a.lawyers-profile:hover {background:url(../img/sub-navigation.jpg) -211px 0 no-repeat; width:211px; height:31px;}
+			a.our-services-selected, a.our-services:hover {background:url(../img/sub-navigation.jpg) -211px -31px no-repeat; width:211px; height:26px;}
+			a.outrageous-laws-selected, a.outrageous-laws:hover {background:url(../img/sub-navigation.jpg) -211px -57px no-repeat; width:211px; height:27px;}
+			a.lawyers-quotes-selected, a.lawyers-quotes:hover {background:url(../img/sub-navigation.jpg) -211px -84px no-repeat; width:211px; height:26px;}
+			a.case-studies-selected, a.case-studies:hover {background:url(../img/sub-navigation.jpg) -211px -110px no-repeat; width:211px; height:27px;}
+			a.elegal-news-selected, a.elegal-news:hover {background:url(../img/sub-navigation.jpg) -211px -137px no-repeat; width:211px; height:26px;}
+			a.contact-us-selected, a.contact-us:hover {background:url(../img/sub-navigation.jpg) -211px -163px no-repeat; width:211px; height:27px;}
+	/* Sub Navigations */
+	
+	/* Canvas */
+	.legal-consultation {
+		bottom: 84px;
+		display: block;
+		height: 40px;
+		right: 329px;
+		width: 275px;
+		}
+	/* Canvas */
+/* Banner */
+
+/* Wrapper */
+.wrapper {
+	background:url(../img/main-bg.jpg) repeat;
+	height:auto;
+	}
+	.main-content {
+		margin:0 auto;
+		width:810px;
+		}
+		
+		/* Left Rail */
+		.left-rail {
+			background:#d3e7ff;
+			width:211px;
+			}
+			/* Login */
+			ul.login-holder {
+				background:#d3e7ff;
+				height:200px;
+				list-style-type:none;
+				margin:0 0 15px;
+				padding:15px  15px 10px 0;
+				width:196px;
+				clear:both;
+				}
+				ul.login-holder li {
+					padding:5px 0 5px 15px;
+					clear:both;
+					}
+					ul.login-holder li label {
+						clear: both;s
+						color:#534741;
+						display:block;
+						font-size:10px;
+						float:left;
+						padding-top:4px;
+						text-transform:uppercase;
+						width:68px;
+						}
+					ul.login-holder input.text {
+						border:2px solid #a7afb9;
+						width:106px;
+						}
+				.forgot-pword {
+					color:#de6026;
+					font-size:9px;
+					padding:5px 0 0;
+					}
+				.icon-space {
+					padding-left:20px;
+					}
+			/* Login */
+			
+			/* Left Adertise */
+			.advertise-white {
+				background:#fefbee;
+				color:#b7b7b7;
+				font-size:15px;
+				min-height:229px;
+				text-align:center;
+				text-transform:uppercase;
+				width:211px;
+				}
+			/* Left Adertise */	
+		
+		/* Right Rail */
+		.right-rail {
+			width:598px;
+			}
+			.left-main {
+				width: 302px;
+				}
+			.right-main {
+				width: 295px;
+				}			
+				.everyday-holder {
+					background:url(../img/everyday-law.jpg) no-repeat #ffe658;
+					min-height:469px;
+					height:auto;
+					}
+					.everyday-content {
+						color:#464646;
+						font-size:11px;
+						margin:0 auto;
+						padding-top:70px;
+						width:230px;
+						}
+						.everyday-content h2 {
+							color:#2a2524;
+							font-size:19px;
+							font-weight:bold;
+							}	
+				.law-society-holder {
+						background:url(../img/law-society.jpg) no-repeat #c1e8fe;
+						min-height:235px;
+						height:auto;
+					}
+				.law-updates-holder {
+						background:url(../img/law-updates.jpg) no-repeat #ecd9c2;
+						min-height:234px;
+						height:auto;
+					}
+					.law-content {
+						color:#464646;
+						font-size:11px;
+						margin:0 auto;
+						padding-top:70px;
+						width:230px;
+						}
+						.law-content h2 {
+							color:#2a2524;
+							font-size:13px;
+							font-weight:bold;
+							}				
+				.read-more {
+					background:url(../img/read-more.png) no-repeat;
+					display:block;
+					height:18px;
+					margin: 23px 10px 23px 0;
+					width:86px;
+					}
+	
+	/* Advertise Footer */
+	.advertise-footer {
+		color:#fff;
+		font-size:15px;
+		margin:0 auto;
+		text-align:center;
+		text-transform:uppercase;
+		width:810px;
+		}
+		.left-rail-footer {
+			background:#898989;
+			min-height:150px;
+			width:211px;
+			}
+		.right-rail-footer {
+			background:#685454;
+			min-height:150px;
+			width:597px;
+			}
+	/* Advertise Footer */
+/* Wrapper */
+
+
+/* Inner Pages */
+.title-lawyers-profile {
+	background:url(../img/title-lawyers-profile.jpg) no-repeat;
+	height:46px;
+	width:597px;
+	}
+	.inner-content {
+		background:#ffe658;
+		color:#464646;
+		min-height:383px;
+		width:557px;
+		padding:20px;
+		}
+		.inner-content h2 {
+			color:#2a2524;
+			font-size:18px;
+			font-weight:bold;
+			}
+			.inner-content img {
+				float:left;
+				}
+				.lawyer-profile {
+					float:left;
+					padding-left:30px;
+					width:370px;
+					}
+
+.inner-left-ads {
+	background:#898989;
+	color:#fff;
+	min-height:365px;
+	font-size:15px;
+	text-align:center;
+	text-transform:uppercase;
+	text-align:center;
+	}
+	.inner-advertise {
+		background:#685454;
+		min-height:136px;
+		width:597px;
+		}
+
+/* Inner Pages */
+
+/* Footer */
+.footer {
+	background:#fed614;
+	color:#534741;
+	font-size:11px;
+	padding: 10px 0;
+	text-align:center;
+	}
+/* Footer */
+
+/** Full Content **/
+#full-content{
+	margin:0 auto;
+	width:810px;
+	background: #fff;
+	clear: both;
+	color: #333;
+	padding: 10px 0 40px 0;
+	overflow: auto;
+}
+
+#main {
+	padding: 10px 0 40px 20px;
+}
+
+#main h2 {
+	background:#fff;
+	color: #e32;
+	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
+	font-size: 190%;
+}
+
+
+/** Forms **/
+#main form {
+	clear: both;
+	margin-right: 20px;
+	padding: 0;
+	width: 95%;
+}
+#main fieldset {
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+	padding: 16px 20px;
+}
+#main fieldset legend {
+	background:#fff;
+	color: #e32;
+	font-size: 160%;
+	font-weight: bold;
+}
+#main fieldset fieldset {
+	margin-top: 0px;
+	margin-bottom: 20px;
+	padding: 16px 10px;
+}
+#main fieldset fieldset legend {
+	font-size: 120%;
+	font-weight: normal;
+}
+#main fieldset fieldset div {
+	clear: left;
+	margin: 0 20px;
+}
+#main form div {
+	clear: both;
+	margin-bottom: 1em;
+	padding: .5em;
+	vertical-align: text-top;
+}
+#main form .input {
+	color: #444;
+}
+#main form .required {
+	font-weight: bold;
+}
+#main form .required label:after {
+	color: #e32;
+	content: '*';
+	display:inline;
+}
+#main form div.submit {
+	border: 0;
+	clear: both;
+	margin-top: 10px;
+}
+#main label {
+	display: block;
+	font-size: 110%;
+	margin-bottom:3px;
+}
+#main input, textarea {
+	clear: both;
+	font-size: 140%;
+	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
+	padding: 1%;
+	width:98%;
+}
+#main select {
+	clear: both;
+	font-size: 120%;
+	vertical-align: text-bottom;
+}
+#main select[multiple=multiple] {
+	width: 100%;
+}
+#main option {
+	font-size: 120%;
+	padding: 0 3px;
+}
+#main input[type=checkbox] {
+	clear: left;
+	float: left;
+	margin: 0px 6px 7px 2px;
+	width: auto;
+}
+#main div.checkbox label {
+	display: inline;
+}
+#main input[type=radio] {
+	float:left;
+	width:auto;
+	margin: 0 3px 7px 0;
+}
+#main div.radio label {
+	margin: 0 0 6px 20px;
+}
+#main input[type=submit] {
+	display: inline;
+	font-size: 110%;
+	width: auto;
+}
+#main form .submit input[type=submit] {
+	background:#62af56;
+	background: -webkit-gradient(linear, left top, left bottom, from(#a8ea9c), to(#62af56));
+	background-image: -moz-linear-gradient(top, #a8ea9c, #62af56);
+	border-color: #2d6324;
+	color: #000;
+	text-shadow: #8cee7c 0px 1px 0px;
+}
+#main form .submit input[type=submit]:hover {
+	background:#4ca83d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#85e573), to(#4ca83d));
+	background-image: -moz-linear-gradient(top, #85e573, #4ca83d);
+}
+
+/** Notices and Errors **/
+#main div.message {
+	clear: both;
+	color: #fff;
+	font-size: 140%;
+	font-weight: bold;
+	margin: 0 0 1em 0;
+	background: #c73e14;
+	padding: 5px;
+	width: 95%;
+}
+#main div.error-message {
+	clear: both;
+	color: #fff;
+	font-weight: bold;
+	background: #c73e14;
+}
+#main p.error {
+	background-color: #e32;
+	color: #fff;
+	font-family: Courier, monospace;
+	font-size: 120%;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+#main p.error em {
+	color: #000;
+	font-weight: normal;
+	line-height: 140%;
+}
+#main .notice {
+	background: #ffcc00;
+	color: #000;
+	display: block;
+	font-family: Courier, monospace;
+	font-size: 120%;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+#main .success {
+	background: green;
+	color: #fff;
+}
+
+/* Others*/
+.hidden {
+	display: none;
+}
+
+.red-asterisks {
+	color: #e32;
+}
+
+.cake-sql-log, .cake-debug, .cake-stack-trace, .cake-context {
+	color: #fff;
+}
+
+/*Tables*/
+table.summary-info td {
+	vertical-align: top;
+	padding-right: 10px;
+}
+
+table.summary-info td.label {
+	font-weight: bold;
+}
