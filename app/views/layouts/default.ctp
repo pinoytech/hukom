@@ -15,27 +15,13 @@
 		
 		echo $this->Html->script('jquery-1.4.4.min');
 		
-		echo $html->script('jquery-ui.min.js');
+		echo $html->script('jquery-ui.min');
+		
+		echo $html->script('jquery.validate.min');
 		
 		echo $scripts_for_layout;
 	?>
-	<script type="text/javascript">
-		// //Remove Asterisks
-		// 		jQuery('.remove-asterisk').each(function(index) {
-		// 				console.log(1);
-		// 				var parent_div      = jQuery(this).parent().parent();
-		// 				var parent_fieldset = jQuery(this).parent();
-		// 				// console.log(parent_fieldset.children('legend'));
-		// 				parent_div.removeClass('required');
-		// 				parent_fieldset.children('legend').addClass('put-asterisk');
-		// 
-		// 		});
-		// 
-		// 		//Put astrerisks
-		// 		jQuery('.put-asterisk').each(function(index) {
-		// 			jQuery(this).append('<span class="red-asterisks">*</span>').css({'color' : '#444444', 'font-weight' : 'bold'});
-		// 		});
-	</script>
+	
 </head>
 <body>
     <!-- Header -->
@@ -74,7 +60,7 @@
         <!-- Canvas -->
         <div class="canvas-holder fl">
             <img src="/img/canvas.jpg" alt="canvas" title="Needs Legal Advice but lacks time to visit a Lawyer?" />
-            <a href="#" class="legal-consultation fl ab textindent" title="Online Legal Consultation">Online Legal Consultation</a>
+            <!-- <a href="#" class="legal-consultation fl ab textindent" title="Online Legal Consultation">Online Legal Consultation</a> -->
         </div>
         <!-- Canvas -->
     <br class="clear" />

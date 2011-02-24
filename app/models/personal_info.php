@@ -14,6 +14,14 @@ class PersonalInfo extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'middle_name' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Field must not be empty',
+				'allowEmpty' => false,
+				'required' => true,
+			),
+		),
 		'last_name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),

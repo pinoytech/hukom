@@ -131,10 +131,20 @@ class User extends AppModel {
 			'conditions'   => '',
             'dependent'    => true
         ),
-		'Case' => array(
-			'className' => 'Case',
+		'Legalcase' => array(
+			'className' => 'Legalcase',
 			'foreignKey' => 'user_id',
-			'dependent' => false,
+			'dependent' => true,
+		),
+		'Legalcasedetail' => array(
+			'className' => 'Legalcasedetail',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
+		),
+		'Bankdeposit' => array(
+			'className' => 'Bankdeposit',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
 		)
 	);
 	

@@ -5,14 +5,19 @@
 				
 		<?php echo $this->Session->flash(); ?>
 		
-		<?php echo $this->Form->create('User', array('url' => "/users/letter_of_intent/$id"));
-			echo $this->Form->input('User.id', array('value' => $id));
-		?>
+		<div class="form-title">Client's Letter of Intent</div>
+		<div class="form-holder">
 		
-			<fieldset>
-		 		<legend><?php __('Letter of Intent'); ?></legend>
+		<?php
+			echo $this->Form->create('User', array('onsubmit' => 'redirect(); return false;'));
+			//echo $this->Form->input('User.id', array('value' => $id));
+		?>
 				<p>
-					I, <?php echo $user_full_name;?>, with <?php echo $email;?>, of legal age, hereby intends to obtain from E-Lawyers Online your service of online legal consultation via E-Mail or Written Query.
+					<?php echo date('F d, Y');?>
+				</p>
+				
+				<p>
+					I, <b><?php echo $user_full_name;?></b>, with <b><?php echo $email;?></b>, of legal age, hereby intends to obtain from E-Lawyers Online your service of online legal consultation via E-Mail or Written Query.
 				</p>
 				
 				<p>
@@ -23,9 +28,16 @@
 					Respectfully submitted.
 				</p>
 				
-			</fieldset>
+			
 		<?php echo $this->Form->end(__('Submit', true));?>
 		
+		</div>
 		
 	</div>
 </div>
+
+<script type="text/javascript">
+function redirect(){
+	window.location = '/users/personal_info/<?php echo "$id/$case_id"?>';
+}
+</script>

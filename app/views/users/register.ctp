@@ -1,65 +1,3 @@
-<script type="text/javascript">
-jQuery('document').ready(function() {
-	//jQuery('#UserRegisterForm').	
-
-	jQuery("#reject-alert").dialog({
-		autoOpen: false,
-		width: 300,
-		height: 150,
-        modal: true,
-		resizable: false,
-        buttons: {
-            Ok: function() {
-            	jQuery(this).dialog('close');
-			}
-        }
-	});
-	
-	//Remove Asterisks
-	jQuery('.remove-asterisk').each(function(index) {
-			var parent_div      = jQuery(this).parent().parent();
-			var parent_fieldset = jQuery(this).parent();
-			// console.log(parent_fieldset.children('legend'));
-			parent_div.removeClass('required');
-			parent_fieldset.children('legend').addClass('put-asterisk');
-		
-	});
-	
-	//Put astrerisks
-	jQuery('.put-asterisk').each(function(index) {
-		jQuery(this).append('<span class="red-asterisks">*</span>').css({'color' : '#444444', 'font-weight' : 'bold'});
-	});
-});
-
-function check_end_user() {
-	jQuery("#end-user-form").dialog({
-		autoOpen: false,
-		width: 800,
-		height: 600,
-        modal: true,
-		resizable: false,
-        buttons: {
-            'I agree': function() {
-            	jQuery('#agree-checker').val(1);
-				// alert('Submit form');
-				document.forms['UserRegisterForm'].submit();
-			},
-			"I reject": function() {
-                jQuery('#agree-checker').val('');
-				jQuery("#reject-alert").dialog("open");
-            }
-        }
-	}); 
-	
-	if(jQuery('#agree-checker').val() != '') {
-		form.submit();
-	}
-	else {
-		jQuery("#end-user-form").dialog("open");
-	}
-}
-</script>
-
 <div id="end-user-form" class="hidden" title="End User Agreement">
 	<p style="text-align:center;">End User Agreement</p>
 	<p>
@@ -89,27 +27,99 @@ function check_end_user() {
 	<div id="main">
 		
 		<?php echo $this->Session->flash(); ?>
-		
-		<?php echo $this->Form->create('User', array('onsubmit' => 'check_end_user(); return false;', 'name' => 'UserRegisterForm'));?>
-			<fieldset>
-		 		<legend><?php __('Register'); ?></legend>
+
+		<?php //echo $this->Form->create('User', array('onsubmit' => 'check_end_user(); return false;', 'name' => 'UserRegisterForm', 'inputDefaults' => array('class' => 'required')));?>
+		<?php echo $this->Form->create('User', array('name' => 'UserRegisterForm'));?>
+			<div class="form-title">Register</div>
+			<div class="form-holder form-registration">
 			<?php
 				echo $this->Form->input('User.group_id', array('type' => 'hidden', 'value' => 3));
-				// echo $this->Form->radio('User.type', $options, array('legend' => 'Please select type of account'));
+				
 				$options=array('personal'=>'Personal','corporation'=>'Corporation/Partnership');
-				echo $this->Form->input('User.type', array('type' => 'radio', 'options'=>$options, 'class' => 'remove-asterisk', 'legend' => 'Please select type of account'));
-				echo $this->Form->input('PersonalInfo.first_name');
-				echo $this->Form->input('PersonalInfo.last_name');
-				echo $this->Form->input('User.username', array('label' => 'Email'));
-				echo $this->Form->input('User.password', array('value' => ''));
-				echo $this->Form->input('User.password_confirm', array('label' => 'Retype Password', 'type' => 'password', 'value' => ''));
-				echo $this->Form->input('PersonalInfo.gender', array('type' => 'radio', 'options' => array('male' => 'Male', 'female' => 'Female'), 'class' => 'remove-asterisk'));
-				echo $this->Form->input('PersonalInfo.birth_date', array('minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select'));
+				echo $this->Form->input('User.type', array('type' => 'select', 'options'=>$options, 'label' => 'Please select type of account', 'empty' => 'Select', 'class' => 'required'));
+				
+				// echo '<div>Please select type of account</div>';
+				// echo '<div><label>&nbsp;</label></div>';
+				// echo '<span id="type">';
+				// echo $this->Form->input('User.type', array('type' => 'radio', 'options'=>$options, 'div' => false, 'legend' => false, 'class' => 'type'));
+				// echo '</span>';
+				
+				echo $this->Form->input('PersonalInfo.first_name', array('class' => 'required'));
+				echo $this->Form->input('PersonalInfo.last_name', array('class' => 'required'));
+				echo $this->Form->input('User.username', array('label' => 'Email', 'class' => 'required email'));
+				echo $this->Form->input('User.password', array('value' => '', 'class' => 'required'));
+				echo $this->Form->input('User.password_confirm', array('label' => 'Retype Password', 'type' => 'password', 'value' => '', 'class' => 'required'));
+				echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'options' => array('male' => 'Male', 'female' => 'Female'), 'empty' => 'Select', 'class' => 'required'));
+				// echo $this->Form->input('PersonalInfo.gender', array('type' => 'radio', 'options' => array('male' => 'Male', 'female' => 'Female'), 'div' => '', 'class' => 'required'));
+				// echo $this->Form->input('PersonalInfo.birth_date', array('minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select', 'after' => '<input type="hidden" id="birth_date_check" class="required">', 'class' => 'birth_date'));
+				echo $this->Form->input('PersonalInfo.birth_date', array('type' => 'text', 'class' => 'birth_date required'));
 				echo $this->Form->input('PersonalInfo.referred_by');
 			?>
 				<input type="hidden" id="agree-checker">
 				
-			</fieldset>
-		<?php echo $this->Form->end(__('Submit', true));?>
+				<?php echo $this->Form->end(__('Submit', true));?>
+			</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+jQuery('document').ready(function() {
+	//jQuery('#UserRegisterForm').	
+
+	jQuery("#reject-alert").dialog({
+		autoOpen: false,
+		width: 300,
+		height: 200,
+        modal: true,
+		resizable: false,
+        buttons: {
+            Ok: function() {
+            	jQuery(this).dialog('close');
+			}
+        }
+	});
+	
+	//jQuery Valdidate
+	jQuery("#UserRegisterForm").validate({
+		rules: {
+			"data[User][password_confirm]": {
+				equalTo: '#UserPassword'
+			},
+		},
+		submitHandler: function(form) {
+			check_end_user();
+		}
+	});
+	
+});
+
+function check_end_user() {
+	jQuery("#end-user-form").dialog({
+		autoOpen: false,
+		width: 800,
+		height: 600,
+        modal: true,
+		resizable: false,
+        buttons: {
+            'I agree': function() {
+            	jQuery('#agree-checker').val(1);
+				// alert('Submit form');
+				document.forms['UserRegisterForm'].submit();
+			},
+			"I reject": function() {
+                jQuery('#agree-checker').val(''); 
+				jQuery("#reject-alert").dialog("open");
+            }
+        }
+	}); 
+	
+	if(jQuery('#agree-checker').val() != '') {
+		form.submit();
+	}
+	else {
+		jQuery("#end-user-form").dialog("open");
+	}
+}
+</script>
+
+<?php echo $html->script('form-hacks');?>

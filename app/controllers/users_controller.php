@@ -99,7 +99,7 @@ class UsersController extends AppController {
 			} else {
 				$this->Session->setFlash(__('Registration could not be completed. Please, try again.', true));
 			}
-		}	
+		}
 	}
 
 	function edit($id = null) {
@@ -333,7 +333,7 @@ class UsersController extends AppController {
 		}
 	}
 	
-	function personal_info($id) {
+	function personal_info($id, $case_id=null) {
 		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -356,14 +356,12 @@ class UsersController extends AppController {
 				// $this->Session->setFlash(__('Personal Information has been saved', true));
 				
 				//
-				if ($this->data['PersonalInfo']['civil_status'] == 'single') {
-					$this->redirect(array('action' => 'children_info', $this->data['User']['id']));
+				if ($this->data['PersonalInfo']['civil_status'] == 'single') {					
+					$this->redirect(array('action' => 'children_info', $this->data['User']['id'], $this->data['User']['case_id']));
 				}
 				else {
-					$this->redirect(array('action' => 'spouse_info', $this->data['User']['id']));
+					$this->redirect(array('action' => 'spouse_info', $this->data['User']['id'], $this->data['User']['case_id']));
 				}
-				
-				
 				
 			} else {
 				$this->Session->setFlash(__('Personal Information could not be saved. Please, try again.', true));
@@ -375,37 +373,47 @@ class UsersController extends AppController {
 		}
 		
 		$this->set('id', $id);
-		
+		$this->set('case_id', $case_id);
 	}
 	
-	function spouse_info($id) {
+	function spouse_info($id, $case_id=null) {
 		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
 		}
 		
+		// debug($this->data);
+		// exit;
+		
 		// Update Spouse Info
 		if (!empty($this->data)) {
-			// debug($this->data);
+			
 			$this->loadModel('SpouseInfo');
 			$this->SpouseInfo->id = $this->data['SpouseInfo']['id'];
+			
 			if ($this->SpouseInfo->save($this->data)) {
-				// $this->Session->setFlash(__('Spouse Information has been saved', true));
-				$this->redirect(array('action' => 'children_info', $this->data['User']['id']));
+				
 			} else {
 				$this->Session->setFlash(__('Spouse Information could not be saved. Please, try again.', true));
+				unset($this->data['User']['goto']);
 			}
-			
 		}
+		
+		//Redirect control
+		if (isset($this->data['User']['goto'])) {
+			$this->redirect(array('action' => $this->data['User']['goto'], $this->data['SpouseInfo']['user_id'], $this->data['User']['case_id']));
+		}
+		
 		if (empty($this->data)) {
 			$this->data = $this->User->read(null, $id);
 		}
 		
 		$this->set('id', $id);
+		$this->set('case_id', $case_id);
 	}
 	
-	function children_info($id) {
+	function children_info($id, $case_id=null) {
 		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -414,44 +422,62 @@ class UsersController extends AppController {
 		
 		// Update Children Info
 		if (!empty($this->data)) {
-			// debug($this->data);
-			// exit;
 			
 			$this->loadModel('ChildrenInfo');
 			$this->loadModel('ChildrenList');
-			$this->loadModel('Case');
+			//$this->loadModel('Legalcase');
 			
 			$this->ChildrenInfo->id = $this->data['ChildrenInfo']['id'];
 			
 			// Delete ChildrenList
 			$this->ChildrenList->deleteAll(array('ChildrenList.user_id' => $id));
 			
-			if ($this->ChildrenInfo->saveAll($this->data)) {
-				// $this->Session->setFlash(__('Children Information has been saved', true));
+			// debug($this->data);
+			// exit;
+			
+			$goto = $this->data['User']['goto'];
+			$case_id = $this->data['User']['case_id'];
+			unset($this->data['User']);
+						
+			//Save Data	
+			//Check if no_of_children is available
+			if (!empty($this->data['ChildrenInfo']['no_of_children'])) {
+								
+				if ($this->ChildrenInfo->saveAll($this->data)) {		
 				
-				$Case = $this->Case->find('first', array('conditions' => array('Case.User_id' => $id)));
-				
-				if (!empty($Case['Case']['id'])) {
-					$case_id = $Case['Case']['id'];
+				} else {
+					$this->Session->setFlash(__('Children Information could not be saved. Please, try again.', true));
 				}
-				else {
-					$case_id = null;
-				}
-				
-				$this->redirect(array('controller' => 'cases', 'action' => 'legal_problem', $id, $case_id ));
-			} else {
-				$this->Session->setFlash(__('Children Information could not be saved. Please, try again.', true));
 			}
 			
-			$this->data = $this->User->read(null, $id);
+			//Redirect 
+			if ($goto == 'legal_problem') {
+				$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id));
+			}
+			else {	
+				
+				$User = $this->User->read(null, $id);
+				
+				if ($User['PersonalInfo']['civil_status'] == 'single') {
+					$goto = 'personal_info';
+				}
+				else {
+					$goto = 'spouse_info';
+				}
+				
+				//Redirect to Personal or Spouse
+				$this->redirect(array('action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id));
+			}
+			
+			// $this->data = $this->User->read(null, $id);
 			
 		}
 		if (empty($this->data)) {
 			$this->data = $this->User->read(null, $id);
-			// debug($this->data);
 		}
-		// debug($this->data);
+		
 		$this->set('id', $id);
+		$this->set('case_id', $case_id);
 	}
 	
 	//Corporate Accounts
@@ -459,6 +485,7 @@ class UsersController extends AppController {
 		
 	}
 	
+	/*
 	function letter_of_intent($id){
 		
 		$User = $this->User->find('first', array('conditions' => array('User.id' => $id)));
@@ -473,6 +500,7 @@ class UsersController extends AppController {
 		$this->set('email', $User['PersonalInfo']['email']);
 		$this->set('id', $id);
 	}
+	*/
 	
 	function initDB() {
 	    $group =& $this->User->Group;
@@ -494,18 +522,22 @@ class UsersController extends AppController {
 	    $this->Acl->allow($group, 'controllers/Widgets/add');
 	    $this->Acl->allow($group, 'controllers/Widgets/edit');
 		$this->Acl->allow($group, 'controllers/Dashboard');
-		$this->Acl->allow($group, 'controllers/Cases');
+		$this->Acl->allow($group, 'controllers/Legalcases');
 		$this->Acl->allow($group, 'controllers/Users/edit');
 		$this->Acl->allow($group, 'controllers/Users/personal_info');
 		$this->Acl->allow($group, 'controllers/Users/spouse_info');
 		$this->Acl->allow($group, 'controllers/Users/children_info');
-		$this->Acl->allow($group, 'controllers/Cases/legal_problem');
-		$this->Acl->allow($group, 'controllers/Cases/summary_of_facts');
-		$this->Acl->allow($group, 'controllers/Cases/objectives_questions');
-		$this->Acl->allow($group, 'controllers/Cases/summary_of_information');
-		$this->Acl->allow($group, 'controllers/Cases/online_legal_consultation_agreement');
-		$this->Acl->allow($group, 'controllers/Users/letter_of_intent');
-		$this->Acl->allow($group, 'controllers/Payments/select_option');
+		$this->Acl->allow($group, 'controllers/Legalcases/legal_problem');
+		$this->Acl->allow($group, 'controllers/Legalcases/summary_of_facts');
+		$this->Acl->allow($group, 'controllers/Legalcases/objectives_questions');
+		$this->Acl->allow($group, 'controllers/Legalcases/summary_of_information');
+		$this->Acl->allow($group, 'controllers/Legalcases/online_legal_consultation_agreement');
+		$this->Acl->allow($group, 'controllers/Legalcases/online_legal_consultation');
+		$this->Acl->allow($group, 'controllers/Legalcases/letter_of_intent');
+		$this->Acl->allow($group, 'controllers/Payments/mode_of_payment');
+		$this->Acl->allow($group, 'controllers/Payments/bank_deposit');
+		$this->Acl->allow($group, 'controllers/Payments/bank_deposit_summary');
+		$this->Acl->allow($group, 'controllers/Payments/bank_deposit_confirmation');
 	    //we add an exit to avoid an ugly "missing views" error message
 	    echo "all done";
 	    exit;

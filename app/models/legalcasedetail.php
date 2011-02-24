@@ -1,20 +1,9 @@
 <?php
-class Payment extends AppModel {
-	var $name = 'Payment';
-	
-	// var $validate = array(
-	// 		'type' => array(
-	// 			'notempty' => array(
-	// 				'rule' => array('notempty'),
-	// 				'message' => 'Field must not be empty',
-	// 				'allowEmpty' => false,
-	// 				'required' => true,
-	// 			),
-	// 		),
-	// 	);
-			
+class Legalcasedetail extends AppModel {
+	var $name = 'Legalcasedetail';
+	var $useTable = 'legal_case_details';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
+	
 	var $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
@@ -23,13 +12,23 @@ class Payment extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'Case' => array(
-			'className' => 'Case',
+		'Legalcase' => array(
+			'className' => 'Legalcase',
 			'foreignKey' => 'case_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+	);	
+	
+	var $hasMany = array(
+		'Legalcasedetail' => array(
+			'className' => 'Legalcasedetail',
+			'foreignKey' => 'case_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 	);
 }
 ?>
