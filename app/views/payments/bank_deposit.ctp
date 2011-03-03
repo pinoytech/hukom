@@ -1,6 +1,8 @@
 <div id="full-content">
 	<div id="main">
 		
+		<?php echo $this->element('navigation');?>
+		
 		<?php echo $this->Session->flash(); ?>
 
 			<div class="form-title">Bank Deposit</div>
@@ -19,6 +21,7 @@
 				echo $this->Form->input('Bankdeposit.country', array('class' => 'required'));
 				echo $this->Form->input('Bankdeposit.amount', array('class' => 'required decimal'));
 				echo $this->Form->input('Bankdeposit.reference_no', array('class' => 'required'));
+				echo 'file upload here';
 			?>	
 			<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>
 			</form>

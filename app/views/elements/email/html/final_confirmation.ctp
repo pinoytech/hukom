@@ -6,7 +6,7 @@
 
 <p>Please click this <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/users/login/';?>">link</a> to login to your dashboard.</p>
 
-<p>If you have further queries involving the same subject matter and have follow-up questions, please visit this <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/users/login/?redirect=my_questions';?>">link</a>.  For a more personal consultation through office/video conference, you may click on this <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/users/login/?video_conference';?>">link</a> and E-Lawyers Online will voluntarily give you a discount.</p>
+<p>If you have further queries involving the same subject matter and have follow-up questions, please visit this <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/legalcases/summary_of_information/' . $User['User']['id'] . '/' . $case_id . '/all/view/perquery' ;?>">link</a>.  For a more personal consultation through office/video conference, you may click on this <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/users/login/?video_conference';?>">link</a> and E-Lawyers Online will voluntarily give you a discount.</p>
 
 <p>Should you wish to retain our services or engage our firm to handle your case, we will be more than glad to arrange a  meeting with you at your most convenient schedule. You may get in touch with us at the following numbers:</p>
 

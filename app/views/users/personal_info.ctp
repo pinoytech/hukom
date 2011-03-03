@@ -24,12 +24,12 @@
 					echo '</div>';
 					
 					echo '<div class="row full-field">';
-					echo $this->Form->input('PersonalInfo.address_abroad', array('label' => 'Address (Abroad)', 'class' => 'required', 'style' => ''));
+					echo $this->Form->input('PersonalInfo.address_abroad', array('label' => 'Address (Abroad)', 'style' => ''));
 					echo '</div>';
 					
 					echo '<div class="row three-field">';
-					echo $this->Form->input('PersonalInfo.telephone_no', array('class' => 'required'));
-					echo $this->Form->input('PersonalInfo.cellphone_no', array('class' => 'required'));
+					echo $this->Form->input('PersonalInfo.telephone_no', array('class' => 'required digits'));
+					echo $this->Form->input('PersonalInfo.cellphone_no', array('class' => 'required digits'));
 					echo $this->Form->input('PersonalInfo.email', array('readonly' => true));
 					echo '</div>';
 					
@@ -46,7 +46,14 @@
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
-					echo $this->Form->input('PersonalInfo.education_attained', array('class' => 'required'));
+					$options = array('Grade School' => 'Grade School',
+						'High School' => 'High School',
+						'Vocational/Short Course' => 'Vocational/Short Course',
+						"Bachelor's/College Degree" => "Bachelor's/College Degree",
+						"Post Graduate Diploma/Master's Degree" => "Post Graduate Diploma/Master's Degree",
+						'Professional License' => 'Professional License',
+						'Docotrate Degree' => 'Docotrate Degree');
+					echo $this->Form->input('PersonalInfo.education_attained', array('class' => 'required', 'type' => 'select', 'options' => $options, 'empty' => 'Select One'));
 					echo $this->Form->input('PersonalInfo.school', array('class' => 'required'));
 					echo '</div>';
 					

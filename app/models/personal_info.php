@@ -65,14 +65,6 @@ class PersonalInfo extends AppModel {
 				'required' => true,
 			),
 		),
-		'address_abroad' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
 		'telephone_no' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),

@@ -689,6 +689,26 @@ table.summary-info td.label {
 	font-weight: bold;
 }
 
+/* Dashboard */
+table.dashboard {
+	border-width: 1px;
+	border-style: solid;
+	width: 100%;
+	border-color: #118CD5;
+}
+
+table.dashboard tr.label {
+	font-weight: bold;
+}
+
+table.dashboard td {
+	vertical-align: top;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #118CD5;
+}
+
+
 a {cursor: pointer; cursor: hand;}
 
 .form-link {

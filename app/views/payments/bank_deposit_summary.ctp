@@ -2,8 +2,9 @@
 	<div id="main">
 		
 		<?php echo $this->element('navigation');?>
-				
+		
 		<?php echo $this->Session->flash(); ?>
+		
 		<?php
 		// debug($User);
 		?>

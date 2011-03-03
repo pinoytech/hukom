@@ -13,6 +13,7 @@
 				echo $this->Form->input('Legalcasedetail.id', array('type' => 'hidden'));
 				echo $this->Form->input('Legalcasedetail.case_id', array('type' => 'hidden', 'value' => $case_id));
 				echo $this->Form->input('Legalcasedetail.user_id', array('type' => 'hidden', 'value' => $id));
+				echo $this->Form->input('Legalcasedetail.legal_service', array('type' => 'hidden', 'value' => $legal_service));
 			?>
 				<div>
 					<p>

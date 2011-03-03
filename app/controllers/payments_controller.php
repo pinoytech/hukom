@@ -47,6 +47,11 @@ class PaymentsController extends AppController {
 			//debug($this->data);
 			// exit;		
 			
+			//Delete data when browser back button is pressed
+			if (isset($this->data['Bankdeposit']['case_detail_id'])) {
+				$this->Bankdeposit->deleteAll(array('Bankdeposit.case_detail_id' => $this->data['Bankdeposit']['case_detail_id']));
+			}
+			
 			// Save Bank Details
 			$this->Bankdeposit->id = $this->data['Bankdeposit']['id'];
 			if ($this->Bankdeposit->save($this->data)) {
@@ -86,10 +91,15 @@ class PaymentsController extends AppController {
 	}
 	
 	function bank_deposit_confirmation($id=null, $case_id=null, $deposit_id=null){
-
+		
+		//Clear Legalcase.legal_service Session
+		$this->Session->write('Legalcase.legal_service', '');
+		
 		$this->Bankdeposit->id = $deposit_id;
 		$this->Bankdeposit->set('status', 'submit');
 		$this->Bankdeposit->save();
+		
+		$this->set('id', $id);
 	}
 	
 }

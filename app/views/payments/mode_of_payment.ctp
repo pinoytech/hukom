@@ -8,7 +8,7 @@
 	<div id="main">
 		
 		<?php echo $this->element('navigation');?>
-				
+		
 		<?php echo $this->Session->flash(); ?>
 		
 		<?php echo $this->Form->create('Payment');?>		
