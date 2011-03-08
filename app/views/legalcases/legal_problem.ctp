@@ -12,6 +12,7 @@
 					echo $this->Form->input('Legalcase.id');
 					echo $this->Form->input('Legalcase.user_id', array('type' => 'hidden', 'value' => $id));
 					echo $this->Form->input('Legalcase.status', array('type' => 'hidden', 'value' => 'active'));
+					echo $this->Form->input('Legalcase.case_detail_id', array('type' => 'hidden', 'value' => $case_detail_id));
 					
 					/*
 					$options = array(

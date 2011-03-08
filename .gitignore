@@ -2,6 +2,7 @@
 /app/tmp
 /plugins
 /vendors
+/app/webroot/uploads
 *.tmproj
 tmtags
 .DS_Store

@@ -3,6 +3,8 @@ class PaymentsController extends AppController {
 
 	var $name = 'Payments';
 	var $uses = 'Bankdeposit';
+	var $components = array('Custom');
+	
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
@@ -35,7 +37,7 @@ class PaymentsController extends AppController {
 
 	}
 	
-	function bank_deposit($id=null, $case_id=null, $case_detail_id=null){
+	function bank_deposit($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
 		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -56,24 +58,39 @@ class PaymentsController extends AppController {
 			$this->Bankdeposit->id = $this->data['Bankdeposit']['id'];
 			if ($this->Bankdeposit->save($this->data)) {
 				// $this->Session->setFlash(__('Case Information has been saved', true));
-				$this->redirect(array('action' => $this->data['Payment']['goto'], $this->data['Bankdeposit']['user_id'], $this->data['Bankdeposit']['case_id'], $this->data['Bankdeposit']['case_detail_id']));
+				$this->redirect(array('action' => $this->data['Payment']['goto'], $this->data['Bankdeposit']['user_id'], $this->data['Bankdeposit']['case_id'], $this->data['Bankdeposit']['case_detail_id'], $this->Bankdeposit->id));
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
 			}
 			
-			$this->data = $this->Bankdeposit->read(null, $case_detail_id);
+			$this->data = $this->Bankdeposit->read(null, $payment_id);
 
 		}
 		if (empty($this->data)) {
-			$this->data = $this->Bankdeposit->read(null, $case_detail_id);
+			$this->data = $this->Bankdeposit->read(null, $payment_id);
 		}
+		
+		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id/bankdeposit";
+		
+		//Create Legalcase_id Folder
+		$file = $_SERVER{'DOCUMENT_ROOT'} . $upload_folder; 
+		if (!file_exists($file)) {
+			mkdir($file);
+			chmod($file, 0755);
+		}
+		
+		//Show files
+		$folder = $_SERVER['DOCUMENT_ROOT'] . $upload_folder;
+		$files = $this->Custom->list_folder_files($folder);
 		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
+		$this->set('upload_folder', $upload_folder);
+		$this->set('files', $files);
 	}
 	
-	function bank_deposit_summary($id=null, $case_id=null, $case_detail_id=null){
+	function bank_deposit_summary($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
 
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -88,6 +105,7 @@ class PaymentsController extends AppController {
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
+		$this->set('payment_id', $payment_id);
 	}
 	
 	function bank_deposit_confirmation($id=null, $case_id=null, $deposit_id=null){

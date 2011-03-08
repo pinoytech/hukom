@@ -66,7 +66,7 @@ jQuery('document').ready(function() {
 	jQuery("#LegalcaseSummaryOfFactsForm").validate({});
 
 	jQuery('#back').click(function() {
-		window.location = '/payments/bank_deposit/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>';
+		window.location = '/payments/bank_deposit/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>/<?php echo $payment_id ?>';
 	});
 
 	jQuery('#next').click(function() {

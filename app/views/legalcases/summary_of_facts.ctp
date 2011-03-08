@@ -1,3 +1,5 @@
+<link href="/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+
 <div id="full-content">
 	<div id="main">
 		
@@ -33,7 +35,20 @@
 			</form>
 			
 			<div>
-				Attach Document/s:
+				<b>Attach Document/s:</b>&nbsp;
+				<br /><br />
+				<input id="file_upload" name="file_upload" type="file" />
+				
+				<!-- <a href="javascript:$('#file_upload').uploadifyUpload()">Upload Files</a> -->
+				
+				<ul id="file-list">
+					<?php
+					// echo debug($files);
+					foreach ($files as $key => $value) {
+						echo '<li>' . $value . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '">Remove</a></li>';
+					}
+					?>
+				</ul>
 			</div>
 			
 		</div>
@@ -53,6 +68,9 @@
 	</div>
 </div>
 
+<script type="text/javascript" src="/uploadify/swfobject.js"></script>
+<script type="text/javascript" src="/uploadify/jquery.uploadify.v2.1.4.min.js"></script>
+
 <script type="text/javascript">
 jQuery('document').ready(function() {
 
@@ -67,7 +85,7 @@ jQuery('document').ready(function() {
 			
 			var agree=confirm("Data you provided on this form will be discared. Do you want to continue?");
 	        if (agree){                        
-	           window.location = '/legalcases/legal_problem/<?php echo $id ?>/<?php echo $case_id ?>';
+	           window.location = '/legalcases/legal_problem/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>';
 	        }
 	        else{
 	           return false;
@@ -83,6 +101,39 @@ jQuery('document').ready(function() {
 		jQuery('form').submit();
 	});
 
+	jQuery('#file_upload').uploadify({
+	    'uploader'  : '/uploadify/uploadify.swf',
+	    'script'    : '/uploadify/uploadify.php',
+	    'cancelImg' : '/uploadify/cancel.png',
+	    'folder'    : '<?php echo $upload_folder;?>',
+	    'auto'      : true,
+		'onComplete' : function(event, ID, fileObj, response, data) {
+				append_files(fileObj)
+		    }
+	  });
+	
+	function append_files(fileObj) {
+		name = fileObj.name;
+		jQuery('#file-list').append('<li>'+name+' <a class="remove_file" id="'+fileObj.filePath+'" >Remove</a></li>');
+	}
+	
+	jQuery('.remove_file').live('click', function(e) {
+		var parent = jQuery(this).parent();
+
+		jQuery.ajax({
+			type: "POST", 
+			url: "/legalcases/remove_file",
+			data: 'file_path=' + jQuery(this).attr('id'),
+			success: function(msg)
+			{
+				parent.empty().fadeOut();
+			},
+			error: function()
+			{
+				alert("An error occured while updating. Try again in a while");
+			}
+		 });
+	});
 });
 
 </script>

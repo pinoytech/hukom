@@ -2,7 +2,7 @@
 class LegalcasesController extends AppController {
 
 	var $name = 'Legalcases';
-	var $components = array('Email');
+	var $components = array('Email', 'Custom');
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
@@ -102,10 +102,21 @@ class LegalcasesController extends AppController {
 			$this->Session->setFlash(__('Invalid id for user', true));
 			$this->redirect(array('action'=>'index'));
 		}
+		
+		//Get User_id
+		$Legalcase = $this->Legalcase->find('first', array('condtions' => array('Legalcase.id' => $id)));
+		
+		$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $Legalcase['Legalcase']['user_id'] . '/' . $id;
+
 		if ($this->Legalcase->delete($id)) {
 			$this->Session->setFlash(__('Case deleted', true));
+			
+			//Delete Files
+			$this->Custom->rrmdir($file);
+			
 			$this->redirect(array('action'=>'index'));
 		}
+				
 		$this->Session->setFlash(__('Case was not deleted', true));
 		$this->redirect(array('action' => 'index'));
 	}
@@ -147,6 +158,13 @@ class LegalcasesController extends AppController {
 			$this->Legalcase->id = $this->data['Legalcase']['id'];
 			if ($this->Legalcase->save($this->data)) {
 				
+				//Create Legalcase_id Folder
+				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id; 
+				if (!file_exists($file)) {
+					mkdir($file);
+					chmod($file, 0755);
+				}
+				
 				// $this->Session->setFlash(__('Case Information has been saved', true));
 				$this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id));
 				
@@ -185,7 +203,7 @@ class LegalcasesController extends AppController {
 		$this->set('case_id', $case_id);
 	}
 	
-	function legal_problem($id, $case_id=null){ //$id = user_id
+	function legal_problem($id, $case_id=null,$case_detail_id=null){ //$id = user_id
 		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -200,9 +218,36 @@ class LegalcasesController extends AppController {
 			
 			$this->Legalcase->id = $this->data['Legalcase']['id'];
 			
+			$case_detail_id = $this->data['Legalcase']['case_detail_id'];
+			
 			if ($this->Legalcase->save($this->data)) {
 				// $this->Session->setFlash(__('Case Information has been saved', true));
-				$this->redirect(array('action' => 'summary_of_facts', $this->data['Legalcase']['user_id'], $this->Legalcase->id));
+				
+				if (!$this->data['Legalcase']['case_detail_id']) {
+					// debug(1);
+					// exit;
+					
+					//Create Case Detail ID
+					$this->loadModel('Legalcasedetail');
+					$data['Legalcasedetail'] = array(
+						'user_id' => $this->data['Legalcase']['user_id'],
+						'case_id' => $this->Legalcase->id
+						);
+					//Remove model validation
+					$this->Legalcasedetail->validate = array();
+					$this->Legalcasedetail->create();
+					$this->Legalcasedetail->save($data);
+					$case_detail_id = $this->Legalcasedetail->id;
+				}
+				
+				//Create Legalcase_id Folder
+				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id . '/' . $case_detail_id; 
+				if (!file_exists($file)) {
+					mkdir($file);
+					chmod($file, 0755);
+				}
+				
+				$this->redirect(array('action' => 'summary_of_facts', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $case_detail_id));
 				
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
@@ -219,6 +264,7 @@ class LegalcasesController extends AppController {
 
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
+		$this->set('case_detail_id', $case_detail_id);
 	}
 	
 	function summary_of_facts($id=null, $case_id=null, $case_detail_id=null){ //$id = user_id
@@ -232,6 +278,7 @@ class LegalcasesController extends AppController {
 		// debug($this->data);
 		// exit;		
 		
+		//Remove model validation
 		$this->Legalcasedetail->validate = array();
 				
 		// Update Case Details
@@ -241,6 +288,9 @@ class LegalcasesController extends AppController {
 			
 			if ($this->Legalcasedetail->save($this->data)) {
 				// $this->Session->setFlash(__('Case Information has been saved', true));
+				
+				//Create Details Folder here
+				
 				$this->redirect(array('action' => $this->data['Legalcase']['goto'], $this->data['Legalcasedetail']['user_id'], $this->data['Legalcasedetail']['case_id'], $this->Legalcasedetail->id));
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
@@ -253,11 +303,19 @@ class LegalcasesController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Legalcasedetail->read(null, $case_detail_id);
 		}
+		
+		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id";
+		
+		//Show files
+		$folder = $_SERVER['DOCUMENT_ROOT'] . $upload_folder;
+		$files = $this->Custom->list_folder_files($folder);
 
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('legal_service', $this->Session->read('Legalcase.legal_service'));
+		$this->set('upload_folder', $upload_folder);
+		$this->set('files', $files);
 	}
 	
 	function objectives_questions($id, $case_id=null, $case_detail_id=null){
@@ -346,9 +404,22 @@ class LegalcasesController extends AppController {
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 	}
-	
-	function review_case($id) {
+
+	function show_uploaded_files() {
+		$folder = $_SERVER['DOCUMENT_ROOT'] . $_POST['upload_folder'];
+		$files = $this->Custom->list_folder_files($folder);
 		
+		foreach ($files as $key => $value) {
+			
+		}
+		
+		$this->autoRender=false;
+	}
+	
+	function remove_file(){
+		echo $folder = $_SERVER['DOCUMENT_ROOT'] . $_POST['file_path'];
+		unlink($folder);
+		$this->autoRender=false;
 	}
 }
 ?>

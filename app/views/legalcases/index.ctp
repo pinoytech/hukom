@@ -49,14 +49,13 @@
 									<td>
 										<?php
 											$payment_option = 'mode_of_payment';
-											$payment_id_or_case_detail_id = $Legalcasedetail['id'];
 											
 											if (isset($Legalcases['Bankdeposit'])) {
 												foreach ($Legalcases['Bankdeposit'] as $Bankdeposit) {
 													if ($Bankdeposit['case_detail_id'] == $Legalcasedetail['id']) {
 														echo 'Bank Deposit';
 														$payment_option = 'bank_deposit';
-														$payment_id_or_case_detail_id = $Bankdeposit['id'];
+														$payment_id = $Bankdeposit['id'];
 													}
 												}
 											}
@@ -65,7 +64,13 @@
 									<td>
 										<?php
 										if ($Legalcasedetail['status'] == 'pending') {
-											echo $this->Html->link(__('Payment Options', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $payment_id_or_case_detail_id)); 
+											if ($payment_id) {
+												echo $this->Html->link(__('Edit Payment Options', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], $payment_id)); 
+											}
+											else {
+												echo $this->Html->link(__('Payment Options', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'])); 
+											}
+											
 										}
 										?>
 									</td>

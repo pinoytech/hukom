@@ -16,6 +16,7 @@ class AppController extends Controller {
 		//Assign Auth User globally
 		$this->Auth_user = $this->Auth->user();
 		
+		//Redirect to Admin
 		if (isset($this->params['admin']) && $this->params['admin'] = TRUE) {
 			$this->layout = 'admin';
 			

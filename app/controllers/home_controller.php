@@ -10,6 +10,8 @@ class HomeController extends AppController {
 	}
 	
 	function index() {
+		// debug(2);
+		// exit;
 		$this->loadModel('User');
 		$Auth_User = $this->Auth->User();
 		$User = $this->User->find('first', array('conditions' => array('User.id' => $Auth_User['User']['id'])));

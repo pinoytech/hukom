@@ -95,6 +95,11 @@ class UsersController extends AppController {
 				// Send Confirmation Email
 				$this->_sendNewUserMail( $this->User->id );
 				
+				//Create User_ID Folder 
+				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->User->id; 
+				mkdir($file);
+				chmod($file, 0755);
+				
 				$this->redirect(array('controller' => 'pages', 'action' => 'thankyou'));
 			} else {
 				$this->Session->setFlash(__('Registration could not be completed. Please, try again.', true));
@@ -534,6 +539,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Legalcases/online_legal_consultation_agreement');
 		$this->Acl->allow($group, 'controllers/Legalcases/online_legal_consultation');
 		$this->Acl->allow($group, 'controllers/Legalcases/letter_of_intent');
+		$this->Acl->allow($group, 'controllers/Legalcases/show_uploaded_files');
 		$this->Acl->allow($group, 'controllers/Payments/mode_of_payment');
 		$this->Acl->allow($group, 'controllers/Payments/bank_deposit');
 		$this->Acl->allow($group, 'controllers/Payments/bank_deposit_summary');

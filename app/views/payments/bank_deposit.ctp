@@ -1,3 +1,5 @@
+<link href="/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+
 <div id="full-content">
 	<div id="main">
 		
@@ -21,9 +23,23 @@
 				echo $this->Form->input('Bankdeposit.country', array('class' => 'required'));
 				echo $this->Form->input('Bankdeposit.amount', array('class' => 'required decimal'));
 				echo $this->Form->input('Bankdeposit.reference_no', array('class' => 'required'));
-				echo 'file upload here';
 			?>	
 			<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>
+			
+				<div>
+					<b>Attach Document/s:</b>&nbsp;
+					<br /><br />
+					<input id="file_upload" name="file_upload" type="file" />
+
+					<ul id="file-list">
+						<?php
+						// echo debug($files);
+						foreach ($files as $key => $value) {
+							echo '<li>' . $value . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '">Remove</a></li>';
+						}
+						?>
+					</ul>
+				</div>
 			</form>
 			</div>
 			
@@ -40,6 +56,9 @@
 			</table>
 	</div>
 </div>
+
+<script type="text/javascript" src="/uploadify/swfobject.js"></script>
+<script type="text/javascript" src="/uploadify/jquery.uploadify.v2.1.4.min.js"></script>
 
 <script type="text/javascript">
 jQuery('document').ready(function() {
@@ -67,6 +86,40 @@ jQuery('document').ready(function() {
 	jQuery('#next').click(function() {
 		jQuery('#goto').val('bank_deposit_summary');
 		jQuery('form').submit();
+	});
+	
+	jQuery('#file_upload').uploadify({
+	    'uploader'  : '/uploadify/uploadify.swf',
+	    'script'    : '/uploadify/uploadify.php',
+	    'cancelImg' : '/uploadify/cancel.png',
+	    'folder'    : '<?php echo $upload_folder;?>',
+	    'auto'      : true,
+		'onComplete' : function(event, ID, fileObj, response, data) {
+				append_files(fileObj)
+		    }
+	  });
+	
+	function append_files(fileObj) {
+		name = fileObj.name;
+		jQuery('#file-list').append('<li>'+name+' <a class="remove_file" id="'+fileObj.filePath+'" >Remove</a></li>');
+	}
+	
+	jQuery('.remove_file').live('click', function(e) {
+		var parent = jQuery(this).parent();
+
+		jQuery.ajax({
+			type: "POST", 
+			url: "/legalcases/remove_file",
+			data: 'file_path=' + jQuery(this).attr('id'),
+			success: function(msg)
+			{
+				parent.empty().fadeOut();
+			},
+			error: function()
+			{
+				alert("An error occured while updating. Try again in a while");
+			}
+		 });
 	});
 });
 </script>
