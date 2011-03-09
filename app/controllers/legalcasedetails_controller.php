@@ -56,7 +56,7 @@ class LegalcasedetailsController extends AppController {
 				if ($this->data['Legalcasedetail']['confirmed'] != 1) {					
 
 					//Send Confirmation Email
-					$this->_send_client_confirmation($this->data['Legalcasedetail']['user_id'], $this->data['Legalcasedetail']['case_id']);
+					$this->_send_payment_confirmation($this->data['Legalcasedetail']['user_id'], $this->data['Legalcasedetail']['case_id']);
 					$this->data['Legalcasedetail']['confirmed'] = 1;
 					$email_sent_alert = ' and confirmation email is sent to the user';
 					
@@ -82,18 +82,18 @@ class LegalcasedetailsController extends AppController {
 		$this->loadModel('Legalservice');
 		$this->set('Legalservices', $this->Legalservice->find('list', array('fields' => array('Legalservice.name', 'Legalservice.name'))));
 	}
-
-	function _send_client_confirmation($id, $case_id) {
+    
+	function _send_payment_confirmation($id, $case_id) {
 		$this->loadModel('User');
 		
 		$User                  = $this->User->read(null,$id);
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = array('gino.carlo.cortez@gmail.com');  
-		$this->Email->subject  = 'E-Lawyers Online - Final Confirmation Email';
+		$this->Email->subject  = 'E-Lawyers Online - Payment Confirmation';
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
-		$this->Email->template = 'final_confirmation'; // note no '.ctp'
+		$this->Email->template = 'payment_confirmation'; // note no '.ctp'
 		//Send as 'html', 'text' or 'both' (default is 'text')
 		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
 	    //Set view variables as normal

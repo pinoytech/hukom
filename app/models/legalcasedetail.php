@@ -89,7 +89,6 @@ class Legalcasedetail extends AppModel {
 			'order' => ''
 		),
 	);
-	
-	
+		
 }
 ?>

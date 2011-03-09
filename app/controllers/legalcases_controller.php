@@ -150,7 +150,6 @@ class LegalcasesController extends AppController {
 			
 			//Assign Sessions
 			$this->Session->write('Legalcase.legal_service', $this->data['Legalcase']['legal_service']);
-			unset($this->data['Legalcase']['legal_service']);
 			
 			// debug($this->Session->read('Legalcase.legal_service'));
 			// exit;
@@ -231,7 +230,8 @@ class LegalcasesController extends AppController {
 					$this->loadModel('Legalcasedetail');
 					$data['Legalcasedetail'] = array(
 						'user_id' => $this->data['Legalcase']['user_id'],
-						'case_id' => $this->Legalcase->id
+						'case_id' => $this->Legalcase->id,
+						'legal_service' => $this->Session->read('Legalcase.legal_service')
 						);
 					//Remove model validation
 					$this->Legalcasedetail->validate = array();
@@ -267,7 +267,7 @@ class LegalcasesController extends AppController {
 		$this->set('case_detail_id', $case_detail_id);
 	}
 	
-	function summary_of_facts($id=null, $case_id=null, $case_detail_id=null){ //$id = user_id
+	function summary_of_facts($id=null, $case_id=null, $case_detail_id=null, $type=null){ //$id = user_id
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
@@ -306,16 +306,13 @@ class LegalcasesController extends AppController {
 		
 		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id";
 		
-		//Show files
-		$folder = $_SERVER['DOCUMENT_ROOT'] . $upload_folder;
-		$files = $this->Custom->list_folder_files($folder);
-
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('legal_service', $this->Session->read('Legalcase.legal_service'));
 		$this->set('upload_folder', $upload_folder);
-		$this->set('files', $files);
+		$this->set('files', $this->Custom->show_files($upload_folder));
+		$this->set('type', $type);
 	}
 	
 	function objectives_questions($id, $case_id=null, $case_detail_id=null){
@@ -367,12 +364,17 @@ class LegalcasesController extends AppController {
 		$Legalcase = $this->Legalcase->find('first', array('conditions' => array('Legalcase.id' => $case_id)));
 		//, 'order' => array('Legalcasedetail.id' => 'DESC')
 		// debug($Legalcase);
-
+        
+        $upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id";
+        
 		$this->set('Legalcase', $Legalcase);
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('type', $type);
+		$this->set('upload_folder', $upload_folder);
+		$this->set('files', $this->Custom->show_files($upload_folder));
+		
 		
 		//Assign Legal Service Session
 		if ($legal_service == 'perquery') {
@@ -405,17 +407,6 @@ class LegalcasesController extends AppController {
 		$this->set('case_detail_id', $case_detail_id);
 	}
 
-	function show_uploaded_files() {
-		$folder = $_SERVER['DOCUMENT_ROOT'] . $_POST['upload_folder'];
-		$files = $this->Custom->list_folder_files($folder);
-		
-		foreach ($files as $key => $value) {
-			
-		}
-		
-		$this->autoRender=false;
-	}
-	
 	function remove_file(){
 		echo $folder = $_SERVER['DOCUMENT_ROOT'] . $_POST['file_path'];
 		unlink($folder);

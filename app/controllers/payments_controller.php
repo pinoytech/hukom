@@ -2,8 +2,7 @@
 class PaymentsController extends AppController {
 
 	var $name = 'Payments';
-	var $uses = 'Bankdeposit';
-	var $components = array('Custom');
+	var $components = array('Email', 'Custom');
 	
 	
 	function beforeFilter() {
@@ -50,44 +49,33 @@ class PaymentsController extends AppController {
 			// exit;		
 			
 			//Delete data when browser back button is pressed
-			if (isset($this->data['Bankdeposit']['case_detail_id'])) {
-				$this->Bankdeposit->deleteAll(array('Bankdeposit.case_detail_id' => $this->data['Bankdeposit']['case_detail_id']));
+			if (isset($this->data['Payment']['case_detail_id'])) {
+				$this->Payment->deleteAll(array('Payment.case_detail_id' => $this->data['Payment']['case_detail_id']));
 			}
 			
 			// Save Bank Details
-			$this->Bankdeposit->id = $this->data['Bankdeposit']['id'];
-			if ($this->Bankdeposit->save($this->data)) {
+			$this->Payment->id = $this->data['Payment']['id'];
+			if ($this->Payment->save($this->data)) {
 				// $this->Session->setFlash(__('Case Information has been saved', true));
-				$this->redirect(array('action' => $this->data['Payment']['goto'], $this->data['Bankdeposit']['user_id'], $this->data['Bankdeposit']['case_id'], $this->data['Bankdeposit']['case_detail_id'], $this->Bankdeposit->id));
+				$this->redirect(array('action' => $this->data['Payment']['goto'], $this->data['Payment']['user_id'], $this->data['Payment']['case_id'], $this->data['Payment']['case_detail_id'], $this->Payment->id));
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
 			}
 			
-			$this->data = $this->Bankdeposit->read(null, $payment_id);
+			$this->data = $this->Payment->read(null, $payment_id);
 
 		}
 		if (empty($this->data)) {
-			$this->data = $this->Bankdeposit->read(null, $payment_id);
+			$this->data = $this->Payment->read(null, $payment_id);
 		}
 		
 		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id/bankdeposit";
-		
-		//Create Legalcase_id Folder
-		$file = $_SERVER{'DOCUMENT_ROOT'} . $upload_folder; 
-		if (!file_exists($file)) {
-			mkdir($file);
-			chmod($file, 0755);
-		}
-		
-		//Show files
-		$folder = $_SERVER['DOCUMENT_ROOT'] . $upload_folder;
-		$files = $this->Custom->list_folder_files($folder);
 		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('upload_folder', $upload_folder);
-		$this->set('files', $files);
+		$this->set('files', $this->Custom->show_files($upload_folder));
 	}
 	
 	function bank_deposit_summary($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
@@ -97,28 +85,57 @@ class PaymentsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$Bankdeposit = $this->Bankdeposit->find('first', array('conditions' => array('Bankdeposit.case_detail_id' => $case_detail_id)));
+		$Payment = $this->Payment->find('first', array('conditions' => array('Payment.case_detail_id' => $case_detail_id)));
 
 		// debug($Legalcase);
+		
+		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id/bankdeposit";
 
-		$this->set('Bankdeposit', $Bankdeposit);
+		$this->set('Payment', $Payment);
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('payment_id', $payment_id);
+		$this->set('upload_folder', $upload_folder);
+		$this->set('files', $this->Custom->show_files($upload_folder));
 	}
 	
-	function bank_deposit_confirmation($id=null, $case_id=null, $deposit_id=null){
+	function bank_deposit_confirmation($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
 		
 		//Clear Legalcase.legal_service Session
 		$this->Session->write('Legalcase.legal_service', '');
-		
-		$this->Bankdeposit->id = $deposit_id;
-		$this->Bankdeposit->set('status', 'submit');
-		$this->Bankdeposit->save();
+        
+        //Send Confirmation To Admin
+        $this->_send_admin_payment_confirmation($id, 'Bank Deposit');
+        
+        // debug($this->admin_email);
 		
 		$this->set('id', $id);
 	}
 	
+	function _send_admin_payment_confirmation($id, $option) {
+		$this->loadModel('User');
+		
+		if ($option == 'Bank Deposit') {
+            $subject = 'Bank Deposit Payment';
+            $template = 'bank_deposit_confirmation';
+		}
+		
+		$User                          = $this->User->read(null,$id);
+		$this->Email->to               = $this->admin_email;
+		$this->Email->bcc              = array('gino.carlo.cortez@gmail.com'); 
+		$this->Email->subject          = 'E-Lawyers Online - ' . $subject;
+		$this->Email->replyTo          = 'no-reply@e-laywersonline.com';
+		$this->Email->from             = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template         = $template; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs           = 'html'; // because we like to send pretty mail
+
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	 }
 }
 ?>

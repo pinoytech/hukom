@@ -22,7 +22,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php __('E-Laywers Online:'); ?>
+		<?php __('E-Lawyers Online:'); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php

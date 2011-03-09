@@ -11,8 +11,8 @@ class Legalcase extends AppModel {
 			'order' => 'Legalcasedetail.id DESC',
 			'dependent'    => true
 		),
-		'Bankdeposit' => array(
-			'className' => 'Bankdeposit',
+		'Payment' => array(
+			'className' => 'Payment',
 			'foreignKey' => 'case_id',
 			'dependent'    => true
 		),

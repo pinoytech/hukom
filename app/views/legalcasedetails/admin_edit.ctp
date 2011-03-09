@@ -12,7 +12,7 @@
 		$options = $Legalservices;
 		echo $this->Form->input('Legalcasedetail.legal_service', array('type' => 'select', 'options' => $options));
 		
-		$options = array('pending' => 'pending', 'confirmed' => 'confirmed', 'closed' => 'closed');
+		$options = array('pending' => 'pending', 'for review' => 'review', 'incomplete' => 'incomplete', 'closed' => 'closed');
 		echo $this->Form->input('Legalcasedetail.status', array('type' => 'select', 'options' => $options));
 		
 		echo $this->Form->input('Legalcasedetail.summary', array('type' => 'textarea'));

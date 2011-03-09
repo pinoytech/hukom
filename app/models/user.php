@@ -141,8 +141,8 @@ class User extends AppModel {
 			'foreignKey' => 'user_id',
 			'dependent' => true,
 		),
-		'Bankdeposit' => array(
-			'className' => 'Bankdeposit',
+		'Payment' => array(
+			'className' => 'Payment',
 			'foreignKey' => 'user_id',
 			'dependent' => true,
 		)

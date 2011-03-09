@@ -44,5 +44,22 @@ class CustomComponent extends Object {
         }
         return false;
     }
+    
+    //List Files uploaded
+    function show_files($upload_folder) {
+		
+		//Create Legalcase_id Folder
+		$file = $_SERVER{'DOCUMENT_ROOT'} . $upload_folder; 
+		if (!file_exists($file)) {
+			mkdir($file);
+			chmod($file, 0755);
+		}
+		
+		//Show files
+		$folder = $_SERVER['DOCUMENT_ROOT'] . $upload_folder;
+		$files = $this->list_folder_files($folder);
+		
+		return $files;
+    }
 }
 ?>

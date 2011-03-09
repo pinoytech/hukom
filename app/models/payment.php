@@ -1,11 +1,7 @@
 <?php
 class Payment extends AppModel {
 	var $name = 'Payment';
-	var $useTable = false;
-	
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-	
-	/*
+
 	var $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
@@ -15,14 +11,10 @@ class Payment extends AppModel {
 			'className' => 'Legalcase',
 			'foreignKey' => 'case_id',
 		),
-	);
-	
-	var $hasOne = array(
-		'Bankdeposit' => array(
-			'className' => 'Bankdeposit',
-			'foreignKey' => 'payment_id',
+		'Legalcasedetail' => array(
+			'className' => 'Legalcasedetail',
+			'foreignKey' => 'case_detail_id',
 		),
 	);
-	*/
 }
 ?>

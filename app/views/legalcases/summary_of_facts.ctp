@@ -43,9 +43,8 @@
 				
 				<ul id="file-list">
 					<?php
-					// echo debug($files);
 					foreach ($files as $key => $value) {
-						echo '<li>' . $value . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '">Remove</a></li>';
+						echo '<li class="actions"><a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a>' . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '">Remove</a></li>';
 					}
 					?>
 				</ul>
@@ -54,9 +53,10 @@
 		</div>
 
 		<br />
+		
 		<table>
 			<tr>
-				<td>
+			    <td>
 					<input type="button" id="back" value="Back" />
 				</td>
 				<td>
@@ -85,7 +85,7 @@ jQuery('document').ready(function() {
 			
 			var agree=confirm("Data you provided on this form will be discared. Do you want to continue?");
 	        if (agree){                        
-	           window.location = '/legalcases/legal_problem/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>';
+	           window.location = '/legalcases/legal_problem/<?php echo $id; ?>/<?php echo $case_id; ?>/<?php echo $case_detail_id; ?>';
 	        }
 	        else{
 	           return false;
@@ -114,7 +114,7 @@ jQuery('document').ready(function() {
 	
 	function append_files(fileObj) {
 		name = fileObj.name;
-		jQuery('#file-list').append('<li>'+name+' <a class="remove_file" id="'+fileObj.filePath+'" >Remove</a></li>');
+		jQuery('#file-list').append('<li class="actions">'+name+' <a class="remove_file" id="'+fileObj.filePath+'" >Remove</a></li>');
 	}
 	
 	jQuery('.remove_file').live('click', function(e) {

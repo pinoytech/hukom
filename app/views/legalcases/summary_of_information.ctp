@@ -36,6 +36,17 @@
 					<td><?php echo $Legalcasedetail['questions'];?></td>
 				</tr>
 				<tr>
+					<td class="label">File Attachments:</td>
+					<td class="actions">
+				    	<?php
+						// echo debug($files);
+						foreach ($files as $key => $value) {
+							echo '<a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a><br />';
+						}
+						?>    					
+					</td>
+				</tr>
+				<tr>
 					<td class="label">Status:</td>
 					<td><?php echo ucfirst($Legalcasedetail['status']);?></td>
 				</tr>
@@ -56,34 +67,37 @@
 		
 		<br />
 		
-		<?php
-		if ($type != 'view') {
-		?>
 		<table>
 			<tr>
-				<td>
-					<input type="button" id="back" value="Back" />
-				</td>
-				<td>
-					<input type="button" id="next" value="Next" />
-				</td>
-			</tr>
+            <?php
+    		if ($type == 'view') {
+    		?>
+		        <td>
+    				<input type="button" id="back-to-case-index" value="Back to Case List" />
+    			</td>
+    		<?php
+    		}
+    		elseif ($type == 'add') {
+    		?>
+    			<td>
+    				<input type="button" id="new-facts" value="Add new facts" />
+    			</td>
+    		<?php
+    	    }
+    		else {
+    		?>
+                <td>
+                    <input type="button" id="back" value="Back" />
+                </td>
+                <td>
+                    <input type="button" id="next" value="Next" />
+                </td>
+    		<?php
+    		}
+            ?>
+        	</tr>
 		</table>
-		<?php
-		}
-		else {
-		?>
-		<table>
-			<tr>
-				<td>
-					<input type="button" id="new-facts" value="Add new facts" />
-				</td>
-			</tr>
-		</table>
-		<?php
-		}
-		?>
-		
+        
 	</div>
 </div>
 
@@ -106,6 +120,9 @@ jQuery('document').ready(function() {
 		window.location = '/legalcases/summary_of_facts/<?php echo $id ?>/<?php echo $case_id ?>';
 	});
 
+    jQuery('#back-to-case-index').click(function() {
+		window.location = '/legalcases/index/<?php echo $id ?>';
+	});
 });
 
 </script>

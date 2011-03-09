@@ -11,18 +11,19 @@
 			<div class="form-holder form-registration">
 			<?php echo $this->Form->create('Payment');?>
 			<?php
-				echo $this->Form->input('Bankdeposit.id');
-				echo $this->Form->input('Bankdeposit.user_id', array('type' => 'hidden', 'value' => $id));
-				echo $this->Form->input('Bankdeposit.case_id', array('type' => 'hidden','value' => $case_id));
-				echo $this->Form->input('Bankdeposit.case_detail_id', array('type' => 'hidden','value' => $case_detail_id));
+				echo $this->Form->input('Payment.id');
+				echo $this->Form->input('Payment.user_id', array('type' => 'hidden', 'value' => $id));
+				echo $this->Form->input('Payment.case_id', array('type' => 'hidden','value' => $case_id));
+				echo $this->Form->input('Payment.case_detail_id', array('type' => 'hidden','value' => $case_detail_id));
+				echo $this->Form->input('Payment.option', array('type' => 'hidden','value' => 'Bank Deposit'));
 				
 				$options=array('Allied Bank'=>'Allied Bank','Banco De Oro'=>'Banco De Oro','BPI Family Savings Bank'=>'BPI Family Savings Bank','Metrobank'=>'Metrobank');
-				echo $this->Form->input('Bankdeposit.bank', array('type' => 'select', 'options'=>$options, 'label' => 'Choose Bank', 'empty' => 'Select', 'class' => 'required'));
-				echo $this->Form->input('Bankdeposit.date_deposited', array('type' => 'text', 'class' => 'required birth_date'));
-				echo $this->Form->input('Bankdeposit.branch', array('class' => 'required'));
-				echo $this->Form->input('Bankdeposit.country', array('class' => 'required'));
-				echo $this->Form->input('Bankdeposit.amount', array('class' => 'required decimal'));
-				echo $this->Form->input('Bankdeposit.reference_no', array('class' => 'required'));
+				echo $this->Form->input('Payment.bank_name', array('type' => 'select', 'options'=>$options, 'label' => 'Choose Bank', 'empty' => 'Select', 'class' => 'required'));
+				echo $this->Form->input('Payment.bank_date_deposited', array('type' => 'text', 'class' => 'required birth_date'));
+				echo $this->Form->input('Payment.bank_branch', array('class' => 'required'));
+				echo $this->Form->input('Payment.bank_country', array('class' => 'required'));
+				echo $this->Form->input('Payment.amount', array('class' => 'required decimal'));
+				echo $this->Form->input('Payment.reference_no', array('class' => 'required'));
 			?>	
 			<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>
 			
@@ -33,9 +34,8 @@
 
 					<ul id="file-list">
 						<?php
-						// echo debug($files);
 						foreach ($files as $key => $value) {
-							echo '<li>' . $value . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '">Remove</a></li>';
+							echo '<li class="actions"><a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a>' . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '">Remove</a></li>';
 						}
 						?>
 					</ul>
@@ -101,7 +101,7 @@ jQuery('document').ready(function() {
 	
 	function append_files(fileObj) {
 		name = fileObj.name;
-		jQuery('#file-list').append('<li>'+name+' <a class="remove_file" id="'+fileObj.filePath+'" >Remove</a></li>');
+		jQuery('#file-list').append('<li class="actions">'+name+' <a class="remove_file" id="'+fileObj.filePath+'" >Remove</a></li>');
 	}
 	
 	jQuery('.remove_file').live('click', function(e) {

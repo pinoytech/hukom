@@ -30,7 +30,6 @@
 				<div style="font-weight:bold">Please select your preferred payment option below:</div>
 				<div>
 					<input type="radio" class="option_radio" value="bank_deposit" name="data[Payment][option]" >Bank Deposit
-					<input type="radio" class="option_radio" value="credit_card" name="data[Payment][option]">Credit Card
 					<input type="radio" class="option_radio" value="paypal" name="data[Payment][option]">Paypal
 					<input type="radio" class="option_radio" value="gcash" name="data[Payment][option]">G-Cash
 					<input type="radio" class="option_radio" value="smartmoney" name="data[Payment][option]">SmartMoney

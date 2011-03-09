@@ -351,16 +351,16 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 	padding: 10px;
 	background-color: #118CD5;
 	text-align: center;
+	color: #ffffff;
 }
 
 .dashboard-navigation a {
-	font-weight: bold;
-	color: #000000;
-	text-transform: capitalize;
+	color: #ffffff;
+	text-transform: uppercase;
 }
 
 .dashboard-navigation a:hover {
-	color: #ffffff;
+	color: #000000;
 }
 
 /** Custom Forms **/
@@ -501,6 +501,8 @@ table#child-list td input {
 }
 
 /** Summary of Facts Form **/
+
+/** Case Index **/
 
 
 /** Forms **/
@@ -689,7 +691,7 @@ table.summary-info td.label {
 	font-weight: bold;
 }
 
-/* Dashboard */
+/* Dashboard / Tables */
 table.dashboard {
 	border-width: 1px;
 	border-style: solid;
@@ -706,6 +708,19 @@ table.dashboard td {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #118CD5;
+}
+
+.actions a {
+	color: #118CD5;
+}
+
+.actions a:hover {
+	color: #E3821F;
+}
+
+
+.actions a.remove_file {
+	color: red;
 }
 
 

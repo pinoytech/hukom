@@ -2,6 +2,7 @@
 class AppController extends Controller {
     var $components = array('Acl', 'Auth', 'Session');
     var $helpers = array('Html', 'Form', 'Session');
+	var $admin_email = 'gino.carlo.cortez@gmail.com';
 	
 	function beforeFilter() {
         //Configure AuthComponent

@@ -18,7 +18,6 @@
 				<tr class="label">
 					<td>Case No.</td>
 					<td>Legal Problem</td>
-					<td>Actions</td>
 				</tr>
 				<?php
 				// debug($Legalcase);
@@ -35,6 +34,7 @@
 									<td>Status</td>
 									<td>Date</td>
 									<td>Payment Option</td>
+									<td>Payment Status</td>
 									<td>Actions</td>
 								</tr>
 								<?php
@@ -49,29 +49,33 @@
 									<td>
 										<?php
 											$payment_option = 'mode_of_payment';
+											$payment_status = '';
+											$action         = 'Pay Now';
 											
 											if (isset($Legalcases['Bankdeposit'])) {
 												foreach ($Legalcases['Bankdeposit'] as $Bankdeposit) {
 													if ($Bankdeposit['case_detail_id'] == $Legalcasedetail['id']) {
 														echo 'Bank Deposit';
 														$payment_option = 'bank_deposit';
-														$payment_id = $Bankdeposit['id'];
+														$payment_id     = $Bankdeposit['id'];
+														$payment_status = $Bankdeposit['status'];
+														$action         = '';
 													}
 												}
 											}
 										?>
 									</td>
-									<td>
+									<td><?php echo ucfirst($payment_status); ?></td>
+									<td class="actions">
 										<?php
-										if ($Legalcasedetail['status'] == 'pending') {
-											if ($payment_id) {
-												echo $this->Html->link(__('Edit Payment Options', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], $payment_id)); 
-											}
-											else {
-												echo $this->Html->link(__('Payment Options', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'])); 
-											}
-											
+										
+										if ($action == 'Pay Now') {
+                                            echo $this->Html->link(__('Pay Now', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
+                                            echo '<br />';
 										}
+
+										echo $this->Html->link(__('View', true), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view'));
+
 										?>
 									</td>
 								</tr>
@@ -80,9 +84,6 @@
 								?>
 							</table>
 						</div>
-					</td>
-					<td>
-						<?php echo $this->Html->link(__('View', true), array('controller' => 'legalcases', 'action' => 'summary_of_information',$Legalcases['Legalcase']['user_id'], $Legalcases['Legalcase']['id'], 'all', 'view')); ?>
 					</td>
 				</tr>
 				<?php
