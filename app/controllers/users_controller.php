@@ -542,8 +542,10 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Legalcases/show_uploaded_files');
 		$this->Acl->allow($group, 'controllers/Payments/mode_of_payment');
 		$this->Acl->allow($group, 'controllers/Payments/bank_deposit');
+		$this->Acl->allow($group, 'controllers/Payments/payment_confirmation');
 		$this->Acl->allow($group, 'controllers/Payments/bank_deposit_summary');
-		$this->Acl->allow($group, 'controllers/Payments/bank_deposit_confirmation');
+		$this->Acl->allow($group, 'controllers/Payments/gcash');
+		$this->Acl->allow($group, 'controllers/Payments/smartmoney');
 	    //we add an exit to avoid an ugly "missing views" error message
 	    echo "all done";
 	    exit;

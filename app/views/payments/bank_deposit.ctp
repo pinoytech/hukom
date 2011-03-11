@@ -68,7 +68,7 @@ jQuery('document').ready(function() {
 	jQuery('#back').click(function() {
 		jQuery('#goto').val('mode_of_payment');
 		
-		if (jQuery('#BankdepositId').val() == '') {
+		if (jQuery('#PaymentId').val() == '') {
 			
 			var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
 	        if (agree){                        

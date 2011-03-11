@@ -8,7 +8,7 @@
 		<div class="form-title">My Cases</div>
 		<div class="form-holder">
 			
-			<div>
+			<div class="actions">
 				<?php echo $this->Html->link(__('Add Case', true), array('action' => 'online_legal_consultation', $id)); ?>
 			</div>
 			
@@ -20,7 +20,7 @@
 					<td>Legal Problem</td>
 				</tr>
 				<?php
-				// debug($Legalcase);
+                // debug($Legalcase);
 				foreach ($Legalcase as $Legalcases) {
 				?>
 				<tr>
@@ -52,13 +52,13 @@
 											$payment_status = '';
 											$action         = 'Pay Now';
 											
-											if (isset($Legalcases['Bankdeposit'])) {
-												foreach ($Legalcases['Bankdeposit'] as $Bankdeposit) {
-													if ($Bankdeposit['case_detail_id'] == $Legalcasedetail['id']) {
-														echo 'Bank Deposit';
+											if (isset($Legalcases['Payment'])) {
+												foreach ($Legalcases['Payment'] as $Payment) {
+													if ($Payment['case_detail_id'] == $Legalcasedetail['id']) {
+														echo $Payment['option'];
 														$payment_option = 'bank_deposit';
-														$payment_id     = $Bankdeposit['id'];
-														$payment_status = $Bankdeposit['status'];
+														$payment_id     = $Payment['id'];
+														$payment_status = $Payment['status'];
 														$action         = '';
 													}
 												}

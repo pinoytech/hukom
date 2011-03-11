@@ -76,7 +76,7 @@ jQuery('document').ready(function() {
 	});
 
 	jQuery('#next').click(function() {
-		window.location = '/payments/bank_deposit_confirmation/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>/<?php echo $payment_id ?>';
+		window.location = '/payments/payment_confirmation/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>/<?php echo $payment_id ?>/bank_deposit';
 	});
 
 });

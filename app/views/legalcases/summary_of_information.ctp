@@ -36,7 +36,7 @@
 					<td><?php echo $Legalcasedetail['questions'];?></td>
 				</tr>
 				<tr>
-					<td class="label">File Attachments:</td>
+					<td class="label">Attached Document/s:</td>
 					<td class="actions">
 				    	<?php
 						// echo debug($files);

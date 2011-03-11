@@ -1,6 +1,6 @@
 <p>Dear Admin,</p>
 
-<p>User <?php echo $User['User']['username'];?> has paid through Bank Deposit.</p>
+<p>User <?php echo $User['User']['username'];?> made a <?php echo $subject; ?>.</p>
 
 <p>Please monitor account.</p>
 
