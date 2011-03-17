@@ -16,7 +16,7 @@
 					echo $this->Form->input('CorporateInfo.first_name');
 					echo $this->Form->input('CorporateInfo.last_name');
 					echo $this->Form->input('CorporateInfo.email');
-					echo $this->Form->input('CorporateInfo.gender', array('type' => 'select', 'options' => array('male' => 'Male', 'female' => 'Female')));
+					echo $this->Form->input('CorporateInfo.gender', array('type' => 'select', 'options' => $list_gender));
 					echo $this->Form->input('CorporateInfo.birth_date', array('minYear' => '1900', 'empty' => 'Select'));
 					echo $this->Form->input('CorporateInfo.birth_place', array('label' => 'Place of Birth'));
 					echo $this->Form->input('CorporateInfo.address_ph', array('label' => 'Address (Philippines)'));

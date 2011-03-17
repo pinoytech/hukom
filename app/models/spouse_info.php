@@ -34,10 +34,12 @@ class SpouseInfo extends AppModel {
 			),
 		),
 		'email' => array(
-			'rule' => array('email', true),
-			'message' => 'Email must be a valid email',
-			'allowEmpty' => false,
-			'required' => true,
+		    'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Field must not be empty',
+				'allowEmpty' => false,
+				'required' => true,
+            ),
 		),
 		'gender' => array(
 			'notempty' => array(
@@ -76,8 +78,8 @@ class SpouseInfo extends AppModel {
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
+				'allowEmpty' => true,
+				'required' => false,
 			),
 		),
 		'telephone_no' => array(
@@ -187,7 +189,7 @@ class SpouseInfo extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
 	);
 }
 ?>

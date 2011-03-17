@@ -49,11 +49,9 @@
 				echo $this->Form->input('User.username', array('label' => 'Email', 'class' => 'required email'));
 				echo $this->Form->input('User.password', array('value' => '', 'class' => 'required'));
 				echo $this->Form->input('User.password_confirm', array('label' => 'Retype Password', 'type' => 'password', 'value' => '', 'class' => 'required'));
-				echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'options' => array('male' => 'Male', 'female' => 'Female'), 'empty' => 'Select', 'class' => 'required'));
-				// echo $this->Form->input('PersonalInfo.gender', array('type' => 'radio', 'options' => array('male' => 'Male', 'female' => 'Female'), 'div' => '', 'class' => 'required'));
+				echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'options' => $list_gender, 'empty' => 'Select', 'class' => 'required'));
 				// echo $this->Form->input('PersonalInfo.birth_date', array('minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select', 'after' => '<input type="hidden" id="birth_date_check" class="required">', 'class' => 'birth_date'));
 				echo $this->Form->input('PersonalInfo.birth_date', array('type' => 'text', 'class' => 'birth_date required'));
-				echo $this->Form->input('PersonalInfo.referred_by');
 			?>
 				<input type="hidden" id="agree-checker">
 				

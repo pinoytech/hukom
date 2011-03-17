@@ -78,25 +78,6 @@ class LegalcasesController extends AppController {
 		}
 	}
 	
-	function _send_client_confirmation($id) {
-		$this->loadModel('User');
-		
-		$User                  = $this->User->read(null,$id);
-		$this->Email->to       = $User['User']['username'];
-		$this->Email->bcc      = array('gino.carlo.cortez@gmail.com');  
-		$this->Email->subject  = 'E-Lawyers Online - Final Confirmation Email';
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
-		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
-		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
-		$this->Email->template = 'final_confirmation'; // note no '.ctp'
-		//Send as 'html', 'text' or 'both' (default is 'text')
-		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
-	    //Set view variables as normal
-	    $this->set('User', $User);
-	    //Do not pass any args to send()
-	    $this->Email->send();
-	 }
-	
 	function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for user', true));

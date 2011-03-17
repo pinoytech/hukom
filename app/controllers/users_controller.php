@@ -2,7 +2,7 @@
 class UsersController extends AppController {
 
 	var $name = 'Users';
-	var $components = array('Email');
+	var $components = array('Email', 'Custom');
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
@@ -32,6 +32,7 @@ class UsersController extends AppController {
 	
 	function admin_index() {
 		$this->User->recursive = 0;
+        $this->paginate['conditions'][] = array('Group.id !=' => 1);
 		$this->set('users', $this->paginate());
 	}
 
@@ -105,6 +106,8 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('Registration could not be completed. Please, try again.', true));
 			}
 		}
+		
+		$this->set('list_gender', $this->Custom->list_gender());
 	}
 
 	function edit($id = null) {
@@ -149,6 +152,9 @@ class UsersController extends AppController {
 		}
 		$groups = $this->User->Group->find('list');
 		$this->set(compact('groups'));
+		
+		$this->set('list_gender', $this->Custom->list_gender());
+		
 	}
 
 	function delete($id = null) {
@@ -354,14 +360,14 @@ class UsersController extends AppController {
 			$this->PersonalInfo->id = $this->data['PersonalInfo']['id'];
 			if ($this->PersonalInfo->save($this->data)) {
 				
-				if ($this->data['PersonalInfo']['civil_status'] == 'single') {
+				if ($this->data['PersonalInfo']['civil_status'] == 'Single') {
 					$this->SpouseInfo->deleteAll(array('SpouseInfo.user_id' => $id));
 				}
 				
 				// $this->Session->setFlash(__('Personal Information has been saved', true));
 				
 				//
-				if ($this->data['PersonalInfo']['civil_status'] == 'single') {					
+				if ($this->data['PersonalInfo']['civil_status'] == 'Single') {					
 					$this->redirect(array('action' => 'children_info', $this->data['User']['id'], $this->data['User']['case_id']));
 				}
 				else {
@@ -379,6 +385,11 @@ class UsersController extends AppController {
 		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
+		$this->set('list_gender', $this->Custom->list_gender());
+		$this->set('list_education_attained', $this->Custom->list_education_attained());
+		$this->set('list_work_status', $this->Custom->list_work_status());
+		$this->set('list_civil_status', $this->Custom->list_civil_status());
+		
 	}
 	
 	function spouse_info($id, $case_id=null) {
@@ -414,8 +425,15 @@ class UsersController extends AppController {
 			$this->data = $this->User->read(null, $id);
 		}
 		
+        // $this->data = $this->User->read(null, $id);
+		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
+		$this->set('list_gender', $this->Custom->list_gender());
+		$this->set('list_education_attained', $this->Custom->list_education_attained());
+		$this->set('list_work_status', $this->Custom->list_work_status());
+		$this->set('list_civil_status', $this->Custom->list_civil_status());
+		
 	}
 	
 	function children_info($id, $case_id=null) {
@@ -463,7 +481,7 @@ class UsersController extends AppController {
 				
 				$User = $this->User->read(null, $id);
 				
-				if ($User['PersonalInfo']['civil_status'] == 'single') {
+				if ($User['PersonalInfo']['civil_status'] == 'Single') {
 					$goto = 'personal_info';
 				}
 				else {
@@ -483,10 +501,13 @@ class UsersController extends AppController {
 		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
+		$this->set('list_gender', $this->Custom->list_gender());
+		
 	}
 	
 	//Corporate Accounts
 	function corporate_info($id) {
+		$this->set('list_gender', $this->Custom->list_gender());
 		
 	}
 	
@@ -546,6 +567,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Payments/bank_deposit_summary');
 		$this->Acl->allow($group, 'controllers/Payments/gcash');
 		$this->Acl->allow($group, 'controllers/Payments/smartmoney');
+		$this->Acl->allow($group, 'controllers/Payments/create_paypal_payment');
 	    //we add an exit to avoid an ugly "missing views" error message
 	    echo "all done";
 	    exit;

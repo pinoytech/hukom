@@ -2,7 +2,7 @@
 // debug($Legalcase);
 ?>
 <div class="users view">
-<h2><?php  __('Case');?></h2>
+<h2><?php  __('View Case');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
@@ -46,7 +46,7 @@
 	<div>
 		<?php echo $this->Html->link(__('Edit', true), array('admin' => true, 'action' => 'edit', $Legalcase['Legalcase']['id'])); ?>
 		|
-		<?php echo $this->Html->link(__('View Case Details List', true), array('admin' => true, 'controller' => 'legalcasedetails', 'action' => 'index', $Legalcase['Legalcase']['id'])); ?>
+		<?php echo $this->Html->link(__('Case Details List', true), array('admin' => true, 'controller' => 'legalcasedetails', 'action' => 'index', $Legalcase['Legalcase']['id'])); ?>
 	</div>
 
 	

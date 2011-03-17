@@ -40,20 +40,13 @@
 					echo '</div>';
 					
 					echo '<div class="row three-field">';
-					echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'empty' => 'Select', 'class' => 'required', 'options' => array('male' => 'Male', 'female' => 'Female')));
+					echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'empty' => 'Select', 'class' => 'required', 'options' => $list_gender));
 					echo $this->Form->input('PersonalInfo.age', array('class' => 'required digits'));
 					echo $this->Form->input('PersonalInfo.citizenship', array('class' => 'required'));
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
-					$options = array('Grade School' => 'Grade School',
-						'High School' => 'High School',
-						'Vocational/Short Course' => 'Vocational/Short Course',
-						"Bachelor's/College Degree" => "Bachelor's/College Degree",
-						"Post Graduate Diploma/Master's Degree" => "Post Graduate Diploma/Master's Degree",
-						'Professional License' => 'Professional License',
-						'Docotrate Degree' => 'Docotrate Degree');
-					echo $this->Form->input('PersonalInfo.education_attained', array('class' => 'required', 'type' => 'select', 'options' => $options, 'empty' => 'Select One'));
+					echo $this->Form->input('PersonalInfo.education_attained', array('class' => 'required', 'type' => 'select', 'options' => $list_education_attained, 'empty' => 'Select One'));
 					echo $this->Form->input('PersonalInfo.school', array('class' => 'required'));
 					echo '</div>';
 					
@@ -67,7 +60,7 @@
 					echo '</div>';
 					
 					echo '<div class="row three-field">';
-					echo $this->Form->input('PersonalInfo.civil_status', array('options' => array('single' => 'Single','married' => 'Married','separated' => 'Separated','divorced/annulled' => 'Divorced/Annulled'), 'empty' => 'Select', 'class' => 'civil-status required'));
+					echo $this->Form->input('PersonalInfo.civil_status', array('options' => $list_civil_status, 'empty' => 'Select', 'class' => 'civil-status required'));
 					// echo $this->Form->input('PersonalInfo.marriage_date', array('label' => 'Date of Marriage', 'minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select', 'class' => 'marriage_date', 'validate' => 'required:true'));
 					echo $this->Form->input('PersonalInfo.marriage_date', array('type' => 'text', 'class' => 'birth_date marriage_date'));
 					echo $this->Form->input('PersonalInfo.marriage_place', array('label' => 'Place of Marriage', 'class' => 'marriage-input'));
@@ -76,7 +69,7 @@
 					echo '<div class="row three-field">';
 					echo $this->Form->input('PersonalInfo.work_position', array('label' => 'Work/Position', 'class' => 'required'));
 					echo $this->Form->input('PersonalInfo.work_duration', array('class' => 'required'));
-					echo $this->Form->input('PersonalInfo.work_status', array('options' => array('regular' => 'Regular','probationary' => 'Probationary','casual' => 'Casual','project' => 'Project','other' => 'Other'), 'class' => 'required', 'empty' => 'Select'));
+					echo $this->Form->input('PersonalInfo.work_status', array('options' => $list_work_status, 'class' => 'required', 'empty' => 'Select'));
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
@@ -115,7 +108,7 @@ jQuery('document').ready(function() {
 	jQuery("#UserPersonalInfoForm").validate();
 	
 	//Disable Marriage Fields
-	if (jQuery('#PersonalInfoCivilStatus').val() == '' || jQuery('#PersonalInfoCivilStatus').val() == 'single') {
+	if (jQuery('#PersonalInfoCivilStatus').val() == '' || jQuery('#PersonalInfoCivilStatus').val() == 'Single') {
 		bool = true;
 	}
 	else {
@@ -125,7 +118,7 @@ jQuery('document').ready(function() {
 	jQuery('#PersonalInfoMarriagePlace').attr('disabled', bool);
 	
 	jQuery('#PersonalInfoCivilStatus').change(function(){
-		if (jQuery(this).val() == 'single' || jQuery(this).val() == '') {
+		if (jQuery(this).val() == 'Single' || jQuery(this).val() == '') {
 			bool = true;
 			jQuery('#PersonalInfoMarriagePlace').val('');
 			jQuery('#PersonalInfoMarriageDate').val('');

@@ -88,6 +88,13 @@ class Legalcasedetail extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
+		'Payment' => array(
+			'className' => 'Payment',
+			'foreignKey' => 'case_detail_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 	);
 		
 }

@@ -277,7 +277,7 @@ class PersonalInfo extends AppModel {
 	);
 	
 	function validate_marriage_date($check) {
-		if($check['civil_status'] == 'single') {
+		if($check['civil_status'] == 'Single') {
 			return true;
 		}
 		else {

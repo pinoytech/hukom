@@ -13,10 +13,10 @@ class AppController extends Controller {
 
         //ACL
 		$this->Auth->allowedActions = array('display');
-		
+
 		//Assign Auth User globally
 		$this->Auth_user = $this->Auth->user();
-		
+
 		//Redirect to Admin
 		if (isset($this->params['admin']) && $this->params['admin'] = TRUE) {
 			$this->layout = 'admin';
@@ -37,6 +37,8 @@ class AppController extends Controller {
 		//Set global user variable for View (i.e. navigation)
 		$this->set('auth_user_type', $this->Auth_user['User']['type']);
 		$this->set('auth_user_id', $this->Auth_user['User']['id']);
+		
+		
     }
 
 	// Redirect admin to admin_index of controller

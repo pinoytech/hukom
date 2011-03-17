@@ -25,7 +25,7 @@
 					echo '</div>';
 					
 					echo '<div class="row full-field">';
-					echo $this->Form->input('SpouseInfo.address_abroad', array('label' => 'Address (Abroad)', 'class' => 'required'));
+					echo $this->Form->input('SpouseInfo.address_abroad', array('label' => 'Address (Abroad)'));
 					echo '</div>';
 					
 					echo '<div class="row three-field">';
@@ -40,7 +40,7 @@
 					echo '</div>';
 					
 					echo '<div class="row three-field">';
-					if ($this->data['PersonalInfo']['gender'] == 'male') {
+					if ($this->data['PersonalInfo']['gender'] == 'Male') {
 						$spouse_gender = 'Female';
 					}
 					else {
@@ -52,8 +52,8 @@
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
-					echo $this->Form->input('SpouseInfo.education_attained', array('class' => 'required'));
-					echo $this->Form->input('SpouseInfo.school', array('class' => 'required'));
+					echo $this->Form->input('SpouseInfo.education_attained', array('class' => 'required', 'type' => 'select', 'options' => $list_education_attained, 'empty' => 'Select One'));
+                    echo $this->Form->input('SpouseInfo.school', array('class' => 'required'));
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
@@ -68,7 +68,7 @@
 					echo '<div class="row three-field">';
 					echo $this->Form->input('SpouseInfo.work_position', array('label' => 'Work/Position','class' => 'required'));
 					echo $this->Form->input('SpouseInfo.work_duration', array('class' => 'required'));
-					echo $this->Form->input('SpouseInfo.work_status', array('options' => array('regular' => 'Regular','probationary' => 'Probationary','casual' => 'Casual','project' => 'Project','other' => 'Other'),'class' => 'required', 'empty' => 'Select'));
+					echo $this->Form->input('SpouseInfo.work_status', array('options' => $list_work_status,'class' => 'required', 'empty' => 'Select'));
 					echo '</div>';
 				?>
 				<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>

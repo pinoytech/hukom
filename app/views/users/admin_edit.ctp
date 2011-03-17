@@ -19,7 +19,7 @@
 		echo $this->Form->input('PersonalInfo.id');
 		echo $this->Form->input('PersonalInfo.first_name');
 		echo $this->Form->input('PersonalInfo.last_name');
-		echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'options' => array('male' => 'Male', 'female' => 'Female')));
+		echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'options' => $list_gender));
 		echo $this->Form->input('PersonalInfo.birth_date', array('minYear' => '1900'));
 	?>
 	</fieldset>

@@ -44,7 +44,7 @@
 								<tr>
 									<td><?php echo $Legalcasedetail['id'];?></td>
 									<td><?php echo $Legalcasedetail['legal_service'];?></td>
-									<td><?php echo ucfirst($Legalcasedetail['status']);?></td>
+									<td><?php echo $Legalcasedetail['status'];?></td>
 									<td><?php echo substr($Legalcasedetail['created'], 0, 11);?></td>
 									<td>
 										<?php
