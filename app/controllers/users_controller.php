@@ -84,7 +84,8 @@ class UsersController extends AppController {
 				'password',
 				'password_confirm',
 				'gender',
-				'birth_date'
+				'birth_date',
+				'referred_by'
 				);
 
 			if ($this->User->saveAll($this->data, array('fieldList' => $fieldList))) {
@@ -135,6 +136,8 @@ class UsersController extends AppController {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
 		}
+		
+		debug($this->data);
 		
 		// Update Users and Personal Info
 		if (!empty($this->data)) {
@@ -233,7 +236,7 @@ class UsersController extends AppController {
 	function _sendNewUserMail($id) {
 		$User                  = $this->User->read(null,$id);
 		$this->Email->to       = $User['User']['username'];
-		$this->Email->bcc      = array('gino.carlo.cortez@gmail.com');  
+		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = 'E-Lawyers Online - Confirmation Email';
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
@@ -297,7 +300,7 @@ class UsersController extends AppController {
 	function _sendUserForgotPasswordMail($id) {
 		$User                  = $this->User->read(null,$id);
 		$this->Email->to       = $User['User']['username'];
-		$this->Email->bcc      = array('gino.carlo.cortez@gmail.com');  
+		$this->Email->bcc      = $this->admin_email;
 		$this->Email->subject  = 'E-Lawyers Online - Password Request';
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
@@ -354,20 +357,24 @@ class UsersController extends AppController {
 		// Update Personal Info
 		if (!empty($this->data)) {
 			
+            // debug($this->data);
+            // exit;
+			
 			$this->loadModel('PersonalInfo');
 			$this->loadModel('SpouseInfo');
 			
 			$this->PersonalInfo->id = $this->data['PersonalInfo']['id'];
+			
+			if ($this->data['PersonalInfo']['civil_status'] == 'Single' || $this->data['PersonalInfo']['civil_status'] == 'Living In') {
+                $this->data['PersonalInfo']['marriage_date']  = NULL;
+                $this->data['PersonalInfo']['marriage_place'] = NULL;                
+			}
+			
 			if ($this->PersonalInfo->save($this->data)) {
-				
-				if ($this->data['PersonalInfo']['civil_status'] == 'Single') {
-					$this->SpouseInfo->deleteAll(array('SpouseInfo.user_id' => $id));
-				}
-				
-				// $this->Session->setFlash(__('Personal Information has been saved', true));
-				
-				//
-				if ($this->data['PersonalInfo']['civil_status'] == 'Single') {					
+								
+				if ($this->data['PersonalInfo']['civil_status'] == 'Single' || $this->data['PersonalInfo']['civil_status'] == 'Living In') {					
+				    $this->SpouseInfo->deleteAll(array('SpouseInfo.user_id' => $id));
+				    
 					$this->redirect(array('action' => 'children_info', $this->data['User']['id'], $this->data['User']['case_id']));
 				}
 				else {
@@ -457,9 +464,10 @@ class UsersController extends AppController {
 			
 			// debug($this->data);
 			// exit;
-			
-			$goto = $this->data['User']['goto'];
+						
+			$goto    = $this->data['User']['goto'];
 			$case_id = $this->data['User']['case_id'];
+			
 			unset($this->data['User']);
 						
 			//Save Data	
@@ -485,7 +493,13 @@ class UsersController extends AppController {
 					$goto = 'personal_info';
 				}
 				else {
-					$goto = 'spouse_info';
+				    
+				    if ($goto == 'profilesave') {
+				        $goto = 'personal_info';
+				    }
+				    else {
+				        $goto = 'spouse_info';
+				    }
 				}
 				
 				//Redirect to Personal or Spouse

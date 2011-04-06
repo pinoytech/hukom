@@ -9,7 +9,7 @@ body {
 	margin:0;
 	padding:0;
 	color:#000000;
-	font-weight:100;
+	/*font-weight:100;*/
 	}
 
 a img {border:none; outline:none;}
@@ -406,6 +406,11 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 .form-holder div label span {
 	color: #118CD5;
 }
+
+.form-holder div span.label {
+	font-weight: bold;
+}
+
 /** Registration Form **/
 .form-registration div label {
 	width: 210px;

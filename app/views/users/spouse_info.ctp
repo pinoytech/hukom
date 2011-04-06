@@ -29,8 +29,8 @@
 					echo '</div>';
 					
 					echo '<div class="row three-field">';
-					echo $this->Form->input('SpouseInfo.telephone_no', array('class' => 'required'));
-					echo $this->Form->input('SpouseInfo.cellphone_no', array('class' => 'required'));
+					echo $this->Form->input('SpouseInfo.telephone_no', array('class' => 'required digits'));
+					echo $this->Form->input('SpouseInfo.cellphone_no', array('class' => 'required digits'));
 					echo $this->Form->input('SpouseInfo.email', array('class' => 'required email'));
 					echo '</div>';
 					
@@ -81,8 +81,19 @@
 						<input type="button" id="back" value="Back" />
 					</td>
 					<td>
-						<input type="button" id="next" value="Next" />
-					</td>
+    				    <?php
+                		if ($case_id) {
+                		?>
+    					<input type="button" id="next" class="next-save" value="Next" />
+    					<?php
+                		}
+                		else {
+                		?>
+                		<input type="button" id="save" class="next-save" value="Save" />
+                		<?php
+            		    }
+                		?>
+    				</td>
 				</tr>
 			</table>
 		
@@ -116,7 +127,7 @@ jQuery('document').ready(function() {
 		}
 	});
 
-	jQuery('#next').click(function() {
+	jQuery('.next-save').click(function() {
 		jQuery('#goto').val('children_info');
 		jQuery('form').submit();
 	});

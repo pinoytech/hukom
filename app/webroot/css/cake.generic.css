@@ -540,3 +540,12 @@ div.code-coverage-results span.result-ok {
 div.code-coverage-results span.result-good {
 	color: #0a0;
 }
+
+table.custom-inside tr td {
+	border: 1px solid #DDDDDD;
+	padding: 5px;
+}
+
+table.custom-inside tr.label {
+	font-weight: bold;
+}

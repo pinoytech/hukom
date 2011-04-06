@@ -382,6 +382,11 @@ class LegalcasesController extends AppController {
 		
 		$user_full_name = $User['PersonalInfo']['first_name'].' '.$User['PersonalInfo']['last_name'];
 		
+		//Legal Service Fee
+		$this->loadModel('Legalservice');
+		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
+		
+		$this->set('fee', $Legalservice['Legalservice']['fee']);
 		$this->set('user_full_name', $user_full_name);
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);

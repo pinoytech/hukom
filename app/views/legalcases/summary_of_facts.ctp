@@ -29,7 +29,7 @@
 			<?php echo $this->Form->textarea('Legalcasedetail.summary', array('label' => false, 'class' => 'required')); ?>
 				
 				<div>
-					<em>*You can prepare your summary of facts from Microsoft Word then copy and paste to this textarea</em>
+					<em>*You can prepare your summary of facts in Microsoft Word then copy and paste in this text area.</em>
 				</div>
 				<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>
 			</form>
@@ -38,7 +38,7 @@
 				<b>Attach Document/s:</b>&nbsp;
 				<br /><br />
 				<input id="file_upload" name="file_upload" type="file" />
-				
+				<p>Select a file (jpeg, pdf, word) on your computer (2MB max).</p>
 				<!-- <a href="javascript:$('#file_upload').uploadifyUpload()">Upload Files</a> -->
 				
 				<ul id="file-list">
@@ -48,6 +48,10 @@
 					}
 					?>
 				</ul>
+			</div>
+			
+			<div>
+			    Voluminous documents should be sent to Suite 10-G, 10th Floor, Strata 100 Condominium, 100 F. Ortigas, Jr. Road, Ortigas Center, Pasig City, Metro Manila, Philippines c/o Atty. Marlon Valderama.
 			</div>
 			
 		</div>
@@ -107,6 +111,9 @@ jQuery('document').ready(function() {
 	    'cancelImg' : '/uploadify/cancel.png',
 	    'folder'    : '<?php echo $upload_folder;?>',
 	    'auto'      : true,
+	    'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx',
+	    'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
+	    'sizeLimit' : 104800,
 		'onComplete' : function(event, ID, fileObj, response, data) {
 				append_files(fileObj)
 		    }

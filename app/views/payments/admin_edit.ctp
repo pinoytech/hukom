@@ -4,6 +4,7 @@
  		<legend><?php __('Edit Payment'); ?></legend>
 	<?php
 		echo $this->Form->input('Payment.id', array('type' => 'text', 'readonly' => true));
+		echo $this->Form->input('Payment.user_id', array('type' => 'hidden'));
 		echo $this->Form->input('Payment.case_id', array('type' => 'hidden'));
 		echo $this->Form->input('Payment.confirmed', array('type' => 'hidden'));
         echo '<div><label>Username</label>' . $this->data['User']['username'] . '</div>';

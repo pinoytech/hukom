@@ -79,17 +79,28 @@
 				</form>		
 		</div>
 		<br />
+		
 		<table>
 			<tr>
 				<td>
 					<input type="button" id="back" value="Back" />
 				</td>
 				<td>
+				    <?php
+            		if ($case_id) {
+            		?>
 					<input type="button" id="next" value="Next" />
+					<?php
+            		}
+            		else {
+            		?>
+            		<input type="button" id="save" value="Save" />
+            		<?php
+        		    }
+            		?>
 				</td>
 			</tr>
 		</table>
-		
 	</div>
 </div>
 
@@ -202,6 +213,10 @@ jQuery('document').ready(function() {
 		jQuery('form').submit();
 	});
 	
+	jQuery('#save').click(function() {
+		jQuery('#goto').val('profilesave');
+		jQuery('form').submit();
+	});
 });
 
 </script>

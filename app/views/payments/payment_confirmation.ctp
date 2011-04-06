@@ -9,8 +9,7 @@
 		<div class="form-holder">
 		
 		<p>
-			Thank You for your <strong><?php echo $payment_option_name; ?> Payment</strong>. We greatly appreciate your trust and confidence on us by giving opportunity to E-Layers Online
-			to render service for you. Will send our written and legal advice via e-mail to your preferred email address. 
+			Thank you for your <strong><?php echo $payment_option_name; ?> Payment</strong>. We greatly appreciate your trust and confidence on us by giving opportunity to E-Lawyers Online to render service for you. We will send our written legal advice via e-mail to your preferred email address.
 		</p>
 		</div>
 		<br />

@@ -58,6 +58,7 @@ class User extends AppModel {
 		
 		'password' => array('rule' => array('confirmPassword', 'password'),
                             'message' => 'Passwords do not match'),
+                            
         'password_confirm' => array('rule' => array('notempty'),
                                     'required' => true),
 		'group_id' => array(
@@ -191,12 +192,12 @@ class User extends AppModel {
 	}
 	
 	function beforeSave() {
-		
 		if (isset($this->data['User']['admin_edit_user']) AND $this->data['User']['admin_edit_user']) {
 			// Change password and hash it!
 			if (isset($this->data['User']['new_password']) AND $this->data['User']['new_password']) {
 				$this->data['User']['password'] = '';
-				$this->data['User']['password'] = Security::hash($this->data['User']['new_password'], null, true); // A way to wash password like the Auth
+				$this->data['User']['password'] = Security::hash($this->data['User']['new_password'], null, true); // A way to hash password like the Auth
+
 			}
 			else {
 				// Don't update this field via saveAll :)
@@ -207,7 +208,7 @@ class User extends AppModel {
 	}
 	
 	function confirmPassword($data) {
-		$valid = false;
+	    $valid = false;
 
         if ($data['password'] ==  Security::hash($this->data['User']['password_confirm'], null, true)) {
             $valid = true;

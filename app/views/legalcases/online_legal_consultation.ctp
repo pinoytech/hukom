@@ -15,7 +15,11 @@
 				// echo $this->Form->input('Legalcase.legal_service', array('label' => false, 'legend' => 'Please select type of legal service that you would like to avail from E-lawyers Online', 'type' => 'radio', 'options' => $options));
 			?>
 				<div style="text-align:center">
-					<div style="font-weight:bold">Please select type of legal service that you would like to avail from E-lawyers Online</div>
+				    <p>
+				        The Online Legal Consultation Page is an interactive platform for clients to discuss online his/her legal problem and avail of legal services/advice.  The Client may select from the four (4) kinds of online legal consultation services we offer, as follows:
+				    </p>
+				    
+					<div style="font-weight:bold">Please select the type of legal service that you would like to avail from E-Lawyers Online.</div>
 					<div>
 						<!--
 						<input type="radio" value="per query" id="CaseLegalServiceTypePerQuery" name="data[Legalcase][legal_service]" >Per Query

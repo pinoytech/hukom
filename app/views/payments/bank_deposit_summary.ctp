@@ -22,7 +22,7 @@
 					<td><?php echo $Payment['Payment']['bank_date_deposited'];?></td>
 				</tr>
 				<tr>
-					<td class="label">Date Deposited:</td>
+					<td class="label">Bank Branch:</td>
 					<td><?php echo $Payment['Payment']['bank_branch'];?></td>
 				</tr>
 				<tr>

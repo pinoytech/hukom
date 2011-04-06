@@ -5,8 +5,13 @@
 				
 		<?php echo $this->Session->flash(); ?>
 					
-			<div class="form-title">My Legal Problem is - Ang Problemeng Legal Ko Ay</div>
+			<div class="form-title">My Legal Problem is - Ang Problema kong Legal ay:</div>
 			<div class="form-holder">
+			    
+			    <p>
+			        (Choose your legal problem - Pumili kung ano ang iyong problemang legal)
+			    </p>
+			    
 				<?php echo $this->Form->create('Legalcase');?>
 				<?php
 					echo $this->Form->input('Legalcase.id');
@@ -27,41 +32,41 @@
 							'Anything under the sun' => 'Anything under the sun (Other Legal Services)',
 						);	
 					*/
-						
+
 					//echo $this->Form->input('Legalcase.legal_problem', array('type' => 'radio', 'options'=>$options, 'class' => 'remove-asterisk', 'legend' => false, ));
 				?>
 				
 				<div class="input radio">
 					
-					<input type="radio" class="legal_problem_radio" value="Personal" id="LegalcaseLegalProblemPersonal" name="data[Legalcase][legal_problem]">Personal
+					<input type="radio" class="legal_problem_radio" value="Personal" id="LegalcaseLegalProblemPersonal" name="data[Legalcase][legal_problem]"><span class="label">Personal</span> - I have problem in my birth certificate, my passport, my criminal case, etc.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Family" id="LegalcaseLegalProblemFamily" name="data[Legalcase][legal_problem]">Family
+					<input type="radio" class="legal_problem_radio" value="Family" id="LegalcaseLegalProblemFamily" name="data[Legalcase][legal_problem]"><span class="label">Family</span> - I have a problem in annulment, child custody, adoption, etc.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Property" id="LegalcaseLegalProblemProperty" name="data[Legalcase][legal_problem]">Property
+					<input type="radio" class="legal_problem_radio" value="Property" id="LegalcaseLegalProblemProperty" name="data[Legalcase][legal_problem]"><span class="label">Property</span> - I have a problem with my land title, car, stocks, etc.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Contractual" id="LegalcaseLegalProblemContractual" name="data[Legalcase][legal_problem]">Contractual
+					<input type="radio" class="legal_problem_radio" value="Contractual" id="LegalcaseLegalProblemContractual" name="data[Legalcase][legal_problem]"><span class="label">Contractual</span> - I have a problem with my contract, sub-contract, etc. 
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Business" id="LegalcaseLegalProblemBusiness" name="data[Legalcase][legal_problem]">Business
+					<input type="radio" class="legal_problem_radio" value="Business" id="LegalcaseLegalProblemBusiness" name="data[Legalcase][legal_problem]"><span class="label">Business</span> - I have a problem in my business.
 					<br />
 						<div id="my_business_is">
 							My Business is:
 							<br />
-							<input type="radio" class="legal_problem_radio" value="Single Proprietorship" name="data[Legalcase][legal_problem]">Single Proprietorship
+							<input type="radio" class="legal_problem_radio" value="Single Proprietorship" name="data[Legalcase][legal_problem]"><span class="label">Single Proprietorship</span>
 							<br />
-							<input type="radio" class="legal_problem_radio" value="Corporation Partnership" name="data[Legalcase][legal_problem]">Corporation Partnership
+							<input type="radio" class="legal_problem_radio" value="Corporation Partnership" name="data[Legalcase][legal_problem]"><span class="label">Corporation Partnership</span> - SEC, DTI, BIR, etc.
 							<br />
-							<input type="radio" class="legal_problem_radio" value="Unregistered Business, Joint Venture, Consortium etc" name="data[Legalcase][legal_problem]">Unregistered Business, Joint Venture, Consortium etc.
+							<input type="radio" class="legal_problem_radio" value="Unregistered Business, Joint Venture, Consortium etc" name="data[Legalcase][legal_problem]"><span class="label">Unregistered Business, Joint Venture, Consortium etc.</span>
 							<br />
-							<input type="radio" class="legal_problem_radio" value="Others" name="data[Legalcase][legal_problem]">Others
+							<input type="radio" class="legal_problem_radio" value="Others" name="data[Legalcase][legal_problem]"><span class="label">Others</span>
 							<br />
 						</div>
-					<input type="radio" class="legal_problem_radio" value="Work" id="LegalcaseLegalProblemWork" name="data[Legalcase][legal_problem]">Work
+					<input type="radio" class="legal_problem_radio" value="Work" id="LegalcaseLegalProblemWork" name="data[Legalcase][legal_problem]"><span class="label">Work</span> - I have a problem in my work, dismissal, SSS, Pag-Ibig, OWWA, etc.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Legal Documents" id="LegalcaseLegalProblemLegalDocuments" name="data[Legalcase][legal_problem]">Legal Documents
+					<input type="radio" class="legal_problem_radio" value="Legal Documents" id="LegalcaseLegalProblemLegalDocuments" name="data[Legalcase][legal_problem]"><span class="label">Legal Documents</span> - I need an affidavit, SPA, deed of sale, contract, etc.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Special Projects/Contracts" id="LegalcaseLegalProblemSpecialProjectsContracts" name="data[Legalcase][legal_problem]">Special Projects/Contracts
+					<input type="radio" class="legal_problem_radio" value="Special Projects/Contracts" id="LegalcaseLegalProblemSpecialProjectsContracts" name="data[Legalcase][legal_problem]"><span class="label">Special Projects/Contracts</span> - I need a lawyer for a big transaction.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Anything under the sun" id="LegalcaseLegalProblemAnythingUnderTheSun" name="data[Legalcase][legal_problem]">Anything under the sun (Other Legal Services)
+					<input type="radio" class="legal_problem_radio" value="Anything under the sun" id="LegalcaseLegalProblemAnythingUnderTheSun" name="data[Legalcase][legal_problem]"><span class="label">Anything under the sun (Other Legal Services)</span> - I need a legal advice before I act.
 					<div id="anything_under">
 						<input type="text" name="data[Legalcase][legal_problem]" disabled>
 					</div>

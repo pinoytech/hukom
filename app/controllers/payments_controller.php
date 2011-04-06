@@ -77,7 +77,7 @@ class PaymentsController extends AppController {
 		
 		$User                  = $this->User->read(null,$id);
 		$this->Email->to       = $User['User']['username'];
-		$this->Email->bcc      = array('gino.carlo.cortez@gmail.com');  
+		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = 'E-Lawyers Online - Payment Confirmation';
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
@@ -282,7 +282,7 @@ class PaymentsController extends AppController {
 		
 		$User                          = $this->User->read(null,$id);
 		$this->Email->to               = $this->admin_email;
-		$this->Email->bcc              = array('gino.carlo.cortez@gmail.com'); 
+		//$this->Email->bcc              = array('gino.carlo.cortez@gmail.com'); 
 		$this->Email->subject          = 'E-Lawyers Online - ' . $subject;
 		$this->Email->replyTo          = 'no-reply@e-laywersonline.com';
 		$this->Email->from             = 'E-Lawyers Online <info@e-lawyersonline.com>';

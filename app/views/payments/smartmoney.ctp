@@ -10,9 +10,13 @@
 			<div class="form-title">SmartMoney</div>
 			<div class="form-holder form-registration">
 			    
-			<p>You have chosen to pay through <b>Smart Money</b>.</p>
+			<p>
+			    You have chosen to pay through <b>Smart Money</b>, your professional fee is <b>Php <?php echo $fee;?></b>.
+            </p>
 			
-			<p>Your <b>professional fee</b> is Php <?php echo $fee;?>, please send your payment to this <b>Smart Cellphone number +639498443880</b> and please fill out the fields below.</p>
+			<p>
+			    Select the type of Smart Money payment and send your payment to this Smart Money cellphone number <b>(+639498443880)</b> and fill out the form below.
+			</p>
 			    
 			<?php echo $this->Form->create('Payment');?>
 			<?php
@@ -22,7 +26,9 @@
 				echo $this->Form->input('Payment.case_detail_id', array('type' => 'hidden','value' => $case_detail_id));
 				echo $this->Form->input('Payment.option', array('type' => 'hidden','value' => 'SmartMoney'));
 				
-				echo $this->Form->input('Payment.cellphone_no', array('class' => 'required'));
+				$options=array('Over-the-Counter' => 'Over-the-Counter','Wallet-to-Wallet' => 'Wallet-to-Wallet','Mobile Banking Service' => 'Mobile Banking Service','Smart Padala' => 'Smart Padala');
+				echo $this->Form->input('Payment.smartmoney_type', array('type' => 'select', 'options'=>$options, 'label' => 'Choose Type of SmartMoney', 'empty' => 'Select', 'class' => 'required'));
+				echo $this->Form->input('Payment.cellphone_no', array('class' => 'required digits'));
 				echo $this->Form->input('Payment.reference_no', array('class' => 'required'));
 				echo $this->Form->input('Payment.amount', array('class' => 'required'));
 			?>	

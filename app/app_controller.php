@@ -2,7 +2,8 @@
 class AppController extends Controller {
     var $components = array('Acl', 'Auth', 'Session');
     var $helpers = array('Html', 'Form', 'Session');
-	var $admin_email = 'gino.carlo.cortez@gmail.com';
+    var $admin_email = array('gino.carlo.cortez@gmail.com', 'ginoc@sourcepad.com', 'gino@etgdes.com');
+    // var $admin_email = array('gino.carlo.cortez@gmail.com', 'attyvalderama@gmail.com', 'redgfernandez@yahoo.com');
 	
 	function beforeFilter() {
         //Configure AuthComponent
@@ -22,7 +23,7 @@ class AppController extends Controller {
 			$this->layout = 'admin';
 			
 			$this->Auth->loginRedirect = array('controller' => 'dashboard', 'action' => 'admin_index');
-			
+
 			if ($this->Session->read('Auth.User')) {
 				// Redirect users out of admin prefix
 				if ($this->Auth_user['User']['group_id'] != 1) {

@@ -2,7 +2,7 @@
 class LegalcasedetailsController extends AppController {
 
 	var $name = 'Legalcasedetails';
-	var $components = array('Email');
+	var $components = array('Email', 'Custom');
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
@@ -36,9 +36,16 @@ class LegalcasedetailsController extends AppController {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('Legalcasedetail', $this->Legalcasedetail->read(null, $id));
 		
-
+		$Legalcasedetail = $this->Legalcasedetail->read(null, $id);
+		
+		$this->set('Legalcasedetail', $Legalcasedetail);
+		
+        // debug($Legalcasedetail);
+		
+        $upload_folder = "/app/webroot/uploads/"  . $Legalcasedetail['User']['id'] . "/" . $Legalcasedetail['Legalcasedetail']['case_id'] . "/" . $Legalcasedetail['Legalcasedetail']['id'];
+        $this->set('files', $this->Custom->show_files($upload_folder));
+        $this->set('upload_folder', $upload_folder);
 	}
 	
 	function admin_edit($id) {
@@ -88,7 +95,7 @@ class LegalcasedetailsController extends AppController {
 		
 		$User                  = $this->User->read(null,$id);
 		$this->Email->to       = $User['User']['username'];
-		$this->Email->bcc      = array('gino.carlo.cortez@gmail.com');  
+		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = 'E-Lawyers Online - Closed Confirmation';
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';

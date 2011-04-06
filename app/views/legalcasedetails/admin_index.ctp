@@ -1,5 +1,5 @@
 <div class="cases index">
-	<h2><?php __('Case Details of Case No.'. $case_id);?></h2>
+	<h2><?php __('Case No.'. $case_id);?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
@@ -23,8 +23,8 @@
 		<td><?php echo $Legalcasedetail['Legalcasedetail']['status']; ?>&nbsp;</td>
 		<td><?php echo $Legalcasedetail['Legalcasedetail']['created']; ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $Legalcasedetail['Legalcasedetail']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $Legalcasedetail['Legalcasedetail']['id'])); ?>
+			<?php echo $this->Html->link(__('View Case Details', true), array('action' => 'view', $Legalcasedetail['Legalcasedetail']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit Case Details', true), array('action' => 'edit', $Legalcasedetail['Legalcasedetail']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $Legalcasedetail['Legalcasedetail']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $Legalcasedetail['Legalcasedetail']['id'])); ?>
 		</td>
 	</tr>
@@ -43,11 +43,6 @@
  |
 		<?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
 	</div>
-	
-	<br />
-	<div>
-		<?php echo $this->Html->link(__('View Case', true), array('admin' => true, 'controller' => 'legalcases', 'action' => 'view', $Legalcasedetail['Legalcase']['id'])); ?>
-	</div>
-	
+
 </div>
 <?php echo $this->element('admin_navigation'); ?>

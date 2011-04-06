@@ -94,8 +94,14 @@
 				?>
 			</div>
 			<br />
-		<?php echo $this->Form->end(__('Next', true));?>
-		
+	    <?php
+		if ($case_id) {
+		    echo $this->Form->end(__('Next', true));
+		}
+		else {
+		    echo $this->Form->end(__('Save', true));
+		}
+		?>
 	</div>
 </div>
 
@@ -105,10 +111,23 @@
 jQuery('document').ready(function() {
 	
 	//jQuery Valdidate
-	jQuery("#UserPersonalInfoForm").validate();
+	jQuery("#UserPersonalInfoForm").validate({
+	    submitHandler: function(form) {
+			
+			if (jQuery('#PersonalInfoCivilStatus').val() == 'Married' || jQuery('#PersonalInfoCivilStatus').val() == 'Divorced/Annulled'){
+                    
+			    if (jQuery('#PersonalInfoMarriageDate').val() == '' || jQuery('#PersonalInfoMarriagePlace').val() == '') {
+			       alert('Marriage Date and Marriage Place must not be empty');
+			       return false;
+			    }
+			}
+			
+			form.submit();
+		}
+	});
 	
 	//Disable Marriage Fields
-	if (jQuery('#PersonalInfoCivilStatus').val() == '' || jQuery('#PersonalInfoCivilStatus').val() == 'Single') {
+	if (jQuery('#PersonalInfoCivilStatus').val() == '' || jQuery('#PersonalInfoCivilStatus').val() == 'Single' || jQuery('#PersonalInfoCivilStatus').val() == 'Living In') {
 		bool = true;
 	}
 	else {
@@ -118,7 +137,7 @@ jQuery('document').ready(function() {
 	jQuery('#PersonalInfoMarriagePlace').attr('disabled', bool);
 	
 	jQuery('#PersonalInfoCivilStatus').change(function(){
-		if (jQuery(this).val() == 'Single' || jQuery(this).val() == '') {
+		if (jQuery(this).val() == 'Single' || jQuery(this).val() == '' || jQuery(this).val() == 'Living In') {
 			bool = true;
 			jQuery('#PersonalInfoMarriagePlace').val('');
 			jQuery('#PersonalInfoMarriageDate').val('');

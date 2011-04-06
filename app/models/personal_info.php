@@ -168,101 +168,7 @@ class PersonalInfo extends AppModel {
 				'allowEmpty' => false,
 				'required' => true,
 			),
-		),
-		
-		// 'civil_status' => array(
-		// 			'notempty' => array(
-		// 				'rule' => array('notempty'),
-		// 				'message' => 'Field must not be empty',
-		// 				'allowEmpty' => false,
-		// 				'required' => true,
-		// 			),
-		// 		),
-		
-		
-		/*
-		'marriage_date' => array(
-				'rule' => array('date'),
-				'message' => 'Please select valid date',
-				'allowEmpty' => false,
-				'required' => true,
-
-		),
-		'marriage_place' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
-
-		'mothers_name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
-		'mothers_age' => array(
-			'notempty' => array(
-				'rule' => array('numeric'),
-				'message' => 'Numbers Only',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
-		'mothers_citizenship' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
-		'mothers_address' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
-		'fathers_name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
-		'fathers_age' => array(
-			'notempty' => array(
-				'rule' => array('numeric'),
-				'message' => 'Numbers Only',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
-		'fathers_citizenship' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
-		'fathers_address' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
-			),
-		),
-		*/
-		
+		),		
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -277,7 +183,7 @@ class PersonalInfo extends AppModel {
 	);
 	
 	function validate_marriage_date($check) {
-		if($check['civil_status'] == 'Single') {
+		if($check['civil_status'] == 'Single' || $check['civil_status'] == 'Living In') {
 			return true;
 		}
 		else {

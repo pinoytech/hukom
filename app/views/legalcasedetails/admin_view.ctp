@@ -2,7 +2,7 @@
 // debug($Legalcasedetail);
 ?>
 <div class="users view">
-<h2><?php  __('View Case Details of Case ID '. $Legalcasedetail['Legalcase']['id']);?></h2>
+<h2><?php  __('Case Details of Case ID '. $Legalcasedetail['Legalcase']['id']);?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
@@ -27,6 +27,15 @@
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Summary'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $Legalcasedetail['Legalcasedetail']['summary']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Documents'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php
+			foreach ($files as $key => $value) {
+				echo '<li class="actions"><a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a>';
+			}
+			?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Objectives'); ?></dt>
@@ -59,11 +68,9 @@
 	
 	<br />
 	<div>
-		<?php echo $this->Html->link(__('Edit', true), array('admin' => true, 'action' => 'edit', $Legalcasedetail['Legalcasedetail']['id'])); ?>
+		<?php echo $this->Html->link(__('Edit Case Details', true), array('admin' => true, 'action' => 'edit', $Legalcasedetail['Legalcasedetail']['id'])); ?>
 		|
-		<?php echo $this->Html->link(__('Case Details List', true), array('admin' => true, 'action' => 'index', $Legalcasedetail['Legalcase']['id'])); ?>
-		|
-		<?php echo $this->Html->link(__('View Case', true), array('admin' => true, 'controller' => 'legalcases', 'action' => 'view', $Legalcasedetail['Legalcase']['id'])); ?>
+		<?php echo $this->Html->link(__('Back to Case List', true), array('admin' => true, 'action' => 'index', $Legalcasedetail['Legalcase']['id'])); ?>
 		|
 		<?php echo $this->Html->link(__('View Payment Option', true), array('admin' => true, 'controller' => 'payments', 'action' => 'view', $Legalcasedetail['Payment'][0]['id'])); ?>
 	</div>

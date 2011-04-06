@@ -43,6 +43,14 @@ class Payment extends AppModel {
 				'required' => false,
 			)
 		),
+		'smartmoney_type' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => '',
+				'allowEmpty' => false,
+				'required' => false,
+			)
+		),
     	'reference_no' => array(
     		'notempty' => array(
     			'rule' => array('notempty'),

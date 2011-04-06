@@ -89,7 +89,7 @@ class CustomComponent extends Object {
             'Single'            => 'Single',
             'Married'           => 'Married',
             'Divorced/Annulled' => 'Divorced/Annulled',
-            'Living in'         => 'Living In'
+            'Living In'         => 'Living In'
         );
     }
     

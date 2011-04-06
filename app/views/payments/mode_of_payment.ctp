@@ -92,25 +92,25 @@ $smartmoney_payment_instructions =
 ';
 ?>
 
-<div id="bank_deposit_holder" class="hidden" title="Bank Deposit Payment Instrucitons">
+<div id="bank_deposit_holder" class="hidden" title="Bank Deposit Payment Instructions">
 	<p style="padding-top:20px; text-align:center;">
 	    <?php echo $bank_deposit_payment_instructions; ?>
 	</p>
 </div>
 
-<div id="paypal_holder" class="hidden" title="Paypal Payment Instrucitons">
+<div id="paypal_holder" class="hidden" title="Paypal Payment Instructions">
 	<p style="padding-top:20px; text-align:center;">
 	    <?php echo $paypal_payment_instructions; ?>
 	</p>
 </div>
 
-<div id="gcash_holder" class="hidden" title="G-Cash Payment Instrucitons">
+<div id="gcash_holder" class="hidden" title="G-Cash Payment Instructions">
 	<p style="padding-top:20px; text-align:center;">
 	    <?php echo $gcash_payment_instructions; ?>
 	</p>
 </div>
 
-<div id="smartmoney_holder" class="hidden" title="SmartMoney Payment Instrucitons">
+<div id="smartmoney_holder" class="hidden" title="SmartMoney Payment Instructions">
 	<p style="padding-top:20px; text-align:center;">
 	    <?php echo $smartmoney_payment_instructions; ?>
 	</p>
@@ -128,6 +128,11 @@ $smartmoney_payment_instructions =
 		
 		<div class="form-title">Mode of Payment</div>
 		<div class="form-holder">
+		    
+		    <p>
+		        Welcome to E-Lawyers Online Payments Page. We find ways on how to make payments convenient for our customers in the Philippines and abroad. You can choose from the different channels through which you can pay your online legal consultation service. Please read the instructions provided on the different payment options.
+		    </p>
+		    
 			<?php
 			echo $this->Form->input('Payment.user_id', array('type' => 'hidden', 'value' => $id));	
 			echo $this->Form->input('Payment.case_id', array('type' => 'hidden', 'value' => $case_id));	
@@ -237,7 +242,8 @@ function payment_instuctions_pop() {
 		resizable: false,
         buttons: {
             'Pay Later': function() {
-            	jQuery(this).dialog('close');
+                // jQuery(this).dialog('close');
+                window.location = '/dashboard/';
 			},
 			'Proceed Payment': function() {
 			    

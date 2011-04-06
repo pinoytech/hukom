@@ -31,7 +31,9 @@
 		echo $this->Html->css('cake.generic');
 		
 		echo $this->Html->css('generic');
-
+        
+        echo $this->Html->script('jquery-1.4.4.min');
+        
 		echo $scripts_for_layout;
 	?>
 </head>

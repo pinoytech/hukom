@@ -13,13 +13,13 @@
 		echo $this->Form->input('Legalcasedetail.user_id', array('type' => 'hidden', 'value' => $id));
 		?>
 		
-		<div class="form-title">My Objectives/Mga Gusto Ko:</div>
+		<div class="form-title">My Objectives/Ang Mga Gusto ko:</div>
 		<div class="form-holder">
 			<?php
 			echo $this->Form->textarea('Legalcasedetail.objectives', array('label' => false, 'class' => 'required'));
 			?>
 			<div>
-				<em>*You can prepare your summary of facts from Microsoft Word then copy and paste to this textarea</em>
+				<em>*You can prepare your list of objectives in Microsoft Word then copy and paste in this text area.</em>
 			</div>
 		</div>
 		
@@ -29,7 +29,7 @@
 		echo $this->Form->textarea('Legalcasedetail.questions', array('label' => false, 'class' => 'required'));
 		?>
 			<div>
-				<em>*You can prepare your summary of facts from Microsoft Word then copy and paste to this textarea</em>
+				<em>*You can prepare your list of objectives in Microsoft Word then copy and paste in this text area.</em>
 			</div>
 		</div>	
 		

@@ -2,7 +2,7 @@
 // debug($Payment);
 ?>
 <div class="payments view">
-<h2><?php  __('View Payment');?></h2>
+<h2><?php  __('Payment Details');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
@@ -51,7 +51,7 @@
 	
 	<br />
 	<div>
-		<?php echo $this->Html->link(__('Edit', true), array('admin' => true, 'action' => 'edit', $Payment['Payment']['id'])); ?>
+		<?php echo $this->Html->link(__('Edit Payment Status', true), array('admin' => true, 'action' => 'edit', $Payment['Payment']['id'])); ?>
 		|
 		<?php echo $this->Html->link(__('Payments List', true), array('admin' => true, 'controller' => 'payments', 'action' => 'index', $Payment['Payment']['id'])); ?>
 		|

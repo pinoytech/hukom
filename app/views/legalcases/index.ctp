@@ -9,7 +9,7 @@
 		<div class="form-holder">
 			
 			<div class="actions">
-				<?php echo $this->Html->link(__('Add Case', true), array('action' => 'online_legal_consultation', $id)); ?>
+				<?php echo $this->Html->link(__('Avail Legal Service', true), array('action' => 'online_legal_consultation', $id)); ?>
 			</div>
 			
 			<br />

@@ -20,11 +20,11 @@
 				?>
 				
 				<p>
-					I, <?php echo $user_full_name;?>, of legal, freely and voluntarily provided information to E-LAWYERS ONLINE with the intention to obtain legal advice for me or for the company/partnership I duly represents. I agree that:
+					I, <?php echo $user_full_name;?>, of legal age, freely and voluntarily provided information to E-LAWYERS ONLINE with the intention to obtain legal advice for me or for the company/partnership I duly represents. I agree that:
 				</p>
 				
 				<ol>
-					<li>I will pay the amount of [Fee] as professional fee. This fee for online legal consultation service shall cover only the subject matter discussed herein and to no other.</li>
+					<li>I will pay the amount of Php <?php echo $fee;?> as professional fee. This fee for online legal consultation service shall cover only the subject matter discussed herein and to no other.</li>
 					<li>I understand that the result of this consultation is for internal, personal and non-commercial purpose and I shall use the same not for any other purpose.</li>
 					<li>Any and all information that will be given by me shall be treated as private and strictly confidential. I certify that all information given is true and correct and/or based on authentic documents.</li>
 					<li>I expressly acknowledge that the legal advise obtained herein does not assure success of litigation as the same is based on the evidence presented and as appreciated by the courts of law;</li>
@@ -36,14 +36,14 @@
 					<li>I agree that E-Lawyers Online shall have the right to first assess the scope of services based on the facts and documents submitted by me and to determine if the same is commensurate to the fees paid by me. E-Lawyers Online shall have the right to refund my fee in the event of disagreement of the parties upon determination that the fee is not proportionate to the legal services requested.</li>
 					<li>The legal fee is for the full payment for the online consultation for the subject matter of my query/ies and any question/s I did not ask/provide in this website upon submission of this form shall be considered waived and forfeited. Follow-up questions or queries on other subject matter not covered by the fee may be entertained at the option of E-Lawyers Online on a discounted basis.</li>
 				</ol>
-				
+
 				<p style="text-align:center;">
 					I hereby <input type="checkbox" id="accept" value="accept" class="terms" style="float:none;"> ACCEPT <input type="checkbox" id="reject" class="terms" value="reject" style="float:none;"> REJECT the above said terms and conditions.
 					<br />
 					<br />
 					<input type="button" value="Submit" id="check_end_user" style="width:100px">
 				</p>
-				
+
 			</div>
 
 	</div>
