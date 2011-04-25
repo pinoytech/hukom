@@ -9,7 +9,7 @@
 		echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' =>'login')));
 		echo $this->Form->input('User.username', array('label' => 'Email', 'class' => 'required email'));
 		echo $this->Form->input('User.password', array('value' => '', 'class' => 'required'));
-		echo $this->Form->end('Log In');
+		echo $this->Form->end('login.jpg');
 		?>
 		<br />
 		<p>

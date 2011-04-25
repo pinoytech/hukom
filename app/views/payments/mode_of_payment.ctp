@@ -160,8 +160,8 @@ $smartmoney_payment_instructions =
     			</div>
 
 			    <br />
-
-		        <?php echo $this->Form->end(__('Next', true));?>
+				<input type="submit" class="button-next" value="" />
+		        <?php echo $this->Form->end();?>
 		    </center>
 		    
 		    <!-- Paypal Form -->

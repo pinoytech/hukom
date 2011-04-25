@@ -26,6 +26,90 @@
 			&nbsp;
 		</dd>
 		
+		<?php
+		if ($Payment['Payment']['option'] == 'Bank Deposit') {
+        ?>
+            <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Bank Name'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['bank_name']; ?>
+    			&nbsp;
+    		</dd>
+		
+    		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Bank Branch'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['bank_branch']; ?>
+    			&nbsp;
+    		</dd>
+		
+    		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Bank Counrty'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['bank_country']; ?>
+    			&nbsp;
+    		</dd>
+    		
+    		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Date Deposited'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['bank_date_deposited']; ?>
+    			&nbsp;
+    		</dd>
+		<?php
+		}
+		?>
+		
+		<?php
+		if ($Payment['Payment']['option'] == 'GCash') {
+        ?>
+            <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('GCash Type'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['gcash_type']; ?>
+    			&nbsp;
+    		</dd>
+		
+    		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Cellphone No.'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['cellphone_no']; ?>
+    			&nbsp;
+    		</dd>
+		
+    		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Reference No.'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['reference_no']; ?>
+    			&nbsp;
+    		</dd>
+        <?php
+		}
+		?>
+		
+		<?php
+		if ($Payment['Payment']['option'] == 'SmartMoney') {
+        ?>
+            <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('SmartMoney Type'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['smartmoney_type']; ?>
+    			&nbsp;
+    		</dd>
+		
+    		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Cellphone No.'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['cellphone_no']; ?>
+    			&nbsp;
+    		</dd>
+		
+    		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Reference No.'); ?></dt>
+    		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+    			<?php echo $Payment['Payment']['reference_no']; ?>
+    			&nbsp;
+    		</dd>
+        <?php
+		}
+		?>
+		
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Amount'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $Payment['Payment']['amount']; ?>
+			&nbsp;
+		</dd>
+		
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Referred By'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php //echo $Payment['Payment']['option']; ?>

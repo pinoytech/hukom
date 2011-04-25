@@ -1,9 +1,10 @@
 <?php
 class UsersController extends AppController {
 
-	var $name = 'Users';
+	var $name       = 'Users';
 	var $components = array('Email', 'Custom');
-	
+	var $helpers    = array('Custom');
+
 	function beforeFilter() {
 	    parent::beforeFilter(); 
 	    // $this->Auth->allow(array('*'));
@@ -102,13 +103,19 @@ class UsersController extends AppController {
 				mkdir($file);
 				chmod($file, 0755);
 				
+				if ($this->data['User']['type'] == 'corporation') {
+				    //Create Attachments Folder for Corporate Accounts
+    				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->User->id . '/attachments'; 
+    				mkdir($file);
+    				chmod($file, 0755);
+				}
+				
+				
 				$this->redirect(array('controller' => 'pages', 'action' => 'thankyou'));
 			} else {
 				$this->Session->setFlash(__('Registration could not be completed. Please, try again.', true));
 			}
 		}
-		
-		$this->set('list_gender', $this->Custom->list_gender());
 	}
 
 	function edit($id = null) {
@@ -155,8 +162,6 @@ class UsersController extends AppController {
 		}
 		$groups = $this->User->Group->find('list');
 		$this->set(compact('groups'));
-		
-		$this->set('list_gender', $this->Custom->list_gender());
 		
 	}
 
@@ -347,7 +352,7 @@ class UsersController extends AppController {
 		}
 	}
 	
-	function personal_info($id, $case_id=null) {
+	function personal_info($id, $case_id=null, $case_detail_id=null) {
 		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -375,10 +380,10 @@ class UsersController extends AppController {
 				if ($this->data['PersonalInfo']['civil_status'] == 'Single' || $this->data['PersonalInfo']['civil_status'] == 'Living In') {					
 				    $this->SpouseInfo->deleteAll(array('SpouseInfo.user_id' => $id));
 				    
-					$this->redirect(array('action' => 'children_info', $this->data['User']['id'], $this->data['User']['case_id']));
+					$this->redirect(array('action' => 'children_info', $this->data['User']['id'], $this->data['User']['case_id'], $this->data['User']['case_detail_id']));
 				}
 				else {
-					$this->redirect(array('action' => 'spouse_info', $this->data['User']['id'], $this->data['User']['case_id']));
+					$this->redirect(array('action' => 'spouse_info', $this->data['User']['id'], $this->data['User']['case_id'], $this->data['User']['case_detail_id']));
 				}
 				
 			} else {
@@ -391,15 +396,11 @@ class UsersController extends AppController {
 		}
 		
 		$this->set('id', $id);
-		$this->set('case_id', $case_id);
-		$this->set('list_gender', $this->Custom->list_gender());
-		$this->set('list_education_attained', $this->Custom->list_education_attained());
-		$this->set('list_work_status', $this->Custom->list_work_status());
-		$this->set('list_civil_status', $this->Custom->list_civil_status());
-		
+		$this->set('case_id', $case_id);		
+		$this->set('case_detail_id', $case_detail_id);		
 	}
 	
-	function spouse_info($id, $case_id=null) {
+	function spouse_info($id, $case_id=null, $case_detail_id=null) {
 		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -425,7 +426,7 @@ class UsersController extends AppController {
 		
 		//Redirect control
 		if (isset($this->data['User']['goto'])) {
-			$this->redirect(array('action' => $this->data['User']['goto'], $this->data['SpouseInfo']['user_id'], $this->data['User']['case_id']));
+			$this->redirect(array('action' => $this->data['User']['goto'], $this->data['SpouseInfo']['user_id'], $this->data['User']['case_id'], $this->data['User']['case_detail_id']));
 		}
 		
 		if (empty($this->data)) {
@@ -435,15 +436,11 @@ class UsersController extends AppController {
         // $this->data = $this->User->read(null, $id);
 		
 		$this->set('id', $id);
-		$this->set('case_id', $case_id);
-		$this->set('list_gender', $this->Custom->list_gender());
-		$this->set('list_education_attained', $this->Custom->list_education_attained());
-		$this->set('list_work_status', $this->Custom->list_work_status());
-		$this->set('list_civil_status', $this->Custom->list_civil_status());
-		
+		$this->set('case_id', $case_id);	
+		$this->set('case_detail_id', $case_detail_id);		
 	}
 	
-	function children_info($id, $case_id=null) {
+	function children_info($id, $case_id=null, $case_detail_id=null) {
 		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -465,10 +462,11 @@ class UsersController extends AppController {
 			// debug($this->data);
 			// exit;
 						
-			$goto    = $this->data['User']['goto'];
-			$case_id = $this->data['User']['case_id'];
+			$goto           = $this->data['User']['goto'];
+			$case_id        = $this->data['User']['case_id'];
+			$case_detail_id = $this->data['User']['case_detail_id'];
 			
-			unset($this->data['User']);
+			unset($this->data['User']); //Need to unset User for savaAll to work. User don't need to be saved.
 						
 			//Save Data	
 			//Check if no_of_children is available
@@ -483,7 +481,7 @@ class UsersController extends AppController {
 			
 			//Redirect 
 			if ($goto == 'legal_problem') {
-				$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id));
+				$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
 			}
 			else {	
 				
@@ -495,7 +493,8 @@ class UsersController extends AppController {
 				else {
 				    
 				    if ($goto == 'profilesave') {
-				        $goto = 'personal_info';
+                        // $goto = 'personal_info';
+				        $this->redirect(array('controller' => 'legalcases', 'action' => 'index', $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
 				    }
 				    else {
 				        $goto = 'spouse_info';
@@ -503,7 +502,7 @@ class UsersController extends AppController {
 				}
 				
 				//Redirect to Personal or Spouse
-				$this->redirect(array('action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id));
+				$this->redirect(array('action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
 			}
 			
 			// $this->data = $this->User->read(null, $id);
@@ -515,14 +514,107 @@ class UsersController extends AppController {
 		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
-		$this->set('list_gender', $this->Custom->list_gender());
-		
+		$this->set('case_detail_id', $case_detail_id);	
 	}
 	
 	//Corporate Accounts
-	function corporate_info($id) {
-		$this->set('list_gender', $this->Custom->list_gender());
+	function corporate_partnership_representative_info($id, $case_id=null, $case_detail_id=null) {
+
+		if (!$id && empty($this->data)) {
+			$this->Session->setFlash(__('Invalid user', true));
+			$this->redirect(array('action' => 'index'));
+		}
 		
+		// Update Personal Info
+		if (!empty($this->data)) {
+	
+			$this->loadModel('PersonalInfo');
+			
+			$this->PersonalInfo->id = $this->data['PersonalInfo']['id'];
+						
+			if (!$this->PersonalInfo->save($this->data)) {
+			    $this->Session->setFlash(__('Corporate/Partnership Representative Information could not be saved. Please, try again.', true));
+			}
+			
+			$this->redirect(array('action' => 'corporate_partnership_info', $this->data['User']['id'], $this->data['User']['case_id'], $this->data['User']['case_detail_id']));
+			
+		}
+		
+		if (empty($this->data)) {
+			$this->data = $this->User->read(null, $id);
+		}
+		
+		$this->set('id', $id);
+		$this->set('case_id', $case_id);
+		$this->set('case_detail_id', $case_detail_id);
+	}
+	
+	function corporate_partnership_info($id, $case_id=null, $case_detail_id=null) {
+
+		if (!$id && empty($this->data)) {
+			$this->Session->setFlash(__('Invalid user', true));
+			$this->redirect(array('action' => 'index'));
+		}
+		
+		// Update Personal Info
+		if (!empty($this->data)) {
+			
+            debug($this->data);
+            // exit;
+			
+			$this->loadModel('CorporatePartnershipInfo');
+			$this->loadModel('BoardOfDirector');
+			$this->loadModel('Stockholder');
+			
+			$this->CorporatePartnershipInfo->id = $this->data['CorporatePartnershipInfo']['id'];
+			
+			$goto           = $this->data['User']['goto'];
+			$case_id        = $this->data['User']['case_id'];
+			$case_detail_id = $this->data['User']['case_detail_id'];
+			
+			unset($this->data['User']); //Need to unset User for savaAll to work. User don't need to be saved. 
+			
+			// Delete BoardOfDirector
+			$this->BoardOfDirector->deleteAll(array('BoardOfDirector.user_id' => $id)); //Deleted manually. SaveAll didn't do the the magic!
+			
+			// Delete Stockholder
+			$this->Stockholder->deleteAll(array('Stockholder.user_id' => $id)); //Deleted manually. SaveAll didn't do the the magic!
+			
+			if (!$this->CorporatePartnershipInfo->saveAll($this->data)) {
+			    $this->Session->setFlash(__('Corporate/Partnership Information could not be saved. Please, try again.', true));
+			}
+
+            // $this->redirect(array('action' => 'board_of_directors', $this->data['User']['id'], $this->data['User']['case_id']));
+            
+            //Redirect control
+    		if ($goto == 'corporate_partnership_representative_info') {
+    			$this->redirect(array('action' => $goto, $this->data['CorporatePartnershipInfo']['user_id'], $case_id, $case_detail_id));
+    		}
+    		
+    		if ($goto == 'legalcases') {
+    			$this->redirect(array('controller' => $goto, 'action' => 'index', $this->data['CorporatePartnershipInfo']['user_id'], $case_id, $case_detail_id));
+    		}
+    		
+    		if ($goto == 'legal_problem') {
+    			$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['CorporatePartnershipInfo']['user_id'], $case_id, $case_detail_id));
+    		}
+    		
+            $this->data = $this->User->read(null, $this->data['CorporatePartnershipInfo']['user_id']);
+		}
+		
+		if (empty($this->data)) {
+			$this->data = $this->User->read(null, $id);
+		}
+		
+        // debug($this->data);
+		
+		$upload_folder = "/app/webroot/uploads/$id/attachments";
+		
+		$this->set('id', $id);
+		$this->set('case_id', $case_id);
+		$this->set('case_detail_id', $case_detail_id);
+		$this->set('upload_folder', $upload_folder);
+		$this->set('files', $this->Custom->show_files($upload_folder));
 	}
 	
 	/*
@@ -567,6 +659,8 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Users/personal_info');
 		$this->Acl->allow($group, 'controllers/Users/spouse_info');
 		$this->Acl->allow($group, 'controllers/Users/children_info');
+		$this->Acl->allow($group, 'controllers/Users/corporate_partnership_representative_info');
+		$this->Acl->allow($group, 'controllers/Users/corporate_partnership_info');
 		$this->Acl->allow($group, 'controllers/Legalcases/legal_problem');
 		$this->Acl->allow($group, 'controllers/Legalcases/summary_of_facts');
 		$this->Acl->allow($group, 'controllers/Legalcases/objectives_questions');

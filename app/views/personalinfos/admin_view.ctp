@@ -1,5 +1,5 @@
 <div class="personalinfos view">
-<h2><?php  __('View Personal Information');?></h2>
+<h2><?php  __('Personal Information');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
@@ -217,13 +217,23 @@
 			&nbsp;
 		</dd>
 	</dl>
-	
+
 	<br />
 	<div>
 		<?php echo $this->Html->link(__('Edit Personal Information', true), array('admin' => true, 'action' => 'edit', $PersonalInfo['PersonalInfo']['id'])); ?>
 		<?php
-		if (isset($PersonalInfo['SpouseInfo']['id'])) {
-		    echo '| ' . $this->Html->link(__('View Spouse Information', true), array('admin' => true, 'controller' => 'spouseinfos', 'action' => 'view', $PersonalInfo['SpouseInfo']['id']));
+		//Get Spouse and Children Info Id
+		$spouse_info_id   = $custom->get_spouse_info_id($PersonalInfo['PersonalInfo']['user_id']);
+		$children_info_id = $custom->get_children_info_id($PersonalInfo['PersonalInfo']['user_id']);
+		
+		if (isset($spouse_info_id)) {
+		    echo '| ' . $this->Html->link(__('Next', true), array('admin' => true, 'controller' => 'spouseinfos', 'action' => 'view', $spouse_info_id));
+		}
+		elseif(isset($children_info_id)) {
+		    echo '| ' . $this->Html->link(__('Next', true), array('admin' => true, 'controller' => 'childrenlists', 'action' => 'index', $PersonalInfo['User']['id']));
+		}
+		else {
+		    echo '| ' . $this->Html->link(__('Next', true), array('admin' => true, 'controller' => 'legalcases', 'action' => 'index', $PersonalInfo['User']['id'])); 
 		}
 		?>
 	</div>

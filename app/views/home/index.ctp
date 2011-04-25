@@ -38,7 +38,7 @@
 	            </li>
 				<li><br />
 	                <label>Create an<br />Account</label>
-	                <a href="/users/register" class="fr">
+	                <a href="/register" class="fr">
 	                    <img src="/img/sign-up.jpg" alt="create an account" title="Sign Up" />
 	                </a>
 	            </li>

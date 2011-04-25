@@ -23,10 +23,10 @@
 					</p>
 					
 					<p>
-						Ikuwento nang malinaw, kumpleto at detalyadong pangyayari ng iyong problemang legal mula simula hanggang sa kasalukuyan sa pamamagitan ng pagsagot sa mga katanungang Sino? Bakit? Kailan? Saan? Ano? At Paano? Kung meron ka na papel, dokumento, larawan o video na kasama sa iyong katanungan, kopyahin at isama ito sa aplikasyon na ito.
+						Ikuwento nang malinaw, kumpleto at detalyadong pangyayari ang iyong problemang legal mula simula hanggang sa kasalukuyan sa pamamagitan ng pagsagot sa mga katanungang Sino? Bakit? Kailan? Saan? Ano? At Paano? Kung meron ka na papel, dokumento, larawan o video na kasama sa iyong katanungan, kopyahin at isama ito sa aplikasyon na ito.
 					</p>
 				</div>
-			<?php echo $this->Form->textarea('Legalcasedetail.summary', array('label' => false, 'class' => 'required')); ?>
+			    <?php echo $this->Form->textarea('Legalcasedetail.summary', array('label' => false, 'class' => 'required')); ?>
 				
 				<div>
 					<em>*You can prepare your summary of facts in Microsoft Word then copy and paste in this text area.</em>
@@ -54,21 +54,18 @@
 			    Voluminous documents should be sent to Suite 10-G, 10th Floor, Strata 100 Condominium, 100 F. Ortigas, Jr. Road, Ortigas Center, Pasig City, Metro Manila, Philippines c/o Atty. Marlon Valderama.
 			</div>
 			
-		</div>
-
-		<br />
-		
-		<table>
-			<tr>
-			    <td>
-					<input type="button" id="back" value="Back" />
-				</td>
-				<td>
-					<input type="button" id="next" value="Next" />
-				</td>
-			</tr>
-		</table>
-		
+			<br />
+            <table>
+				<tr>
+					<td>
+						<input type="button" id="back" class="button-back" value="" />
+					</td>
+					<td>
+						<input type="button" id="next" class="button-next" value="" />
+					</td>
+				</tr>
+			</table>			
+        <?php echo $this->Form->end();?>
 	</div>
 </div>
 
@@ -111,13 +108,13 @@ jQuery('document').ready(function() {
 	    'cancelImg' : '/uploadify/cancel.png',
 	    'folder'    : '<?php echo $upload_folder;?>',
 	    'auto'      : true,
-	    'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx',
+	    'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
 	    'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
-	    'sizeLimit' : 104800,
+	    'sizeLimit' : 2097152,
 		'onComplete' : function(event, ID, fileObj, response, data) {
 				append_files(fileObj)
 		    }
-	  });
+	});
 	
 	function append_files(fileObj) {
 		name = fileObj.name;

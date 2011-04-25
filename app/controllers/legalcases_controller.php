@@ -1,8 +1,9 @@
 <?php
 class LegalcasesController extends AppController {
 
-	var $name = 'Legalcases';
+	var $name       = 'Legalcases';
 	var $components = array('Email', 'Custom');
+	var $helpers    = array('Custom');
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
@@ -16,9 +17,17 @@ class LegalcasesController extends AppController {
 		
 		$this->set('id', $this->Auth_user['User']['id']);
 		
-		$Legalcase = $this->Legalcase->find('all', array('conditions' => array('Legalcase.status' => 'active', 'Legalcase.user_id' => $this->Auth_user['User']['id'])));
+        // $Legalcase = $this->Legalcase->find('all', array('conditions' => array('Legalcase.status' => 'active', 'Legalcase.user_id' => $this->Auth_user['User']['id'])));
 		// debug($Legalcase);
-		$this->set('Legalcase', $Legalcase);
+        // $this->set('Legalcase', $Legalcase);
+		
+		$conditions = array('Legalcase.status' => 'active', 'Legalcase.user_id' => $this->Auth_user['User']['id']);
+		
+		$this->Legalcase->recursive = 1;		
+		$this->paginate['conditions'][] = $conditions;
+		$this->paginate['sort'][] = array('Legalcase.id' => 'asc');
+		$this->paginate['limit'] = 5;
+		$this->set('Legalcase', $this->paginate());
 	}
 
 	function admin_index($id=null) {

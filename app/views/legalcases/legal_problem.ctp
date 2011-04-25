@@ -55,7 +55,7 @@
 							<br />
 							<input type="radio" class="legal_problem_radio" value="Corporation Partnership" name="data[Legalcase][legal_problem]"><span class="label">Corporation Partnership</span> - SEC, DTI, BIR, etc.
 							<br />
-							<input type="radio" class="legal_problem_radio" value="Unregistered Business, Joint Venture, Consortium etc" name="data[Legalcase][legal_problem]"><span class="label">Unregistered Business, Joint Venture, Consortium etc.</span>
+							<input type="radio" class="legal_problem_radio" value="Unregistered Business, Joint Venture, Consortium etc" name="data[Legalcase][legal_problem]"><span class="label">Unregistered Business, Joint Venture, Consortium, etc.</span>
 							<br />
 							<input type="radio" class="legal_problem_radio" value="Others" name="data[Legalcase][legal_problem]"><span class="label">Others</span>
 							<br />
@@ -75,21 +75,17 @@
 					<label for="data[Legalcase][legal_problem]" class="error" style="display:none">Please select legal problem</label> 
 				</div>
 				<br />
-			</div>
-			</form>
-			
-			<br />
-			<table>
-				<tr>
-					<td>
-						<input type="button" id="back" value="Back" />
-					</td>
-					<td>
-						<input type="button" id="next" value="Next" />
-					</td>
-				</tr>
-			</table>
-			
+				<table>
+    				<tr>
+    					<td>
+    						<input type="button" id="back" class="button-back" value="" />
+    					</td>
+    					<td>
+    						<input type="button" id="next" class="button-next" value="" />
+    					</td>
+    				</tr>
+    			</table>
+		<?php echo $this->Form->end();?>
 	</div>
 </div>
 
@@ -133,7 +129,16 @@ jQuery('document').ready(function() {
 	
 	//Submit button logic
 	jQuery('#back').click(function() {
-		window.location = '/users/children_info/<?php echo $id;?>/<?php echo $case_id;?>';
+	    <?php
+        if ($auth_user_type == 'personal') {
+            $profile_action = 'personal_info';
+        }
+        elseif ($auth_user_type == 'corporation') {
+            $profile_action = 'corporate_partnership_representative_info';
+        }
+        ?>
+        
+		window.location = '/users/<?php echo $profile_action; ?>/<?php echo $id;?>/<?php echo $case_id;?>/<?php echo $case_detail_id;?>';
 	});
 
 	jQuery('#next').click(function() {

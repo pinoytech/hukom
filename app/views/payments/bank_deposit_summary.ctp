@@ -48,20 +48,22 @@
 					</td>
 				</tr>
 			</table>
-			</form>				
-		</div>
 		
-		<br />
-		<table>
-			<tr>
-				<td>
-					<input type="button" id="back" value="Back" />
-				</td>
-				<td>
-					<input type="button" id="next" value="Submit Payment" />
-				</td>
-			</tr>
-		</table>
+		    <br />
+			<table>
+				<tr>
+					<td>
+						<input type="button" id="back" class="button-back" value="" />
+					</td>
+					<td>
+						<input type="button" id="next" class="button-next" value="" />
+					</td>
+				</tr>
+			</table>
+			
+			<?php echo $this->Form->end();?>
+			
+		</div>
 	</div>
 </div>
 

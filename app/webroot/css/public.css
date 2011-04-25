@@ -441,8 +441,6 @@ label.error {
 	color: red;
 }
 
-
-
 /** Personal Info **/
 .form-personal-info {
 	overflow: hidden;
@@ -475,23 +473,43 @@ label.error {
 }
 
 /** Child List **/
-table#child-list {
+table#child-list, table#board-list, table#stock-list {
 	border-width: 1px;
 	border-style: solid;
 	width: 100%;
 	border-color: #118CD5;
 }
 
-table#child-list td {
+table#child-list td, table#board-list td, table#stock-list td {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #118CD5;
 }
 
-table#child-list td input {
-	width: 100px;
+table#child-list td input, table#board-list td input, table#stock-list td input {
+	width: 100%;
 }
 
+/* Corporate Representative Form */
+.center-corp-type {
+	margin-left: 120px;
+}
+
+.center-stock-type {
+	margin-left: 255px;
+}
+
+.center-attach-fill-out {
+	margin-left: 210px;
+}
+
+#attach-form-file-upload-holder {
+	margin-left: 30px
+}
+
+#attach-form-file-upload-holder p {
+	padding-top: 5px;
+}
 
 /** Legal Problem Form **/
 #anything_under {
@@ -737,4 +755,37 @@ a {cursor: pointer; cursor: hand;}
 
 .form-link-red {
 	color: red;
+}
+
+/* Buttons */
+
+.button-submit, .button-next, .button-back { 
+	width: 70px;
+	height: 22px;
+	border: none;
+	margin-top: 10px;
+}
+
+.button-submit {
+	background: url(../img/submitButton_up.png) no-repeat;
+}
+
+.button-submit:hover {
+	background: url(../img/submitButton_down.png) no-repeat;
+}
+
+.button-next {
+	background: url(../img/nextButton_up.png) no-repeat;
+}
+
+.button-next:hover {
+	background: url(../img/nextButton_down.png) no-repeat;
+}
+
+.button-back {
+	background: url(../img/backButton_up.png) no-repeat;
+}
+
+.button-back:hover {
+	background: url(../img/backButton_down.png) no-repeat;
 }

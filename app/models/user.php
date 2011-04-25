@@ -110,6 +110,12 @@ class User extends AppModel {
 			'conditions'   => '',
             'dependent'    => true
         ),
+        'CorporatePartnershipInfo' => array(
+            'className'    => 'CorporatePartnershipInfo',
+            'foreignKey' => 'user_id',
+			'conditions'   => '',
+            'dependent'    => true
+        ),
     );
 
 	var $hasMany = array(
@@ -144,6 +150,16 @@ class User extends AppModel {
 		),
 		'Payment' => array(
 			'className' => 'Payment',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
+		),
+		'BoardOfDirector' => array(
+			'className' => 'BoardOfDirector',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
+		),
+		'Stockholder' => array(
+			'className' => 'Stockholder',
 			'foreignKey' => 'user_id',
 			'dependent' => true,
 		)

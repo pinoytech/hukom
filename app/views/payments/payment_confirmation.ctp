@@ -11,12 +11,13 @@
 		<p>
 			Thank you for your <strong><?php echo $payment_option_name; ?> Payment</strong>. We greatly appreciate your trust and confidence on us by giving opportunity to E-Lawyers Online to render service for you. We will send our written legal advice via e-mail to your preferred email address.
 		</p>
-		</div>
-		<br />
 		
 		<div style="text-align:center;">
 			<input type="button" id="home" value="Back to Case List" />
 		</div>
+		
+		</div>
+
 	</div>
 </div>
 

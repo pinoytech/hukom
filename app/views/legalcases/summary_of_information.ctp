@@ -62,42 +62,41 @@
 				}
 				?>
 			</table>
+			
+			<br />
+
+    		<table>
+    			<tr>
+                <?php
+        		if ($type == 'view') {
+        		?>
+    		        <td>
+        				<input type="button" id="back-to-case-index" value="Back to Case List" />
+        			</td>
+        		<?php
+        		}
+        		elseif ($type == 'add') {
+        		?>
+        			<td>
+        				<input type="button" id="new-facts" value="Add new facts" />
+        			</td>
+        		<?php
+        	    }
+        		else {
+        		?>
+                    <td>
+                        <input type="button" id="back" class="button-back" />
+                    </td>
+                    <td>
+                        <input type="button" id="next" class="button-next" />
+                    </td>
+        		<?php
+        		}
+                ?>
+            	</tr>
+    		</table>
 							
 		</div>
-		
-		<br />
-		
-		<table>
-			<tr>
-            <?php
-    		if ($type == 'view') {
-    		?>
-		        <td>
-    				<input type="button" id="back-to-case-index" value="Back to Case List" />
-    			</td>
-    		<?php
-    		}
-    		elseif ($type == 'add') {
-    		?>
-    			<td>
-    				<input type="button" id="new-facts" value="Add new facts" />
-    			</td>
-    		<?php
-    	    }
-    		else {
-    		?>
-                <td>
-                    <input type="button" id="back" value="Back" />
-                </td>
-                <td>
-                    <input type="button" id="next" value="Next" />
-                </td>
-    		<?php
-    		}
-            ?>
-        	</tr>
-		</table>
-        
 	</div>
 </div>
 

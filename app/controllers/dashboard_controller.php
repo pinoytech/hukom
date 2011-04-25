@@ -1,12 +1,15 @@
 <?php
 class DashboardController extends AppController {
 
-	var $name = 'Dashboard';
+	var $name       = 'Dashboard';
+	var $components = array('Zip', 'Custom');
+	var $helpers    = array('Custom');
 	
 	var $paginate = array(
-	    'limit' => 10,
+	    'limit'      => 10,
 	    'conditions' => array('Legalcase.status' => 'active'),
-	    'recursive' => 1
+	    'recursive'  => 1,
+	    'order'      => array('Legalcase.id' => 'asc'),
 	    );
 	
 	function beforeFilter() {
@@ -34,6 +37,7 @@ class DashboardController extends AppController {
         // $this->paginate['conditions'][] = array('Legalcase.status' => 'active');
         
         $this->set('Legalcase', $this->paginate('Legalcase'));
+        
 	}
 	
 	function admin_case_export_xls($id) {
@@ -98,8 +102,8 @@ class DashboardController extends AppController {
 	    $this->loadModel('Legalcasedetail');
 	    $this->Legalcasedetail->id = $_POST['id'];
         $this->Legalcasedetail->saveField('is_hidden', 1);
-	    
-	    $this->autoRender=false;
+
+        $this->autoRender=false;
 	}
 	
 	function admin_unhide_cases() {
@@ -114,6 +118,46 @@ class DashboardController extends AppController {
 	    );
 	    	    
 	    $this->autoRender=false;
+	}
+	
+	function admin_count_hidden_case() {
+	    $this->loadModel('Legalcasedetail');
+	    
+	    $no_of_hidden = $this->Legalcasedetail->find('count', array('conditions' => array('Legalcasedetail.is_hidden' => 1, 'Legalcasedetail.case_id' => $_POST['case_id'])));
+	    
+	    echo $no_of_hidden;
+	    
+	    $this->autoRender=false;
+	}
+	
+	function admin_download_attachments($id) {
+	    $this->loadModel('Legalcasedetail');
+	    $Legalcasedetail = $this->Legalcasedetail->find('first', array('fields' => array('Legalcasedetail.id', 'Legalcasedetail.user_id', 'Legalcasedetail.case_id'), 'conditions' => array('Legalcasedetail.id' => $id)));
+        // debug($Legalcasedetail);
+        // exit;
+        
+        echo $upload_folder = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $Legalcasedetail['Legalcasedetail']['user_id'] . '/' . $Legalcasedetail['Legalcasedetail']['case_id'] . '/' . $Legalcasedetail['Legalcasedetail']['id'];
+        
+        $files = $this->Custom->list_folder_files($upload_folder);
+        
+        // debug($files);
+        
+        foreach ($files as $key => $value) {
+            $files_to_zip[] = $upload_folder .'/'. $value;
+        }
+        
+        debug($files_to_zip);
+
+        $this->Zip->create_zip_modified($files_to_zip, 'zip-you.zip', true);
+        
+        // $this->Zip->create_zip($files_to_zip, $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/test.zip', true);
+        
+        // $file_names        = $files_to_zip;
+        // $archive_file_name = 'zipped.zip';
+        // $file_path         = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/';
+
+        // $this->Zip->zipFilesAndDownload($file_names,$archive_file_name,$upload_folder);
+        
 	}
 }
 ?>

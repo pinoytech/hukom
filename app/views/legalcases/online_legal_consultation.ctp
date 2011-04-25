@@ -5,7 +5,7 @@
 						
 		<?php echo $this->Session->flash(); ?>
 		
-		<div class="form-title">Online Legal Consultaion</div>
+		<div class="form-title">Online Legal Consultation</div>
 		<div class="form-holder">
 			<?php
 				echo $this->Form->create('Legalcase');
@@ -42,11 +42,9 @@
 					<label for="data[Legalcase][legal_service]" class="error" style="display:none">Please select type of service</label> 
 				</div>
 				<br />
-			<?php
-				echo $this->Form->end(__('Next', true));
-			?>
+				<input type="submit" class="button-next" value="" />
 		</div>
-		
+		<?php echo $this->Form->end();?>
 	</div>
 </div>
 
@@ -61,7 +59,7 @@ jQuery('document').ready(function() {
 				required: true
 			}
 		}
-	});
+	});	
 });
 
 

@@ -1,9 +1,9 @@
 <?php
 class PaymentsController extends AppController {
 
-	var $name = 'Payments';
+	var $name       = 'Payments';
 	var $components = array('Email', 'Custom');
-	
+	var $helpers    = array('Custom');
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 

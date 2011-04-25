@@ -12,6 +12,7 @@
 					echo $this->Form->input('User.id');
 					echo $this->Form->input('PersonalInfo.id');
 					echo $this->Form->input('User.case_id', array('type' => 'hidden', 'value' => $case_id));
+					echo $this->Form->input('User.case_detail_id', array('type' => 'hidden', 'value' => $case_detail_id));
 					
 					echo '<div class="row three-field">';
 					echo $this->Form->input('PersonalInfo.first_name', array('class' => 'required'));
@@ -40,13 +41,13 @@
 					echo '</div>';
 					
 					echo '<div class="row three-field">';
-					echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'empty' => 'Select', 'class' => 'required', 'options' => $list_gender));
+					echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'empty' => 'Select', 'class' => 'required', 'options' => $custom->list_gender()));
 					echo $this->Form->input('PersonalInfo.age', array('class' => 'required digits'));
 					echo $this->Form->input('PersonalInfo.citizenship', array('class' => 'required'));
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
-					echo $this->Form->input('PersonalInfo.education_attained', array('class' => 'required', 'type' => 'select', 'options' => $list_education_attained, 'empty' => 'Select One'));
+					echo $this->Form->input('PersonalInfo.education_attained', array('class' => 'required', 'type' => 'select', 'options' => $custom->list_education_attained(), 'empty' => 'Select One'));
 					echo $this->Form->input('PersonalInfo.school', array('class' => 'required'));
 					echo '</div>';
 					
@@ -60,7 +61,7 @@
 					echo '</div>';
 					
 					echo '<div class="row three-field">';
-					echo $this->Form->input('PersonalInfo.civil_status', array('options' => $list_civil_status, 'empty' => 'Select', 'class' => 'civil-status required'));
+					echo $this->Form->input('PersonalInfo.civil_status', array('options' => $custom->list_civil_status(), 'empty' => 'Select', 'class' => 'civil-status required'));
 					// echo $this->Form->input('PersonalInfo.marriage_date', array('label' => 'Date of Marriage', 'minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select', 'class' => 'marriage_date', 'validate' => 'required:true'));
 					echo $this->Form->input('PersonalInfo.marriage_date', array('type' => 'text', 'class' => 'birth_date marriage_date'));
 					echo $this->Form->input('PersonalInfo.marriage_place', array('label' => 'Place of Marriage', 'class' => 'marriage-input'));
@@ -69,7 +70,7 @@
 					echo '<div class="row three-field">';
 					echo $this->Form->input('PersonalInfo.work_position', array('label' => 'Work/Position', 'class' => 'required'));
 					echo $this->Form->input('PersonalInfo.work_duration', array('class' => 'required'));
-					echo $this->Form->input('PersonalInfo.work_status', array('options' => $list_work_status, 'class' => 'required', 'empty' => 'Select'));
+					echo $this->Form->input('PersonalInfo.work_status', array('options' => $custom->list_work_status(), 'class' => 'required', 'empty' => 'Select'));
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
@@ -91,17 +92,17 @@
 					echo $this->Form->input('PersonalInfo.fathers_citizenship', array('label' => "Father's Citizenship"));
 					echo $this->Form->input('PersonalInfo.fathers_address', array('label' => "Father's Address"));
 					echo '</div>';
+					
+					if ($case_id) {
+            		    $button_class = "button-next";
+            		}
+            		else {
+            		    $button_class = "button-submit";
+            		}
 				?>
+				<input type="submit" class="<?php echo $button_class;?>" value="">
 			</div>
-			<br />
-	    <?php
-		if ($case_id) {
-		    echo $this->Form->end(__('Next', true));
-		}
-		else {
-		    echo $this->Form->end(__('Save', true));
-		}
-		?>
+	    <?php echo $this->Form->end();?>
 	</div>
 </div>
 

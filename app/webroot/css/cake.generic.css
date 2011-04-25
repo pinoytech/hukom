@@ -549,3 +549,25 @@ table.custom-inside tr td {
 table.custom-inside tr.label {
 	font-weight: bold;
 }
+
+a {
+	cursor: pointer; 
+	cursor: hand;
+}
+
+/* Dashboard */
+.hide_unhide_holder {
+	position: relative;
+	top: -18px;
+}
+
+.hide_unhide_sub_holder {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.hide_unhide_sub_holder div {
+	float: left;
+	padding: 0 0 0 5px;
+}

@@ -5,7 +5,15 @@
 </ul> -->
 
 <div class="dashboard-navigation">
-	<?php echo $this->Html->link(__('Profile', true), array('controller' => 'users', 'action' => 'personal_info', $id)); ?> | 
+    <?php
+    if ($auth_user_type == 'personal') {
+        $profile_action = 'personal_info';
+    }
+    elseif ($auth_user_type == 'corporation') {
+        $profile_action = 'corporate_partnership_representative_info';
+    }
+    ?>
+	<?php echo $this->Html->link(__('Profile', true), array('controller' => 'users', 'action' => $profile_action, $id)); ?> | 
 	<?php echo $this->Html->link(__('My Cases', true), array('controller' => 'legalcases', 'action' => 'index', $id)); ?> | 
 	<?php echo $this->Html->link('Logout', '/users/logout', array()); ?>
 </div>

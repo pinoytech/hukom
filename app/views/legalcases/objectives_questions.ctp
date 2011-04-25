@@ -29,25 +29,26 @@
 		echo $this->Form->textarea('Legalcasedetail.questions', array('label' => false, 'class' => 'required'));
 		?>
 			<div>
-				<em>*You can prepare your list of objectives in Microsoft Word then copy and paste in this text area.</em>
+				<em>*You can prepare your list of questions from Microsoft Word then copy and paste to this text area.</em>
 			</div>
-		</div>	
-		
-		<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>
-		</form>
+			
+		    <?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>
 
-		<br />
-		<table>
-			<tr>
-				<td>
-					<input type="button" id="back" value="Back" />
-				</td>
-				<td>
-					<input type="button" id="next" value="Next" />
-				</td>
-			</tr>
-		</table>
-		
+    		<br />
+            <table>
+    			<tr>
+    				<td>
+    					<input type="button" id="back" class="button-back" value="" />
+    				</td>
+    				<td>
+    					<input type="button" id="next" class="button-next" value="" />
+    				</td>
+    			</tr>
+    		</table>
+    		
+		</div>	
+	
+		<?php echo $this->Form->end();?>
 	</div>
 </div>
 

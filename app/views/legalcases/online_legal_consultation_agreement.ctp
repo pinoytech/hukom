@@ -41,7 +41,7 @@
 					I hereby <input type="checkbox" id="accept" value="accept" class="terms" style="float:none;"> ACCEPT <input type="checkbox" id="reject" class="terms" value="reject" style="float:none;"> REJECT the above said terms and conditions.
 					<br />
 					<br />
-					<input type="button" value="Submit" id="check_end_user" style="width:100px">
+					<input type="button" value="" id="check_end_user" class="button-submit" >
 				</p>
 
 			</div>

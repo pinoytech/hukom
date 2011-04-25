@@ -6,6 +6,7 @@
 			<th><?php echo $this->Paginator->sort('username');?></th>
 			<th><?php echo $this->Paginator->sort('First Name', 'PersonalInfo.first_name');?></th>
 			<th><?php echo $this->Paginator->sort('Last Name', 'PersonalInfo.last_name');?></th>
+			<th><?php echo $this->Paginator->sort('Type', 'User.type');?></th>
 			<th><?php echo $this->Paginator->sort('created');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
@@ -23,12 +24,18 @@
 		<td><?php echo $user['User']['username']; ?>&nbsp;</td>
 		<td><?php echo $user['PersonalInfo']['first_name']; ?>&nbsp;</td>
 		<td><?php echo $user['PersonalInfo']['last_name']; ?>&nbsp;</td>
+		<td><?php echo $user['User']['type']; ?>&nbsp;</td>
 		<td><?php echo $user['User']['created']; ?>&nbsp;</td>
 		<td class="actions">
 		    <?php echo $this->Html->link(__('View Personal Info', true), array('controller' => 'personalinfos', 'action' => 'view', $user['PersonalInfo']['id'])); ?>
 		    <?php
-			    if (isset($user['PersonalInfo']['civil_status']) && $user['PersonalInfo']['civil_status'] != 'Single') {
+			    if (isset($user['PersonalInfo']['civil_status']) AND $user['PersonalInfo']['civil_status'] != 'Single') {
 			        echo $this->Html->link(__('View Spouse Info', true), array('controller' => 'spouseinfos', 'action' => 'view', $user['SpouseInfo']['id']));
+			    }
+			?>
+			<?php
+			    if (isset($user['ChildrenInfo']) AND $user['ChildrenInfo']['no_of_children'] != 0) {
+			        echo $this->Html->link(__('View Children Info', true), array('controller' => 'childrenlists', 'action' => 'index', $user['User']['id']));
 			    }
 			?>
 			<?php echo $this->Html->link(__('View Cases', true), array('controller' => 'legalcases', 'action' => 'index', $user['User']['id'])); ?>

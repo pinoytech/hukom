@@ -24,9 +24,11 @@
 				<?php echo $this->Form->create('User');?>
 				<?php
 					echo $this->Form->input('User.case_id', array('type' => 'hidden', 'value' => $case_id));
+					echo $this->Form->input('User.case_detail_id', array('type' => 'hidden', 'value' => $case_detail_id));
 					
 					echo $this->Form->input('ChildrenInfo.id');
 					echo $this->Form->input('ChildrenInfo.user_id', array('type' => 'hidden', 'value' => $id));
+					
 					
 					echo '<div class="row two-field">';
 					echo $this->Form->input('ChildrenInfo.no_of_children', array('class' => 'no-of-children', 'readonly' => true));
@@ -64,7 +66,7 @@
 								<?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.children_info_id', array('type' => 'hidden', 'value' => $this->data['ChildrenInfo']['id']));?>
 								<?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.name', array('label' => '', 'value' => $ChildrenList['name'], 'class' => 'required'));?>
 							</td>
-							<td><?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.sex', array('label' => '', 'type' => 'select', 'selected' => $ChildrenList['sex'], 'options' => $list_gender, 'class' => 'children-input  required'));?></td>
+							<td><?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.sex', array('label' => '', 'type' => 'select', 'selected' => $ChildrenList['sex'], 'options' => $custom->list_gender(), 'class' => 'children-input  required'));?></td>
 							<td><?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.birth_date', array('type' => 'text', 'label' => '', 'value' => $ChildrenList['birth_date'], 'class' => 'birth_date required'));?></td>
 							<td><?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.school', array('label' => '', 'value' => $ChildrenList['school'], 'class' => ' required'));?></td>
 							<td><?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.grade_year', array('label' => '', 'value' => $ChildrenList['grade_year'], 'class' => ' required'));?></td>
@@ -76,31 +78,29 @@
 					?>
 				</table>
 				<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>
-				</form>		
-		</div>
-		<br />
-		
-		<table>
-			<tr>
-				<td>
-					<input type="button" id="back" value="Back" />
-				</td>
-				<td>
-				    <?php
-            		if ($case_id) {
-            		?>
-					<input type="button" id="next" value="Next" />
-					<?php
-            		}
-            		else {
-            		?>
-            		<input type="button" id="save" value="Save" />
-            		<?php
-        		    }
-            		?>
-				</td>
-			</tr>
-		</table>
+                <br />
+				<table>
+    				<tr>
+    					<td>
+    						<input type="button" id="back" class="button-back" value="" />
+    					</td>
+    					<td>
+        				    <?php
+        				    if ($case_id) {
+                    		    $button_class = "button-next";
+                    		    $button_id = 'next';
+                    		}
+                    		else {
+                    		    $button_class = "button-submit";
+                    		    $button_id = 'save';
+                    		}
+        				    ?>
+                    		<input type="button" id="<?php echo $button_id;?>" class="next-save <?php echo $button_class;?>" value="" />
+        				</td>
+    				</tr>
+    			</table>
+		    </div>
+		<?php echo $this->Form->end();?>
 	</div>
 </div>
 
@@ -111,7 +111,7 @@
 			<?php echo $this->Form->input('ChildrenList.xxx.children_info_id', array('type' => 'hidden', 'value' => $this->data['ChildrenInfo']['id']));?>
 			<?php echo $this->Form->input('ChildrenList.xxx.name', array('label' => '', 'class' => 'children-input required'));?>
 		</td>
-		<td><?php echo $this->Form->input('ChildrenList.xxx.sex', array('label' => '', 'type' => 'select', 'options' => $list_gender, 'class' => 'children-input  required'));?></td>
+		<td><?php echo $this->Form->input('ChildrenList.xxx.sex', array('label' => '', 'type' => 'select', 'options' => $custom->list_gender(), 'class' => 'children-input  required'));?></td>
 		<td><?php echo $this->Form->input('ChildrenList.xxx.birth_date', array('type' => 'text', 'label' => '', 'class' => 'birthdate  required'));?></td>
 		<td><?php echo $this->Form->input('ChildrenList.xxx.school', array('label' => '', 'class' => 'children-input  required'));?></td>
 		<td><?php echo $this->Form->input('ChildrenList.xxx.grade_year', array('label' => '', 'class' => 'children-input  required'));?></td>

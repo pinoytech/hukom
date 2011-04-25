@@ -3,6 +3,22 @@ class Payment extends AppModel {
 	var $name = 'Payment';
 
     var $validate = array(
+        'option' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => '',
+				'allowEmpty' => false,
+				'required' => false,
+			)
+		),
+		'status' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => '',
+				'allowEmpty' => false,
+				'required' => false,
+			)
+		),
 		'bank_name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),

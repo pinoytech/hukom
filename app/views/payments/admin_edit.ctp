@@ -14,13 +14,31 @@
 		
 		echo '<div><label>Legal Service</label>' . $this->data['Legalcasedetail']['legal_service'] . '</div>';
 		
-		$options = array('Bank Deposit' => 'Bank Deposit', 'Paypal' => 'Paypal', 'GCash' => 'GCash', 'SmartMoney' => 'SmartMoney');
-		echo $this->Form->input('Payment.option', array('type' => 'select', 'options' => $options));
+        echo $this->Form->input('Payment.option', array('type' => 'select', 'options' => $custom->list_payment_option()));
+		
+		if ($this->data['Payment']['option'] == 'Bank Deposit') {
+		    echo $this->Form->input('Payment.bank_name');
+		    echo $this->Form->input('Payment.bank_branch');
+		    echo $this->Form->input('Payment.bank_country');
+		    echo $this->Form->input('Payment.bank_date_deposited');
+	    }
+		
+		if ($this->data['Payment']['option'] == 'GCash') {
+		    echo $this->Form->input('Payment.gcash_type', array('type' => 'select', 'options' => $custom->list_gcash_type()));
+		    echo $this->Form->input('Payment.cellphone_no');
+		    echo $this->Form->input('Payment.reference_no');
+		}
+		
+		if ($this->data['Payment']['option'] == 'SmartMoney') {
+		    echo $this->Form->input('Payment.smartmoney_type', array('type' => 'select', 'options' => $custom->list_smartmoney_type()));
+		    echo $this->Form->input('Payment.cellphone_no');
+		    echo $this->Form->input('Payment.reference_no');
+		}
+		
 		
 		echo $this->Form->input('Payment.amount');
 		
-		$options = array('Pending' => 'Pending', 'Overdue' => 'Overdue', 'Confirmed' => 'Confirmed');
-		echo $this->Form->input('Payment.status', array('type' => 'select', 'options' => $options));
+        echo $this->Form->input('Payment.status', array('type' => 'select', 'options' => $custom->list_payment_status()));
 	?>
 	</fieldset>
 	

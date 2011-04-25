@@ -62,46 +62,8 @@ class CustomComponent extends Object {
 		return $files;
     }
     
-    //List Gender
-    function list_gender() {
-        return array(
-            'Male'   => 'Male',
-            'Female' => 'Female',
-        );
-    }
     
-    //List Eductaion Attained
-    function list_education_attained() {
-        return array(
-            'Grade School'                          => 'Grade School',
-            'High School'                           => 'High School',
-            'Vocational/Short Course'               => 'Vocational/Short Course',
-            "Bachelor's/College Degree"             => "Bachelor's/College Degree",
-            "Post Graduate Diploma/Master's Degree" => "Post Graduate Diploma/Master's Degree",
-            'Professional License'                  => 'Professional License',
-            'Doctorate Degree'                      => 'Doctorate Degree'
-        );
-    }
     
-    //List Civil Status
-    function list_civil_status() {
-        return array(
-            'Single'            => 'Single',
-            'Married'           => 'Married',
-            'Divorced/Annulled' => 'Divorced/Annulled',
-            'Living In'         => 'Living In'
-        );
-    }
     
-    //List Work Status
-    function list_work_status() {
-        return array(
-            'Regular'      => 'Regular',
-            'Probationary' => 'Probationary',
-            'Casual'       => 'Casual',
-            'Project'      => 'Project',
-            'Other'        => 'Other'
-        );
-    }
 }
 ?>

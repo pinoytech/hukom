@@ -34,6 +34,8 @@
         
         echo $this->Html->script('jquery-1.4.4.min');
         
+        echo $html->script('jquery.validate.min');
+        
 		echo $scripts_for_layout;
 	?>
 </head>

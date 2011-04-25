@@ -1,3 +1,5 @@
+<?php echo $this->element('admin_navigation'); ?>
+
 <div class="dashboard index">
 	<h2><?php __('Dashboard');?></h2>
 	
@@ -5,6 +7,7 @@
 		<tr class="label">
 			<td><?php echo $this->Paginator->sort('Case ID', 'Legalcase.id');?></td>
 			<td><?php echo $this->Paginator->sort('Username', 'User.username');?></td>
+			<td>Name</td>
 			<td><?php echo $this->Paginator->sort('Legal Problem', 'Legalcase.legal_problem');?></td>
 		</tr>
 		<?php
@@ -14,11 +17,13 @@
 		<tr>
 			<td><?php echo $Legalcases['Legalcase']['id'];?></td>
 			<td><?php echo $Legalcases['User']['username'];?></td>
+			<td><?php echo $custom->get_first_last_name($Legalcases['User']['id']);?></td>
 			<td><?php echo $Legalcases['Legalcase']['legal_problem'];?>
 			    
-			    <div style="position:relative;top:-18px;">
-    			    <div style="position:absolute;top:0;right:0;">
-    			        <?php echo $this->Html->link(__('Unhide Cases', true), '#', array('class' => 'unhide_cases', 'id' => $Legalcases['Legalcase']['id'])); ?>
+			    <div class="hide_unhide_holder">
+    			    <div class="hide_unhide_sub_holder">
+    			        <div class="no_of_hidden_case" id="<?php echo $Legalcases['Legalcase']['id'];?>"></div><div> Case Detail(s) hidden</div>
+    			        <div> - <?php echo $this->Html->link(__('Unhide', true), '', array('class' => 'unhide_cases', 'id' => $Legalcases['Legalcase']['id'])); ?></div>
     			    </div>
 			    </div>
 			    
@@ -66,17 +71,15 @@
 							<td>
 							    <?php echo $this->Html->link(__('Export Case', true), array('action' => 'case_export_xls', $Legalcasedetail['id'])); ?>
 							    <br />
-
 							    <?php echo $this->Html->link(__('Export Personal Info', true), array('action' => 'personalinfo_export_xls', $Legalcasedetail['user_id'])); ?>
 							    <br />
-							    
 							    <?php echo $this->Html->link(__('Export Spouse Info', true), array('action' => 'spouseinfo_export_xls', $Legalcasedetail['user_id'])); ?>
 						        <br />
-						        
 						        <?php echo $this->Html->link(__('Export Children Info', true), array('action' => 'childreninfo_export_xls', $Legalcasedetail['user_id'])); ?>
 						        <br />
-						        
-						        <?php echo $this->Html->link(__('Hide', true), '#', array('class' => 'hide_case', 'id' => $Legalcasedetail['id'])); ?>
+						        <?php echo $this->Html->link(__('Download Attachments', true), array('action' => 'download_attachments', $Legalcasedetail['id'])); ?>
+						        <br />
+						        <?php echo $this->Html->link(__('Hide', true), '', array('class' => 'hide_case', 'id' => $Legalcasedetail['id'])); ?>
 							</td>
 						</tr>
 						<?php
@@ -109,16 +112,17 @@
 	</div>
 	
 </div>
-<?php echo $this->element('admin_navigation'); ?>
 
 <script type="text/javascript">
 jQuery('document').ready(function() {	
 	
 	jQuery('.hide_case').click(function() {
-	    var agree=confirm("Do you want to hide this case?");
+	    var agree=confirm("Do you want to hide this case detail?");
         if (agree){                        
             var parentrow = jQuery(this).parent().parent();
+            
             // console.log(parentrow);
+            
             jQuery.ajax({
     			type: "POST", 
     			url: "/admin/dashboard/hide_case",
@@ -132,6 +136,8 @@ jQuery('document').ready(function() {
     				alert("An error occured while updating. Try again in a while");
     			}
     		 });
+    		 
+    		 return false; //Fixed the weird reloading js error that should not be happening anyways
         }
         else{
             return false;
@@ -139,7 +145,7 @@ jQuery('document').ready(function() {
 	});
 	
 	jQuery('.unhide_cases').click(function() {
-	    var agree=confirm("Do you want to unhide all cases?");
+	    var agree=confirm("Do you want to unhide all case details?");
         if (agree){                        
             jQuery.ajax({
     			type: "POST", 
@@ -154,11 +160,56 @@ jQuery('document').ready(function() {
     				alert("An error occured while updating. Try again in a while");
     			}
     		 });
+    		 
+    		 return false; //Fixed the weird reloading js error that should not be happening anyways
         }
         else{
             return false;
         }
 	});
+	
+	jQuery('.no_of_hidden_case').each(function(index) {
+        // jQuery(this).html(display_no_of_hidden_case(jQuery(this).attr('id')));
+        // display_no_of_hidden_case($(this).attr('id'));
+        
+        var div     = jQuery(this);
+        var case_id = jQuery(this).attr('id');
+                
+        jQuery.ajax({
+            type: "POST", 
+            url: "/admin/dashboard/count_hidden_case",
+            data: 'case_id=' + case_id,
+            success: function(msg)
+            {
+                if (msg > 0) {
+                    div.html(msg);
+                }
+                else {
+                    div.parent().parent().hide();
+                }
+            },
+            error: function()
+            {
+                alert("An error occured while updating. Try again in a while");
+            }
+        });
+	});
+	
+	function display_no_of_hidden_case(case_id) {
+	    jQuery.ajax({
+			type: "POST", 
+			url: "/admin/dashboard/count_hidden_case",
+			data: 'case_id=' + case_id,
+			success: function(msg)
+			{
+                return msg;
+			},
+			error: function()
+			{
+				alert("An error occured while updating. Try again in a while");
+			}
+		});
+	}
 	
 });
 </script>

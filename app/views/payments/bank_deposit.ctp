@@ -49,20 +49,22 @@
 						?>
 					</ul>
 				</div>
-			</form>
+				
+				<br />
+    			<table>
+    				<tr>
+    					<td>
+    						<input type="button" id="back" class="button-back" value="" />
+    					</td>
+    					<td>
+    						<input type="button" id="next" class="button-next" value="" />
+    					</td>
+    				</tr>
+    			</table>
+				
+				<?php echo $this->Form->end();?>
 			</div>
-			
-			<br />
-			<table>
-				<tr>
-					<td>
-						<input type="button" id="back" value="Back" />
-					</td>
-					<td>
-						<input type="button" id="next" value="Next" />
-					</td>
-				</tr>
-			</table>
+
 	</div>
 </div>
 
@@ -103,6 +105,9 @@ jQuery('document').ready(function() {
 	    'cancelImg' : '/uploadify/cancel.png',
 	    'folder'    : '<?php echo $upload_folder;?>',
 	    'auto'      : true,
+	    'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
+	    'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
+	    'sizeLimit' : 2097152,
 		'onComplete' : function(event, ID, fileObj, response, data) {
 				append_files(fileObj)
 		    }
