@@ -676,6 +676,9 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Payments/gcash');
 		$this->Acl->allow($group, 'controllers/Payments/smartmoney');
 		$this->Acl->allow($group, 'controllers/Payments/create_paypal_payment');
+		$this->Acl->allow($group, 'controllers/Events');
+		$this->Acl->allow($group, 'controllers/Events/feed');
+		$this->Acl->allow($group, 'controllers/Events/add');
 	    //we add an exit to avoid an ugly "missing views" error message
 	    echo "all done";
 	    exit;

@@ -8,19 +8,29 @@
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-
-		echo $this->Html->css('public');
-		
-		echo $html->css('base/jquery-ui.css');
-		
-		echo $this->Html->script('jquery-1.4.4.min');
-		
-		echo $html->script('jquery-ui.min');
-		
-		echo $html->script('jquery.validate.min');
-		
+        echo $this->Html->css('public');
+        echo $html->css('base/jquery-ui.css');
+		echo $html->script('jquery-1.5.2.min.js');
+        // echo $html->script('jquery-ui.min');
+        echo $html->script('jquery-ui.js');
+        
+        if ($this->params['controller'] != 'events') {
+            echo $html->script('jquery.validate.min'); // Effects FullCalender
+        }
+        
+        if ($this->params['controller'] == 'events') {
+            //Fullcalendar
+    		echo $html->css('fullcalendar');
+            echo $html->css('fullcalendar.print', 'stylesheet', array('media' => 'print'));
+            echo $html->script('jquery.ui.core.js');
+            echo $html->script('jquery.ui.draggable.js');
+            echo $html->script('jquery.ui.resizable.js');
+            echo $html->script('fullcalendar.min.js');
+        }
+        
 		echo $scripts_for_layout;
 	?>
+	
 	
 </head>
 <body>

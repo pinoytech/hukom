@@ -789,3 +789,12 @@ a {cursor: pointer; cursor: hand;}
 .button-back:hover {
 	background: url(../img/backButton_down.png) no-repeat;
 }
+
+/*Full Calendar*/
+.form-holder div {
+	margin-top: 0;
+}
+
+.fc-content {
+	background: white;
+}
