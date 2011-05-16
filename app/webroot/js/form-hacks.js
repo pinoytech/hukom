@@ -1,36 +1,4 @@
-jQuery('document').ready(function() {
-  /*
-  //Validate birth date select list
-  jQuery('.birth_date').change(function() {
-  	jQuery('.birth_date').each(function(index) {
-  		if (jQuery(this).val() != '') {
-  			jQuery('#birth_date_check').val('1');	
-  		}
-  		else {
-  			jQuery('#birth_date_check').val('');	
-  		}
-  	});
-  });
-  */
-  
-  /*
-  //Validate marriage date select list
-  jQuery('.marriage_date').change(function() {
-   jQuery('.marriage_date').each(function(index) {
-     if (jQuery(this).val() != '') {
-       jQuery('#marriage_date_check').val('1');  
-     }
-     else {
-       jQuery('#marriage_date_check').val(''); 
-     }
-   });
-  });
-  */
-
-  //Append Asterisks on required fields
-  jQuery('div.required').each(function(index) {
-  	jQuery(this).children('label').prepend('<span>*</span>');
-  });
+function fields_arranger() {
 
   //Modify Field lenght
   // One field
@@ -71,8 +39,44 @@ jQuery('document').ready(function() {
   	var input_width = ((parent_div_width - label_width) / 3) - 24;
   	jQuery(this).children('div').children('input').css({'width' : input_width});
   });
+}
+
+jQuery('document').ready(function() {
+  /*
+  //Validate birth date select list
+  jQuery('.birth_date').change(function() {
+  	jQuery('.birth_date').each(function(index) {
+  		if (jQuery(this).val() != '') {
+  			jQuery('#birth_date_check').val('1');	
+  		}
+  		else {
+  			jQuery('#birth_date_check').val('');	
+  		}
+  	});
+  });
+  */
   
+  /*
+  //Validate marriage date select list
+  jQuery('.marriage_date').change(function() {
+   jQuery('.marriage_date').each(function(index) {
+     if (jQuery(this).val() != '') {
+       jQuery('#marriage_date_check').val('1');  
+     }
+     else {
+       jQuery('#marriage_date_check').val(''); 
+     }
+   });
+  });
+  */
   
+  //Append Asterisks on required fields
+  jQuery('div.required').each(function(index) {
+  	jQuery(this).children('label').prepend('<span>*</span>');
+  });
+  
+  fields_arranger();
+
   $( ".birth_date" ).datepicker({
     dateFormat: 'yy-mm-dd',
     changeMonth: true,

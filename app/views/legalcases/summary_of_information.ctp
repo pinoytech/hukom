@@ -20,9 +20,33 @@
 				foreach ($Legalcase['Legalcasedetail'] as $Legalcasedetail) {
 				?>
 				<tr>
-					<td class="label">Legal Service:</td>
+					<td class="label">Legal Service via:</td>
 					<td><?php echo $Legalcasedetail['legal_service'];?></td>
 				</tr>
+				<?php
+				if ($Event) {
+				    /*
+				    $datetime1 = new DateTime($Event['Event']['start']);
+                    $datetime2 = new DateTime($Event['Event']['end']);
+                    $interval = $datetime1->diff($datetime2);
+                    */
+                    
+                ?>
+                <tr>
+					<td class="label">No of Hours:</td>
+					<td><?php echo $custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');?></td>
+				</tr>
+				<tr>
+					<td class="label">Preferred Date:</td>
+					<td><?php echo date('F d, Y', strtotime($Event['Event']['start']));?></td>
+				</tr>
+				<tr>
+					<td class="label">Preferred Time:</td>
+					<td><?php echo date('h:i a', strtotime($Event['Event']['start'])) . ' to ' . date('h:i a', strtotime($Event['Event']['end']));?></td>
+				</tr>
+                <?php
+                }
+                ?>
 				<tr>
 					<td class="label">Summary of Facts:</td>
 					<td><?php echo $Legalcasedetail['summary'];?></td>

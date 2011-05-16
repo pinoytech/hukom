@@ -155,7 +155,17 @@ class LegalcasesController extends AppController {
 				}
 				
 				// $this->Session->setFlash(__('Case Information has been saved', true));
-				$this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id));
+				
+				if ($this->data['Legalcase']['legal_service'] == 'Video Conference' OR $this->data['Legalcase']['legal_service'] == 'Office Conference' ) {
+				    $conference = true;
+				    
+				    $this->Session->write('Event.calendar_id', time());
+				}
+				else {
+				    $conference = false;
+				}
+				
+				$this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $conference));
 				
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
@@ -170,7 +180,7 @@ class LegalcasesController extends AppController {
 		$this->set('id', $id);
 	}
 	
-	function letter_of_intent($id, $case_id){
+	function letter_of_intent($id, $case_id, $conference = null){
 		$this->loadModel('PersonalInfo');
 		$this->loadModel('Legalservice');
 		
@@ -190,6 +200,16 @@ class LegalcasesController extends AppController {
 		$this->set('fee', $Legalservice['Legalservice']['fee']);
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
+		
+		if ($conference) {
+		    $this->set('legal_service', $Legalservice['Legalservice']['name']);
+		    $this->set('event_hours', '');
+		    $this->set('event_date', '');
+		    $this->set('event_start', '');
+		    $this->set('event_end', '');
+		    $this->set('conference_fee', $Legalservice['Legalservice']['fee']);
+		    $this->render('letter_of_intent_conference');
+		}
 	}
 	
 	function legal_problem($id, $case_id=null,$case_detail_id=null){ //$id = user_id
@@ -228,6 +248,17 @@ class LegalcasesController extends AppController {
 					$this->Legalcasedetail->create();
 					$this->Legalcasedetail->save($data);
 					$case_detail_id = $this->Legalcasedetail->id;
+					
+					//Update Events
+					if ($this->Session->read('Event.calendar_id')) {
+                        // debug($this->Session->read('Event.calendar_id'));
+                        // exit;
+                        $this->loadModel('Event');
+    					$this->Event->updateAll(
+    					    array('Event.case_detail_id' => $case_detail_id),
+    					    array('Event.calendar_id' => $this->Session->read('Event.calendar_id'))
+    					);
+					}
 				}
 				
 				//Create Legalcase_id Folder
@@ -365,14 +396,29 @@ class LegalcasesController extends AppController {
 		$this->set('upload_folder', $upload_folder);
 		$this->set('files', $this->Custom->show_files($upload_folder));
 		
-		
+		//Event
+        $this->loadModel('Event');        
+        $Event = $this->Event->findByCaseDetailId($case_detail_id);
+        
+        if ($Event) {
+            $this->set('Event', $Event);
+        }
+        else {
+            $this->set('Event', false);
+        }
+        //end Event
+        
 		//Assign Legal Service Session
 		if ($legal_service == 'perquery') {
 			$this->Session->write('Legalcase.legal_service', 'Per Query');
 		}
 		
 		if ($legal_service == 'video') {
-			$this->Session->write('Legalcase.legal_service', 'Video/Office Conference');
+			$this->Session->write('Legalcase.legal_service', 'Video Conference');
+		}
+		
+		if ($legal_service == 'office') {
+			$this->Session->write('Legalcase.legal_service', 'Office Conference');
 		}
 		
 	}
@@ -395,7 +441,26 @@ class LegalcasesController extends AppController {
 		$this->loadModel('Legalservice');
 		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
 		
-		$this->set('fee', $Legalservice['Legalservice']['fee']);
+		if ($Legalservice['Legalservice']['name'] == 'Video Conference' OR $Legalservice['Legalservice']['name'] == 'Office Conference') {
+		    $this->loadModel('Event');        
+            $Event = $this->Event->findByCaseDetailId($case_detail_id);
+            // debug($Event);
+            // exit;
+            /*
+            $datetime1 = new DateTime($Event['Event']['start']);
+            $datetime2 = new DateTime($Event['Event']['end']);
+            $interval = $datetime1->diff($datetime2);
+            
+            $fee = (float)$Legalservice['Legalservice']['fee'] * (float)$interval->format('%h');
+            */
+            
+            $fee = (float)$Legalservice['Legalservice']['fee'] * $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
+		}
+		else {
+		    $fee = $Legalservice['Legalservice']['fee'];
+		}
+		
+		$this->set('fee', $fee);
 		$this->set('user_full_name', $user_full_name);
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);

@@ -530,13 +530,16 @@ class UsersController extends AppController {
 	
 			$this->loadModel('PersonalInfo');
 			
+			//Temporary Fix
+			$this->data['PersonalInfo']['civil_status'] = 'Single';
+			
 			$this->PersonalInfo->id = $this->data['PersonalInfo']['id'];
 						
 			if (!$this->PersonalInfo->save($this->data)) {
 			    $this->Session->setFlash(__('Corporate/Partnership Representative Information could not be saved. Please, try again.', true));
 			}
 			
-			$this->redirect(array('action' => 'corporate_partnership_info', $this->data['User']['id'], $this->data['User']['case_id'], $this->data['User']['case_detail_id']));
+            $this->redirect(array('action' => 'corporate_partnership_info', $this->data['User']['id'], $this->data['User']['case_id'], $this->data['User']['case_detail_id']));
 			
 		}
 		

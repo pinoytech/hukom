@@ -71,12 +71,33 @@
 							<td>
 							    <?php echo $this->Html->link(__('Export Case', true), array('action' => 'case_export_xls', $Legalcasedetail['id'])); ?>
 							    <br />
-							    <?php echo $this->Html->link(__('Export Personal Info', true), array('action' => 'personalinfo_export_xls', $Legalcasedetail['user_id'])); ?>
-							    <br />
-							    <?php echo $this->Html->link(__('Export Spouse Info', true), array('action' => 'spouseinfo_export_xls', $Legalcasedetail['user_id'])); ?>
-						        <br />
-						        <?php echo $this->Html->link(__('Export Children Info', true), array('action' => 'childreninfo_export_xls', $Legalcasedetail['user_id'])); ?>
-						        <br />
+							    <?php
+							    if ($custom->get_civil_status($Legalcases['User']['id']) != 'Single') {
+							    ?>
+							        <?php echo $this->Html->link(__('Export Personal Info', true), array('action' => 'personalinfo_export_xls', $Legalcasedetail['user_id'])); ?>
+    							    <br />
+    							    <?php echo $this->Html->link(__('Export Spouse Info', true), array('action' => 'spouseinfo_export_xls', $Legalcasedetail['user_id'])); ?>
+    						        <br />
+    						        <?php echo $this->Html->link(__('Export Children Info', true), array('action' => 'childreninfo_export_xls', $Legalcasedetail['user_id'])); ?>
+    						        <br />
+						        <?php
+						        }
+						        ?>
+						        
+						        <?php
+							    if ($Legalcases['User']['type'] == 'corporation') {
+							    ?>
+							        <?php echo $this->Html->link(__('Export Representative Info', true), array('action' => 'corprepinfo_export_xls', $Legalcasedetail['user_id'])); ?>
+    						        <br />
+    						        <?php echo $this->Html->link(__('Export Corporate Info', true), array('action' => 'corpinfo_export_xls', $Legalcasedetail['user_id'])); ?>
+    						        <br />
+							        <?php echo $this->Html->link(__('Export Board of Directors', true), array('action' => 'bod_export_xls', $Legalcasedetail['user_id'])); ?>
+    						        <br />
+    						        <?php echo $this->Html->link(__('Export Stockholders', true), array('action' => 'stockholders_export_xls', $Legalcasedetail['user_id'])); ?>
+    						        <br />
+							    <?php
+						        }
+						        ?>
 						        <?php echo $this->Html->link(__('Download Attachments', true), array('action' => 'download_attachments', $Legalcasedetail['id'])); ?>
 						        <br />
 						        <?php echo $this->Html->link(__('Hide', true), '', array('class' => 'hide_case', 'id' => $Legalcasedetail['id'])); ?>
@@ -121,21 +142,24 @@ jQuery('document').ready(function() {
         if (agree){                        
             var parentrow = jQuery(this).parent().parent();
             
-            // console.log(parentrow);
+            // console.log(jQuery(this).parent().parent().parent().parent().parent().parent().children('.hide_unhide_holder').show());
             
             jQuery.ajax({
-    			type: "POST", 
-    			url: "/admin/dashboard/hide_case",
-    			data: 'id=' + jQuery(this).attr('id'),
-    			success: function(msg)
-    			{
+                type: "POST", 
+                url: "/admin/dashboard/hide_case",
+                data: 'id=' + jQuery(this).attr('id'),
+                success: function(msg)
+                {
                     parentrow.empty().fadeOut();
-    			},
-    			error: function()
-    			{
-    				alert("An error occured while updating. Try again in a while");
-    			}
-    		 });
+                    parentrow.parent().parent().parent().parent().children('.hide_unhide_holder').show();
+                    no_of_hidden_case();
+                
+                },
+                error: function()
+                {
+                 alert("An error occured while updating. Try again in a while");
+                }
+            });
     		 
     		 return false; //Fixed the weird reloading js error that should not be happening anyways
         }
@@ -168,33 +192,37 @@ jQuery('document').ready(function() {
         }
 	});
 	
-	jQuery('.no_of_hidden_case').each(function(index) {
-        // jQuery(this).html(display_no_of_hidden_case(jQuery(this).attr('id')));
-        // display_no_of_hidden_case($(this).attr('id'));
-        
-        var div     = jQuery(this);
-        var case_id = jQuery(this).attr('id');
-                
-        jQuery.ajax({
-            type: "POST", 
-            url: "/admin/dashboard/count_hidden_case",
-            data: 'case_id=' + case_id,
-            success: function(msg)
-            {
-                if (msg > 0) {
-                    div.html(msg);
-                }
-                else {
-                    div.parent().parent().hide();
-                }
-            },
-            error: function()
-            {
-                alert("An error occured while updating. Try again in a while");
-            }
-        });
-	});
+	no_of_hidden_case();
 	
+	function no_of_hidden_case() {
+	    jQuery('.no_of_hidden_case').each(function(index) {
+            // jQuery(this).html(display_no_of_hidden_case(jQuery(this).attr('id')));
+            // display_no_of_hidden_case($(this).attr('id'));
+
+            var div     = jQuery(this);
+            var case_id = jQuery(this).attr('id');
+
+            jQuery.ajax({
+                type: "POST", 
+                url: "/admin/dashboard/count_hidden_case",
+                data: 'case_id=' + case_id,
+                success: function(msg)
+                {
+                    if (msg > 0) {
+                        div.html(msg);
+                    }
+                    else {
+                        div.parent().parent().hide();
+                    }
+                },
+                error: function()
+                {
+                    alert("An error occured while updating. Try again in a while");
+                }
+            });
+    	});
+	}
+
 	function display_no_of_hidden_case(case_id) {
 	    jQuery.ajax({
 			type: "POST", 

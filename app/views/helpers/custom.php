@@ -8,6 +8,13 @@ class CustomHelper extends AppHelper {
         return $personal_info[0]['personal_infos']['first_name'] .' '. $personal_info[0]['personal_infos']['last_name'];
     }
     
+    function get_username($user_id) {
+        $personal_infos =& ClassRegistry::init('users');
+        $personal_info = $personal_infos->query("SELECT username FROM users WHERE id = $user_id");
+
+        return $personal_info[0]['users']['username'];
+    }
+    
     function get_personal_info_id($user_id) {
         $personal_infos =& ClassRegistry::init('personal_infos');
         $personal_infos = $personal_infos->query("SELECT id FROM personal_infos WHERE user_id = $user_id");
@@ -42,6 +49,13 @@ class CustomHelper extends AppHelper {
         else {
             return null;
         }
+    }
+    
+    function get_civil_status($user_id) {
+        $personal_infos =& ClassRegistry::init('personal_infos');
+        $personal_info = $personal_infos->query("SELECT civil_status FROM personal_infos WHERE user_id = $user_id");
+
+        return $personal_info[0]['personal_infos']['civil_status'];
     }
     
     //List Payment Options
@@ -140,6 +154,46 @@ class CustomHelper extends AppHelper {
             'Publicly Listed'     => 'Publicly Listed',
             'Not Publicly Listed' => 'Not Publicly Listed',
         );
+    }
+    
+    function date_difference($date1, $date2, $interval) {
+        $diff = abs(strtotime($date2) - strtotime($date1)); 
+
+        $years   = floor($diff / (365*60*60*24)); 
+        $months  = floor(($diff - $years * 365*60*60*24) / (30*60*60*24)); 
+        $days    = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+        $hours   = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24)/ (60*60)); 
+
+        $minuts  = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60); 
+
+        $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minuts*60)); 
+        
+        switch ($interval) {
+            case 'y':
+                return $years;
+                break;
+            case 'm':
+                return $months;
+                break;
+            case 'd':
+                return $days;
+                break;
+            case 'h':
+                return $hours;
+                break;
+            case 'm':
+                return $months;
+                break;
+            case 's':
+                return $seconds;
+                break;
+            default:
+                # code...
+                break;
+        }
+        
+        //printf("%d years, %d months, %d days, %d hours, %d minuts\n, %d seconds\n", $years, $months, $days, $hours, $minuts, $seconds);
     }
 }
 ?>

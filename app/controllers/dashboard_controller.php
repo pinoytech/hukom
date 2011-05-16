@@ -96,6 +96,50 @@ class DashboardController extends AppController {
 		$this->render('childreninfo_export_xls','export_xls');
 	}
 	
+	function admin_corprepinfo_export_xls($id) {
+	    $this->loadModel('PersonalInfo');
+	    
+		$this->PersonalInfo->recursive = 1;
+		$data = $this->PersonalInfo->find('all', array('conditions' => array('PersonalInfo.user_id' => $id)));
+
+		$this->set('rows',$data);
+		$this->set('filename','corprepinfo_' . $data[0]['User']['id']);
+		$this->render('corprepinfo_export_xls','export_xls');
+	}
+	
+    function admin_corpinfo_export_xls($id) {
+	    $this->loadModel('CorporatePartnershipInfo');
+	    
+		$this->CorporatePartnershipInfo->recursive = 1;
+		$data = $this->CorporatePartnershipInfo->find('all', array('conditions' => array('CorporatePartnershipInfo.user_id' => $id)));
+
+		$this->set('rows',$data);
+		$this->set('filename','corpinfo_' . $data[0]['User']['id']);
+		$this->render('corpinfo_export_xls','export_xls');
+	}
+	
+    function admin_bod_export_xls($id) {
+	    $this->loadModel('BoardOfDirector');
+	    
+		$this->BoardOfDirector->recursive = 1;
+		$data = $this->BoardOfDirector->find('all', array('conditions' => array('BoardOfDirector.user_id' => $id)));
+
+		$this->set('rows',$data);
+		$this->set('filename','bod_' . $data[0]['User']['id']);
+		$this->render('bod_export_xls','export_xls');
+	}
+	
+	function admin_stockholders_export_xls($id) {
+	    $this->loadModel('Stockholder');
+	    
+		$this->Stockholder->recursive = 1;
+		$data = $this->Stockholder->find('all', array('conditions' => array('Stockholder.user_id' => $id)));
+
+		$this->set('rows',$data);
+		$this->set('filename','stockholders_' . $data[0]['User']['id']);
+		$this->render('stockholders_export_xls','export_xls');
+	}
+	
 	//Hide Case from Dashboard
 	function admin_hide_case() {
         // debug($_POST['id']);

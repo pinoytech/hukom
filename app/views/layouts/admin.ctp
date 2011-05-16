@@ -32,9 +32,23 @@
 		
 		echo $this->Html->css('generic');
         
-        echo $this->Html->script('jquery-1.4.4.min');
+        // echo $this->Html->script('jquery-1.4.4.min');
         
-        echo $html->script('jquery.validate.min');
+        // echo $html->script('jquery.validate.min');
+        
+        echo $html->css('base/jquery-ui.css');
+		echo $html->script('jquery-1.5.2.min.js');
+        echo $html->script('jquery-ui.js');        
+        
+    	echo $html->css('fullcalendar');
+        echo $html->css('fullcalendar.print', 'stylesheet', array('media' => 'print'));
+        echo $html->script('jquery.ui.core.js');
+        echo $html->script('jquery.ui.draggable.js');
+        echo $html->script('jquery.ui.resizable.js');
+        echo $html->script('fullcalendar.min.js');
+        
+        echo $html->script('jquery-ui-timepicker-addon.js');
+        
         
 		echo $scripts_for_layout;
 	?>

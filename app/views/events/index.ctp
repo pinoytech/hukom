@@ -1,3 +1,7 @@
+
+<?php
+if (!$dialog) {
+?>
 <div id="full-content">
 	<div id="main">
 				
@@ -10,16 +14,150 @@
 		    
 		    <div id="calendar"></div>
 		    
-		    <div id="event-data-add" title="Schedule Event">
+		    <!-- <div id="event-data-add" title="Schedule Conference"> -->
 		        
 		    </div>
 		</div>
 		
 	</div>
 </div>
+<?php
+}
+else {
+?>
+<div id="calendar"></div>		    
+<!-- <div id="event-data-add" title="Schedule Conference"> -->
+<?php
+}
+?>
+
+<div id="event-data-add" title="Schedule Conference" class="hidden">
+    <?php
+    echo $form->create('Event', array('target'=> '_parent'));
+    echo $form->input('title' , array('label' => 'User', 'type'=>'text', 'value' => $custom->get_first_last_name($id), 'readonly' => true));
+    echo $form->input('date', array('type'=>'text', 'readonly' => true));
+    echo $form->input('start', array('type'=>'text', 'readonly' => true, 'value' => '08:00 am'));
+    echo $form->input('end', array('type'=>'text', 'readonly' => true));
+    echo $form->input('allday', array('type'=>'hidden', 'value' => 0));
+    echo $form->input('user_id', array('type'=>'hidden', 'value' => $id));
+    echo $form->input('case_id', array('type'=>'hidden', 'value' => $case_id));
+    echo $form->input('calendar_id', array('type'=>'hidden', 'value' => $this->Session->read('Event.calendar_id')));
+    ?>
+</div>
+
+<div id="event-blank" title="Schedule Conference" class="hidden">
+    Start Time and End Time is required.
+</div>
+
+<div id="event-not-available" title="Schedule Conference" class="hidden">
+    Sorry, the time you have selected is not available. Please select another time or another date from the calendar.
+</div>
+
+<div id="event-date-not-allowed" title="Schedule Conference" class="hidden">
+    The date you have selected is not allowed. Please select the date today or onwards.
+</div>
+
+<div id="event-date-same" title="Schedule Conference" class="hidden">
+    The time you have selected is not valid. Start Time must be greater then End Time.
+</div>
+
+<div id="event-locked" title="Schedule Conference" class="hidden">
+    You have already booked a schedule.
+</div>
+
+<div id="event-after3days" title="Schedule Conference" class="hidden">
+     The date you have selected is not allowed. Please select a date 3 days from now.
+</div>
+
+
 
 <script type='text/javascript'>
     jQuery(document).ready(function() {
+        
+        $('#EventStart, #EventEnd').timepicker({
+            ampm: true,
+            showMinute: false,
+            hourMin: 8,
+            hourMax: 18
+        });
+        
+        jQuery("#event-blank").dialog({
+    		autoOpen: false,
+    		width: 350,
+    		height: 150,
+            modal: true,
+    		resizable: false,
+    		buttons: {
+				Ok: function() {
+					$(this).dialog("close");
+				}
+			}
+        });
+        
+        jQuery("#event-not-available").dialog({
+    		autoOpen: false,
+    		width: 450,
+    		height: 150,
+            modal: true,
+    		resizable: false,
+    		buttons: {
+				Ok: function() {
+					$(this).dialog("close");
+				}
+			}
+        });
+        
+        jQuery("#event-date-not-allowed").dialog({
+    		autoOpen: false,
+    		width: 350,
+    		height: 150,
+            modal: true,
+    		resizable: false,
+    		buttons: {
+				Ok: function() {
+					$(this).dialog("close");
+				}
+			}
+        });
+        
+        jQuery("#event-date-same").dialog({
+    		autoOpen: false,
+    		width: 350,
+    		height: 150,
+            modal: true,
+    		resizable: false,
+    		buttons: {
+				Ok: function() {
+					$(this).dialog("close");
+				}
+			}
+        });
+        
+        jQuery("#event-locked").dialog({
+    		autoOpen: false,
+    		width: 350,
+    		height: 150,
+            modal: true,
+    		resizable: false,
+    		buttons: {
+				Ok: function() {
+					$(this).dialog("close");
+				}
+			}
+        });
+        
+        jQuery("#event-after3days").dialog({
+    		autoOpen: false,
+    		width: 350,
+    		height: 150,
+            modal: true,
+    		resizable: false,
+    		buttons: {
+				Ok: function() {
+					$(this).dialog("close");
+				}
+			}
+        });
         
         function convertToMilitaryTime( ampm, hours, minutes ) {
             var militaryHours;
@@ -58,95 +196,132 @@
                 next: '&gt;'
             },
             
+            editable: false,
+            allDaySlot: false,
+            selectable: true,
+            selectHelper: true,
+            slotMinutes: 60,
+            minTime: '08:00am',
+            maxTime: '11:00pm',
+            
             dayClick: function(date, allDay, jsEvent, view) {
                 // jQuery("#eventdata").show();
                 // jQuery("#eventdata").load("<?php echo Dispatcher::baseUrl();?>/events/add/"+allDay+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm"));
-                
-                allDay = false;
-                
-                url = "<?php echo Dispatcher::baseUrl();?>/events/add/"+allDay+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
-                
-                var input_data = [];
-                
-                // alert(input_data.join(' '));
-                
-                /*
-                calendar.fullCalendar('renderEvent',
-					{
-                        title: 'value.title',
-                        start: jQuery('#EventStart').val(),
-                        end: '',
-                        allDay: ''
-					},
-					true // make the event "stick"
-				);
-                */
-                
-                jQuery("#event-data-add").load(url).dialog({
-            		autoOpen: false,
-            		width: 500,
-            		height: 400,
-                    modal: true,
-            		resizable: false,
-                    buttons: {
-                        Ok: function(data) {
-                            // jQuery('#EventAddForm').submit();
-                            
-                            if (allDay == true) {
-                                jQuery('input[id*=Event]').each(function(index){
-                                    input_data.push(jQuery(this).attr('id') + '=' + jQuery(this).val());
-                                });
+                // console.log('<?php echo date("d/m/y"); ?>');
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: '/events/check_lock',
+                    data: 'case_id=<?php echo $case_id;?>&date_clicked='+$.fullCalendar.formatDate(date, "yyyy-MM-dd"),
+                    success: function(msg)
+                    {      
+                        if (msg == 'locked') {
+                            jQuery("#event-locked").dialog("open");
+                        }
+                        else if (msg == 'after3days') {
+                            jQuery("#event-after3days").dialog("open");
+                        }
+                        else {
+                            if ( Date.parse( $.fullCalendar.formatDate(date, "dd/MM/yyyy")) < Date.parse('<?php echo date('d/m/y'); ?>')) {
+                                jQuery("#event-date-not-allowed").dialog("open");
                             }
-                            else {
-                                input_data.push('EventTitle=' + jQuery('#EventTitle').val());
-                                input_data.push('EventAllday=' + jQuery('#EventAllday').val());
-                                input_data.push('EventStart=' + jQuery('#EventDate').val() + ' ' + convertToMilitaryTime(jQuery('#EventStartMeridian').val(), jQuery('#EventStartHour').val(), jQuery('#EventStartMin').val()) + ':00');
-                                input_data.push('EventEnd=' + jQuery('#EventDate').val() + ' ' + convertToMilitaryTime(jQuery('#EventEndMeridian').val(), jQuery('#EventEndHour').val(), jQuery('#EventEndMin').val()) + ':00');
-                            }
-                            
-                            // console.log(input_data.join('&'));
-                            
-                            jQuery.ajax({
-                                type: "POST",
-                                url: url,
-                                data: input_data.join('&'),
-                                success: function(msg)
-                                {   
-                                    /*    
-                                    console.log(msg)                             
-                                    $.each(msg, function(key, value) {
-                                        
-                                        calendar.fullCalendar('addEventSource',
-                    						{
-                                                title: value.title,
-                                                start: value.start,
-                                                end: value.end,
-                                                allDay: value.allday
-                    						}
-                    					);
-                                    });
-                                    */
-                                    
-                                    // calendar.fullCalendar('addEventSource', "/events/get_feed/" + msg);
-                                    // calendar.fullCalendar('addEventSource', "/events/feed");
-                                    // calendar.fullCalendar('addEventSource', msg);
-                                    calendar.fullCalendar('refetchEvents');
-                                },
-                                error: function()
-                                {
-                                    alert("An error occured while updating. Try again in a while");
+                            else {                    
+                                // allDay = false;    
+                                url    = "<?php echo Dispatcher::baseUrl();?>/events/add/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
+
+                                // jQuery("#event-data-add").load(url).dialog({
+                                jQuery("#event-data-add").dialog({
+                            		autoOpen: false,
+                            		width: 250,
+                            		height: 230,
+                                    modal: true,
+                            		resizable: false,
+                                    buttons: {
+                                        Ok: function(data) {
+                                            // jQuery('#EventAddForm').submit();
+
+                                            var input_data = [];
+
+                                            if (jQuery('#EventStart').val() == '' || jQuery('#EventEnd').val() == '') {
+                                                jQuery("#event-blank").dialog("open");
+                                                return false;
+                                            }
+
+                                            if (jQuery('#EventStart').val() == jQuery('#EventEnd').val()) {
+                                                jQuery("#event-date-same").dialog("open");
+                                                return false;
+                                            }
+
+                                            input_data.push('EventTitle=' + jQuery('#EventTitle').val());
+                                            input_data.push('EventAllday=' + jQuery('#EventAllday').val());
+                                            // input_data.push('EventStart=' + jQuery('#EventDate').val() + ' ' + convertToMilitaryTime(jQuery('#EventStartMeridian').val(), jQuery('#EventStartHour').val(), jQuery('#EventStartMin').val()) + ':00');
+                                            // input_data.push('EventEnd=' + jQuery('#EventDate').val() + ' ' + convertToMilitaryTime(jQuery('#EventEndMeridian').val(), jQuery('#EventEndHour').val(), jQuery('#EventEndMin').val()) + ':00');
+
+                                            //exploaded time
+                                            EventStart          = jQuery('#EventStart').val().split(' ');
+                                            EventStart_time     = EventStart[0].split(':');
+                                            EventStart_meridian = EventStart[1];
+
+                                            input_data.push('EventStart=' + jQuery('#EventDate').val() + ' ' + convertToMilitaryTime(EventStart_meridian, EventStart_time[0], EventStart_time[1]) + ':00');
+
+                                            EventEnd          = jQuery('#EventEnd').val().split(' ');
+                                            EventEnd_time     = EventEnd[0].split(':');
+                                            EventEnd_meridian = EventEnd[1];
+
+                                            input_data.push('EventEnd=' + jQuery('#EventDate').val() + ' ' + convertToMilitaryTime(EventEnd_meridian, EventEnd_time[0], EventEnd_time[1]) + ':00');
+
+                                            input_data.push('EventUserId=' + jQuery('#EventUserId').val());
+                                            input_data.push('EventCaseId=' + jQuery('#EventCaseId').val());
+                                            input_data.push('EventCalendarId=' + jQuery('#EventCalendarId').val());
+
+
+                                            jQuery.ajax({
+                                                type: "POST",
+                                                url: url,
+                                                data: input_data.join('&'),
+                                                success: function(msg)
+                                                {   
+                                                    if (msg == 'not available') {
+                                                        jQuery("#event-not-available").dialog("open");
+                                                        return false;
+                                                    }
+
+                                                    calendar.fullCalendar('refetchEvents');
+                                                },
+                                                error: function()
+                                                {
+                                                    alert("An error occured while updating. Try again in a while");
+                                                }
+                                            });
+
+                                            jQuery(this).dialog('close');
+                                            jQuery('#EventStart').val('');
+                                            jQuery('#EventEnd').val('');
+                                            jQuery('#EventAllday').val(0);
+                            			} //end Ok: function(data) {
+                                    }
+                            	});
+
+                                jQuery("#event-data-add").dialog("open");
+
+                                if (!allDay) {
+                                    // alert(1)
+                                    jQuery('#EventStart').val($.fullCalendar.formatDate(date, "hh:mm tt"));
+                                    jQuery('#EventAllday').val(0);
                                 }
-                            });
-                            
-                            jQuery(this).dialog('close');
-            			}
+
+                                jQuery('#EventDate').val($.fullCalendar.formatDate(date, "yyyy-MM-dd"));
+
+                            }
+                        } // end - if !msg
+                    },
+                    error: function()
+                    {
+                        alert("An error occured while updating. Try again in a while");
                     }
-            	});
-                
-                jQuery("#event-data-add").dialog("open");
+                });
             },
         });
-        
         
     });
 </script>

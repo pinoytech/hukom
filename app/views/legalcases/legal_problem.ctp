@@ -37,11 +37,16 @@
 				?>
 				
 				<div class="input radio">
-					
+					<?php
+					if ($this->Session->read('Legalcase.legal_service') != 'Video Conference' AND $this->Session->read('Legalcase.legal_service') != 'Office Conference') {
+					?>
 					<input type="radio" class="legal_problem_radio" value="Personal" id="LegalcaseLegalProblemPersonal" name="data[Legalcase][legal_problem]"><span class="label">Personal</span> - I have problem in my birth certificate, my passport, my criminal case, etc.
 					<br />
 					<input type="radio" class="legal_problem_radio" value="Family" id="LegalcaseLegalProblemFamily" name="data[Legalcase][legal_problem]"><span class="label">Family</span> - I have a problem in annulment, child custody, adoption, etc.
 					<br />
+					<?php
+				    }
+					?>
 					<input type="radio" class="legal_problem_radio" value="Property" id="LegalcaseLegalProblemProperty" name="data[Legalcase][legal_problem]"><span class="label">Property</span> - I have a problem with my land title, car, stocks, etc.
 					<br />
 					<input type="radio" class="legal_problem_radio" value="Contractual" id="LegalcaseLegalProblemContractual" name="data[Legalcase][legal_problem]"><span class="label">Contractual</span> - I have a problem with my contract, sub-contract, etc. 

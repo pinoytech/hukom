@@ -34,8 +34,8 @@
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
-					echo $this->Form->input('PersonalInfo.email', array('readonly' => true));
-					echo $this->Form->input('PersonalInfo.alternate_email', array('class' => 'required'));
+					echo $this->Form->input('PersonalInfo.email', array('readonly' => true, 'div' => 'input text required'));
+					echo $this->Form->input('PersonalInfo.alternate_email', array('class' => 'required', 'div' => 'input text required'));
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
@@ -64,12 +64,12 @@
 					echo $this->Form->input('PersonalInfo.company_address', array('class' => 'required'));
 					echo '</div>';
 					
-					echo '<div class="row three-field">';
-					echo $this->Form->input('PersonalInfo.civil_status', array('options' => $custom->list_civil_status(), 'empty' => 'Select', 'class' => 'civil-status required'));
-					// echo $this->Form->input('PersonalInfo.marriage_date', array('label' => 'Date of Marriage', 'minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select', 'class' => 'marriage_date', 'validate' => 'required:true'));
-					echo $this->Form->input('PersonalInfo.marriage_date', array('type' => 'text', 'class' => 'birth_date marriage_date'));
-					echo $this->Form->input('PersonalInfo.marriage_place', array('label' => 'Place of Marriage', 'class' => 'marriage-input'));
-					echo '</div>';
+                    // echo '<div class="row three-field">';
+                    // echo $this->Form->input('PersonalInfo.civil_status', array('options' => $custom->list_civil_status(), 'empty' => 'Select', 'class' => 'civil-status required'));
+                    // // echo $this->Form->input('PersonalInfo.marriage_date', array('label' => 'Date of Marriage', 'minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select', 'class' => 'marriage_date', 'validate' => 'required:true'));
+                    // echo $this->Form->input('PersonalInfo.marriage_date', array('type' => 'text', 'class' => 'birth_date marriage_date'));
+                    // echo $this->Form->input('PersonalInfo.marriage_place', array('label' => 'Place of Marriage', 'class' => 'marriage-input'));
+                    // echo '</div>';
 					
 					echo '<div class="row three-field">';
 					echo $this->Form->input('PersonalInfo.work_position', array('label' => 'Work/Position', 'class' => 'required'));

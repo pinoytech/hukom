@@ -26,11 +26,12 @@
             echo $html->script('jquery.ui.draggable.js');
             echo $html->script('jquery.ui.resizable.js');
             echo $html->script('fullcalendar.min.js');
+            echo $html->script('jquery-ui-timepicker-addon.js');
+            
         }
         
 		echo $scripts_for_layout;
 	?>
-	
 	
 </head>
 <body>

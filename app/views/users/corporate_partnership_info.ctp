@@ -47,6 +47,10 @@
 					echo '</div>';
 					
 					echo '<div class="row full-field center-attach-fill-out">';
+					
+                    $checked_attach   = '';
+                    $checked_fill_out = '';
+					
 				    if ('attach' == $this->data['CorporatePartnershipInfo']['attach_fill_out']) {
                         $checked_attach = 'checked';
                         $checked_fill_out = '';
@@ -58,11 +62,12 @@
 					echo '<input type="radio" class="attach_fill_out" value="attach" name="data[CorporatePartnershipInfo][attach_fill_out]" '.$checked_attach.'>Attach the following documents
 					      <input type="radio" class="attach_fill_out" value="fill out" name="data[CorporatePartnershipInfo][attach_fill_out]" '.$checked_fill_out.'>Fill out the forms';
 					echo '</div>';
-
+					
 					echo '
 					<div style="display:block;padding:4px 0 0 315px;">
     					<label for="data[CorporatePartnershipInfo][attach_fill_out]" class="error" style="display:none">This field is required</label> 
     				</div>';
+    				
 				?>
 				
 				    <div id="attach-form" class="row full-field" style="display:none">
@@ -89,19 +94,19 @@
 				    <div id="fill-out-form" style="display:none">
     				    <?php
     				    echo '<div class="row two-field">';
-                        echo $this->Form->input('CorporatePartnershipInfo.authorized_capital_stock_partnership_capital', array('class' => 'required'));
+                        echo $this->Form->input('CorporatePartnershipInfo.authorized_capital_stock_partnership_capital', array('label' => 'Authorized Capital Stock/Partnership Capital', 'class' => 'required'));
                         echo $this->Form->input('CorporatePartnershipInfo.no_of_shares', array('class' => 'required'));
     					echo '</div>';
     					
     					echo '<div class="row three-field">';
-                        echo $this->Form->input('CorporatePartnershipInfo.per_value', array('class' => 'required'));
-                        echo $this->Form->input('CorporatePartnershipInfo.no_of_shares_subscribed', array('class' => 'required'));
+                        echo $this->Form->input('CorporatePartnershipInfo.par_value', array('class' => 'required'));
+                        echo $this->Form->input('CorporatePartnershipInfo.no_of_shares_subscribed', array('label' => 'No. of Share/s Subscribed', 'class' => 'required'));
                         echo $this->Form->input('CorporatePartnershipInfo.subscribed_capital', array('class' => 'required'));
     					echo '</div>';
     					
     					echo '<div class="row three-field">';
                         echo $this->Form->input('CorporatePartnershipInfo.paid_up_capital', array('class' => 'required'));
-                        echo $this->Form->input('CorporatePartnershipInfo.fiscal_calendar_year', array('class' => 'required'));
+                        echo $this->Form->input('CorporatePartnershipInfo.fiscal_calendar_year', array('label' => 'Fiscal/Calendar Year', 'class' => 'required'));
                         echo $this->Form->input('CorporatePartnershipInfo.annual_meeting', array('class' => 'required'));
     					echo '</div>';
     					
@@ -170,10 +175,13 @@
     				    echo '<span class="center-stock-type">';
     					foreach ($custom->list_stockholder_type() as $key => $value) {
     					    $checked = ($value == $this->data['CorporatePartnershipInfo']['stockholder_type']) ? 'checked' : '';
-                            echo '<input type="radio" class="stockholder_type" value="'.$value.'" name="data[CorporatePartnershipInfo][stockholder_type]" '.$checked.' > '.$value.' ';
+                            echo '<input type="radio" class="stockholder_type" value="'.$value.'" name="data[CorporatePartnershipInfo][stockholder_type]" '.$checked.' > '.$value.' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
     					}
-    					echo '</span>';
+    					echo '
+    					    <div class="row full-field center-attach-fill-out-em"><em>Top 10 Majority Stockholders &nbsp;&nbsp;&nbsp;&nbsp; Limited to 20-30 Stockholders</em></div>
+    					</span>';
     				    ?>
+    				    
     				    
                         <br />
                         <div>
@@ -357,6 +365,8 @@ jQuery('document').ready(function() {
 	    if (jQuery(this).val() == 'fill out') {
 	        jQuery('#fill-out-form').show();
 	        jQuery('#attach-form').hide();
+	        
+	        fields_arranger();
 	    }
     });
     
