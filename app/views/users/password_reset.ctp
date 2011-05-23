@@ -3,16 +3,32 @@
 		
 		<?php echo $this->Session->flash(); ?>
 		
-		<h2>Password Reset</h2>
-		<p>Please enter your new password</p>
-		</br>
-		<?php
-		echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' =>'password_reset')));
-		echo $this->Form->input('User.id');
-		echo $this->Form->input('User.username', array('type' => 'hidden'));
-		echo $this->Form->input('User.password', array('label' => 'New Password', 'value' => ''));
-		echo $this->Form->input('User.password_confirm', array('label' => 'Retype Password', 'type' => 'password', 'value' => ''));
-		echo $this->Form->end('Submit');
-		?>
+		<?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' =>'password_reset')));?>
+		    <div class="form-title">Reset Password</div>
+    		<div class="form-holder form-registration">
+        		<?php
+        		echo $this->Form->input('User.id');
+        		echo $this->Form->input('User.username', array('type' => 'hidden'));
+        		echo $this->Form->input('User.password', array('label' => 'New Password', 'value' => '', 'class' => 'required'));
+        		echo $this->Form->input('User.password_confirm', array('label' => 'Retype New Password', 'type' => 'password', 'value' => '', 'class' => 'required'));
+                // echo $this->Form->end('Submit');
+        		?>
+        		<input type="submit" class="button-submit" value="">
+    		</div>
+	    <?php echo $this->Form->end();?>
 	</div>
 </div>
+
+<script type="text/javascript">
+jQuery('document').ready(function() {
+    
+    jQuery("#UserPasswordResetForm").validate({
+        rules: {
+			"data[User][password_confirm]": {
+				equalTo: '#UserPassword'
+			},
+		}
+	});
+	
+});
+</script>

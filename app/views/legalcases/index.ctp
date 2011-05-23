@@ -9,10 +9,8 @@
 		<div class="form-holder">
 			
 			<div class="actions">
-				<?php echo $this->Html->link(__('Avail Legal Service', true), array('action' => 'online_legal_consultation', $id)); ?>
+				<?php echo $this->Html->link($this->Html->image('/img/availButton_up.png', array('border' => '0')), array('action' => 'online_legal_consultation', $id), array('class' => 'avail-button', 'escape' => false)); ?>
 			</div>
-			
-			<br />
 			
 			<table class="dashboard" cellpadding="5" cellspacing="0" >
 				<tr class="label">
@@ -102,13 +100,34 @@
         	</p>
             
             <div class="paging">
-        		<?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class'=>'disabled'));?>
+        		<?php echo $this->Paginator->prev($this->Html->image('/img/previousButton_up.png', array('border' => '0', 'align' => 'absbottom', 'class' => 'prev-button')), array('escape' => false), array(), null, array('class'=>'disabled'));?>
         	    |
         	    <?php echo $this->Paginator->numbers();?>
                 |
-        		<?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
+        		<?php echo $this->Paginator->next($this->Html->image('/img/nextButton_up.png', array('border' => '0', 'align' => 'absbottom', 'class' => 'next-button')), array('escape' => false), array(), null, array('class' => 'disabled'));?>
         	</div>
 		</div>
 		
 	</div>
 </div>
+<script>
+jQuery('.avail-button > img').mouseover(function() {
+  jQuery(this).attr('src', '/img/availButton_down.png');
+}).mouseout(function(){
+  jQuery(this).attr('src', '/img/availButton_up.png');
+});
+
+jQuery('.prev-button').mouseover(function() {
+  jQuery(this).attr('src', '/img/previousButton_down.png');
+}).mouseout(function(){
+  jQuery(this).attr('src', '/img/previousButton_up.png');
+});
+
+jQuery('.next-button').mouseover(function() {
+  jQuery(this).attr('src', '/img/nextButton_down.png');
+}).mouseout(function(){
+  jQuery(this).attr('src', '/img/nextButton_up.png');
+});
+
+
+</script>

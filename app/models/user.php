@@ -162,6 +162,11 @@ class User extends AppModel {
 			'className' => 'Stockholder',
 			'foreignKey' => 'user_id',
 			'dependent' => true,
+		),
+		'Event' => array(
+			'className' => 'Event',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
 		)
 	);
 	

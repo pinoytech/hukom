@@ -13,6 +13,7 @@
 		echo $html->script('jquery-1.5.2.min.js');
         // echo $html->script('jquery-ui.min');
         echo $html->script('jquery-ui.js');
+        echo $html->script('application.js');
         
         if ($this->params['controller'] != 'events') {
             echo $html->script('jquery.validate.min'); // Effects FullCalender

@@ -16,7 +16,7 @@
 			?>
 				<div style="text-align:center">
 				    <p>
-				        The <b>Online Legal Consultation Service</b> offers you the most convenient way to start an attorney-client relationship by discussing all your legal problems online and choosing from the four (4) types of online legal service most preferable to your needs.
+				        The <b>Online Legal Consultation Service</b> offers you the most convenient way to start an attorney-client relationship by discussing all your legal problems online and choosing from the five (5) types of online legal service most preferable to your needs.
 				    </p>
 				    
 					<div style="font-weight:bold">Please select the type of legal service that you would like to avail from E-Lawyers Online.</div>
@@ -38,7 +38,7 @@
 						?>
 					</div>
 				</div>
-				<div style="display:block;padding-left:290px;">
+                <div style="display:block;padding-left:290px;">
 					<label for="data[Legalcase][legal_service]" class="error" style="display:none">Please select type of service</label> 
 				</div>
 				
@@ -65,34 +65,34 @@
                 		  Tips:
                 	        <ul>
                 	            <li>It will be useful for the client to write the complete facts, objectives, and questions regarding his/her legal problem using any word processor program (like Microsoft Word, Wordpad, or Notepad) for an easy cut-and-paste process. </li>
-                	            <li>For any documents which can be valuable for the case, clients can upload any Microsoft Word, Portable Document Format (PDF), or a scanned image( in JPEG format) for a more comprehensive legal advice from E-Lawyers Online.</li>
+                	            <li>For any documents which can be valuable for the case, clients can upload any Microsoft Word, Portable Document Format (PDF), or a scanned image (in JPEG format) for a more comprehensive legal advice from E-Lawyers Online.</li>
                 		    </ul>
                 		</p>
                 	</div>
                 	<div id="tabs-2">
                         <p>
-                            <b>Online Legal Consultation By Video Conference</b> – this legal service is suitable for clients, mostly abroad or have time and distance contraint,  who require an in-depth discussion of his/her case or legal problem through video conference (and/or chat) using Skype or Yahoo Messenger. Through our online form, the client can select a preferred date and time and provide in advance the necessary facts/details, objectives, and questions relevant to the legal problem. The video conference is rated at P3,000/hour, E-Lawyers Online will send the initial legal advice through e-mail based on the given information and during the conference, the client can explore more on the chances or probability of winning his/her case by asking follow-up questions from the lawyer.
+                            <b>Online Legal Consultation By Video Conference</b> – this legal service is suitable for clients, mostly abroad or have time and distance contraint,  who require an in-depth discussion of his/her case or legal problem through video conference (and/or chat) using Skype or Yahoo Messenger. Through our online form, the client can select a preferred date and time and provide in advance the necessary facts/details, objectives, and questions relevant to the legal problem. The video conference is rated at Php 2,000/hour, E-Lawyers Online will send the initial legal advice through e-mail based on the given information and during the conference, the client can explore more on the chances or probability of winning his/her case by asking follow-up questions from the lawyer.
                         </p>
                         
                         <p>
                 		  Tips:
                 	        <ul>
                 	            <li>It will be useful for the client to write the complete facts, objectives, and questions regarding his/her legal problem using any word processor program (like Microsoft Word, Wordpad, or Notepad) for an easy cut-and-paste process. </li>
-                	            <li>For any documents which can be valuable for the case, clients can upload any Microsoft Word, Portable Document Format (PDF), or a scanned image( in JPEG format) for a more comprehensive legal advice from E-Lawyers Online.</li>
+                	            <li>For any documents which can be valuable for the case, clients can upload any Microsoft Word, Portable Document Format (PDF), or a scanned image (in JPEG format) for a more comprehensive legal advice from E-Lawyers Online.</li>
                 	            <li>Make sure you have the following: built-in or separate headset with microphone and webcam. Before the video conference, test if your headset, microphone, and webcam are working properly. Prepare a copy of the facts and details for reference during the conference.</li>
                 		    </ul>
                 		</p>                		
                 	</div>
                 	<div id="tabs-3">
                         <p>
-                            <b>Online Legal Consultation By Office Conference</b> – (for approval) this legal service is suitable for clients who require an in-depth discussion of his/her case or legal problem through office conference. Through our online form, the client can select a preferred date and time of office conference and provide in advance the necessary facts/details, objectives, and questions relevant to the legal problem. The office conference is rated at P3,000/hour and will be held at Suite 10-G Strata 100 Condominium, 100 F. Ortigas Jr. Road, Ortigas Center, Pasig City, Metro Manila. E-Lawyers Online will send the initial legal advice through e-mail based on the given information and during the conference the client can explore more on the chances or probability of winning his/her case by asking follow-up questions from the lawyer.
+                            <b>Online Legal Consultation By Office Conference</b> – this legal service is suitable for clients who require an in-depth discussion of his/her case or legal problem through office conference. Through our online form, the client can select a preferred date and time of office conference and provide in advance the necessary facts/details, objectives, and questions relevant to the legal problem. The office conference is rated at Php 2,000/hour and will be held at Suite 10-G Strata 100 Condominium, 100 F. Ortigas Jr. Road, Ortigas Center, Pasig City, Metro Manila. E-Lawyers Online will send the initial legal advice through e-mail based on the given information and during the conference the client can explore more on the chances or probability of winning his/her case by asking follow-up questions from the lawyer.
                         </p>
                         
                         <p>
                 		  Tips:
                 	        <ul>
                 	            <li>It will be useful for the client to write the complete facts, objectives, and questions regarding his/her legal problem using any word processor program (like Microsoft Word, Wordpad, or Notepad) for an easy cut-and-paste process. </li>
-                	            <li>For any documents which can be valuable for the case, clients can upload any Microsoft Word, Portable Document Format (PDF), or a scanned image( in JPEG format) for a more comprehensive legal advice from E-Lawyers Online.</li>
+                	            <li>For any documents which can be valuable for the case, clients can upload any Microsoft Word, Portable Document Format (PDF), or a scanned image (in JPEG format) for a more comprehensive legal advice from E-Lawyers Online.</li>
                 	            <li>We advised you to be at our office 30 minutes before the set schedule of office conference for purposes of preparation of documents and initial interview.</li>
                 		    </ul>
                 		</p>
@@ -111,7 +111,7 @@
                 		  Tips:
                 	        <ul>
                 	            <li>It will be useful for the client to write the complete facts, objectives, and questions regarding his/her legal problem using any word processor program (like Microsoft Word, Wordpad, or Notepad) for an easy cut-and-paste process. </li>
-                	            <li>For any documents which can be valuable for the case, clients can upload any Microsoft Word, Portable Document Format (PDF), or a scanned image( in JPEG format) for a more comprehensive legal advice from E-Lawyers Online.</li>
+                	            <li>For any documents which can be valuable for the case, clients can upload any Microsoft Word, Portable Document Format (PDF), or a scanned image (in JPEG format) for a more comprehensive legal advice from E-Lawyers Online.</li>
                 		    </ul>
                 		</p>
                 	</div>

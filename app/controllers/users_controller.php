@@ -338,6 +338,8 @@ class UsersController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		
+		$this->User->validate = array();
+		
 		if (!empty($this->data)) {	
 			$this->User->id = $this->data['User']['id'];
 			if ($this->User->saveAll($this->data)) {
@@ -527,7 +529,7 @@ class UsersController extends AppController {
 		
 		// Update Personal Info
 		if (!empty($this->data)) {
-	
+
 			$this->loadModel('PersonalInfo');
 			
 			//Temporary Fix

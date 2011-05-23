@@ -35,42 +35,42 @@
 					
 					echo '<div class="row two-field">';
 					echo $this->Form->input('PersonalInfo.email', array('readonly' => true, 'div' => 'input text required'));
-					echo $this->Form->input('PersonalInfo.alternate_email', array('class' => 'required', 'div' => 'input text required'));
+					echo $this->Form->input('PersonalInfo.alternate_email', array('class' => 'required', 'div' => 'input text required email'));
 					echo '</div>';
-					
+
 					echo '<div class="row two-field">';
 					// echo $this->Form->input('PersonalInfo.birth_date', array('minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select', 'label' => 'Date of Birth', 'after' => '<input type="hidden" id="birth_date_check" class="required">', 'class' => 'birth_date'));
 					echo $this->Form->input('PersonalInfo.birth_date', array('type' => 'text', 'class' => 'birth_date'));
 					echo $this->Form->input('PersonalInfo.birth_place', array('label' => 'Place of Birth', 'class' => 'required'));
 					echo '</div>';
-					
+
 					echo '<div class="row three-field">';
 					echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'empty' => 'Select', 'class' => 'required', 'options' => $custom->list_gender()));
 					echo $this->Form->input('PersonalInfo.age', array('class' => 'required digits'));
 					echo $this->Form->input('PersonalInfo.citizenship', array('class' => 'required'));
 					echo '</div>';
-					
+
 					echo '<div class="row two-field">';
 					echo $this->Form->input('PersonalInfo.education_attained', array('class' => 'required', 'type' => 'select', 'options' => $custom->list_education_attained(), 'empty' => 'Select One'));
 					echo $this->Form->input('PersonalInfo.school', array('class' => 'required'));
 					echo '</div>';
-					
+
 					echo '<div class="row two-field">';
 					echo $this->Form->input('PersonalInfo.company_work', array('label' => 'Company/Work', 'class' => 'required'));
 					echo $this->Form->input('PersonalInfo.nature_of_business', array('class' => 'required'));
 					echo '</div>';
-					
+
 					echo '<div class="row full-field">';
 					echo $this->Form->input('PersonalInfo.company_address', array('class' => 'required'));
 					echo '</div>';
-					
+
                     // echo '<div class="row three-field">';
                     // echo $this->Form->input('PersonalInfo.civil_status', array('options' => $custom->list_civil_status(), 'empty' => 'Select', 'class' => 'civil-status required'));
                     // // echo $this->Form->input('PersonalInfo.marriage_date', array('label' => 'Date of Marriage', 'minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select', 'class' => 'marriage_date', 'validate' => 'required:true'));
                     // echo $this->Form->input('PersonalInfo.marriage_date', array('type' => 'text', 'class' => 'birth_date marriage_date'));
                     // echo $this->Form->input('PersonalInfo.marriage_place', array('label' => 'Place of Marriage', 'class' => 'marriage-input'));
                     // echo '</div>';
-					
+
 					echo '<div class="row three-field">';
 					echo $this->Form->input('PersonalInfo.work_position', array('label' => 'Work/Position', 'class' => 'required'));
 					echo $this->Form->input('PersonalInfo.work_duration', array('class' => 'required'));

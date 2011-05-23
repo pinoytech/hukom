@@ -105,3 +105,15 @@ jQuery.extend(jQuery.validator.messages, {
     max: jQuery.validator.format("Please enter a value less than or equal to {0}"),
     min: jQuery.validator.format("Please enter a value greater than or equal to {0}")
 });
+
+jQuery('.add-button > img').mouseover(function() {
+  jQuery(this).attr('src', '/img/Addbutton_down.png');
+}).mouseout(function(){
+  jQuery(this).attr('src', '/img/Addbutton_up.png');
+});
+
+jQuery('.remove-button > img').live('mouseover', function(e) {
+  jQuery(this).attr('src', '/img/removeButton_down.png');
+}).live('mouseout', function(e) {
+  jQuery(this).attr('src', '/img/removeButton_up.png');
+});
