@@ -237,11 +237,17 @@ class EventsController extends AppController {
         $datetime2 = new DateTime($_POST['date_clicked']);
         $interval = $datetime1->diff($datetime2);
         */
-                
+				
+		// debug($this->Custom->date_difference(date('y-m-d'), $_POST['date_clicked'], 'd'));
+		
+		$msg = '';
+		
         if ($this->Custom->date_difference(date('y-m-d'), $_POST['date_clicked'], 'd') > 3) { //if
             $events = $this->Event->find('count', array('conditions' => array('Event.case_id' => $_POST['case_id'], 'Event.is_locked' => 1), 'limit' => 1));
-                
-            if ($events > 0) {
+			
+			// debug($events);
+            
+			if ($events > 0) {
                 $msg = 'locked';
             }
         }

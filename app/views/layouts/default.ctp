@@ -11,29 +11,24 @@
         echo $this->Html->css('public');
         echo $html->css('base/jquery-ui.css');
 		echo $html->script('jquery-1.5.2.min.js');
-        // echo $html->script('jquery-ui.min');
         echo $html->script('jquery-ui.js');
         echo $html->script('application.js');
-        
-        if ($this->params['controller'] != 'events') {
-            echo $html->script('jquery.validate.min'); // Effects FullCalender
+
+        if ($this->params['action'] == 'letter_of_intent') {
+			echo $html->css('fullcalendar');
+	        echo $html->css('fullcalendar.print', 'stylesheet', array('media' => 'print'));
+	        echo $html->script('jquery.ui.core.js');
+	        echo $html->script('jquery.ui.draggable.js');
+	        echo $html->script('jquery.ui.resizable.js');
+	    	echo $html->script('fullcalendar.min.js');
+	        echo $html->script('jquery-ui-timepicker-addon.js');
         }
-        
-        if ($this->params['controller'] == 'events') {
-            //Fullcalendar
-    		echo $html->css('fullcalendar');
-            echo $html->css('fullcalendar.print', 'stylesheet', array('media' => 'print'));
-            echo $html->script('jquery.ui.core.js');
-            echo $html->script('jquery.ui.draggable.js');
-            echo $html->script('jquery.ui.resizable.js');
-            echo $html->script('fullcalendar.min.js');
-            echo $html->script('jquery-ui-timepicker-addon.js');
-            
-        }
-        
+		else {
+			echo $html->script('jquery.validate.min'); // Affects FullCalender
+		}
+
 		echo $scripts_for_layout;
 	?>
-	
 </head>
 <body>
     <!-- Header -->
@@ -54,8 +49,7 @@
 	<br class="clear" />
     </div>
     <!-- Header -->
-    
-    
+
     <!-- Banner -->
     <div class="banner">
         <!-- Sub Nav -->
