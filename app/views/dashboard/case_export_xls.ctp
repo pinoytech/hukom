@@ -18,6 +18,14 @@
     <tr id="titles">
         <td class="tableTd">Case ID</td>
         <td class="tableTd">Username</td>
+		<?php
+		if ($video) {
+		?>
+		<td class="tableTd">Messenger Type</td>
+        <td class="tableTd">Messenger Username/ID</td>
+		<?php
+		}
+		?>
         <td class="tableTd">Legal Problem</td>
         <td class="tableTd">Case Detail ID</td>
         <td class="tableTd">Legal Service</td>
@@ -32,6 +40,10 @@
     echo '<tr>';
     echo '<td class="tableTdContent">'.$row['Legalcase']['id'].'</td>';
     echo '<td class="tableTdContent">'.$row['User']['username'].'</td>';
+	if ($video) {
+		echo '<td class="tableTdContent">'.$row['Event']['messenger_type'].'</td>';
+		echo '<td class="tableTdContent">'.$row['Event']['messenger_username'].'</td>';
+	}
     echo '<td class="tableTdContent">'.$row['Legalcase']['legal_problem'].'</td>';
     echo '<td class="tableTdContent">'.$row['Legalcasedetail']['id'].'</td>';
     echo '<td class="tableTdContent">'.$row['Legalcasedetail']['legal_service'].'</td>';
@@ -39,7 +51,7 @@
     echo '<td class="tableTdContent">'.$row['Legalcasedetail']['objectives'].'</td>';
     echo '<td class="tableTdContent">'.$row['Legalcasedetail']['questions'].'</td>';    
     echo '<td class="tableTdContent">'.$row['Legalcasedetail']['status'].'</td>';
-    echo '<td class="tableTdContent">'.$row['Legalcasedetail']['created'].'</td>';
+	echo '<td class="tableTdContent">'.$row['Legalcasedetail']['created'].'</td>';
     echo '</tr>';
     endforeach;
     ?>

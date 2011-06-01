@@ -113,7 +113,7 @@ jQuery('document').ready(function() {
 		
 		if (jQuery('#SpouseInfoId').val() == '') {
 			
-			var agree=confirm("Data you provided on this form will be discared. Do you want to continue?");
+			var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
 	        if (agree){                        
 	           window.location = '/users/personal_info/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>';
 	        }

@@ -157,8 +157,16 @@ class LegalcasesController extends AppController {
 				// $this->Session->setFlash(__('Case Information has been saved', true));
 				
 				if ($this->data['Legalcase']['legal_service'] == 'Video Conference' OR $this->data['Legalcase']['legal_service'] == 'Office Conference' ) {
-				    $conference = true;
-				    
+					
+					switch ($this->data['Legalcase']['legal_service']){
+						case "Video Conference":
+							$conference = 'video';
+							break;
+						case "Office Conference":
+							$conference = 'office';
+							break;	
+					}
+					
 				    $this->Session->write('Event.calendar_id', time());
 				}
 				else {
@@ -207,6 +215,41 @@ class LegalcasesController extends AppController {
 		    $this->set('event_date', '');
 		    $this->set('event_start', '');
 		    $this->set('event_end', '');
+		    $this->set('conference', $conference);
+		    $this->set('conference_fee', $Legalservice['Legalservice']['fee']);
+		    $this->render('letter_of_intent_conference');
+		}
+	}
+	
+	function reschedule_conference($event_id){
+		$this->loadModel('Event');
+		$this->loadModel('PersonalInfo');
+		$this->loadModel('Legalservice');
+		
+		$PersonalInfo = $this->PersonalInfo->find('first', array('conditions' => array('PersonalInfo.user_id' => $id)));
+		
+		$user_full_name = $PersonalInfo['PersonalInfo']['first_name'].' '.$PersonalInfo['PersonalInfo']['last_name'];
+		
+		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
+		// debug($Legalservice['Legalservice']['fee']);
+		
+		if (!empty($this->data)) {
+			$this->redirect(array('controller' => 'LegalCases', 'action' => 'add'));
+		}
+
+		$this->set('user_full_name', $user_full_name);
+		$this->set('email', $PersonalInfo['PersonalInfo']['email']);
+		$this->set('fee', $Legalservice['Legalservice']['fee']);
+		$this->set('id', $id);
+		$this->set('case_id', $case_id);
+		
+		if ($conference) {
+		    $this->set('legal_service', $Legalservice['Legalservice']['name']);
+		    $this->set('event_hours', '');
+		    $this->set('event_date', '');
+		    $this->set('event_start', '');
+		    $this->set('event_end', '');
+		    $this->set('conference', $conference);
 		    $this->set('conference_fee', $Legalservice['Legalservice']['fee']);
 		    $this->render('letter_of_intent_conference');
 		}
@@ -296,9 +339,6 @@ class LegalcasesController extends AppController {
 		
 		$this->loadModel('Legalcasedetail');
 
-		// debug($this->data);
-		// exit;		
-		
 		//Remove model validation
 		$this->Legalcasedetail->validate = array();
 				
@@ -318,7 +358,6 @@ class LegalcasesController extends AppController {
 			}
 			
 			$this->data = $this->Legalcasedetail->read(null, $this->data['Legalcasedetail']['case_id']);
-
 		}
 		
 		if (empty($this->data)) {
@@ -375,7 +414,21 @@ class LegalcasesController extends AppController {
 	}
 
 	function summary_of_information($id, $case_id=null, $case_detail_id=null, $type=null, $legal_service=null){
-
+		
+		//Assign Legal Service Session
+		if ($legal_service == 'perquery') {
+			$this->Session->write('Legalcase.legal_service', 'Per Query');
+		}
+		
+		if ($legal_service == 'video') {
+			$this->Session->write('Legalcase.legal_service', 'Video Conference');
+		}
+		
+		if ($legal_service == 'office') {
+			$this->Session->write('Legalcase.legal_service', 'Office Conference');
+		}
+		//end assign
+		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
@@ -395,34 +448,30 @@ class LegalcasesController extends AppController {
 		$this->set('type', $type);
 		$this->set('upload_folder', $upload_folder);
 		$this->set('files', $this->Custom->show_files($upload_folder));
+		$this->set('no_of_hours', '');
 		
-		//Event
+		//Get Legalservice fee
+		$this->loadModel('Legalservice');
+		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
+		$this->set('fee', $Legalservice['Legalservice']['fee']);
+		
+		//Get Event
         $this->loadModel('Event');        
         $Event = $this->Event->findByCaseDetailId($case_detail_id);
         
         if ($Event) {
-            $this->set('Event', $Event);
+            $no_of_hours = $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
+			
+			$this->set('Event', $Event);
+			$this->set('no_of_hours', $no_of_hours);
+			$this->set('fee', (float)$Legalservice['Legalservice']['fee'] * $no_of_hours);
         }
         else {
             $this->set('Event', false);
         }
         //end Event
-        
-		//Assign Legal Service Session
-		if ($legal_service == 'perquery') {
-			$this->Session->write('Legalcase.legal_service', 'Per Query');
-		}
-		
-		if ($legal_service == 'video') {
-			$this->Session->write('Legalcase.legal_service', 'Video Conference');
-		}
-		
-		if ($legal_service == 'office') {
-			$this->Session->write('Legalcase.legal_service', 'Office Conference');
-		}
-		
 	}
-	
+
 	function online_legal_consultation_agreement($id, $case_id=null, $case_detail_id=null){ //$id = user_id
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -453,13 +502,13 @@ class LegalcasesController extends AppController {
             
             $fee = (float)$Legalservice['Legalservice']['fee'] * (float)$interval->format('%h');
             */
-            
+
             $fee = (float)$Legalservice['Legalservice']['fee'] * $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
 		}
 		else {
 		    $fee = $Legalservice['Legalservice']['fee'];
 		}
-		
+
 		$this->set('fee', $fee);
 		$this->set('user_full_name', $user_full_name);
 		$this->set('id', $id);

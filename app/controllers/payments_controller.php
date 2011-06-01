@@ -72,6 +72,57 @@ class PaymentsController extends AppController {
 		
 	}
 	
+	function admin_on_time_payment() {
+		if (!empty($_POST)) {
+			
+			$this->loadModel('Event');
+			$this->loadModel('Payment');
+			
+			$Event = $this->Event->findById($_POST['event_id']);
+			
+			if ($Event) {
+				$this->Event->id = $Event['Event']['id'];
+				$this->Event->saveField('is_locked', '0');
+				
+				$Payment = $this->Payment->findByCaseDetailId($Event['Event']['case_detail_id']);
+				
+				$this->Payment->id = $Payment['Payment']['id'];
+				$this->Payment->saveField('status', 'Confirmed');
+				
+				//Send Confirmation Email
+				
+				// debug(date('F d, Y', strtotime($Event['Event']['start'])));
+				
+				$this->_send_on_time_payment_confirmation($Payment['Payment']['user_id'], $Payment['Payment']['case_id'], $Event['Event']['id']);
+			}
+			
+			Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+			echo 'test';
+		}
+	}
+	
+	function admin_late_payment() {
+		// debug('here');
+		// exit;
+		if (!empty($_POST)) {
+			$this->loadModel('Event');
+			$this->loadModel('Payment');
+			
+			$Event = $this->Event->findById($_POST['event_id']);
+			
+			if ($this->Event->delete($Event['Event']['id'])) {
+				$this->_send_late_payment_confirmation($Event['Event']['user_id'], $Event['Event']['id']);
+			}
+			
+			Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+			echo 'late payment';
+		}
+	}
+	
 	function _send_payment_confirmation($id, $case_id) {
 		$this->loadModel('User');
 		
@@ -92,6 +143,49 @@ class PaymentsController extends AppController {
 	    $this->Email->send();
 	 }
 	
+	function _send_on_time_payment_confirmation($id, $case_id, $event_id) {
+		$this->loadModel('User');
+
+		$User                  = $this->User->read(null,$id);
+		$Event                 = $this->Event->read(null,$event_id);
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = 'E-Lawyers Online - Payment Confirmation';
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'on_time_payment_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Event', $Event);
+	    $this->set('case_id', $case_id);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
+	
+	function _send_late_payment_confirmation($id, $event_id) {
+		$this->loadModel('User');
+
+		$User                  = $this->User->read(null,$id);
+		$Event                 = $this->Event->read(null,$event_id);
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = 'E-Lawyers Online - Late Payment Confirmation';
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'late_payment_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Event', $Event);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
+
 	function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for user', true));
@@ -178,9 +272,22 @@ class PaymentsController extends AppController {
 				$this->Payment->deleteAll(array('Payment.case_detail_id' => $this->data['Payment']['case_detail_id']));
 			}
 			
+			// debug($this->Session->read('Legalcase.legal_service'));
+			// exit;
+			
 			// Save Bank Details
 			$this->Payment->id = $this->data['Payment']['id'];
 			if ($this->Payment->save($this->data)) {
+
+				//Update Event Status
+				if (($this->Session->read('Legalcase.legal_service') == 'Video Conference') OR ($this->Session->read('Legalcase.legal_service') == 'Office Conference')) {			
+					$this->loadModel('Event');
+					$this->Event->updateAll(
+					    array('Event.status' => "'active'"),
+						array('Event.case_detail_id' => $this->data['Payment']['case_detail_id'])
+					);					
+				}
+				
 				$this->redirect(array('action' => $this->data['Payment']['goto'], $this->data['Payment']['user_id'], $this->data['Payment']['case_id'], $this->data['Payment']['case_detail_id'], $this->Payment->id, $payment_option));
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));

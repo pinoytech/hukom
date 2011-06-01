@@ -2,7 +2,7 @@
 class AppController extends Controller {
     var $components = array('Acl', 'Auth', 'Session');
     var $helpers = array('Html', 'Form', 'Session');
-    var $admin_email = array('gino.carlo.cortez@gmail.com', 'ginoc@sourcepad.com', 'gino@etgdes.com');
+    var $admin_email = array('gino.carlo.cortez@gmail.com');
     // var $admin_email = array('gino.carlo.cortez@gmail.com', 'attyvalderama@gmail.com', 'redgfernandez@yahoo.com');
 	
 	function beforeFilter() {

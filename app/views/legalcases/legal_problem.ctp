@@ -5,7 +5,7 @@
 				
 		<?php echo $this->Session->flash(); ?>
 					
-			<div class="form-title">My Legal Problem is - Ang Problema kong Legal ay:</div>
+			<div class="form-title"><?php echo ($auth_user_type == 'personal') ? 'My' : 'Our'; ?> Legal Problem is - Ang Problema <?php echo ($auth_user_type == 'personal') ? 'kong' : 'naming'; ?> Legal ay:</div>
 			<div class="form-holder">
 			    
 			    <p>
@@ -18,7 +18,7 @@
 					echo $this->Form->input('Legalcase.user_id', array('type' => 'hidden', 'value' => $id));
 					echo $this->Form->input('Legalcase.status', array('type' => 'hidden', 'value' => 'active'));
 					echo $this->Form->input('Legalcase.case_detail_id', array('type' => 'hidden', 'value' => $case_detail_id));
-					
+										
 					/*
 					$options = array(
 							'Personal' => 'Personal',
@@ -38,7 +38,7 @@
 				
 				<div class="input radio">
 					<?php
-					if ($this->Session->read('Legalcase.legal_service') != 'Video Conference' AND $this->Session->read('Legalcase.legal_service') != 'Office Conference') {
+					if ($auth_user_type == 'personal') {
 					?>
 					<input type="radio" class="legal_problem_radio" value="Personal" id="LegalcaseLegalProblemPersonal" name="data[Legalcase][legal_problem]"><span class="label">Personal</span> - I have problem in my birth certificate, my passport, my criminal case, etc.
 					<br />
@@ -47,14 +47,14 @@
 					<?php
 				    }
 					?>
-					<input type="radio" class="legal_problem_radio" value="Property" id="LegalcaseLegalProblemProperty" name="data[Legalcase][legal_problem]"><span class="label">Property</span> - I have a problem with my land title, car, stocks, etc.
+					<input type="radio" class="legal_problem_radio" value="Property" id="LegalcaseLegalProblemProperty" name="data[Legalcase][legal_problem]"><span class="label">Property</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem with my land title, car, stocks, etc.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Contractual" id="LegalcaseLegalProblemContractual" name="data[Legalcase][legal_problem]"><span class="label">Contractual</span> - I have a problem with my contract, sub-contract, etc. 
+					<input type="radio" class="legal_problem_radio" value="Contractual" id="LegalcaseLegalProblemContractual" name="data[Legalcase][legal_problem]"><span class="label">Contractual</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem with my contract, sub-contract, etc. 
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Business" id="LegalcaseLegalProblemBusiness" name="data[Legalcase][legal_problem]"><span class="label">Business</span> - I have a problem in my business.
+					<input type="radio" class="legal_problem_radio" value="Business" id="LegalcaseLegalProblemBusiness" name="data[Legalcase][legal_problem]"><span class="label">Business</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem in my business.
 					<br />
 						<div id="my_business_is">
-							My Business is:
+							<?php echo ($auth_user_type == 'personal') ? 'My' : 'Our'; ?> Business is:
 							<br />
 							<input type="radio" class="legal_problem_radio" value="Single Proprietorship" name="data[Legalcase][legal_problem]"><span class="label">Single Proprietorship</span>
 							<br />
@@ -65,13 +65,13 @@
 							<input type="radio" class="legal_problem_radio" value="Others" name="data[Legalcase][legal_problem]"><span class="label">Others</span>
 							<br />
 						</div>
-					<input type="radio" class="legal_problem_radio" value="Work" id="LegalcaseLegalProblemWork" name="data[Legalcase][legal_problem]"><span class="label">Work</span> - I have a problem in my work, dismissal, SSS, Pag-Ibig, OWWA, etc.
+					<input type="radio" class="legal_problem_radio" value="Work" id="LegalcaseLegalProblemWork" name="data[Legalcase][legal_problem]"><span class="label">Work</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem in <?php echo ($auth_user_type == 'personal') ? 'my' : 'our'; ?> work, dismissal, SSS, Pag-Ibig, OWWA, etc.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Legal Documents" id="LegalcaseLegalProblemLegalDocuments" name="data[Legalcase][legal_problem]"><span class="label">Legal Documents</span> - I need an affidavit, SPA, deed of sale, contract, etc.
+					<input type="radio" class="legal_problem_radio" value="Legal Documents" id="LegalcaseLegalProblemLegalDocuments" name="data[Legalcase][legal_problem]"><span class="label">Legal Documents</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> need an affidavit, SPA, deed of sale, contract, etc.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Special Projects/Contracts" id="LegalcaseLegalProblemSpecialProjectsContracts" name="data[Legalcase][legal_problem]"><span class="label">Special Projects/Contracts</span> - I need a lawyer for a big transaction.
+					<input type="radio" class="legal_problem_radio" value="Special Projects/Contracts" id="LegalcaseLegalProblemSpecialProjectsContracts" name="data[Legalcase][legal_problem]"><span class="label">Special Projects/Contracts</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> need a lawyer for a big transaction.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Anything under the sun" id="LegalcaseLegalProblemAnythingUnderTheSun" name="data[Legalcase][legal_problem]"><span class="label">Anything under the sun (Other Legal Services)</span> - I need a legal advice before I act.
+					<input type="radio" class="legal_problem_radio" value="Anything under the sun" id="LegalcaseLegalProblemAnythingUnderTheSun" name="data[Legalcase][legal_problem]"><span class="label">Anything under the sun (Other Legal Services)</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> need a legal advice before <?php echo ($auth_user_type == 'personal') ? 'I' : 'we'; ?> act.
 					<div id="anything_under">
 						<input type="text" name="data[Legalcase][legal_problem]" disabled>
 					</div>

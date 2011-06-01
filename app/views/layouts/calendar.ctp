@@ -7,7 +7,7 @@
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
-		echo $this->Html->meta('icon');
+		echo $html->meta('icon');
         echo $html->css('base/jquery-ui.css');
 		echo $html->script('jquery-1.5.2.min.js');
         echo $html->script('jquery-ui.js');        

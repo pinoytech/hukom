@@ -36,8 +36,9 @@ else {
     echo $form->create('Event', array('target'=> '_parent'));
     echo $form->input('title' , array('label' => 'User', 'type'=>'text', 'value' => $custom->get_first_last_name($id), 'readonly' => true));
     echo $form->input('date', array('type'=>'text', 'readonly' => true));
-    echo $form->input('start', array('type'=>'text', 'readonly' => true, 'value' => '08:00 am'));
-    echo $form->input('end', array('type'=>'text', 'readonly' => true));
+    // echo $form->input('start', array('type'=>'text', 'readonly' => true, 'value' => '08:00 am'));
+    echo $form->input('start', array('options' => $custom->calendar_time_select()));
+    echo $form->input('end', array('options' => $custom->calendar_time_select()));
     echo $form->input('allday', array('type'=>'hidden', 'value' => 0));
     echo $form->input('user_id', array('type'=>'hidden', 'value' => $id));
     echo $form->input('case_id', array('type'=>'hidden', 'value' => $case_id));
@@ -46,30 +47,28 @@ else {
 </div>
 
 <div id="event-blank" title="Schedule Conference" class="hidden">
-    Start Time and End Time is required.
+    Please complete the conference start time and end time to proceed.
 </div>
 
 <div id="event-not-available" title="Schedule Conference" class="hidden">
-    Sorry, the time you have selected is not available. Please select another time or another date from the calendar.
+    The schedule you have selected is not available. Please select another date or time to proceed.
 </div>
 
 <div id="event-date-not-allowed" title="Schedule Conference" class="hidden">
-    The date you have selected is not allowed. Please select the date today or onwards.
+    The schedule you have selected is not allowed. Please select another date or time to proceed.
 </div>
 
 <div id="event-date-same" title="Schedule Conference" class="hidden">
-    The time you have selected is not valid. Start Time must be greater then End Time.
+    The time you have selected is invalid. The start time of your conference should NOT be greater than the end time. 
 </div>
 
 <div id="event-locked" title="Schedule Conference" class="hidden">
-    You have already booked a schedule.
+    You already booked a schedule.
 </div>
 
 <div id="event-after3days" title="Schedule Conference" class="hidden">
-     The date you have selected is not allowed. Please select a date 3 days from now.
+    You have selected a date within the 3-day case review period. Please select a new schedule 3 days after the original date selected.
 </div>
-
-
 
 <script type='text/javascript'>
 jQuery(document).ready(function() {
@@ -197,7 +196,7 @@ jQuery(document).ready(function() {
             prev: '&lt;',
             next: '&gt;'
         },
-        
+
         editable: false,
         allDaySlot: false,
         selectable: true,
@@ -223,14 +222,14 @@ jQuery(document).ready(function() {
                     else if (msg == 'after3days') {
                         jQuery("#event-after3days").dialog("open");
                     }
-                    else if (!msg) {
+                    else if (msg == 'ok') {
 						
 						// console.log((Date.parse($.fullCalendar.formatDate(date, "MMM d, yyyy"))));
 						// console.log(Date.parse("May 27, 2011"));
 						// console.log(Date.parse("<?php echo date('M j, Y');?>"));
 						
                         if ( Date.parse( $.fullCalendar.formatDate(date, "MMM d, yyyy")) < Date.parse("<?php echo date('M j, Y');?>")) {
-                            jQuery("#event-date-not-allowed").dialog("open");
+                            jQuery("#event-after3days").dialog("open");
                         }
                         else {                    
                             // allDay = false;    
@@ -280,8 +279,7 @@ jQuery(document).ready(function() {
                                         input_data.push('EventUserId=' + jQuery('#EventUserId').val());
                                         input_data.push('EventCaseId=' + jQuery('#EventCaseId').val());
                                         input_data.push('EventCalendarId=' + jQuery('#EventCalendarId').val());
-
-
+										
                                         jQuery.ajax({
                                             type: "POST",
                                             url: url,
@@ -292,8 +290,12 @@ jQuery(document).ready(function() {
                                                     jQuery("#event-not-available").dialog("open");
                                                     return false;
                                                 }
+												else {
+													//Assign data
+													jQuery('#event_date').val('date here');
+												}
 
-                                                calendar.fullCalendar('refetchEvents');
+                                                // calendar.fullCalendar('refetchEvents');
                                             },
                                             error: function()
                                             {
@@ -301,10 +303,15 @@ jQuery(document).ready(function() {
                                             }
                                         });
 
-                                        jQuery(this).dialog('close');
+                                        jQuery(this).dialog('destroy');
                                         jQuery('#EventStart').val('');
                                         jQuery('#EventEnd').val('');
                                         jQuery('#EventAllday').val(0);
+
+										//Close the calendar too
+										// jQuery("#event-calendar").dialog("close");
+										window.parent.jQuery('#event-calendar').dialog('close');
+
                         			} //end Ok: function(data) {
                                 }
                         	});

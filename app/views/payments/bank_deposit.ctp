@@ -104,6 +104,8 @@ jQuery('document').ready(function() {
 	    'script'    : '/uploadify/uploadify.php',
 	    'cancelImg' : '/uploadify/cancel.png',
 	    'folder'    : '<?php echo $upload_folder;?>',
+		'buttonImg' : '/img/selectButton_up.png',
+		'wmode'     : 'transparent',
 	    'auto'      : true,
 	    'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
 	    'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',

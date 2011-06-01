@@ -46,10 +46,13 @@ class EventsController extends AppController {
 
         //2. Get the events corresponding to the time range
         $conditions = array('Event.start BETWEEN ? AND ?' => array($mysqlstart,$mysqlend), 
-            // 'Event.case_detail_id !=' => "''"
+            'Event.status' => 'active'
         );
-        $events = $this->Event->find('all',array('conditions' =>$conditions));
 
+        $events = $this->Event->find('all',array('conditions' =>$conditions));
+		
+		// debug($events);
+		
         //3. Create the json array
         $rows = array();
         for ($a=0; count($events)> $a; $a++) {
@@ -58,11 +61,11 @@ class EventsController extends AppController {
 
             //Create an event entry
             $rows[] = array('id' => $events[$a]['Event']['id'],
-            'title' => $events[$a]['Event']['title'],
+            'title' => ucfirst($events[$a]['Event']['title']),
             'start' => date('Y-m-d H:i', strtotime($events[$a]['Event']['start'])),
             'end' => date('Y-m-d H:i',strtotime($events[$a]['Event']['end'])),
             'allDay' => $all,
-            'className' => $events[$a]['Event']['className'],
+            'color' => $events[$a]['Event']['color'],
             );
         }
 
@@ -74,7 +77,89 @@ class EventsController extends AppController {
         echo json_encode($rows);
     }
     
-    function get_feed($id) {
+	function add_event() {
+        
+        if (!empty($_POST)) {
+            
+            $this->Event->create();
+			$this->data['Event']['title']              = Sanitize::paranoid($_POST['EventTitle'], array('!','\'','?','_','.',' ','-'));
+			$this->data['Event']['allday']             = $_POST['EventAllday'];
+			$this->data['Event']['start']              = $_POST['EventStart'];
+			$this->data['Event']['end']                = $_POST['EventEnd'];
+			$this->data['Event']['user_id']            = $_POST['EventUserId'];
+			$this->data['Event']['case_id']            = $_POST['EventCaseId'];
+			$this->data['Event']['editable']           = '1';
+			$this->data['Event']['is_locked']          = '1';
+			$this->data['Event']['calendar_id']        = $_POST['EventCalendarId'];
+			$this->data['Event']['conference']         = $_POST['EventConference'];
+			$this->data['Event']['color']              = $_POST['EventColor'];
+			$this->data['Event']['messenger_type']     = $_POST['messenger_type'];
+			$this->data['Event']['messenger_username'] = $_POST['messenger_username'];
+			$this->data['Event']['status']			   = $_POST['EventStatus'];
+
+            $this->Event->save($this->data);
+            			
+			Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+			echo $this->Event->id;
+        }
+    }
+
+	function verify_event($allday=null,$day=null,$month=null,$year=null,$hour=null,$min=null) {
+        if (!empty($_POST)) {            
+	
+            //Check if Time is Available
+            $mysqlstart = $_POST['EventStart'];
+            $mysqlend   = $_POST['EventEnd'];
+            
+            // $conditions = array('Event.start BETWEEN ? AND ?' => array($mysqlstart,$mysqlend));            
+            // $conditions = array("date_add('$mysqlstart', interval 1 minute) between Event.start and Event.end OR date_sub('$mysqlend', interval 1 minute) between Event.start and Event.end ");
+
+            $conditions = array("
+                (date_add('$mysqlstart', interval 1 minute) BETWEEN Event.start AND Event.end OR
+                date_sub('$mysqlend', interval 1 minute) BETWEEN Event.start AND Event.end OR
+                (date_add('$mysqlstart', interval 1 minute) <= Event.start AND
+                date_sub('$mysqlend', interval 1 minute) >= Event.end)) AND
+				Event.status = 'active'
+                ");
+            
+            $events = $this->Event->find('all',array('conditions' => $conditions, 'limit' => 1));
+			
+			Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+
+			if ($events) {
+                echo 'not available';
+			}
+        }
+    }
+
+    function check_lock() {
+		$msg = 'ok';
+		
+        if ($this->Custom->date_difference(date('y-m-d'), $_POST['date_clicked'], 'd') > 3) { //if
+			
+			//Check if case_id on events is is_locked. (is_locked must be removed if user is already paid) - questionable
+            $events = $this->Event->find('count', array('conditions' => array('Event.case_id' => $_POST['case_id'], 'Event.is_locked' => 1), 'limit' => 1));
+
+			if ($events > 0) {
+                $msg = 'locked';
+            }
+        }
+        else {
+            $msg = 'after3days';
+        }
+        
+        Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->autoLayout = false;
+        echo $msg;
+    }
+    
+	/* Fetch feed info - not in use currently
+	function get_feed($id) {
         $events = $this->Event->findById($id);
 
         //3. Create the json array
@@ -95,8 +180,35 @@ class EventsController extends AppController {
         $this->header('Content-Type: application/json');
         echo json_encode($rows);
     }
-    
-    function add($allday=null,$day=null,$month=null,$year=null,$hour=null,$min=null) {
+	*/
+	
+	/* Fetch events info - not in use currently
+    function get_info() {
+        $Event = $this->Event->findByCalendarId($this->Session->read('Event.calendar_id'));
+
+        // $datetime1 = new DateTime($Event['Event']['start']);
+        // $datetime2 = new DateTime($Event['Event']['end']);
+        // $interval = $datetime1->diff($datetime2);
+
+        $rows[] = array(
+            'id'          => $Event['Event']['id'],
+            'title'       => $Event['Event']['title'],
+            'start'       => date('h:i a', strtotime($Event['Event']['start'])),
+            'end'         => date('h:i a', strtotime($Event['Event']['end'])),
+            'date'        => date('F d, Y', strtotime($Event['Event']['start'])),
+            'no_of_hours' => $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h')
+        );
+        
+        Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->autoLayout = false;
+        $this->header('Content-Type: application/json');
+        echo json_encode($rows);
+    }
+	*/
+	
+	//Not in use. This is only for reference
+	function add($allday=null,$day=null,$month=null,$year=null,$hour=null,$min=null) {
         
         if (empty($_POST)) {
         
@@ -169,9 +281,17 @@ class EventsController extends AppController {
                 ");
             
             $events = $this->Event->find('all',array('conditions' => $conditions, 'limit' => 1));
-            // debug($events);
-            // exit;
-            if (!$events) {
+			
+			if ($events) {
+				Configure::write('debug', 0);
+                $this->autoRender = false;
+                $this->autoLayout = false;
+                echo 'not available';
+			}
+			
+			/* 
+			//commented out because event won't be saved from the calendar
+			if (!$events) { //Save Event
                 //GCC Code
                 $this->Event->create();
 
@@ -194,8 +314,9 @@ class EventsController extends AppController {
                 $this->autoLayout = false;
                 echo 'not available';
             }
+			*/
             
-            /*
+            /* - part of the original code
             //renderEvent stuff here
             //Create an event entry
             $Event = $this->Event->findById($this->Event->id);
@@ -226,64 +347,6 @@ class EventsController extends AppController {
             // $this->autoLayout = false;
             // echo $this->Event->id;
         }
-    }
-    
-    function check_lock() {
-
-        //Check if day click is 3 days more than today
-        
-        /*
-        $datetime1 = new DateTime(date('y-m-d'));
-        $datetime2 = new DateTime($_POST['date_clicked']);
-        $interval = $datetime1->diff($datetime2);
-        */
-				
-		// debug($this->Custom->date_difference(date('y-m-d'), $_POST['date_clicked'], 'd'));
-		
-		$msg = '';
-		
-        if ($this->Custom->date_difference(date('y-m-d'), $_POST['date_clicked'], 'd') > 3) { //if
-            $events = $this->Event->find('count', array('conditions' => array('Event.case_id' => $_POST['case_id'], 'Event.is_locked' => 1), 'limit' => 1));
-			
-			// debug($events);
-            
-			if ($events > 0) {
-                $msg = 'locked';
-            }
-        }
-        else {
-            $msg = 'after3days';
-        }
-        
-        Configure::write('debug', 0);
-        $this->autoRender = false;
-        $this->autoLayout = false;
-        echo $msg;
-    }
-    
-    function get_info() {
-        $Event = $this->Event->findByCalendarId($this->Session->read('Event.calendar_id'));
-
-        /*
-        $datetime1 = new DateTime($Event['Event']['start']);
-        $datetime2 = new DateTime($Event['Event']['end']);
-        $interval = $datetime1->diff($datetime2);
-        */
-
-        $rows[] = array(
-            'id'          => $Event['Event']['id'],
-            'title'       => $Event['Event']['title'],
-            'start'       => date('h:i a', strtotime($Event['Event']['start'])),
-            'end'         => date('h:i a', strtotime($Event['Event']['end'])),
-            'date'        => date('F d, Y', strtotime($Event['Event']['start'])),
-            'no_of_hours' => $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h')
-        );
-        
-        Configure::write('debug', 0);
-        $this->autoRender = false;
-        $this->autoLayout = false;
-        $this->header('Content-Type: application/json');
-        echo json_encode($rows);
     }
 }
 ?>

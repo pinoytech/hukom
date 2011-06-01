@@ -38,6 +38,7 @@
 				<b>Attach Document/s:</b>&nbsp;
 				<br /><br />
 				<input id="file_upload" name="file_upload" type="file" />
+				<br />
 				<p>Select a file (jpeg, pdf, word) on your computer (2MB max).</p>
 				<!-- <a href="javascript:$('#file_upload').uploadifyUpload()">Upload Files</a> -->
 				
@@ -84,7 +85,7 @@ jQuery('document').ready(function() {
 		
 		if (jQuery('#LegalcasedetailSummary').val() == '') {
 			
-			var agree=confirm("Data you provided on this form will be discared. Do you want to continue?");
+			var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
 	        if (agree){                        
 	           window.location = '/legalcases/legal_problem/<?php echo $id; ?>/<?php echo $case_id; ?>/<?php echo $case_detail_id; ?>';
 	        }
@@ -106,6 +107,8 @@ jQuery('document').ready(function() {
 	    'uploader'  : '/uploadify/uploadify.swf',
 	    'script'    : '/uploadify/uploadify.php',
 	    'cancelImg' : '/uploadify/cancel.png',
+		'buttonImg' : '/img/selectButton_up.png',
+		'wmode'     : 'transparent',
 	    'folder'    : '<?php echo $upload_folder;?>',
 	    'auto'      : true,
 	    'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',

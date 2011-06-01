@@ -47,6 +47,16 @@ class DashboardController extends AppController {
 		$data = $this->Legalcasedetail->find('all', array('conditions' => array('Legalcasedetail.id' => $id)));
         // debug($data);
         // exit;
+		
+		$video = false;
+		
+		if ($data[0]['Event']['conference']) {
+			if ($data[0]['Event']['conference'] == 'video') {
+				$video = true;
+			}
+		}
+		
+		$this->set('video', $video);
 		$this->set('rows',$data);
 		$this->set('filename','case_' . $data[0]['Legalcase']['id'] . '_' . $id);
 		$this->render('case_export_xls','export_xls');

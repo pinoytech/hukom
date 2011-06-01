@@ -81,13 +81,6 @@ class Legalcasedetail extends AppModel {
 	);	
 	
 	var $hasMany = array(
-		'Legalcasedetail' => array(
-			'className' => 'Legalcasedetail',
-			'foreignKey' => 'case_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
 		'Payment' => array(
 			'className' => 'Payment',
 			'foreignKey' => 'case_detail_id',
@@ -96,6 +89,15 @@ class Legalcasedetail extends AppModel {
 			'order' => ''
 		),
 	);
-		
+	
+	var $hasOne = array(
+		'Event' => array(
+			'className' => 'Event',
+			'foreignKey' => 'case_detail_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+	);
 }
 ?>

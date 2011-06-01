@@ -13,7 +13,7 @@
 		</p>
 		
 		<div style="text-align:center;">
-			<input type="button" id="home" value="Back to Case List" />
+			<input type="button" id="home" class="back-to-case-list" />
 		</div>
 		
 		</div>

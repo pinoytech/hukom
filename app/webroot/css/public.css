@@ -735,7 +735,7 @@ table.summary-info td {
 }
 
 table.summary-info td.label {
-	width:140px;
+	width:160px;
 	font-weight: bold;
 }
 
@@ -814,6 +814,22 @@ a {cursor: pointer; cursor: hand;}
 .button-back:hover {
 	background: url(../img/backButton_down.png) no-repeat;
 }
+
+.back-to-case-list { 
+	width: 124px;
+	height: 22px;
+	border: none;
+	margin-top: 10px;
+}
+
+.back-to-case-list {
+	background: url(../img/backCaseListButton_up.png) no-repeat;
+}
+
+.back-to-case-list:hover {
+	background: url(../img/backCaseListButton_down.png) no-repeat;
+}
+
 
 /*Full Calendar*/
 /*.form-holder div {

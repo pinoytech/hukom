@@ -1,19 +1,19 @@
 <div id="full-content">
 	<div id="main">
-		
+
 		<?php echo $this->element('navigation');?>
 				
 		<?php echo $this->Session->flash(); ?>
-		
+
 		<div class="form-title">Summary of Information</div>
 		<div class="form-holder">
 			<table class="summary-info">
 				<tr>
-					<td class="label">My Legal Problem is:</td>
+					<td class="label"><?php echo ($auth_user_type == 'personal') ? 'My' : 'Our'; ?> Legal Problem is:</td>
 					<td><?php echo $Legalcase['Legalcase']['legal_problem'];?></td>
 				</tr>
 				<tr>
-					<td colspan="2">-----------------------------------------------------------------------------------------------------------------------------------------</td>
+					<td colspan="2">---------------------------------------------------------------------------------------------------------------------------------------------------</td>
 				</tr>
 				<?php
 				//debug($Legalcase);
@@ -25,25 +25,29 @@
 				</tr>
 				<?php
 				if ($Event) {
-				    /*
-				    $datetime1 = new DateTime($Event['Event']['start']);
-                    $datetime2 = new DateTime($Event['Event']['end']);
-                    $interval = $datetime1->diff($datetime2);
-                    */
-                    
                 ?>
-                <tr>
-					<td class="label">No of Hours:</td>
-					<td><?php echo $custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');?></td>
-				</tr>
-				<tr>
-					<td class="label">Preferred Date:</td>
-					<td><?php echo date('F d, Y', strtotime($Event['Event']['start']));?></td>
-				</tr>
-				<tr>
-					<td class="label">Preferred Time:</td>
-					<td><?php echo date('h:i a', strtotime($Event['Event']['start'])) . ' to ' . date('h:i a', strtotime($Event['Event']['end']));?></td>
-				</tr>
+					<?php
+					if ($Event['Event']['conference'] == 'video') {
+					?>
+		                <tr>
+							<td class="label">Username:</td>
+							<td><?php echo $Event['Event']['messenger_username'];?></td>
+						</tr>
+					<?php
+	                }
+	                ?>					
+					<tr>
+						<td class="label">No. of Hours:</td>
+						<td><?php echo $no_of_hours;?></td>
+					</tr>
+					<tr>
+						<td class="label">Preferred Date:</td>
+						<td><?php echo date('F d, Y', strtotime($Event['Event']['start']));?></td>
+					</tr>
+					<tr>
+						<td class="label">Preferred Time:</td>
+						<td><?php echo date('h:i a', strtotime($Event['Event']['start'])) . ' to ' . date('h:i a', strtotime($Event['Event']['end']));?></td>
+					</tr>
                 <?php
                 }
                 ?>
@@ -52,11 +56,11 @@
 					<td><?php echo $Legalcasedetail['summary'];?></td>
 				</tr>
 				<tr>
-					<td class="label">My Objectives:</td>
+					<td class="label"><?php echo ($auth_user_type == 'personal') ? 'My' : 'Our'; ?> Objectives:</td>
 					<td><?php echo $Legalcasedetail['objectives'];?></td>
 				</tr>
 				<tr>
-					<td class="label">My Questions:</td>
+					<td class="label"><?php echo ($auth_user_type == 'personal') ? 'My' : 'Our'; ?> Questions:</td>
 					<td><?php echo $Legalcasedetail['questions'];?></td>
 				</tr>
 				<tr>
@@ -78,9 +82,12 @@
 					<td class="label">Date:</td>
 					<td><?php echo substr($Legalcasedetail['created'], 0, 10);?></td>
 				</tr>
-				
 				<tr>
-					<td colspan="2">-----------------------------------------------------------------------------------------------------------------------------------------</td>
+					<td class="label">Professional Fee:</td>
+					<td>Php <?php echo $fee;?></td>
+				</tr>
+				<tr>
+					<td colspan="2">---------------------------------------------------------------------------------------------------------------------------------------------------</td>
 				</tr>
 				<?php
 				}
@@ -95,7 +102,7 @@
         		if ($type == 'view') {
         		?>
     		        <td>
-        				<input type="button" id="back-to-case-index" value="Back to Case List" />
+        				<input type="button" id="back-to-case-index" class="back-to-case-list" />
         			</td>
         		<?php
         		}

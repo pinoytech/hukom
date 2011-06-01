@@ -71,8 +71,20 @@
                                             echo $this->Html->link(__('Pay Now', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
                                             echo '<br />';
 										}
-
-										echo $this->Html->link(__('View', true), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view'));
+										
+										switch ($Legalcasedetail['legal_service']){
+											case "Per Query":
+												$legal_service = 'perquery';
+												break;
+											case "Video Conference":
+												$legal_service = 'video';
+												break;
+											case "Office Conference":
+												$legal_service = 'office';
+												break;	
+										}
+										
+										echo $this->Html->link(__('View', true), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view', $legal_service));
 
 										?>
 									</td>

@@ -7,8 +7,8 @@
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
-		echo $this->Html->meta('icon');
-        echo $this->Html->css('public');
+		echo $html->meta('icon');
+        echo $html->css('public');
         echo $html->css('base/jquery-ui.css');
 		echo $html->script('jquery-1.5.2.min.js');
         echo $html->script('jquery-ui.js');
@@ -21,7 +21,8 @@
 	        echo $html->script('jquery.ui.draggable.js');
 	        echo $html->script('jquery.ui.resizable.js');
 	    	echo $html->script('fullcalendar.min.js');
-	        echo $html->script('jquery-ui-timepicker-addon.js');
+	        echo $html->script('jquery.qtip-1.0.0-rc3.min.js');
+	
         }
 		else {
 			echo $html->script('jquery.validate.min'); // Affects FullCalender

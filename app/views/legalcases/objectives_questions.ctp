@@ -13,7 +13,7 @@
 		echo $this->Form->input('Legalcasedetail.user_id', array('type' => 'hidden', 'value' => $id));
 		?>
 		
-		<div class="form-title">My Objectives/Ang Mga Gusto ko:</div>
+		<div class="form-title"><?php echo ($auth_user_type == 'personal') ? 'My' : 'Our'; ?> Objectives/Ang Mga Gusto <?php echo ($auth_user_type == 'personal') ? 'ko' : 'namin'; ?>:</div>
 		<div class="form-holder">
 			<?php
 			echo $this->Form->textarea('Legalcasedetail.objectives', array('label' => false, 'class' => 'required'));
@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		
-		<div class="form-title">My Questions/Ang (mga) Tanong Ko:</div>
+		<div class="form-title"><?php echo ($auth_user_type == 'personal') ? 'My' : 'Our'; ?> Questions/Ang (mga) Tanong <?php echo ($auth_user_type == 'personal') ? 'ko' : 'namin'; ?>:</div>
 		<div class="form-holder">
 		<?php
 		echo $this->Form->textarea('Legalcasedetail.questions', array('label' => false, 'class' => 'required'));
@@ -64,7 +64,7 @@ jQuery('document').ready(function() {
 		
 		if (jQuery('#LegalcasedetailObjectives').val() == '' || jQuery('#LegalcasedetailQuestions').val() == '') {
 			
-			var agree=confirm("Data you provided on this form will be discared. Do you want to continue?");
+			var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
 	        if (agree){                        
 	           window.location = '/legalcases/summary_of_facts/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>';
 	        }
