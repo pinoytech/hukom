@@ -324,7 +324,6 @@ $(document).ready(function() {
 													}
 													?>
 			                                        input_data.push('EventColor=' + '<?php echo $color;?>');
-			                                        input_data.push('EventStatus=' + 'not active');
 
 													//assign original values 
 													EventStart_value = $('#EventStart').val();

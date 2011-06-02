@@ -8,7 +8,6 @@ class PaymentsController extends AppController {
 	function beforeFilter() {
 	    parent::beforeFilter(); 
 	    // $this->Auth->allowedActions = array('index', 'view');
-
 	}
 	
 	function admin_index($id=null) {
@@ -272,23 +271,12 @@ class PaymentsController extends AppController {
 				$this->Payment->deleteAll(array('Payment.case_detail_id' => $this->data['Payment']['case_detail_id']));
 			}
 			
-			// debug($this->Session->read('Legalcase.legal_service'));
-			// exit;
-			
 			// Save Bank Details
 			$this->Payment->id = $this->data['Payment']['id'];
 			if ($this->Payment->save($this->data)) {
-
-				//Update Event Status
-				if (($this->Session->read('Legalcase.legal_service') == 'Video Conference') OR ($this->Session->read('Legalcase.legal_service') == 'Office Conference')) {			
-					$this->loadModel('Event');
-					$this->Event->updateAll(
-					    array('Event.status' => "'active'"),
-						array('Event.case_detail_id' => $this->data['Payment']['case_detail_id'])
-					);					
-				}
 				
 				$this->redirect(array('action' => $this->data['Payment']['goto'], $this->data['Payment']['user_id'], $this->data['Payment']['case_id'], $this->data['Payment']['case_detail_id'], $this->Payment->id, $payment_option));
+				
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
 			}
@@ -406,7 +394,7 @@ class PaymentsController extends AppController {
 	}
 	
 	function create_paypal_payment() {
-	    
+
         //Create Payment Details
         $this->Payment->validate = array();
 

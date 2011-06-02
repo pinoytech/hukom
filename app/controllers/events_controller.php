@@ -42,11 +42,11 @@ class EventsController extends AppController {
 	function feed() {
         //1. Transform request parameters to MySQL datetime format.
         $mysqlstart = date( 'Y-m-d H:i:s', $this->params['url']['start']);
-        $mysqlend = date('Y-m-d H:i:s', $this->params['url']['end']);
+        $mysqlend   = date('Y-m-d H:i:s', $this->params['url']['end']);
 
         //2. Get the events corresponding to the time range
         $conditions = array('Event.start BETWEEN ? AND ?' => array($mysqlstart,$mysqlend), 
-            'Event.status' => 'active'
+            // 'Event.status' => 'active'
         );
 
         $events = $this->Event->find('all',array('conditions' =>$conditions));
@@ -60,12 +60,13 @@ class EventsController extends AppController {
             $all = ($events[$a]['Event']['allday'] == 1);
 
             //Create an event entry
-            $rows[] = array('id' => $events[$a]['Event']['id'],
-            'title' => ucfirst($events[$a]['Event']['title']),
-            'start' => date('Y-m-d H:i', strtotime($events[$a]['Event']['start'])),
-            'end' => date('Y-m-d H:i',strtotime($events[$a]['Event']['end'])),
-            'allDay' => $all,
-            'color' => $events[$a]['Event']['color'],
+            $rows[] = array(
+				'id'     => $events[$a]['Event']['id'],
+				'title'  => ucfirst($events[$a]['Event']['title']),
+				'start'  => date('Y-m-d H:i', strtotime($events[$a]['Event']['start'])),
+				'end'    => date('Y-m-d H:i',strtotime($events[$a]['Event']['end'])),
+				'allDay' => $all,
+				'color'  => $events[$a]['Event']['color'],
             );
         }
 
@@ -78,7 +79,7 @@ class EventsController extends AppController {
     }
     
 	function add_event() {
-        
+
         if (!empty($_POST)) {
             
             $this->Event->create();
@@ -95,7 +96,6 @@ class EventsController extends AppController {
 			$this->data['Event']['color']              = $_POST['EventColor'];
 			$this->data['Event']['messenger_type']     = $_POST['messenger_type'];
 			$this->data['Event']['messenger_username'] = $_POST['messenger_username'];
-			$this->data['Event']['status']			   = $_POST['EventStatus'];
 
             $this->Event->save($this->data);
             			
@@ -120,8 +120,7 @@ class EventsController extends AppController {
                 (date_add('$mysqlstart', interval 1 minute) BETWEEN Event.start AND Event.end OR
                 date_sub('$mysqlend', interval 1 minute) BETWEEN Event.start AND Event.end OR
                 (date_add('$mysqlstart', interval 1 minute) <= Event.start AND
-                date_sub('$mysqlend', interval 1 minute) >= Event.end)) AND
-				Event.status = 'active'
+                date_sub('$mysqlend', interval 1 minute) >= Event.end))
                 ");
             
             $events = $this->Event->find('all',array('conditions' => $conditions, 'limit' => 1));

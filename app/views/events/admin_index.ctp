@@ -171,16 +171,15 @@ $(document).ready(function() {
 											  color = 'violet'
 											  break;
 										}
-										
+
                                         input_data.push('EventColor=' + color);
-										input_data.push('EventStatus=' + 'active');
 
 										//assign original values 
 										EventStart_value = $('#EventStart').val();
 										EventEnd_value   = $('#EventEnd').val();
 										
 										event_input_data = input_data.join('&');
-										
+
                                         jQuery.ajax({
                                             type: "POST",
                                             url: verify_event_url,
@@ -205,8 +204,6 @@ $(document).ready(function() {
 			                                            }
 			                                        });
 												}
-												
-                                                calendar.fullCalendar('refetchEvents');
                                             },
                                             error: function()
                                             {
