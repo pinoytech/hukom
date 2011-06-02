@@ -250,15 +250,19 @@ $(document).ready(function() {
 	$('#EventType').change(function() {
 		if ($('#EventType option:selected').val() == 'holiday') {
 			$('#EventFullday').attr("checked", true);
-			$("#EventStart").val("8:00 am");
+			$("#EventStart").val("08:00 am");
 			$("#EventEnd").val("11:00 pm");
 		};
 	});
 	
 	$('#EventFullday').change(function() {
 		if ($(this).is(':checked')) {
-			$("#EventStart").val("8:00 am");
+			$("#EventStart").val("08:00 am");
 			$("#EventEnd").val("11:00 pm");
+		}
+		else {
+			$("#EventStart").val("08:00 am");
+			$("#EventEnd").val("08:00 am");
 		}
 	});
 
