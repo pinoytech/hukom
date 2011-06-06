@@ -94,78 +94,14 @@
 	</div>
 </div>
 
-<?php echo $html->script('form-hacks');?>
+<?php
+if ($auth_user_type == 'personal') {
+    $profile_action = 'personal_info';
+}
+elseif ($auth_user_type == 'corporation') {
+    $profile_action = 'corporate_partnership_representative_info';
+}
+?>
 
-<script type="text/javascript">
-jQuery('document').ready(function() {
-
-	//Assign radio value
-	jQuery('.legal_problem_radio').filter('[value=<?php echo $this->data['Legalcase']['legal_problem'] ;?>]').attr('checked', true);
-
-	jQuery("#LegalcaseLegalProblemForm").validate({
-		rules: {
-			"data[Legalcase][legal_problem]" : {
-				required: true
-			}
-		},
-		submitHandler: function(form) {
-			
-			if (jQuery('.legal_problem_radio:checked').val() == 'Business'){
-				
-				if (! jQuery('#my_business_is input').is(":checked")){
-					alert('Please select business type');
-					return false;
-				}
-					
-			}
-			
-			if (jQuery('.legal_problem_radio:checked').val() == 'Anything under the sun'){
-				
-				if (jQuery('#anything_under').children('input').val() == ''){
-					alert('Please input data on Other Legal Services field');
-					return false;
-				}
-
-			}
-			
-			form.submit();
-		}
-	});
-	
-	//Submit button logic
-	jQuery('#back').click(function() {
-	    <?php
-        if ($auth_user_type == 'personal') {
-            $profile_action = 'personal_info';
-        }
-        elseif ($auth_user_type == 'corporation') {
-            $profile_action = 'corporate_partnership_representative_info';
-        }
-        ?>
-        
-		window.location = '/users/<?php echo $profile_action; ?>/<?php echo $id;?>/<?php echo $case_id;?>/<?php echo $case_detail_id;?>';
-	});
-
-	jQuery('#next').click(function() {
-		jQuery('form').submit();
-	});
-	
-	jQuery('.legal_problem_radio').click(function() {
-		if (jQuery(this + ':checked')){
-			if (jQuery(this).val() == 'Anything under the sun'){
-				jQuery('#anything_under').show();
-				jQuery('#anything_under').children('input').attr('disabled', false);
-			}
-			else {
-				jQuery('#anything_under').children('input').val('');
-				jQuery('#anything_under').children('input').attr('disabled', true);				
-			}
-			
-			if (jQuery(this).val() == 'Business'){
-				jQuery('#my_business_is').show();
-			}
-		}		
-	});
-	
-});
-</script>
+<?php $html->scriptBlock("legal_problem_form('$profile_action', '$id', '$case_id', '$case_detail_id', '" . $this->data['Legalcase']['legal_problem'] . "');", array('inline'=>false)); ?>
+<?php echo $html->script('form-hacks', array('inline'=>false));?>

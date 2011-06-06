@@ -210,66 +210,7 @@ $smartmoney_payment_instructions =
 	</div>
 </div>
 
-<script type="text/javascript">
-jQuery('document').ready(function() {
-
-	//Assign radio value
-	jQuery('.option_radio').filter('[value=<?php echo $this->data['Payment']['option'] ;?>]').attr('checked', true);
-
-	jQuery("#PaymentModeOfPaymentForm").validate({
-		rules: {
-			"data[Payment][option]" : {
-				required: true
-			}
-		},
-		submitHandler: function(form) {
-			payment_instuctions_pop();
-		}
-	});
-	
-	jQuery('#payment-instructions').tabs();
-
-});
-
-function payment_instuctions_pop() {
-    option_value = jQuery('.option_radio:checked').val();
-
-    jQuery('#' + option_value + '_holder').dialog({
-		autoOpen: false,
-		width: 800,
-		height: 600,
-        modal: true,
-		resizable: false,
-        buttons: {
-            'Pay Later': function() {
-                // jQuery(this).dialog('close');
-                window.location = '/dashboard/';
-			},
-			'Proceed Payment': function() {
-			    
-			    if (option_value == 'paypal') {
-			       jQuery.ajax({
-           			type: "POST", 
-           			url: "/payments/create_paypal_payment",
-           			data: 'id=<?php echo $id; ?>&case_id=<?php echo $case_id; ?>&case_detail_id=<?php echo $case_detail_id; ?>',
-           			success: function(msg)
-           			{
-                        document.forms['payment_summary'].submit(); 
-           			},
-           			error: function()
-           			{
-           				alert("An error occured while updating. Try again in a while");
-           			}
-           		 });
-			    }
-			    else {
-                    document.forms['PaymentModeOfPaymentForm'].submit();
-			    }
-            }
-        }
-	});
-    
-    jQuery('#' + option_value + '_holder').dialog("open");
-}
-
-</script>
+<?php
+$payment_option = $this->data['Payment']['option'];
+$html->scriptBlock("mode_of_payment_form('$id', '$case_id', '$case_detail_id', '$payment_option');", array('inline'=>false));
+?>

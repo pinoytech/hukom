@@ -122,24 +122,7 @@
 		
 	</div>
 </div>
-<script>
-jQuery('.avail-button > img').mouseover(function() {
-  jQuery(this).attr('src', '/img/availButton_down.png');
-}).mouseout(function(){
-  jQuery(this).attr('src', '/img/availButton_up.png');
-});
 
-jQuery('.prev-button').mouseover(function() {
-  jQuery(this).attr('src', '/img/previousButton_down.png');
-}).mouseout(function(){
-  jQuery(this).attr('src', '/img/previousButton_up.png');
-});
-
-jQuery('.next-button').mouseover(function() {
-  jQuery(this).attr('src', '/img/nextButton_down.png');
-}).mouseout(function(){
-  jQuery(this).attr('src', '/img/nextButton_up.png');
-});
-
-
+<script type="text/javascript">
+legalcases_index()
 </script>

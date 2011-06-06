@@ -67,8 +67,11 @@
     Late payment confirmation has been sent.
 </div>
 
-<script type="text/javascript">
+<?php $html->scriptBlock("calendar_dialogs();", array('inline'=>false));?>
 
+
+<?php //$this->Html->scriptStart(array('inline' => false));?>
+<script type="text/javascript">
 $(document).ready(function() {
 	
 	//Full Calendar
@@ -76,7 +79,7 @@ $(document).ready(function() {
         events: "/events/feed",
 		eventRender: function(event, element) {
 	        element.qtip({
-	            content: '<a id="' + event.id +'" class="on_time">On Time</a> <br /> <a id="' + event.id +'" class="late_payment">Late Payment</a> <br /> <a id="' + event.id +'" class="not_available">Not Available </a><br /> <a id="' + event.id +'" class="available">Available</a>',
+	            content: event.title + ' <br /> <a id="' + event.id +'" class="on_time">On Time</a> <br /> <a id="' + event.id +'" class="late_payment">Late Payment</a> <br /> <a id="' + event.id +'" class="not_available">Not Available </a> <br /> <a id="' + event.id +'" class="available">Available</a><br /> <a id="' + event.id +'" class="delete">Delete</a>',
 				position: 'topRight',
 				hide: {
 					fixed: true // Make it fixed so it can be hovered over
@@ -104,8 +107,8 @@ $(document).ready(function() {
             // $("#eventdata").load("<?php echo Dispatcher::baseUrl();?>/events/add/"+allDay+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm"));
             // console.log('<?php echo date("d/m/y"); ?>');
 
-                            verify_event_url = "<?php echo Dispatcher::baseUrl();?>/events/verify_event/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
-                            add_event_url    = "<?php echo Dispatcher::baseUrl();?>/events/add_event/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
+                            verify_event_url = "/events/verify_event/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
+                            add_event_url    = "/events/add_event/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
 
                             $("#event-data-add").dialog({
                         		autoOpen: false,
@@ -233,19 +236,7 @@ $(document).ready(function() {
         },
     });
    
-    //Dialog Messages
-	$("#event-blank, #event-after3days, #event-date-not-allowed, #event-date-same, #event-locked, #event-not-available, #on_time_payment, #late_payment").dialog({
-		autoOpen: false,
-		width: 450,
-		height: 160,
-        modal: true,
-		resizable: false,
-		buttons: {
-			Ok: function() {
-				$(this).dialog("close");
-			}
-		}
-    });
+    
 
 	$('#EventType').change(function() {
 		if ($('#EventType option:selected').val() == 'holiday') {
@@ -299,6 +290,23 @@ $(document).ready(function() {
             }
         });
 	});
-
+	
+	$('.delete').live('click', function(e) {
+		// jQuery.ajax({
+		//             type: "POST",
+		//             url: '/admin/payments/late_payment/',
+		//             data: 'event_id=' + $(this).attr('id'),
+		//             success: function(msg) {
+		// 		console.log(msg)
+		// 		calendar.fullCalendar('refetchEvents');
+		//                 $("#late_payment").dialog("open");
+		//             },
+		//             error: function() {
+		//                 alert("An error occured while updating. Try again in a while");
+		//             }
+		//         });
+	});
+	
 });
 </script>
+<?php //$this->Html->scriptEnd();?>

@@ -117,21 +117,5 @@
 	</div>
 </div>
 
-<?php echo $html->script('form-hacks');?>
-
-<script type="text/javascript">
-jQuery('document').ready(function() {
-
-	jQuery("#LegalcaseOnlineLegalConsultationForm").validate({
-		rules: {
-			"data[Legalcase][legal_service]" : {
-				required: true
-			}
-		}
-	});	
-	
-	jQuery('#legal-service-descriptions').tabs();
-});
-
-
-</script>
+<?php $html->scriptBlock("online_legal_consultation_form();", array('inline'=>false));?>
+<?php echo $html->script('form-hacks', array('inline'=>false));?>

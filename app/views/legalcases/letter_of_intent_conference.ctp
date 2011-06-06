@@ -98,22 +98,11 @@
     You have selected a date within the 3-day case review period. Please select a new schedule 3 days after the original date selected.
 </div>
 
+<?php $html->scriptBlock("calendar_dialogs();", array('inline'=>false));?>
+
+<?php //$this->Html->scriptStart(array('inline' => false));?>
 <script type="text/javascript">
-function redirect(){
-	
-	$("#event-fill-up-notice, #messenger-type-notice, #messenger-username-notice").dialog({
-		autoOpen: false,
-		width: 350,
-		height: 150,
-        modal: true,
-		resizable: false,
-		buttons: {
-			Ok: function() {
-				$(this).dialog("close");
-			}
-		}
-    });
-    
+function redirect(){    
 	var messenger_values = '';
 
 	<?php
@@ -140,7 +129,7 @@ function redirect(){
     }
 	
 	//Save Event Data
-	jQuery.ajax({
+	$.ajax({
         type: "POST",
         url: '/events/add_event',
         data: $('#event_input_data').val() + messenger_values,
@@ -258,7 +247,7 @@ $(document).ready(function() {
 			                        }
 			                        else {                    
 			                            // allDay = false;    
-			                            verify_event_url = "<?php echo Dispatcher::baseUrl();?>/events/verify_event/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
+			                            verify_event_url = "/events/verify_event/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
 
 			                            $("#event-data-add").dialog({
 			                        		autoOpen: false,
@@ -416,20 +405,6 @@ $(document).ready(function() {
         
         $("#event-calendar").dialog("open");
     });
-    
-    //Dialog Messages
-	$("#event-blank, #event-after3days, #event-date-not-allowed, #event-date-same, #event-locked, #event-not-available").dialog({
-		autoOpen: false,
-		width: 450,
-		height: 160,
-        modal: true,
-		resizable: false,
-		buttons: {
-			Ok: function() {
-				$(this).dialog("close");
-			}
-		}
-    });
-
 });
 </script>
+<?php //$this->Html->scriptEnd();?>

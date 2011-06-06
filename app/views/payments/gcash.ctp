@@ -50,35 +50,5 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-jQuery('document').ready(function() {
-	//jQuery Valdidate
-	jQuery("#PaymentGcashForm").validate();
-	
-	jQuery('#back').click(function() {
-		jQuery('#goto').val('mode_of_payment');
-		
-		if (jQuery('#PaymentId').val() == '') {
-			
-			var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
-	        if (agree){                        
-	           window.location = '/payments/mode_of_payment/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id; ?>';
-	        }
-	        else{
-	           return false;
-	        }
-		}
-		else{
-			jQuery('form').submit();
-		}
-	});
-
-	jQuery('#next').click(function() {
-		jQuery('#goto').val('payment_confirmation');
-		jQuery('form').submit();
-	});
-	
-});
-</script>
-
-<?php echo $html->script('form-hacks');?>
+<?php $html->scriptBlock("gcash_form('$id', '$case_id', '$case_detail_id');", array('inline'=>false));?>
+<?php echo $html->script('form-hacks', array('inline'=>false));?>

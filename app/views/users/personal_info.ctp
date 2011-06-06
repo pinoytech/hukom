@@ -109,47 +109,5 @@
 <?php echo $html->script('form-hacks');?>
 
 <script type="text/javascript">
-jQuery('document').ready(function() {
-	
-	//jQuery Valdidate
-	jQuery("#UserPersonalInfoForm").validate({
-	    submitHandler: function(form) {
-			
-			if (jQuery('#PersonalInfoCivilStatus').val() == 'Married' || jQuery('#PersonalInfoCivilStatus').val() == 'Divorced/Annulled'){
-                    
-			    if (jQuery('#PersonalInfoMarriageDate').val() == '' || jQuery('#PersonalInfoMarriagePlace').val() == '') {
-			       alert('Marriage Date and Marriage Place must not be empty');
-			       return false;
-			    }
-			}
-			
-			form.submit();
-		}
-	});
-	
-	//Disable Marriage Fields
-	if (jQuery('#PersonalInfoCivilStatus').val() == '' || jQuery('#PersonalInfoCivilStatus').val() == 'Single' || jQuery('#PersonalInfoCivilStatus').val() == 'Living In') {
-		bool = true;
-	}
-	else {
-		bool = false;
-	}
-	jQuery('.marriage_date').attr('disabled', bool);
-	jQuery('#PersonalInfoMarriagePlace').attr('disabled', bool);
-	
-	jQuery('#PersonalInfoCivilStatus').change(function(){
-		if (jQuery(this).val() == 'Single' || jQuery(this).val() == '' || jQuery(this).val() == 'Living In') {
-			bool = true;
-			jQuery('#PersonalInfoMarriagePlace').val('');
-			jQuery('#PersonalInfoMarriageDate').val('');
-		}
-		else{
-			bool = false;
-		}
-		jQuery('.marriage_date').attr('disabled', bool);
-		jQuery('#PersonalInfoMarriagePlace').attr('disabled', bool);
-		
-	});
-	
-});
+personal_info_form();
 </script>

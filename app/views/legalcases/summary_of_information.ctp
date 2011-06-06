@@ -131,28 +131,4 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-jQuery('document').ready(function() {
-
-	//jQuery Valdidate
-	jQuery("#LegalcaseSummaryOfFactsForm").validate({});
-
-	jQuery('#back').click(function() {
-		window.location = '/legalcases/objectives_questions/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>';
-        
-	});
-
-	jQuery('#next').click(function() {
-		window.location = '/legalcases/online_legal_consultation_agreement/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>';
-	});
-	
-	jQuery('#new-facts').click(function() {
-		window.location = '/legalcases/summary_of_facts/<?php echo $id ?>/<?php echo $case_id ?>';
-	});
-
-    jQuery('#back-to-case-index').click(function() {
-		window.location = '/legalcases/index/<?php echo $id ?>';
-	});
-});
-
-</script>
+<?php $html->scriptBlock("summary_of_information_form('$id', '$case_id', '$case_detail_id');", array('inline'=>false));?>

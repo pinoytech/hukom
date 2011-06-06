@@ -67,20 +67,4 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-jQuery('document').ready(function() {
-
-	//jQuery Valdidate
-	jQuery("#LegalcaseSummaryOfFactsForm").validate({});
-
-	jQuery('#back').click(function() {
-		window.location = '/payments/bank_deposit/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>/<?php echo $payment_id ?>';
-	});
-
-	jQuery('#next').click(function() {
-		window.location = '/payments/payment_confirmation/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>/<?php echo $payment_id ?>/bank_deposit';
-	});
-
-});
-
-</script>
+<?php $html->scriptBlock("bank_deposit_summary('$id', '$case_id', '$case_detail_id', '$payment_id');", array('inline'=>false));?>

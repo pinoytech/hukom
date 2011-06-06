@@ -52,36 +52,4 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-jQuery('document').ready(function() {
-
-	//jQuery Valdidate
-	jQuery("#LegalcaseObjectivesQuestionsForm").validate({
-	});
-
-	jQuery('#back').click(function() {
-		jQuery('#goto').val('summary_of_facts');
-		
-		if (jQuery('#LegalcasedetailObjectives').val() == '' || jQuery('#LegalcasedetailQuestions').val() == '') {
-			
-			var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
-	        if (agree){                        
-	           window.location = '/legalcases/summary_of_facts/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>';
-	        }
-	        else{
-	           return false;
-	        }
-		}
-		else{
-			jQuery('form').submit();
-		}
-	});
-
-	jQuery('#next').click(function() {
-		jQuery('#goto').val('summary_of_information');
-		jQuery('form').submit();
-	});
-
-});
-
-</script>
+<?php $html->scriptBlock("objectives_questions_form('$id', '$case_id', '$case_detail_id');", array('inline'=>false));?>

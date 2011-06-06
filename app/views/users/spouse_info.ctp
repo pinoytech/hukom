@@ -101,35 +101,5 @@
 <?php echo $html->script('form-hacks');?>
 
 <script type="text/javascript">
-jQuery('document').ready(function() {	
-	//jQuery Valdidate
-	jQuery("#UserSpouseInfoForm").validate();
-	
-	//Submit button logic
-	jQuery('#back').click(function() {
-		jQuery('#goto').val('personal_info');
-		
-		// alert(jQuery('#SpouseInfoId').val());
-		
-		if (jQuery('#SpouseInfoId').val() == '') {
-			
-			var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
-	        if (agree){                        
-	           window.location = '/users/personal_info/<?php echo $id ?>/<?php echo $case_id ?>/<?php echo $case_detail_id ?>';
-	        }
-	        else{
-	           return false;
-	        }
-		}
-		else{
-			jQuery('form').submit();
-		}
-	});
-
-	jQuery('.next-save').click(function() {
-		jQuery('#goto').val('children_info');
-		jQuery('form').submit();
-	});
-});
+spouse_info_form('<?php echo $id ?>', '<?php echo $case_id ?>', '<?php echo $case_detail_id ?>');
 </script>
-

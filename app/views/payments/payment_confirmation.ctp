@@ -21,13 +21,4 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-jQuery('document').ready(function() {
-
-	jQuery('#home').click(function() {
-		window.location = '/legalcases/index/<?php echo $id;?>';
-        
-	});
-});
-
-</script>
+<?php $html->scriptBlock("payment_confirmation('$id');", array('inline'=>false));?>

@@ -30,6 +30,7 @@
 
 		echo $scripts_for_layout;
 	?>
+	
 </head>
 <body>
     <!-- Header -->

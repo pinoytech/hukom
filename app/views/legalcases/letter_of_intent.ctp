@@ -8,7 +8,15 @@
 		<div class="form-title">Client's Letter of Intent</div>
 		<div class="form-holder">
 		
-		    <?php echo $this->Form->create('User', array('onsubmit' => 'redirect(); return false;')); ?>
+		    <?php
+				if ($auth_user_type == 'personal') {
+				    $profile_action = 'personal_info';
+				}
+				elseif ($auth_user_type == 'corporation') {
+				    $profile_action = 'corporate_partnership_representative_info';
+				}
+				
+				echo $this->Form->create('User', array('onsubmit' => "redirect_form('$profile_action', '$id', '$case_id', ''); return false;")); ?>
 				<p>
 					<?php echo date('F d, Y');?>
 				</p>
@@ -31,17 +39,3 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-function redirect(){
-    <?php
-    if ($auth_user_type == 'personal') {
-        $profile_action = 'personal_info';
-    }
-    elseif ($auth_user_type == 'corporation') {
-        $profile_action = 'corporate_partnership_representative_info';
-    }
-    ?>
-	window.location = '/users/<?php echo $profile_action; ?>/<?php echo "$id/$case_id"?>';
-}
-</script>

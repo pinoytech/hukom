@@ -48,51 +48,5 @@
 
 	</div>
 </div>
-<script type="text/javascript">
-jQuery('document').ready(function() {
-	//jQuery('#UserRegisterForm').	
 
-	jQuery("#reject-alert").dialog({
-		autoOpen: false,
-		width: 400,
-		height: 200,
-        modal: true,
-		resizable: false,
-        buttons: {
-            Ok: function() {
-            	jQuery(this).dialog('close');
-			}
-        }
-	});
-	
-	jQuery('#check_end_user').click(function() {
-		if(jQuery('#accept').is(":checked")){
-			window.location = "/payments/mode_of_payment/<?php echo $id;?>/<?php echo $case_id;?>/<?php echo $case_detail_id;?>";
-			return false;
-		}
-		
-		if(jQuery('#reject').is(":checked")){
-			jQuery("#reject-alert").dialog("open");
-		}
-		
-		if(jQuery('.terms:not(:checked)')){
-			jQuery("#reject-alert").dialog("open");
-		}
-		
-	});
-	
-	jQuery('#accept').click(function() {
-		if(jQuery('#accept').is(":checked")){
-			jQuery('#reject').attr('checked', false);
-		}
-	});
-	
-	jQuery('#reject').click(function() {
-		if(jQuery('#reject').is(":checked")){
-			jQuery('#accept').attr('checked', false);
-		}
-	});
-});
-
-
-</script>
+<?php $html->scriptBlock("online_legal_consulation_agreement_form('$id', '$case_id', '$case_detail_id');", array('inline'=>false));?>

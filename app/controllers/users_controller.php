@@ -303,16 +303,17 @@ class UsersController extends AppController {
 	
 	
 	function _sendUserForgotPasswordMail($id) {
-		$User                  = $this->User->read(null,$id);
-		$this->Email->to       = $User['User']['username'];
-		$this->Email->bcc      = $this->admin_email;
-		$this->Email->subject  = 'E-Lawyers Online - Password Request';
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
-		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$User                          = $this->User->read(null,$id);
+		$this->Email->to               = $User['User']['username'];
+		$this->Email->bcc              = $this->admin_email;
+		$this->Email->subject          = 'E-Lawyers Online - Password Request';
+		$this->Email->replyTo          = 'no-reply@e-laywersonline.com';
+		$this->Email->from             = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
-		$this->Email->template = 'password_request'; // note no '.ctp'
+		$this->Email->template         = 'password_request'; // note no '.ctp'
 		//Send as 'html', 'text' or 'both' (default is 'text')
-		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+		$this->Email->sendAs           = 'html'; // because we like to send pretty mail
+
 	    //Set view variables as normal
 	    $this->set('User', $User);
 		// $this->set('password', $password);

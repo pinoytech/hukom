@@ -19,11 +19,5 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-jQuery('document').ready(function() {
-	//jQuery Valdidate
-	jQuery("#UserLoginForm").validate();
-});
-</script>
-
-<?php echo $html->script('form-hacks');?>
+<?php $html->scriptBlock("login_form();", array('inline'=>false));?>
+<?php echo $html->script('form-hacks', array('inline'=>false));?>

@@ -10,7 +10,7 @@ class User extends AppModel {
 				'required' => true,
 			),
 			'email' => array(
-				'rule' => array('email', true),
+				'rule' => array('email'),
 				'message' => 'Email must be a valid email',
 				'allowEmpty' => false,
 				'required' => true,
