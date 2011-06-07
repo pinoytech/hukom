@@ -40,18 +40,18 @@
 					<?php
 					if ($auth_user_type == 'personal') {
 					?>
-					<input type="radio" class="legal_problem_radio" value="Personal" id="LegalcaseLegalProblemPersonal" name="data[Legalcase][legal_problem]"><span class="label">Personal</span> - I have problem in my birth certificate, my passport, my criminal case, etc.
+					<input type="radio" class="legal_problem_radio" value="Personal" id="LegalcaseLegalProblemPersonal" name="data[Legalcase][legal_problem]"><span class="label">Personal</span> - I have problem in <?php echo ($auth_user_type == 'personal') ? 'my' : 'our'; ?> birth certificate, <?php echo ($auth_user_type == 'personal') ? 'my' : 'our'; ?> passport, <?php echo ($auth_user_type == 'personal') ? 'my' : 'our'; ?> criminal case, etc.
 					<br />
 					<input type="radio" class="legal_problem_radio" value="Family" id="LegalcaseLegalProblemFamily" name="data[Legalcase][legal_problem]"><span class="label">Family</span> - I have a problem in annulment, child custody, adoption, etc.
 					<br />
 					<?php
 				    }
 					?>
-					<input type="radio" class="legal_problem_radio" value="Property" id="LegalcaseLegalProblemProperty" name="data[Legalcase][legal_problem]"><span class="label">Property</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem with my land title, car, stocks, etc.
+					<input type="radio" class="legal_problem_radio" value="Property" id="LegalcaseLegalProblemProperty" name="data[Legalcase][legal_problem]"><span class="label">Property</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem with <?php echo ($auth_user_type == 'personal') ? 'my' : 'our'; ?> land title, car, stocks, etc.
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Contractual" id="LegalcaseLegalProblemContractual" name="data[Legalcase][legal_problem]"><span class="label">Contractual</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem with my contract, sub-contract, etc. 
+					<input type="radio" class="legal_problem_radio" value="Contractual" id="LegalcaseLegalProblemContractual" name="data[Legalcase][legal_problem]"><span class="label">Contractual</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem with <?php echo ($auth_user_type == 'personal') ? 'my' : 'our'; ?> contract, sub-contract, etc. 
 					<br />
-					<input type="radio" class="legal_problem_radio" value="Business" id="LegalcaseLegalProblemBusiness" name="data[Legalcase][legal_problem]"><span class="label">Business</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem in my business.
+					<input type="radio" class="legal_problem_radio" value="Business" id="LegalcaseLegalProblemBusiness" name="data[Legalcase][legal_problem]"><span class="label">Business</span> - <?php echo ($auth_user_type == 'personal') ? 'I' : 'We'; ?> have a problem in <?php echo ($auth_user_type == 'personal') ? 'my' : 'our'; ?> business.
 					<br />
 						<div id="my_business_is">
 							<?php echo ($auth_user_type == 'personal') ? 'My' : 'Our'; ?> Business is:

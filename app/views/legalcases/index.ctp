@@ -123,6 +123,4 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-legalcases_index()
-</script>
+<?php $html->scriptBlock("legalcases_index();", array('inline'=>false));?>

@@ -30,7 +30,7 @@
 					if ($Event['Event']['conference'] == 'video') {
 					?>
 		                <tr>
-							<td class="label">Username:</td>
+							<td class="label"><?php echo ucfirst($Event['Event']['messenger_type']);?> ID:</td>
 							<td><?php echo $Event['Event']['messenger_username'];?></td>
 						</tr>
 					<?php

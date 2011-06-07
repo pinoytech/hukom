@@ -98,8 +98,6 @@
 		<?php echo $this->Form->end();?>
 	</div>
 </div>
-<?php echo $html->script('form-hacks');?>
 
-<script type="text/javascript">
-spouse_info_form('<?php echo $id ?>', '<?php echo $case_id ?>', '<?php echo $case_detail_id ?>');
-</script>
+<?php $html->scriptBlock("spouse_info_form('$id', '$case_id', '$case_detail_id');", array('inline'=>false));?>
+<?php echo $html->script('form-hacks', array('inline'=>false));?>

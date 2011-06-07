@@ -144,7 +144,7 @@ class UsersController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		
-		debug($this->data);
+		// debug($this->data);
 		
 		// Update Users and Personal Info
 		if (!empty($this->data)) {
@@ -565,7 +565,7 @@ class UsersController extends AppController {
 		// Update Personal Info
 		if (!empty($this->data)) {
 			
-            debug($this->data);
+            // debug($this->data);
             // exit;
 			
 			$this->loadModel('CorporatePartnershipInfo');

@@ -43,17 +43,17 @@ function forgot_password_form() {
 
 function register_form() {
 	$(document).ready(function() {
-		jQuery("#reject-alert").dialog({
+		$("#reject-alert").dialog({
 			autoOpen: false,
 			width: 300,
 			height: 200,
-	        modal: true,
+			modal: true,
 			resizable: false,
-	        buttons: {
-	            Ok: function() {
-	            	jQuery(this).dialog('close');
+      buttons: {
+				Ok: function() {
+        	$(this).dialog('close');
 				}
-	        }
+			}
 		});
 	
 		//jQuery Valdidate
@@ -64,38 +64,33 @@ function register_form() {
 				},
 			},
 			submitHandler: function(form) {
-				check_end_user();
-			}
-		});
-	});
-}
+				$("#end-user-form").dialog({
+					autoOpen: false,
+					width: 800,
+					height: 600,
+			    modal: true,
+					resizable: false,
+			    buttons: {
+						'I agree': function() {
+			      	$('#agree-checker').val(1);
+							document.forms['UserRegisterForm'].submit();
+						},
+						"I reject": function() {
+							$('#agree-checker').val(''); 
+							$("#reject-alert").dialog("open");
+					  }
+					}
+				}); 
 
-function check_end_user() {
-	$(document).ready(function() {
-		jQuery("#end-user-form").dialog({
-			autoOpen: false,
-			width: 800,
-			height: 600,
-	    modal: true,
-			resizable: false,
-	    buttons: {
-				'I agree': function() {
-	      	jQuery('#agree-checker').val(1);
-					document.forms['UserRegisterForm'].submit();
-				},
-				"I reject": function() {
-					jQuery('#agree-checker').val(''); 
-					jQuery("#reject-alert").dialog("open");
-			  }
+				if($('#agree-checker').val() != '') {
+					form.submit();
+				}
+				else {
+					$("#end-user-form").dialog("open");
+				}
 			}
-		}); 
-	
-		if(jQuery('#agree-checker').val() != '') {
-			form.submit();
-		}
-		else {
-			jQuery("#end-user-form").dialog("open");
-		}
+			
+		});
 	});
 }
 
@@ -315,6 +310,18 @@ function legal_problem_form(action, id, case_id, case_detail_id, legal_problem) 
 	$(document).ready(function() {
 		//Assign radio value
 		jQuery('.legal_problem_radio').filter('[value="' + legal_problem + '"]').attr('checked', true);
+		
+		if (legal_problem) {
+			if (legal_problem == 'Others' || legal_problem == 'Single Proprietorship' || legal_problem == 'Corporation Partnership' || legal_problem == 'Unregistered Business, Joint Venture, Consortium etc') {
+				$('#my_business_is').show();
+			}
+			else if (legal_problem != 'Personal' && legal_problem != 'Family' && legal_problem != 'Property' && legal_problem != 'Contractual' && legal_problem != 'Legal Documents' && legal_problem != 'Special Projects/Contracts') {
+				$('#anything_under').show();
+				$('#anything_under').children('input').attr('disabled', false);
+				$('#anything_under').children('input').val(legal_problem);
+				jQuery('.legal_problem_radio').filter('[value="Anything under the sun"]').attr('checked', true);
+			}
+		}
 
 		jQuery("#LegalcaseLegalProblemForm").validate({
 			rules: {
@@ -716,6 +723,247 @@ function gcash_form(id, case_id, case_detail_id) {
 		});
 
 	});
+}
+
+function corporate_partnership_info(id, case_id, upload_folder) {
+	$('document').ready(function() {
+		//jQuery Valdidate
+		$("#UserCorporatePartnershipInfoForm").validate({
+			rules: {
+				"data[CorporatePartnershipInfo][type]" : { //Radio Button Validation
+					required: true
+				},
+				"data[CorporatePartnershipInfo][attach_fill_out]" : { //Radio Button Validation
+					required: true
+				}
+			},	    
+			submitHandler: function(form) {
+				
+				if ($('.stockholder_type:checked').val() == 'Publicly Listed') {
+					stock_list_total_rows = $('#stock-list > tbody').size() - 1;
+					if (stock_list_total_rows > 10) {
+						alert('Top 10 Majority Stockholders only');
+						return false;
+					}
+				}
+								
+				// $('form').submit();				
+				form.submit();
+			}
+		});
+
+		//Submit button logic
+		$('#back').click(function() {
+			$('#goto').val('corporate_partnership_representative_info');
+
+			if ($('#CorporatePartnershipInfoId').val() == '') {
+				
+				var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
+     		if (agree){                        
+         	window.location = '/users/corporate_partnership_representative_info/' + id + '/' + case_id;
+        }
+        else{
+        	return false;
+        }
+			}
+			else{
+				$('form').submit();
+			}
+		});
+
+		//Submit button logic
+		$('#back').click(function() {
+			$('#goto').val('corporate_partnership_representative_info');
+			$('form').submit();
+		});
+
+		$('#next').click(function() {
+			$('#goto').val('legal_problem');
+			$('form').submit();
+		});
+
+		$('#save').click(function() {
+			$('#goto').val('legalcases');
+			$('form').submit();
+		});
+
+		//Attach Fill Out Form
+		if ($('.attach_fill_out:checked').val() == 'attach') {
+			$('#attach-form').show();
+		}
+
+		if ($('.attach_fill_out:checked').val() == 'fill out') {
+			$('#fill-out-form').show();
+		}
+
+		//Disable fill-out-form fields to avoid validation when attach-form is selected
+		var fill_out_form  = $('#fill-out-form');
+		var fill_out_radio = $('#fill-out-radio');
+		var initial        = fill_out_radio.is(":checked");
+		fill_out_form_inputs = fill_out_form.find("input, textarea").attr("disabled", !initial);
+	    // fill_out_radio.click(function() {
+	        // fill_out_form_inputs.attr("disabled", !this.checked);
+	    // });
+
+		function remove_row(element) {
+			var parentrow = element;
+			parentrow.remove();
+		}
+
+		$('.attach_fill_out').change(function() {
+	    if ($(this).val() == 'attach') {
+				$('#attach-form').show();
+	      $('#fill-out-form').hide();
+
+	      //remove board w/ no data
+        $('#board-list tbody tr.row td div input.required').each(function(index) {
+        	if ($(this).val() == '') {
+          	remove_row($(this).parents('tbody'));
+					}
+				});
+
+				$('#stock-list tbody tr.row td div input.required').each(function(index) {
+        	if ($(this).val() == '') {
+          	remove_row($(this).parents('tbody'));
+					}
+				});
+
+        fill_out_form_inputs.attr("disabled", true);
+        $('#file-upload-validate').attr("disabled", false);
+	    }
+
+	    if ($(this).val() == 'fill out') {
+        $('#fill-out-form').show();
+        $('#attach-form').hide();
+        fields_arranger();
+				add_board();
+        add_stock();
+        fill_out_form_inputs.attr("disabled", false);
+        $('#file-upload-validate').attr("disabled", true);
+	    }
+	  });
+
+	  //Uploadify
+		$('#file_upload').uploadify({
+	    'uploader'  : '/uploadify/uploadify.swf',
+	    'script'    : '/uploadify/uploadify.php',
+	    'cancelImg' : '/uploadify/cancel.png',
+	    'buttonImg' : '/img/selectButton_up.png',
+	    'wmode'     : 'transparent',
+	    'folder'    : upload_folder,
+	    'auto'      : true,
+	    'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
+	    'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
+	    'sizeLimit' : 2097152,
+			'onComplete' : function(event, ID, fileObj, response, data) {
+			append_files(fileObj);
+				$('#file-upload-validate').val(1);
+		  }
+		});
+
+		//Remove Files
+		$('.remove_file').live('click', function(e) {
+			var parent = $(this).parent();
+
+			$.ajax({
+				type: "POST", 
+				url: "/legalcases/remove_file",
+				data: 'file_path=' + $(this).attr('id'),
+				success: function(msg) {
+					parent.remove().fadeOut();
+				},
+				error: function() {
+					alert("An error occured while updating. Try again in a while");
+				}
+			});
+
+			// toggle_file_upload_validate();
+			total_files = $('#file-list > li').size() - 1;
+	 		
+			if (total_files < 1) {
+	 			$('#file-upload-validate').val('');
+	 		}
+		});
+
+	  function add_board() {
+	  	//Count no. of rows
+			total_rows = $('#board-list > tbody').size() - 1;
+			// alert(total_rows);
+
+			//Modify HTML
+			component_render = $('#clone-board').html();
+			component_render = component_render.replace(/xxx/g, total_rows + 100);
+			component_render = component_render.replace(/Xxx/g, total_rows + 100);
+
+			$('#board-list').append(component_render);
+	  }
+
+	  //Add board row to list
+		$('#add-board').live('click', function(e) {
+	   	add_board();
+		});		
+
+		//Remove board from list
+		$('.board-remove').live('click', function(e) {
+			var agree=confirm("Do you want to remove this item?");
+	    if (agree){                        
+	      remove_row($(this).parents('tbody'));
+	    }
+	    else{
+	    	return false;
+	    }
+		});
+
+		function add_stock() {
+			//Count no. of rows
+			total_rows = $('#stock-list > tbody').size() - 1;
+
+			//Check stockholder_type
+      if ($('.stockholder_type:checked').val() == 'Publicly Listed') {
+      	if (total_rows > 10) {
+        	alert('Top 10 Majority Stockholders only');
+          return false;
+				}
+    	}
+
+    	if ($('.stockholder_type:checked').val() == 'Not Publicly Listed') {
+				if (total_rows > 30) {
+        	alert('Limited to 20-30 Stockholders only');
+          return false;
+				}
+    	}
+
+			//Modify HTML
+			component_render = $('#clone-stock').html();
+			component_render = component_render.replace(/xxx/g, total_rows + 100);
+			component_render = component_render.replace(/Xxx/g, total_rows + 100);
+
+			$('#stock-list').append(component_render);
+		}
+
+		//Add Stock row to list
+		$('#add-stock').live('click', function(e) {
+			//if not selected any radio buttons
+			if (!$('.stockholder_type').is(":checked")) {
+		  	alert('Please select Stockholders Type');
+		    return false;
+			}
+			
+			add_stock();
+		});
+
+		//Remove Stock from list
+		$('.stock-remove').live('click', function(e) {
+			var agree=confirm("Do you want to remove this item really?");
+			if (agree){                        
+	    	remove_row($(this).parents('tbody'));
+			}
+	    else{
+	    	return false;
+			}
+		});
+
+	});	
 }
 
 function calendar_dialogs() {

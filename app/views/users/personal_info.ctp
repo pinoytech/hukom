@@ -106,8 +106,5 @@
 	</div>
 </div>
 
-<?php echo $html->script('form-hacks');?>
-
-<script type="text/javascript">
-personal_info_form();
-</script>
+<?php $html->scriptBlock("personal_info_form();", array('inline'=>false));?>
+<?php echo $html->script('form-hacks', array('inline'=>false));?>

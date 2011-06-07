@@ -70,7 +70,7 @@
 							<td><?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.birth_date', array('type' => 'text', 'label' => '', 'value' => $ChildrenList['birth_date'], 'class' => 'birth_date required'));?></td>
 							<td><?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.school', array('label' => '', 'value' => $ChildrenList['school'], 'class' => ' required'));?></td>
 							<td><?php echo $this->Form->input('ChildrenList.' .$ChildrenList['id']. '.grade_year', array('label' => '', 'value' => $ChildrenList['grade_year'], 'class' => ' required'));?></td>
-							<td><a class="child-remove form-link-red">Remove</td>
+							<td><a class="child-remove form-link-red"><img src="/img/removeButton_up.png" border="0" /></td>
 						</tr>
 					</tbody>
 					<?php
@@ -115,11 +115,9 @@
 		<td><?php echo $this->Form->input('ChildrenList.xxx.birth_date', array('type' => 'text', 'label' => '', 'class' => 'birthdate  required'));?></td>
 		<td><?php echo $this->Form->input('ChildrenList.xxx.school', array('label' => '', 'class' => 'children-input  required'));?></td>
 		<td><?php echo $this->Form->input('ChildrenList.xxx.grade_year', array('label' => '', 'class' => 'children-input  required'));?></td>
-		<td><a class="child-remove form-link-red">Remove</td>
+		<td><a class="child-remove form-link-red"><img src="/img/removeButton_up.png" border="0" /></td>
 	</tr>
 </table>
 
-<script type="text/javascript">
-children_info_form()
-</script>
-<?php echo $html->script('form-hacks');?>
+<?php $html->scriptBlock("children_info_form()", array('inline'=>false));?>
+<?php echo $html->script('form-hacks', array('inline'=>false));?>

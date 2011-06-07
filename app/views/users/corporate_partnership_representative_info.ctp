@@ -29,13 +29,13 @@
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
-					echo $this->Form->input('PersonalInfo.telephone_no', array('class' => 'required digits'));
-					echo $this->Form->input('PersonalInfo.cellphone_no', array('class' => 'required digits'));
+					echo $this->Form->input('PersonalInfo.telephone_no', array('label' => 'Telephone No.', 'class' => 'required digits'));
+					echo $this->Form->input('PersonalInfo.cellphone_no', array('label' => 'Cellphone No.', 'class' => 'required digits'));
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
 					echo $this->Form->input('PersonalInfo.email', array('readonly' => true, 'div' => 'input text required'));
-					echo $this->Form->input('PersonalInfo.alternate_email', array('class' => 'required', 'div' => 'input text required email'));
+					echo $this->Form->input('PersonalInfo.alternate_email', array('class' => 'required email', 'div' => 'input text required email'));
 					echo '</div>';
 
 					echo '<div class="row two-field">';
@@ -57,7 +57,7 @@
 
 					echo '<div class="row two-field">';
 					echo $this->Form->input('PersonalInfo.company_work', array('label' => 'Company/Work', 'class' => 'required'));
-					echo $this->Form->input('PersonalInfo.nature_of_business', array('class' => 'required'));
+					echo $this->Form->input('PersonalInfo.nature_of_business', array('label' => 'Nature of Business', 'class' => 'required'));
 					echo '</div>';
 
 					echo '<div class="row full-field">';
