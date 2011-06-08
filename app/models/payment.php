@@ -108,5 +108,6 @@ class Payment extends AppModel {
 			'foreignKey' => 'case_detail_id',
 		),
 	);
+	
 }
 ?>

@@ -2,7 +2,7 @@
 App::import('Sanitize');
 class EventsController extends AppController {
     var $name       = 'Events';
-    var $components = array('Custom');
+    var $components = array('Email', 'Custom');
     var $helpers    = array('Custom');
 
 	function beforeFilter() {
@@ -39,6 +39,27 @@ class EventsController extends AppController {
 		$this->render('index');
 	}
 	
+	function _create_json_array($events) {
+		$rows = array();
+        for ($a=0; count($events)> $a; $a++) {
+            //Is it an all day event?
+            $all = ($events[$a]['Event']['allday'] == 1);
+
+            //Create an event entry
+            $rows[] = array(
+				'id'     => $events[$a]['Event']['id'],
+				'title'  => ucfirst($events[$a]['Event']['title']),
+				'start'  => date('Y-m-d H:i', strtotime($events[$a]['Event']['start'])),
+				'end'    => date('Y-m-d H:i',strtotime($events[$a]['Event']['end'])),
+				'allDay' => $all,
+				'color'  => $events[$a]['Event']['color'],
+				'case_detail_id'  => $events[$a]['Event']['case_detail_id'],
+            );
+        }
+		
+		return $rows;
+	}
+	
 	function feed() {
         //1. Transform request parameters to MySQL datetime format.
         $mysqlstart = date( 'Y-m-d H:i:s', $this->params['url']['start']);
@@ -54,23 +75,77 @@ class EventsController extends AppController {
 		// debug($events);
 		
         //3. Create the json array
-        $rows = array();
-        for ($a=0; count($events)> $a; $a++) {
-            //Is it an all day event?
-            $all = ($events[$a]['Event']['allday'] == 1);
-
-            //Create an event entry
-            $rows[] = array(
-				'id'     => $events[$a]['Event']['id'],
-				'title'  => ucfirst($events[$a]['Event']['title']),
-				'start'  => date('Y-m-d H:i', strtotime($events[$a]['Event']['start'])),
-				'end'    => date('Y-m-d H:i',strtotime($events[$a]['Event']['end'])),
-				'allDay' => $all,
-				'color'  => $events[$a]['Event']['color'],
-            );
-        }
+        $rows = $this->_create_json_array($events);
 
         //4. Return as a json array
+        Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->autoLayout = false;
+        $this->header('Content-Type: application/json');
+        echo json_encode($rows);
+    }
+
+	function pending_payment_feed() {
+		
+		$options['joins'] = array(
+		    array('table' => 'payments',
+		        'alias' => 'Payment',
+		        'type' => 'LEFT',
+		        'conditions' => array(
+		            'Payment.case_detail_id = Event.case_detail_id',
+		        )
+		    )
+		);
+		
+        //1. Transform request parameters to MySQL datetime format.
+        $mysqlstart = date( 'Y-m-d H:i:s', $this->params['url']['start']);
+        $mysqlend   = date('Y-m-d H:i:s', $this->params['url']['end']);
+		
+        //2. Get the events corresponding to the time range
+        $options['conditions'] = array('Event.start BETWEEN ? AND ?' => array($mysqlstart,$mysqlend),
+			'Payment.status' => 'pending'
+		);
+		
+        $events = $this->Event->find('all', $options);
+		
+		// debug($events);
+		
+        //3. Create the json array
+        $rows = $this->_create_json_array($events);
+
+        //4. Return as a json array
+        Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->autoLayout = false;
+        $this->header('Content-Type: application/json');
+        echo json_encode($rows);
+    }
+
+	function not_active_feed() {
+		
+        //1. Transform request parameters to MySQL datetime format.
+        $mysqlstart = date( 'Y-m-d H:i:s', $this->params['url']['start']);
+        $mysqlend   = date('Y-m-d H:i:s', $this->params['url']['end']);
+		
+        //2. Get the events corresponding to the time range
+        $options['conditions'] = array('Event.start BETWEEN ? AND ?' => array($mysqlstart,$mysqlend),
+			'Event.case_detail_id' => null,
+			array(
+				'OR' => array(
+					array('Event.conference LIKE' => 'video'),
+					array('Event.conference LIKE' => 'office')
+				),
+			),
+		);
+		
+        $events = $this->Event->find('all', $options);
+		
+		// debug($events);
+		
+        //3. Create the json array
+        $rows = $this->_create_json_array($events);
+
+        // 4. Return as a json array
         Configure::write('debug', 0);
         $this->autoRender = false;
         $this->autoLayout = false;
@@ -82,6 +157,12 @@ class EventsController extends AppController {
 
         if (!empty($_POST)) {
             
+			//check if resched conference
+			if (isset($_POST['reschedule'])) {
+				//Delete event
+				$this->Event->delete($_POST['event_id']);
+			}
+
             $this->Event->create();
 			$this->data['Event']['title']              = Sanitize::paranoid($_POST['EventTitle'], array('!','\'','?','_','.',' ','-'));
 			$this->data['Event']['allday']             = $_POST['EventAllday'];
@@ -89,6 +170,7 @@ class EventsController extends AppController {
 			$this->data['Event']['end']                = $_POST['EventEnd'];
 			$this->data['Event']['user_id']            = $_POST['EventUserId'];
 			$this->data['Event']['case_id']            = $_POST['EventCaseId'];
+			$this->data['Event']['case_detail_id']     = ($_POST['EventCaseDetailId']) ? $_POST['EventCaseDetailId'] : null;
 			$this->data['Event']['editable']           = '1';
 			$this->data['Event']['is_locked']          = '1';
 			$this->data['Event']['calendar_id']        = $_POST['EventCalendarId'];
@@ -105,7 +187,7 @@ class EventsController extends AppController {
 			echo $this->Event->id;
         }
     }
-
+	
 	function verify_event($allday=null,$day=null,$month=null,$year=null,$hour=null,$min=null) {
         if (!empty($_POST)) {            
 	
@@ -140,12 +222,15 @@ class EventsController extends AppController {
 		
         if ($this->Custom->date_difference(date('y-m-d'), $_POST['date_clicked'], 'd') > 3) { //if
 			
-			//Check if case_id on events is is_locked. (is_locked must be removed if user is already paid) - questionable
-            $events = $this->Event->find('count', array('conditions' => array('Event.case_id' => $_POST['case_id'], 'Event.is_locked' => 1), 'limit' => 1));
+			//check if resched conference
+			if (!isset($_POST['reschedule'])) {
+				//Check if case_id on events is is_locked. (is_locked must be removed if user is already paid) - questionable
+	            $events = $this->Event->find('count', array('conditions' => array('Event.case_id' => $_POST['case_id'], 'Event.is_locked' => 1), 'limit' => 1));
 
-			if ($events > 0) {
-                $msg = 'locked';
-            }
+				if ($events > 0) {
+	                $msg = 'locked';
+	            }
+			}
         }
         else {
             $msg = 'after3days';
@@ -156,7 +241,203 @@ class EventsController extends AppController {
         $this->autoLayout = false;
         echo $msg;
     }
+
+	function admin_delete() {
+		
+		if ($_POST) {
+			$this->Event->delete($_POST['event_id']);
+		}
+		
+		Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->autoLayout = false;
+        echo 'schedule deleted';
+	}
+	
+	function admin_on_time_payment() {
+		if (!empty($_POST)) {
+			
+			$this->loadModel('Payment');
+			
+			$Event = $this->Event->findById($_POST['event_id']);
+			
+			if ($Event) {
+				$this->Event->id = $Event['Event']['id'];
+				$this->Event->saveField('is_locked', '0');
+				
+				$Payment = $this->Payment->findByCaseDetailId($Event['Event']['case_detail_id']);
+				
+				$this->Payment->id = $Payment['Payment']['id'];
+				$this->Payment->saveField('status', 'Confirmed');
+				
+				//Send Confirmation Email
+				
+				// debug(date('F d, Y', strtotime($Event['Event']['start'])));
+				
+				$this->_send_on_time_payment_confirmation($Payment['Payment']['user_id'], $Payment['Payment']['case_id'], $Event['Event']['id'], $Event['Event']['conference']);
+			}
+			
+			Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+			echo 'test';
+		}
+	}
+	
+	function _send_on_time_payment_confirmation($id, $case_id, $event_id, $conference) {
+		
+		if ($conference == 'video') {
+			$subject = "Video Conference Payment Confirmation";
+			$template = 'on_time_payment_confirmation';
+		}
+		elseif ($conference == 'office') {
+			$subject = "Office Conference Payment Confirmation";
+			$template = 'office_on_time_payment_confirmation';
+		}
+		
+		$this->loadModel('User');
+
+		$User                  = $this->User->read(null,$id);
+		$Event                 = $this->Event->read(null,$event_id);
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = "E-Lawyers Online - $subject";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'on_time_payment_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Event', $Event);
+	    $this->set('case_id', $case_id);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
+	
+	function admin_late_payment() {
+		// debug('here');
+		// exit;
+		if (!empty($_POST)) {
+			// $this->loadModel('Payment');
+			
+			$Event = $this->Event->findById($_POST['event_id']);
+			
+			// if ($this->Event->delete($Event['Event']['id'])) {
+				// $this->_send_late_payment_confirmation($Event['Event']['user_id'], $Event['Event']['id']);
+			// }
+			
+			$this->_send_late_payment_confirmation($Event['Event']['user_id'], $Event['Event']['id'], $Event['Event']['conference']);
+			
+			Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+			echo 'late payment';
+		}
+	}
+	
+	function _send_late_payment_confirmation($id, $event_id, $conference) {
+		
+		if ($conference == 'video') {
+			$subject = "Video Conference Late Payment Confirmation";
+			$template = 'late_payment_confirmation';
+		}
+		elseif ($conference == 'office') {
+			$subject = "Office Conference Late Payment Confirmation";
+			$template = 'office_late_payment_confirmation';
+		}
+		
+		$this->loadModel('User');
+
+		$User                  = $this->User->read(null,$id);
+		$Event                 = $this->Event->read(null,$event_id);
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = 'E-Lawyers Online - Late Payment Confirmation';
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'late_payment_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Event', $Event);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
     
+	function admin_available() {
+		if (!empty($_POST)) {
+			
+			$Event = $this->Event->findById($_POST['event_id']);
+			
+			$this->_send_available_confirmation($Event['Event']['user_id'], $Event['Event']['id']);
+			
+			Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+			echo 'available';
+		}
+	}
+	
+	function _send_available_confirmation($id, $event_id) {
+		$this->loadModel('User');
+
+		$User                  = $this->User->read(null,$id);
+		$Event                 = $this->Event->read(null,$event_id);
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = 'E-Lawyers Online - Conference Schedule Reset Request Confirmation';
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'available_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Event', $Event);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
+	
+	function admin_not_available() {
+		if (!empty($_POST)) {
+			
+			$Event = $this->Event->findById($_POST['event_id']);
+			
+			$this->_send_not_available_confirmation($Event['Event']['user_id'], $Event['Event']['id']);
+			
+			Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+			echo 'available';
+		}
+	}
+	
+	function _send_not_available_confirmation($id, $event_id) {
+		$this->loadModel('User');
+
+		$User                  = $this->User->read(null,$id);
+		$Event                 = $this->Event->read(null,$event_id);
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = 'E-Lawyers Online - Conference Schedule Not Available Confirmation';
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'not_available_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Event', $Event);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
+
 	/* Fetch feed info - not in use currently
 	function get_feed($id) {
         $events = $this->Event->findById($id);

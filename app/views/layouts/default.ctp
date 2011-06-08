@@ -14,7 +14,7 @@
         echo $html->script('jquery-ui.js');
         echo $html->script('application.js');
 
-        if ($this->params['action'] == 'letter_of_intent') {
+        if ($this->params['action'] == 'letter_of_intent' || $this->params['action'] == 'reschedule_conference') {
 			echo $html->css('fullcalendar');
 	        echo $html->css('fullcalendar.print', 'stylesheet', array('media' => 'print'));
 	        echo $html->script('jquery.ui.core.js');
@@ -22,7 +22,6 @@
 	        echo $html->script('jquery.ui.resizable.js');
 	    	echo $html->script('fullcalendar.min.js');
 	        echo $html->script('jquery.qtip-1.0.0-rc3.min.js');
-	
         }
 		else {
 			echo $html->script('jquery.validate.min'); // Affects FullCalender

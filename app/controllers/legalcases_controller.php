@@ -221,18 +221,45 @@ class LegalcasesController extends AppController {
 		}
 	}
 	
-	function reschedule_conference($event_id){
+	function reschedule_conference($event_id, $reschedule_type = null){
 		$this->loadModel('Event');
 		$this->loadModel('PersonalInfo');
 		$this->loadModel('Legalservice');
+		$this->loadModel('Payment');
+			
+		$Event          = $this->Event->findById($event_id);
 		
-		$PersonalInfo = $this->PersonalInfo->find('first', array('conditions' => array('PersonalInfo.user_id' => $id)));
+		if (!$Event) {
+			$this->Session->setFlash(__('Invalid Conference ID. Please contact us for any concerns', true));
+			$this->redirect(array('controller' => 'dashboard', 'action' => 'index'));
+		}
 		
+		$event_id       = $Event['Event']['id'];
+		$id             = $Event['Event']['user_id'];
+		$case_id        = $Event['Event']['case_id'];
+		$case_detail_id = $Event['Event']['case_detail_id'];
+		$conference     = $Event['Event']['conference'];
+		
+		$PersonalInfo   = $this->PersonalInfo->find('first', array('conditions' => array('PersonalInfo.user_id' => $id)));
 		$user_full_name = $PersonalInfo['PersonalInfo']['first_name'].' '.$PersonalInfo['PersonalInfo']['last_name'];
 		
-		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
-		// debug($Legalservice['Legalservice']['fee']);
+		//Get Conference Type
+		switch ($conference){
+			case "video":
+				$legal_service_name = 'Video Conference';
+				break;
+			case "office":
+				$legal_service_name = 'Office Conference';
+				break;	
+		}
 		
+		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $legal_service_name)));
+		
+		// $Payment = $this->Payment->findByCaseDetailId($case_detail_id);
+		
+		// debug($Payment);
+		
+		//Not sure kung ano silbi nito?
 		if (!empty($this->data)) {
 			$this->redirect(array('controller' => 'LegalCases', 'action' => 'add'));
 		}
@@ -242,17 +269,20 @@ class LegalcasesController extends AppController {
 		$this->set('fee', $Legalservice['Legalservice']['fee']);
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
+		$this->set('case_detail_id', $case_detail_id);
+		$this->set('event_id', $event_id);
 		
-		if ($conference) {
-		    $this->set('legal_service', $Legalservice['Legalservice']['name']);
-		    $this->set('event_hours', '');
-		    $this->set('event_date', '');
-		    $this->set('event_start', '');
-		    $this->set('event_end', '');
-		    $this->set('conference', $conference);
-		    $this->set('conference_fee', $Legalservice['Legalservice']['fee']);
-		    $this->render('letter_of_intent_conference');
-		}
+
+	    $this->set('legal_service', $Legalservice['Legalservice']['name']);
+	    $this->set('event_hours', '');
+	    $this->set('event_date', '');
+	    $this->set('event_start', '');
+	    $this->set('event_end', '');
+	    $this->set('conference', $conference);
+	    $this->set('conference_fee', $Legalservice['Legalservice']['fee']);
+	    $this->set('messenger_type', $Event['Event']['messenger_type']);
+	    $this->set('messenger_username', $Event['Event']['messenger_username']);
+	    $this->set('reschedule_type', $reschedule_type);
 	}
 	
 	function legal_problem($id, $case_id=null,$case_detail_id=null){ //$id = user_id

@@ -11,6 +11,16 @@ class Event extends AppModel {
     		'fields' => '',
     		'order' => ''
     	),
-);
+	);
+	
+	// var $hasOne = array(
+	// 	'Payment' => array(
+	// 		'className' => 'Payment',
+	// 		'foreignKey' => 'case_detail_id',
+	// 		'conditions' => '',
+	// 		'fields' => '',
+	// 		'order' => ''
+	// 	),
+	// );
 }
 ?>
