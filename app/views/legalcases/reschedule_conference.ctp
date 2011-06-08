@@ -139,7 +139,7 @@ function redirect(){
 					$location = '/pages/reschedule_conference_success/';
 			    }
 				else {
-					$location = "/legalcases/summary_of_information/$id/$case_id/$case_detail_id";
+					$location = "/legalcases/summary_of_information/$id/$case_id/$case_detail_id/reschedule/$conference";
 				}
 				?>
 			

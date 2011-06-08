@@ -113,6 +113,13 @@
         			</td>
         		<?php
         	    }
+				elseif ($type == 'reschedule') {
+        		?>
+        			<td>
+                        <input type="button" id="next" class="button-next" />
+                    </td>
+        		<?php
+        	    }
         		else {
         		?>
                     <td>

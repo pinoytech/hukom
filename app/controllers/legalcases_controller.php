@@ -487,7 +487,7 @@ class LegalcasesController extends AppController {
 		
 		//Get Event
         $this->loadModel('Event');        
-        $Event = $this->Event->findByCaseDetailId($case_detail_id);
+        $Event = $this->Event->findByCaseDetailId($case_detail_id);		
         
         if ($Event) {
             $no_of_hours = $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
