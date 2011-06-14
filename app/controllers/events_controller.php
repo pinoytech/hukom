@@ -305,7 +305,7 @@ class EventsController extends AppController {
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
-		$this->Email->template = 'on_time_payment_confirmation'; // note no '.ctp'
+		$this->Email->template = $template; // note no '.ctp'
 		//Send as 'html', 'text' or 'both' (default is 'text')
 		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
 	    //Set view variables as normal
@@ -354,11 +354,11 @@ class EventsController extends AppController {
 		$Event                 = $this->Event->read(null,$event_id);
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
-		$this->Email->subject  = 'E-Lawyers Online - Late Payment Confirmation';
+		$this->Email->subject  = "E-Lawyers Online - $subject";
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
-		$this->Email->template = 'late_payment_confirmation'; // note no '.ctp'
+		$this->Email->template = $template; // note no '.ctp'
 		//Send as 'html', 'text' or 'both' (default is 'text')
 		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
 	    //Set view variables as normal
@@ -366,6 +366,7 @@ class EventsController extends AppController {
 	    $this->set('Event', $Event);
 	    //Do not pass any args to send()
 	    $this->Email->send();
+	
 	}
     
 	function admin_available() {
@@ -373,7 +374,7 @@ class EventsController extends AppController {
 			
 			$Event = $this->Event->findById($_POST['event_id']);
 			
-			$this->_send_available_confirmation($Event['Event']['user_id'], $Event['Event']['id']);
+			$this->_send_available_confirmation($Event['Event']['user_id'], $Event['Event']['id'], $Event['Event']['conference']);
 			
 			Configure::write('debug', 0);
             $this->autoRender = false;
@@ -382,18 +383,28 @@ class EventsController extends AppController {
 		}
 	}
 	
-	function _send_available_confirmation($id, $event_id) {
+	function _send_available_confirmation($id, $event_id, $conference) {
+		
+		if ($conference == 'video') {
+			$subject = "Video Conference Schedule Reset Request Confirmation";
+			$template = 'available_confirmation';
+		}
+		elseif ($conference == 'office') {
+			$subject = "Office Conference Schedule Reset Request Confirmation";
+			$template = 'office_available_confirmation';
+		}
+		
 		$this->loadModel('User');
 
 		$User                  = $this->User->read(null,$id);
 		$Event                 = $this->Event->read(null,$event_id);
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
-		$this->Email->subject  = 'E-Lawyers Online - Conference Schedule Reset Request Confirmation';
+		$this->Email->subject  = "E-Lawyers Online - $subject";
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
-		$this->Email->template = 'available_confirmation'; // note no '.ctp'
+		$this->Email->template = $template; // note no '.ctp'
 		//Send as 'html', 'text' or 'both' (default is 'text')
 		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
 	    //Set view variables as normal
@@ -408,7 +419,7 @@ class EventsController extends AppController {
 			
 			$Event = $this->Event->findById($_POST['event_id']);
 			
-			$this->_send_not_available_confirmation($Event['Event']['user_id'], $Event['Event']['id']);
+			$this->_send_not_available_confirmation($Event['Event']['user_id'], $Event['Event']['id'], $Event['Event']['conference']);
 			
 			Configure::write('debug', 0);
             $this->autoRender = false;
@@ -417,18 +428,28 @@ class EventsController extends AppController {
 		}
 	}
 	
-	function _send_not_available_confirmation($id, $event_id) {
+	function _send_not_available_confirmation($id, $event_id, $conference) {
+		
+		if ($conference == 'video') {
+			$subject = "Video Conference Schedule Not Available Confirmation";
+			$template = 'not_available_confirmation';
+		}
+		elseif ($conference == 'office') {
+			$subject = "Office Conference Schedule Not Available Confirmation";
+			$template = 'office_not_available_confirmation';
+		}
+		
 		$this->loadModel('User');
 
 		$User                  = $this->User->read(null,$id);
 		$Event                 = $this->Event->read(null,$event_id);
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
-		$this->Email->subject  = 'E-Lawyers Online - Conference Schedule Not Available Confirmation';
+		$this->Email->subject  = "E-Lawyers Online - $subject";
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
-		$this->Email->template = 'not_available_confirmation'; // note no '.ctp'
+		$this->Email->template = $template; // note no '.ctp'
 		//Send as 'html', 'text' or 'both' (default is 'text')
 		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
 	    //Set view variables as normal

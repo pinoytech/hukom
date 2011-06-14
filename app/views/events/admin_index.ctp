@@ -5,9 +5,9 @@
 	
 	<div id="calendar"></div>
 	
-	<div><a id="all_schedule">All Schedule</a></div>
-	<div><a id="pending_payment">Pending Payment</a></div>
-	<div><a id="not_active">Not Active (no Case Detail ID)</a></div>
+	<div><a id="all_schedule" class="display_options selected">All Schedule</a></div>
+	<div><a id="pending_payment" class="display_options">Pending Payment</a></div>
+	<div><a id="not_active" class="display_options">Not Active (no Case Detail ID)</a></div>
 	
 </div>
 
@@ -387,7 +387,10 @@ $(document).ready(function() {
 	// 	load_full_calendar('/events/office_feed/');
 	// })
 	
-	
+	$('.display_options').click(function() {
+		$('.display_options').removeClass("selected");
+    	$(this).addClass("selected");
+	});
 });
 
 

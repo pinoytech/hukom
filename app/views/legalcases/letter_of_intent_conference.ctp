@@ -98,6 +98,10 @@
     You have selected a date within the 3-day case review period. Please select a new schedule 3 days after the original date selected.
 </div>
 
+<div id="already_selected_schedule" title="Schedule Conference" class="hidden">
+    You have already selected a schedule. Close the calendar and re-open to change your selected schedule. 
+</div>
+
 <?php $html->scriptBlock("calendar_dialogs();", array('inline'=>false));?>
 
 <?php //$this->Html->scriptStart(array('inline' => false));?>
@@ -195,6 +199,8 @@ $(document).ready(function() {
 				*/
             },
 			open: function() {
+				var already_selected = false;
+				
 				//Full Calendar
 				var calendar = $('#calendar').fullCalendar({
 			        events: "/events/feed",
@@ -224,6 +230,11 @@ $(document).ready(function() {
 			            // $("#eventdata").load("<?php echo Dispatcher::baseUrl();?>/events/add/"+allDay+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm"));
 			            // console.log('<?php echo date("d/m/y"); ?>');
 
+						if (already_selected) {
+							$("#already_selected_schedule").dialog("open");
+							return false;
+						}
+						
 			            jQuery.ajax({
 			                type: "POST",
 			                url: '/events/check_lock',
@@ -359,7 +370,10 @@ $(document).ready(function() {
 																	end   : EventEnd_full_value,											
 																	allDay : false,
 																	color : '<?php echo $color;?>',
-																}, true);																																
+																}, true);
+																
+																//dont allow multiple select of sched
+																already_selected = true;																													
 															}
 															
 			                                                // calendar.fullCalendar('refetchEvents');

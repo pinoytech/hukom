@@ -133,7 +133,18 @@ class PaymentsController extends AppController {
 			$this->redirect(array('action' => $this->data['Payment']['option'], $this->data['Payment']['user_id'], $this->data['Payment']['case_id'], $this->data['Payment']['case_detail_id']));
 		}
 		
-		$this->set('fee', $this->_get_legal_service_fee($case_detail_id));
+		//Get Events
+		$this->loadModel('Event');        
+        $Event = $this->Event->findByCaseDetailId($case_detail_id);		
+        
+        if ($Event) {
+	    	$no_of_hours = $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
+			$this->set('fee', (float)$this->_get_legal_service_fee($case_detail_id) * $no_of_hours);
+        }
+		else {
+			$this->set('fee', $this->_get_legal_service_fee($case_detail_id));
+		}
+        
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
@@ -148,13 +159,35 @@ class PaymentsController extends AppController {
 	function gcash($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
 	    $this->_save_payment_details($this->data, $id, $case_id, $case_detail_id, $payment_id, 'gcash');
 	    
-	    $this->set('fee', $this->_get_legal_service_fee($case_detail_id));
+		//Get Events
+		$this->loadModel('Event');        
+        $Event = $this->Event->findByCaseDetailId($case_detail_id);		
+        
+        if ($Event) {
+	    	$no_of_hours = $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
+			$this->set('fee', (float)$this->_get_legal_service_fee($case_detail_id) * $no_of_hours);
+        }
+		else {
+			$this->set('fee', $this->_get_legal_service_fee($case_detail_id));
+		}
+	
+
 	}
 	
 	function smartmoney($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
 	    $this->_save_payment_details($this->data, $id, $case_id, $case_detail_id, $payment_id, 'smartmoney');
 	    
-		$this->set('fee', $this->_get_legal_service_fee($case_detail_id));
+		//Get Events
+		$this->loadModel('Event');        
+        $Event = $this->Event->findByCaseDetailId($case_detail_id);		
+        
+        if ($Event) {
+	    	$no_of_hours = $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
+			$this->set('fee', (float)$this->_get_legal_service_fee($case_detail_id) * $no_of_hours);
+        }
+		else {
+			$this->set('fee', $this->_get_legal_service_fee($case_detail_id));
+		}
 	}
 	
 	function _save_payment_details($data, $id=null, $case_id=null, $case_detail_id=null, $payment_id=null, $payment_option=null) {

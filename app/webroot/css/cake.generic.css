@@ -583,3 +583,7 @@ a {
 .hidden {
 	display: none;
 }
+
+.selected {
+	color: blue;
+}

@@ -238,6 +238,9 @@ class UsersController extends AppController {
 		$this->_sendNewUserMail($id);
 	}
 	
+	# Internal: Sends email confirmation to the user
+    #
+    # id - The user_id of the user
 	function _sendNewUserMail($id) {
 		$User                  = $this->User->read(null,$id);
 		$this->Email->to       = $User['User']['username'];

@@ -969,7 +969,7 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 function calendar_dialogs() {
 	$('document').ready(function() {
 		//Dialog Messages
-		$("#event-fill-up-notice, #messenger-type-notice, #messenger-username-notice, #event-blank, #event-after3days, #event-date-not-allowed, #event-date-same, #event-locked, #event-not-available, #on_time_payment, #late_payment, #available, #not_available").dialog({
+		$("#event-fill-up-notice, #messenger-type-notice, #messenger-username-notice, #event-blank, #event-after3days, #event-date-not-allowed, #event-date-same, #event-locked, #event-not-available, #on_time_payment, #late_payment, #available, #not_available, #already_selected_schedule").dialog({
 			autoOpen: false,
 			width: 450,
 			height: 200,
