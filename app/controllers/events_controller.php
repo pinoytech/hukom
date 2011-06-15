@@ -153,6 +153,49 @@ class EventsController extends AppController {
         echo json_encode($rows);
     }
     
+	function no_payment_status_feed() {
+		
+		$options['joins'] = array(
+		    array('table' => 'payments',
+		        'alias' => 'Payment',
+		        'type' => 'LEFT',
+		        'conditions' => array(
+		            'Payment.case_detail_id = Event.case_detail_id',
+		        )
+		    )
+		);
+		
+		//1. Transform request parameters to MySQL datetime format.
+        $mysqlstart = date( 'Y-m-d H:i:s', $this->params['url']['start']);
+        $mysqlend   = date('Y-m-d H:i:s', $this->params['url']['end']);
+		
+        //2. Get the events corresponding to the time range
+        $options['conditions'] = array('Event.start BETWEEN ? AND ?' => array($mysqlstart,$mysqlend),
+			'Event.case_detail_id !=' => null,
+			'Payment.case_detail_id ' => null,
+			array(
+				'OR' => array(
+					array('Event.conference LIKE' => 'video'),
+					array('Event.conference LIKE' => 'office')
+				),
+			),
+		);
+		
+        $events = $this->Event->find('all', $options);
+		
+		// debug($events);
+		
+        //3. Create the json array
+        $rows = $this->_create_json_array($events);
+
+        // 4. Return as a json array
+        Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->autoLayout = false;
+        $this->header('Content-Type: application/json');
+        echo json_encode($rows);
+    }
+
 	function add_event() {
 
         if (!empty($_POST)) {

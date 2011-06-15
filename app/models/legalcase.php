@@ -16,6 +16,11 @@ class Legalcase extends AppModel {
 			'foreignKey' => 'case_id',
 			'dependent'    => true
 		),
+		'Event' => array(
+			'className' => 'Event',
+			'foreignKey' => 'case_id',
+			'dependent'    => true
+		),
 	);
 	
 	var $belongsTo = array(

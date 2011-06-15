@@ -6,8 +6,9 @@
 	<div id="calendar"></div>
 	
 	<div><a id="all_schedule" class="display_options selected">All Schedule</a></div>
-	<div><a id="pending_payment" class="display_options">Pending Payment</a></div>
-	<div><a id="not_active" class="display_options">Not Active (no Case Detail ID)</a></div>
+	<div><a id="pending_payment" class="display_options">Pending Payment (Payment status is Pending)</a></div>
+	<div><a id="no_payment_status" class="display_options">No Payment Status (Filled-up legal forms but didn't fill-up payment form) </a></div>
+	<div><a id="not_active" class="display_options">Not Active (Selected a schedule but didn't fill-up legal forms)</a></div>
 	
 </div>
 
@@ -97,7 +98,7 @@ $(document).ready(function() {
 	        events: feed_url,
 			eventRender: function(event, element) {
 		        element.qtip({
-		            content: event.title + ' <br /> <a href="/admin/legalcasedetails/view/' + event.case_detail_id + '">View Details</a> <br /> <a id="' + event.id +'" class="on_time">On Time</a> <br /> <a id="' + event.id +'" class="late_payment">Late Payment</a> <br /> <a id="' + event.id +'" class="available">Available</a> <br /> <a id="' + event.id +'" class="not_available">Not Available </a> <br /> <a id="' + event.id +'" class="delete">Delete</a>',
+		            content: 'Event ID: ' + event.id + '<br />' + event.title + ' <br /> <a href="/admin/legalcasedetails/view/' + event.case_detail_id + '">View Details</a> <br /> <a id="' + event.id +'" class="on_time">On Time</a> <br /> <a id="' + event.id +'" class="late_payment">Late Payment</a> <br /> <a id="' + event.id +'" class="available">Available</a> <br /> <a id="' + event.id +'" class="not_available">Not Available </a> <br /> <a id="' + event.id +'" class="delete">Delete</a>',
 					position: 'topRight',
 					hide: {
 						fixed: true // Make it fixed so it can be hovered over
@@ -380,6 +381,11 @@ $(document).ready(function() {
 		$('#calendar').fullCalendar('destroy');
 		load_full_calendar('/events/not_active_feed/');
 	})
+	
+	$('#no_payment_status').click(function() {
+		$('#calendar').fullCalendar('destroy');
+		load_full_calendar('/events/no_payment_status_feed/');
+	});
 		
 	// 
 	// $('#all_office').click(function() {
