@@ -577,6 +577,7 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option) {
 							window.location = '/dashboard/';
 						},
 						'Proceed Payment': function() {
+							// Save Paypal details to Payment
 							if (option_value == 'paypal') {
 								$.ajax({
 				        	type: "POST", 

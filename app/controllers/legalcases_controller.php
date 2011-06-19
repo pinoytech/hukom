@@ -322,7 +322,7 @@ class LegalcasesController extends AppController {
 					$this->Legalcasedetail->save($data);
 					$case_detail_id = $this->Legalcasedetail->id;
 					
-					//Update Events
+					//Update Events - insert case_detail_id
 					if ($this->Session->read('Event.calendar_id')) {
                         // debug($this->Session->read('Event.calendar_id'));
                         // exit;
