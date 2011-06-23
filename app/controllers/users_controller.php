@@ -484,32 +484,31 @@ class UsersController extends AppController {
 					$this->Session->setFlash(__('Children Information could not be saved. Please, try again.', true));
 				}
 			}
-			
-			//Redirect 
+
+			//Redirect Controller
 			if ($goto == 'legal_problem') {
 				$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
 			}
-			else {	
-				
+			
+			if ($goto == 'personal_info') {
+				//check users.civil_status
 				$User = $this->User->read(null, $id);
-				
-				if ($User['PersonalInfo']['civil_status'] == 'Single') {
+
+				if ($User['PersonalInfo']['civil_status'] == 'Single' || $User['PersonalInfo']['civil_status'] == 'Living In') {
 					$goto = 'personal_info';
 				}
-				else {
-				    
-				    if ($goto == 'profilesave') {
-                        // $goto = 'personal_info';
-				        $this->redirect(array('controller' => 'legalcases', 'action' => 'index', $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
-				    }
-				    else {
-				        $goto = 'spouse_info';
-				    }
+				elseif ($User['PersonalInfo']['civil_status'] == 'Married' || $User['PersonalInfo']['civil_status'] == 'Divorced/Annulled') {
+					$goto = 'spouse_info';
 				}
-				
+
 				//Redirect to Personal or Spouse
 				$this->redirect(array('action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
 			}
+			
+			if ($goto == 'profilesave') {
+                // $goto = 'personal_info';
+		        $this->redirect(array('controller' => 'legalcases', 'action' => 'index', $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
+		    }
 			
 			// $this->data = $this->User->read(null, $id);
 			

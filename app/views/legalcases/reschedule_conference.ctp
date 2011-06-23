@@ -97,6 +97,10 @@
     You have selected a date within the 3-day case review period. Please select a new schedule 3 days after the original date selected.
 </div>
 
+<div id="reschedule_successfull" title="Schedule Conference" class="hidden">
+    You have successfull reschedule your conference. 
+</div>
+
 <?php $html->scriptBlock("calendar_dialogs();", array('inline'=>false));?>
 
 <?php //$this->Html->scriptStart(array('inline' => false));?>
@@ -130,21 +134,25 @@ function redirect(){
 	//Save Event Data
 	$.ajax({
         type: "POST",
-        url: '/events/add_event',
-        data: $('#event_input_data').val() + messenger_values + '&event_id=<?php echo $event_id;?>&reschedule=1',
+        url: '/events/reschedule_event',
+        data: $('#event_input_data').val() + messenger_values + '&event_id=<?php echo $event_id;?>',
         success: function(msg) {   
 			if (msg) {
 				<?php
+				/*
 			    if ($reschedule_type) {
 					$location = '/pages/reschedule_conference_success/';
 			    }
 				else {
 					$location = "/legalcases/summary_of_information/$id/$case_id/$case_detail_id/reschedule/$conference";
 				}
+				*/
 				?>
-			
-				window.location = '<?php echo $location;?>';
-
+				
+				// window.location = '<?php //echo $location;?>';
+				
+				//Confirm Reschedule
+				window.location = '/pages/reschedule_conference_success/';
 			}
         },
         error: function() {

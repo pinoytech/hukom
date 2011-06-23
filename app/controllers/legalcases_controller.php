@@ -167,7 +167,7 @@ class LegalcasesController extends AppController {
 							break;	
 					}
 					
-				    $this->Session->write('Event.calendar_id', time());
+				    //$this->Session->write('Event.calendar_id', time());
 				}
 				else {
 				    $conference = false;
@@ -322,16 +322,18 @@ class LegalcasesController extends AppController {
 					$this->Legalcasedetail->save($data);
 					$case_detail_id = $this->Legalcasedetail->id;
 					
+					/*
 					//Update Events - insert case_detail_id
 					if ($this->Session->read('Event.calendar_id')) {
-                        // debug($this->Session->read('Event.calendar_id'));
-                        // exit;
+                        debug($this->Session->read('Event.calendar_id'));
+                        exit;
                         $this->loadModel('Event');
     					$this->Event->updateAll(
     					    array('Event.case_detail_id' => $case_detail_id),
     					    array('Event.calendar_id' => $this->Session->read('Event.calendar_id'))
     					);
 					}
+					*/
 				}
 				
 				//Create Legalcase_id Folder
@@ -434,6 +436,48 @@ class LegalcasesController extends AppController {
 			$this->data = $this->Legalcasedetail->read(null, $this->data['Legalcasedetail']['case_id']);
 		}
 		
+		//Update Events - insert case_detail_id
+		if ($this->Session->read('TempEvent.id')) {
+            
+			$this->loadModel('TempEvent');
+			$TempEvent = $this->TempEvent->findById($this->Session->read('TempEvent.id'));
+			
+			// debug($TempEvent);
+			// debug($TempEvent['TempEvent']['user_id']);
+			
+			$Event_data = array(
+				'Event' => array(
+					'user_id'            => $TempEvent['TempEvent']['user_id'],
+					'case_id'            => $TempEvent['TempEvent']['case_id'],
+					'case_detail_id'     => $case_detail_id,
+					'title'              => $TempEvent['TempEvent']['title'],
+					'allday'             => $TempEvent['TempEvent']['allday'],
+					'start'              => $TempEvent['TempEvent']['start'],
+					'end'                => $TempEvent['TempEvent']['end'],
+					'editable'           => $TempEvent['TempEvent']['editable'],
+					'is_locked'          => $TempEvent['TempEvent']['is_locked'],
+					'calendar_id'        => $TempEvent['TempEvent']['calendar_id'],
+					'conference'         => $TempEvent['TempEvent']['conference'],
+					'color'              => $TempEvent['TempEvent']['color'],
+					'messenger_type'     => $TempEvent['TempEvent']['messenger_type'],
+					'messenger_username' => $TempEvent['TempEvent']['messenger_username'],
+				)
+			);
+			
+			$this->loadModel('Event');
+			$this->Event->save($Event_data);
+			
+			//Clear Data
+			$this->Session->write('TempEvent.id', '');
+			
+			/*
+			$this->Event->updateAll(
+			    array('Event.case_detail_id' => $case_detail_id),
+			    array('Event.calendar_id' => $this->Session->read('Event.calendar_id'))
+			);
+			*/
+		}
+		
 		if (empty($this->data)) {
 			$this->data = $this->Legalcasedetail->read(null, $case_detail_id);
 		}
@@ -479,13 +523,14 @@ class LegalcasesController extends AppController {
 		$this->set('upload_folder', $upload_folder);
 		$this->set('files', $this->Custom->show_files($upload_folder));
 		$this->set('no_of_hours', '');
+		$this->set('legal_service', $legal_service);
 		
 		//Get Legalservice fee
 		$this->loadModel('Legalservice');
 		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
 		$this->set('fee', $Legalservice['Legalservice']['fee']);
 		
-		//Get Event
+		//Get Event Data
         $this->loadModel('Event');        
         $Event = $this->Event->findByCaseDetailId($case_detail_id);		
         

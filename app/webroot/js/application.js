@@ -502,6 +502,14 @@ function summary_of_information_form(id, case_id, case_detail_id) {
 	  $('#back-to-case-index').click(function() {
 			window.location = '/legalcases/index/' + id;
 		});
+		
+		$('#new-video-conference').click(function() {
+			window.location = '/legalcases/letter_of_intent/' + id + '/' + case_id + '/video';
+		});
+		
+		$('#new-office-conference').click(function() {
+			window.location = '/legalcases/letter_of_intent/' + id + '/' + case_id + '/office';
+		});
 	});
 }
 
@@ -743,7 +751,7 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 				if ($('.stockholder_type:checked').val() == 'Publicly Listed') {
 					stock_list_total_rows = $('#stock-list > tbody').size() - 1;
 					if (stock_list_total_rows > 10) {
-						alert('Top 10 Majority Stockholders only');
+						alert('Top 10 Majority Stockholders only submit');
 						return false;
 					}
 				}
@@ -917,8 +925,8 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 
 		function add_stock() {
 			//Count no. of rows
-			total_rows = $('#stock-list > tbody').size() - 1;
-
+			total_rows = $('#stock-list > tbody').size();
+			console.log(total_rows);
 			//Check stockholder_type
       if ($('.stockholder_type:checked').val() == 'Publicly Listed') {
       	if (total_rows > 10) {
@@ -970,7 +978,7 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 function calendar_dialogs() {
 	$('document').ready(function() {
 		//Dialog Messages
-		$("#event-fill-up-notice, #messenger-type-notice, #messenger-username-notice, #event-blank, #event-after3days, #event-date-not-allowed, #event-date-same, #event-locked, #event-not-available, #on_time_payment, #late_payment, #available, #not_available, #already_selected_schedule").dialog({
+		$("#event-fill-up-notice, #messenger-type-notice, #messenger-username-notice, #event-blank, #event-after3days, #event-date-not-allowed, #event-date-same, #event-locked, #event-not-available, #on_time_payment, #late_payment, #available, #not_available, #already_selected_schedule, #reschedule_successful").dialog({
 			autoOpen: false,
 			width: 450,
 			height: 200,

@@ -6,9 +6,10 @@
 	<div id="calendar"></div>
 	
 	<div><a id="all_schedule" class="display_options selected">All Schedule</a></div>
+	<div><a id="confirmed_payment" class="display_options">Confirmed Payment (Payment status is Confirmed)</a></div>
 	<div><a id="pending_payment" class="display_options">Pending Payment (Payment status is Pending)</a></div>
 	<div><a id="no_payment_status" class="display_options">No Payment Status (Filled-up legal forms but didn't fill-up payment form) </a></div>
-	<div><a id="not_active" class="display_options">Not Active (Selected a schedule but didn't fill-up legal forms)</a></div>
+	<!-- <div><a id="not_active" class="display_options">Not Active (Selected a schedule but didn't fill-up legal forms)</a></div> -->
 	
 </div>
 
@@ -370,6 +371,11 @@ $(document).ready(function() {
 	$('#pending_payment').click(function() {
 		$('#calendar').fullCalendar('destroy');
 		load_full_calendar('/events/pending_payment_feed/');
+	});
+	
+	$('#confirmed_payment').click(function() {
+		$('#calendar').fullCalendar('destroy');
+		load_full_calendar('/events/confirmed_payment_feed/');
 	});
 	
 	$('#all_schedule').click(function() {

@@ -6,7 +6,9 @@
 		echo $this->Form->input('Payment.id', array('type' => 'text', 'readonly' => true));
 		echo $this->Form->input('Payment.user_id', array('type' => 'hidden'));
 		echo $this->Form->input('Payment.case_id', array('type' => 'hidden'));
+		echo $this->Form->input('Payment.case_detail_id', array('type' => 'hidden'));
 		echo $this->Form->input('Payment.confirmed', array('type' => 'hidden'));
+		echo $this->Form->input('Legalcasedetail.legal_service', array('type' => 'hidden'));
         echo '<div><label>Username</label>' . $this->data['User']['username'] . '</div>';
 		
 		//$options = array('Per Query' => 'Per Query', 'Video/Office Conference' => 'Video/Office Conference', 'Monthly Retainer' => 'Monthly Retainer', 'Case/Project Retainter' => 'Case/Project Retainter');

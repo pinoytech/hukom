@@ -49,5 +49,40 @@ class AppController extends Controller {
 			$this->redirect(array('admin' => true, 'action' => 'admin_index'));
 		}
 	}
+	
+	//Email Confirmation
+	//Returns: email body and sends mail to user
+	function _send_on_time_payment_confirmation($id, $case_id, $event_id, $conference) {
+		
+		if ($conference == 'video') {
+			$subject = "Video Conference Payment Confirmation";
+			$template = 'on_time_payment_confirmation';
+		}
+		elseif ($conference == 'office') {
+			$subject = "Office Conference Payment Confirmation";
+			$template = 'office_on_time_payment_confirmation';
+		}
+		
+		$this->loadModel('User');
+		$this->loadModel('Event');
+
+		$User                  = $this->User->read(null,$id);
+		$Event                 = $this->Event->read(null,$event_id);
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = "E-Lawyers Online - $subject";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = $template; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Event', $Event);
+	    $this->set('case_id', $case_id);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
 }
 ?>

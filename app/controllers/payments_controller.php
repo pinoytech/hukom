@@ -33,26 +33,35 @@ class PaymentsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		
-        // debug($this->data);
-        // exit;
-		
 		if (!empty($this->data)) {
-		    
+
 		    //Check confirmed value
 			if ($this->data['Payment']['status'] == 'Confirmed') {
 
-				if ($this->data['Payment']['confirmed'] != 1) {					
+				if ($this->data['Payment']['confirmed'] != 1) {
 
-					//Send Confirmation Email
-					$this->_send_payment_confirmation($this->data['Payment']['user_id'], $this->data['Payment']['case_id']);
-					$this->data['Payment']['confirmed'] = 1;
-					$email_sent_alert = ' and payment confirmation email is sent to the user';
+					//Get Event
+					$this->loadModel('Event');
+					$Event = $this->Event->findByCaseDetailId($this->data['Payment']['case_detail_id']);
 					
+					//Check if Video or Office
+					if ($this->data['Legalcasedetail']['legal_service'] == 'Video Conference' || $this->data['Legalcasedetail']['legal_service'] == 'Office Conference') {
+						$this->_send_on_time_payment_confirmation($this->data['Payment']['user_id'], $this->data['Payment']['case_id'], $Event['Event']['id'], $Event['Event']['conference']);
+					}
+					else { 
+						//Send Confirmation Email / Non-Conference
+						$this->_send_payment_confirmation($this->data['Payment']['user_id'], $this->data['Payment']['case_id']);
+						$this->data['Payment']['confirmed'] = 1;
+					}
+
+					$email_sent_alert = ' and payment confirmation email is sent to the user';
 				}
 			}
-			
+
+			unset($this->data['Legalcasedetail']);
+
 			$this->Payment->validate = array();
-			
+
 			//Update case data
 			$this->Payment->id = $this->data['Payment']['id'];
 			if ($this->Payment->saveAll($this->data)) {
@@ -67,6 +76,7 @@ class PaymentsController extends AppController {
 		
 		if (empty($this->data)) {
 			$this->data = $this->Payment->read(null, $id);
+			// debug($this->data);
 		}
 		
 	}

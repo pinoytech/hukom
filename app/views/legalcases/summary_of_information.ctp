@@ -16,7 +16,7 @@
 					<td colspan="2">---------------------------------------------------------------------------------------------------------------------------------------------------</td>
 				</tr>
 				<?php
-				//debug($Legalcase);
+				// debug($Legalcase);
 				foreach ($Legalcase['Legalcasedetail'] as $Legalcasedetail) {
 				?>
 				<tr>
@@ -50,7 +50,44 @@
 					</tr>
                 <?php
                 }
+				else {
                 ?>
+
+				<?php
+				//From Closed Confirmation Email
+				if ($Legalcase['Event']) {
+					foreach ($Legalcase['Event'] as $Event) {
+						if ($Event['case_detail_id'] == $Legalcasedetail['id']) {
+                ?>
+					<?php
+					if ($Event['conference'] == 'video') {
+					?>
+		                <tr>
+							<td class="label"><?php echo ucfirst($Event['messenger_type']);?> ID:</td>
+							<td><?php echo $Event['messenger_username'];?></td>
+						</tr>
+					<?php
+	                }
+	                ?>					
+					<tr>
+						<td class="label">No. of Hours:</td>
+						<td><?php echo $custom->date_difference($Event['start'], $Event['end'], 'h');;?></td>
+					</tr>
+					<tr>
+						<td class="label">Preferred Date:</td>
+						<td><?php echo date('F d, Y', strtotime($Event['start']));?></td>
+					</tr>
+					<tr>
+						<td class="label">Preferred Time:</td>
+						<td><?php echo date('h:i a', strtotime($Event['start'])) . ' to ' . date('h:i a', strtotime($Event['end']));?></td>
+					</tr>
+                <?php
+						}
+					}
+                }
+				}
+                ?>
+
 				<tr>
 					<td class="label">Summary of Facts:</td>
 					<td><?php echo $Legalcasedetail['summary'];?></td>
@@ -107,9 +144,19 @@
         		<?php
         		}
         		elseif ($type == 'add') {
+	
+					if ($legal_service == 'video') {
+						$new_facts_id = 'new-video-conference';
+					}
+					elseif ($legal_service == 'office') {
+						$new_facts_id = 'new-office-conference';
+					}
+					else {
+						$new_facts_id = 'new-facts';
+					}
         		?>
         			<td>
-        				<input type="button" id="new-facts" value="Add new facts" />
+        				<input type="button" id="<?php echo $new_facts_id;?>" value="Add new facts" />
         			</td>
         		<?php
         	    }
