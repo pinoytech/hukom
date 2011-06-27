@@ -239,6 +239,7 @@ class LegalcasesController extends AppController {
 		$case_id        = $Event['Event']['case_id'];
 		$case_detail_id = $Event['Event']['case_detail_id'];
 		$conference     = $Event['Event']['conference'];
+		$no_of_hours    = $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
 		
 		$PersonalInfo   = $this->PersonalInfo->find('first', array('conditions' => array('PersonalInfo.user_id' => $id)));
 		$user_full_name = $PersonalInfo['PersonalInfo']['first_name'].' '.$PersonalInfo['PersonalInfo']['last_name'];
@@ -283,6 +284,7 @@ class LegalcasesController extends AppController {
 	    $this->set('messenger_type', $Event['Event']['messenger_type']);
 	    $this->set('messenger_username', $Event['Event']['messenger_username']);
 	    $this->set('reschedule_type', $reschedule_type);
+	    $this->set('no_of_hours', $no_of_hours);
 	}
 	
 	function legal_problem($id, $case_id=null,$case_detail_id=null){ //$id = user_id

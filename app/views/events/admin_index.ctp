@@ -128,7 +128,7 @@ $(document).ready(function() {
 	            // console.log('<?php echo date("d/m/y"); ?>');
 
 	                            verify_event_url = "/events/verify_event/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
-	                            add_event_url    = "/events/add_event/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
+	                            add_event_url    = "/events/reschedule_event/"+'false'+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/HH/mm");
 
 	                            $("#event-data-add").dialog({
 	                        		autoOpen: false,

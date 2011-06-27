@@ -98,7 +98,11 @@
 </div>
 
 <div id="reschedule_successfull" title="Schedule Conference" class="hidden">
-    You have successfull reschedule your conference. 
+    You have successfully reschedule your conference. 
+</div>
+
+<div id="event_no_hours_not_equal" title="Schedule Conference" class="hidden">
+    Please select <?php echo $no_of_hours;?> hour(s) of schedule from the calendar.
 </div>
 
 <?php $html->scriptBlock("calendar_dialogs();", array('inline'=>false));?>
@@ -327,6 +331,9 @@ $(document).ready(function() {
 													EventStart_value = $('#EventStart').val();
 													EventEnd_value   = $('#EventEnd').val();
 													
+													//Reschedule Flag
+													input_data.push('reschedule_event_no_of_hours=<?php echo $no_of_hours;?>');
+													
 													event_input_data = input_data.join('&');
 													
 			                                        jQuery.ajax({
@@ -339,6 +346,10 @@ $(document).ready(function() {
 			                                                    $("#event-not-available").dialog("open");
 			                                                    return false;
 			                                                }
+															else if (msg == 'no hours not equal') {
+																$("#event_no_hours_not_equal").dialog("open");
+			                                                    return false;
+															}
 															else {				
 																
 																//Test code. Hour must have leading zero to work on Firefox and Safari

@@ -290,7 +290,7 @@ function legalcases_index() {
 
 function online_legal_consultation_form() {
 	$(document).ready(function() {
-		jQuery("#LegalcaseOnlineLegalConsultationForm").validate({
+		$("#LegalcaseOnlineLegalConsultationForm").validate({
 			rules: {
 				"data[Legalcase][legal_service]" : {
 					required: true
@@ -298,7 +298,34 @@ function online_legal_consultation_form() {
 			}
 		});	
 	
-		jQuery('#legal-service-descriptions').tabs();
+		var legal_service_tabs = $('#legal-service-descriptions');
+		
+		legal_service_tabs.tabs();
+				
+		$('.legal_service_type').click(function() {
+				
+				switch($(this).val())
+				{
+				case 'Per Query':
+				  legal_service_tabs.tabs({ selected: 0 });
+				  break;
+				case 'Video Conference':
+				  legal_service_tabs.tabs({ selected: 1 });
+				  break;
+				case 'Office Conference':
+				  legal_service_tabs.tabs({ selected: 2 });
+				  break;				
+				case 'Monthly Retainer':
+				  legal_service_tabs.tabs({ selected: 3 });
+				  break;				
+				case 'Case/Project Retainer':
+				  legal_service_tabs.tabs({ selected: 4 });
+				  break;				
+				default:
+				  legal_service_tabs.tabs({ selected: 0 });
+				}
+		});
+		
 	});
 }
 
@@ -611,8 +638,32 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option) {
 			}
 		});
 
-		$('#payment-instructions').tabs();
-
+		// $('#payment-instructions').tabs();
+		
+		//Change tabs on select of radio button
+		var payment_instructions_tabs = $('#payment-instructions');
+		payment_instructions_tabs.tabs();
+				
+		$('.option_radio').click(function() {
+				switch($(this).val())
+				{
+				case 'bank_deposit':
+				  payment_instructions_tabs.tabs({ selected: 0 });
+				  break;
+				case 'paypal':
+				  payment_instructions_tabs.tabs({ selected: 1 });
+				  break;
+				case 'gcash':
+				  payment_instructions_tabs.tabs({ selected: 2 });
+				  break;				
+				case 'smartmoney':
+				  payment_instructions_tabs.tabs({ selected: 3 });
+				  break;				
+				default:
+				  payment_instructions_tabs.tabs({ selected: 0 });
+				}
+		});
+		
 	});
 }
 
@@ -978,7 +1029,7 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 function calendar_dialogs() {
 	$('document').ready(function() {
 		//Dialog Messages
-		$("#event-fill-up-notice, #messenger-type-notice, #messenger-username-notice, #event-blank, #event-after3days, #event-date-not-allowed, #event-date-same, #event-locked, #event-not-available, #on_time_payment, #late_payment, #available, #not_available, #already_selected_schedule, #reschedule_successful").dialog({
+		$("#event-fill-up-notice, #messenger-type-notice, #messenger-username-notice, #event-blank, #event-after3days, #event-date-not-allowed, #event-date-same, #event-locked, #event-not-available, #on_time_payment, #late_payment, #available, #not_available, #already_selected_schedule, #reschedule_successful, #event_no_hours_not_equal").dialog({
 			autoOpen: false,
 			width: 450,
 			height: 200,

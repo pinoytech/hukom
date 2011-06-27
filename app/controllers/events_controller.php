@@ -301,7 +301,7 @@ class EventsController extends AppController {
 			Configure::write('debug', 0);
             $this->autoRender = false;
             $this->autoLayout = false;
-			echo $this->Event->id;
+			echo $this->TempEvent->id;
         }
     }
 
@@ -358,10 +358,23 @@ class EventsController extends AppController {
 			Configure::write('debug', 0);
             $this->autoRender = false;
             $this->autoLayout = false;
-
+			
 			if ($events) {
                 echo 'not available';
+				exit;
 			}
+			else {
+				if ($_POST['reschedule_event_no_of_hours']) {
+					//Get the no. of hours
+					$no_of_hours = $this->Custom->date_difference($mysqlstart, $mysqlend, 'h');
+					// debug($no_of_hours);
+
+					if ($_POST['reschedule_event_no_of_hours'] != $no_of_hours) {
+						echo 'no hours not equal';
+					}					
+				}
+			}
+			
         }
     }
 

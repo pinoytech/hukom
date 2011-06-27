@@ -31,7 +31,7 @@
 						$i=0;
 						foreach ($Legalservices as $Legalservice) {
 						?>
-						<input type="radio" value="<?php echo $Legalservice['Legalservice']['name'];?>" id="<?php echo $i . '-legal-service';?>" name="data[Legalcase][legal_service]" ><?php echo $Legalservice['Legalservice']['name'];?>
+						<input type="radio" value="<?php echo $Legalservice['Legalservice']['name'];?>" id="<?php echo $i . '-legal-service';?>" name="data[Legalcase][legal_service]" class="legal_service_type"><?php echo $Legalservice['Legalservice']['name'];?>
 						<?php
 							$i++;
 						}
