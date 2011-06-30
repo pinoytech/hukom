@@ -547,6 +547,27 @@ table#stock-list td input {
 	margin-bottom: 5px; 
 }
 
+/** Request Reschedue Conference Form **/
+.form-request-reschedule-conference div label {
+	width: 50px;
+}
+
+.form-request-reschedule-conference div label.error {
+	display: block;
+	float: right;
+	width: 410px;
+}
+
+/*.form-request-reschedule-conference div input {
+  width: 400px;
+}
+*/
+
+.form-request-reschedule-conference div textarea {
+  width: 270px;
+  height: 100px;
+}
+
 /** Summary of Facts Form **/
 
 /** Case Index **/

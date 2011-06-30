@@ -592,7 +592,47 @@ class LegalcasesController extends AppController {
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 	}
+    
+    // Description: User request a reschedule of conference
+    function request_reschedule_conference($id=null, $case_id=null, $case_detail_id=null, $event_id=null) {
+        if (!empty($this->data)) {
+            //Send Email to Admin			
+            $this->_send_request_reschedule_conference($this->data['Legalcase']['user_id'], $this->data['Legalcase']['event_id']);
+			
+			//Redirect if sucessful
+			$this->redirect(array('controller' => 'pages', 'action' => 'request_reschedule_conference_sent'));
+		}
+        
+        $this->set('id', $id);
+		$this->set('case_id', $case_id);
+		$this->set('case_detail_id', $case_detail_id);
+		$this->set('event_id', $event_id);
+    }
+    
+    function _send_request_reschedule_conference($id, $event_id) {
+		$this->loadModel('User');
+		$this->loadModel('Event');
 
+		$User                  = $this->User->read(null,$id);
+		$Event                 = $this->Event->read(null,$event_id);
+		
+		$this->Email->to       = $this->admin_email;
+		$this->Email->subject  = "E-Lawyers Online - Request to Reschedule Conference";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'request_reschedule_conference'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Event', $Event);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	
+	}
+    
+    //Description: Delete file physically from the server
 	function remove_file(){
 		echo $folder = $_SERVER['DOCUMENT_ROOT'] . $_POST['file_path'];
 		unlink($folder);

@@ -25,6 +25,7 @@
 				</tr>
 				<?php
 				if ($Event) {
+				    $event_id = $Event['Event']['id'];
                 ?>
 					<?php
 					if ($Event['Event']['conference'] == 'video') {
@@ -51,6 +52,7 @@
                 <?php
                 }
 				else {
+				    $event_id = false;
                 ?>
 
 				<?php
@@ -140,6 +142,14 @@
         		?>
     		        <td>
         				<input type="button" id="back-to-case-index" class="back-to-case-list" />
+        				<?php
+            			//Display Reschedule Conference Button
+            			if ($legal_service == 'video' || $legal_service == 'office') {
+    			        ?>
+            			    <input type="button" id="request_reschdule_conference" value="Request to Reschedule Conference" />
+            			<?php
+        			    }
+            			?>
         			</td>
         		<?php
         		}
@@ -185,4 +195,4 @@
 	</div>
 </div>
 
-<?php $html->scriptBlock("summary_of_information_form('$id', '$case_id', '$case_detail_id');", array('inline'=>false));?>
+<?php $html->scriptBlock("summary_of_information_form('$id', '$case_id', '$case_detail_id', '$event_id');", array('inline'=>false));?>
