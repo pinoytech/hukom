@@ -16,7 +16,7 @@
 					Hi, <?php echo $User['PersonalInfo']['first_name'];?> [<?php echo $this->Html->link('Logout', '/users/logout', array()); ?>]
 				</li>
 				<li>
-					<?php echo $this->Html->link('Go to your dashboard', '/dashboard', array()); ?>
+					<?php echo $this->Html->link('Go to your dashboard test', '/dashboard', array()); ?>
 				</li>
 				<?php
 				}
