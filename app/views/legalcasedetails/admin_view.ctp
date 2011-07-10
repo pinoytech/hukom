@@ -72,7 +72,13 @@
 		|
 		<?php echo $this->Html->link(__('Back to Case List', true), array('admin' => true, 'action' => 'index', $Legalcasedetail['Legalcase']['id'])); ?>
 		|
-		<?php echo $this->Html->link(__('View Payment Option', true), array('admin' => true, 'controller' => 'payments', 'action' => 'view', $Legalcasedetail['Payment'][0]['id'])); ?>
+		<?php
+		if ($Legalcasedetail['Payment']) {
+		?>
+		    <?php echo $this->Html->link(__('View Payment Option', true), array('admin' => true, 'controller' => 'payments', 'action' => 'view', $Legalcasedetail['Payment'][0]['id'])); ?>
+	    <?php
+        }
+	    ?>
 	</div>
 
 	

@@ -48,8 +48,8 @@ class PaymentsController extends AppController {
 					if ($this->data['Legalcasedetail']['legal_service'] == 'Video Conference' || $this->data['Legalcasedetail']['legal_service'] == 'Office Conference') {
 						$this->_send_on_time_payment_confirmation($this->data['Payment']['user_id'], $this->data['Payment']['case_id'], $Event['Event']['id'], $Event['Event']['conference']);
 					}
-					else { 
-						//Send Confirmation Email / Non-Conference
+					elseif ($this->data['Legalcasedetail']['legal_service'] == 'Per Query') { 
+						//Send Confirmation Email for Per Query
 						$this->_send_payment_confirmation($this->data['Payment']['user_id'], $this->data['Payment']['case_id']);
 						$this->data['Payment']['confirmed'] = 1;
 					}
@@ -81,13 +81,14 @@ class PaymentsController extends AppController {
 		
 	}
 	
+	//Per Query Email Confirmation
 	function _send_payment_confirmation($id, $case_id) {
 		$this->loadModel('User');
 		
 		$User                  = $this->User->read(null,$id);
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
-		$this->Email->subject  = 'E-Lawyers Online - Payment Confirmation';
+		$this->Email->subject  = 'E-Lawyers Online - Per Query Payment Confirmation';
 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';

@@ -18,7 +18,7 @@
 					<td><?php echo $this->Paginator->sort('Legal Problem', 'Legalcase.legal_problem');?></td>
 				</tr>
 				<?php
-                // debug($Legalcase);
+                // debug($Legalcase);   
 				foreach ($Legalcase as $Legalcases) {
 				?>
 				<tr>
@@ -37,7 +37,35 @@
 								</tr>
 								<?php
 								foreach ($Legalcases['Legalcasedetail'] as $Legalcasedetail) {
-									// debug($Legalcasedetail);
+                                    // debug($Legalcasedetail);
+									
+									// Check if user reached up to 'questions' form. This will trigger the 'Continue' action
+									if ($Legalcasedetail['questions']) {
+                                        $action = 'Pay Now';
+									}
+									else {
+									    $action = 'Continue';
+									}
+									
+									// Check if legal_service is Video or Office. This will trigger the action to 'Letter of Intent' page
+                                    // if ($Legalcasedetail['legal_service'] == 'Video Conference' || $Legalcasedetail['legal_service'] == 'Office Conference') {
+                                        // $action = 'Continue Conference';
+                                    // }
+                                    
+                                    switch ($Legalcasedetail['legal_service']){
+										case "Per Query":
+											$legal_service = 'perquery';
+											break;
+										case "Video Conference":
+											$legal_service = 'video';
+											$action        = 'Continue Conference';
+											break;
+										case "Office Conference":
+											$legal_service = 'office';
+											$action        = 'Continue Conference';
+											break;	
+									}
+									
 								?>
 								<tr>
 									<td><?php echo $Legalcasedetail['id'];?></td>
@@ -48,7 +76,7 @@
 										<?php
 											$payment_option = 'mode_of_payment';
 											$payment_status = '';
-											$action         = 'Pay Now';
+                                            // $action         = 'Pay Now';
 											
 											if (isset($Legalcases['Payment'])) {
 												foreach ($Legalcases['Payment'] as $Payment) {
@@ -71,20 +99,17 @@
                                             echo $this->Html->link(__('Pay Now', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
                                             echo '<br />';
 										}
-										
-										switch ($Legalcasedetail['legal_service']){
-											case "Per Query":
-												$legal_service = 'perquery';
-												break;
-											case "Video Conference":
-												$legal_service = 'video';
-												break;
-											case "Office Conference":
-												$legal_service = 'office';
-												break;	
+										elseif ($action == 'Continue') {
+                                            echo $this->Html->link(__('Continue', true), array('action' => 'legal_problem', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
+                                            echo '<br />';
+										}
+										elseif ($action == 'Continue Conference') {
+                                            // echo 'conference';
+                                            // echo $this->Html->link(__('Continue', true), array('action' => 'letter_of_intent', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
+                                            echo '<br />';
 										}
 										
-										echo $this->Html->link(__('View', true), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view', $legal_service));
+											echo $this->Html->link(__('View', true), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view', $legal_service));
 
 										?>
 									</td>

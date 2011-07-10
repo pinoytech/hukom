@@ -386,8 +386,8 @@ class EventsController extends AppController {
 			//check if resched conference
 			if (!isset($_POST['reschedule'])) {
 				//Check if case_id on events is is_locked. (is_locked must be removed if user is already paid) - questionable
-	            $events = $this->Event->find('count', array('conditions' => array('Event.case_id' => $_POST['case_id'], 'Event.is_locked' => 1), 'limit' => 1));
-
+                // $events = $this->Event->find('count', array('conditions' => array('Event.case_id' => $_POST['case_id'], 'Event.is_locked' => 1), 'limit' => 1));
+                $events = 0;
 				if ($events > 0) {
 	                $msg = 'locked';
 	            }

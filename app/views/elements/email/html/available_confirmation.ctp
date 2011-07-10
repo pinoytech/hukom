@@ -2,7 +2,7 @@ Dear <?php echo $User['PersonalInfo']['first_name']. ' ' . $User['PersonalInfo']
 <br/>
 <br/>
 
-Your request to reset your schedule has been approved, please select your new schedule <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/legalcases/reschedule_conference/'. $Event['Event']['id'] . '/available';?>">here</a>.
+Your request to reset your schedule has been approved.
 <br/>
 <br/>
 
