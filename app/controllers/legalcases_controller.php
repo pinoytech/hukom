@@ -166,15 +166,15 @@ class LegalcasesController extends AppController {
 							$conference = 'office';
 							break;	
 					}
-					
+
 				    //$this->Session->write('Event.calendar_id', time());
 				}
 				else {
 				    $conference = false;
 				}
-				
+
 				$this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $conference));
-				
+
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
 			}
@@ -187,14 +187,23 @@ class LegalcasesController extends AppController {
 		$this->set('user_id', $id);
 		$this->set('id', $id);
 	}
-	
-	function letter_of_intent($id, $case_id, $conference = null){
+
+	function letter_of_intent($id, $case_id, $conference = null, $case_detail_id = null){
 		$this->loadModel('PersonalInfo');
 		$this->loadModel('Legalservice');
 		
 		$PersonalInfo = $this->PersonalInfo->find('first', array('conditions' => array('PersonalInfo.user_id' => $id)));
 		
 		$user_full_name = $PersonalInfo['PersonalInfo']['first_name'].' '.$PersonalInfo['PersonalInfo']['last_name'];
+		
+		switch ($conference){
+			case "video":
+			    $this->Session->write('Legalcase.legal_service', 'Video Conference');
+				break;
+			case "office":
+			    $this->Session->write('Legalcase.legal_service', 'Office Conference');
+			    break;
+		}
 		
 		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
 		// debug($Legalservice['Legalservice']['fee']);
@@ -208,6 +217,7 @@ class LegalcasesController extends AppController {
 		$this->set('fee', $Legalservice['Legalservice']['fee']);
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
+		$this->set('case_detail_id', $case_detail_id);
 		
 		if ($conference) {
 		    $this->set('legal_service', $Legalservice['Legalservice']['name']);
@@ -296,13 +306,20 @@ class LegalcasesController extends AppController {
 		
 		// debug($this->data);
 		// exit;
-						
+        
 		// Update Case Details
 		if (!empty($this->data)) {
-			
-			$this->Legalcase->id = $this->data['Legalcase']['id'];
+		    $this->loadModel('Legalcasedetail');
+		    
+		    $this->Legalcase->id = $this->data['Legalcase']['id'];
 			
 			$case_detail_id = $this->data['Legalcase']['case_detail_id'];
+			
+			if ($case_detail_id) {
+                //Get and Set Session of legal_service
+                $Legalcasedetail = $this->Legalcasedetail->find('first', array('fields' => array('Legalcasedetail.legal_service'), 'conditions' => array('Legalcasedetail.id' => $case_detail_id)));
+                $this->Session->write('Legalcase.legal_service', $Legalcasedetail['Legalcasedetail']['legal_service']);
+			}
 			
 			if ($this->Legalcase->save($this->data)) {
 				// $this->Session->setFlash(__('Case Information has been saved', true));
@@ -312,7 +329,6 @@ class LegalcasesController extends AppController {
 					// exit;
 					
 					//Create Case Detail ID
-					$this->loadModel('Legalcasedetail');
 					$data['Legalcasedetail'] = array(
 						'user_id' => $this->data['Legalcase']['user_id'],
 						'case_id' => $this->Legalcase->id,

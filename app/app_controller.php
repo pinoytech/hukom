@@ -38,7 +38,9 @@ class AppController extends Controller {
 		//Set global user variable for View (i.e. navigation)
 		$this->set('auth_user_type', $this->Auth_user['User']['type']);
 		$this->set('auth_user_id', $this->Auth_user['User']['id']);
-		
+	
+	    //Profile Complet Flag
+		$this->set('auth_user_profile_complete', $this->Auth_user['User']['profile_complete']);		
 		
     }
 

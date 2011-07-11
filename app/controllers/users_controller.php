@@ -370,7 +370,7 @@ class UsersController extends AppController {
 			
             // debug($this->data);
             // exit;
-			
+
 			$this->loadModel('PersonalInfo');
 			$this->loadModel('SpouseInfo');
 			
@@ -382,10 +382,11 @@ class UsersController extends AppController {
 			}
 			
 			if ($this->PersonalInfo->save($this->data)) {
-								
-				if ($this->data['PersonalInfo']['civil_status'] == 'Single' || $this->data['PersonalInfo']['civil_status'] == 'Living In') {					
+				
+				//Check if Single or Living In to Trigger Spouse Info Form
+				if ($this->data['PersonalInfo']['civil_status'] == 'Single' || $this->data['PersonalInfo']['civil_status'] == 'Living In') {
 				    $this->SpouseInfo->deleteAll(array('SpouseInfo.user_id' => $id));
-				    
+                    
 					$this->redirect(array('action' => 'children_info', $this->data['User']['id'], $this->data['User']['case_id'], $this->data['User']['case_detail_id']));
 				}
 				else {
@@ -443,7 +444,7 @@ class UsersController extends AppController {
 		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);	
-		$this->set('case_detail_id', $case_detail_id);		
+		$this->set('case_detail_id', $case_detail_id);
 	}
 	
 	function children_info($id, $case_id=null, $case_detail_id=null) {
@@ -479,11 +480,15 @@ class UsersController extends AppController {
 			if (!empty($this->data['ChildrenInfo']['no_of_children'])) {
 								
 				if ($this->ChildrenInfo->saveAll($this->data)) {		
-				
+                    
 				} else {
 					$this->Session->setFlash(__('Children Information could not be saved. Please, try again.', true));
 				}
 			}
+			
+			//Update users.profile_complete to 1
+			$this->User->id = $this->data['ChildrenInfo']['user_id'];
+            $this->User->saveField('profile_complete', 1);
 
 			//Redirect Controller
 			if ($goto == 'legal_problem') {
@@ -591,7 +596,11 @@ class UsersController extends AppController {
 			if (!$this->CorporatePartnershipInfo->saveAll($this->data)) {
 			    $this->Session->setFlash(__('Corporate/Partnership Information could not be saved. Please, try again.', true));
 			}
-
+            
+            //Update users.profile_complete to 1
+			$this->User->id = $this->data['CorporatePartnershipInfo']['user_id'];
+            $this->User->saveField('profile_complete', 1);
+            
             // $this->redirect(array('action' => 'board_of_directors', $this->data['User']['id'], $this->data['User']['case_id']));
             
             //Redirect control

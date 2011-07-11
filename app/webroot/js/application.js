@@ -329,8 +329,13 @@ function online_legal_consultation_form() {
 	});
 }
 
+//Letter of Intent
+function redirect_form_legal_problem(id, case_id, case_detail_id) {
+	window.location = '/legalcases/legal_problem/' + id + '/' + case_id + '/' + case_detail_id;
+}
+
 function redirect_form(action, id, case_id, case_detail_id) {
-	window.location = '/users/' + action + '/' + id + '/' + case_id + '/' + case_detail_id;
+ window.location = '/users/' + action + '/' + id + '/' + case_id + '/' + case_detail_id;
 }
 
 function legal_problem_form(action, id, case_id, case_detail_id, legal_problem) {
@@ -342,7 +347,7 @@ function legal_problem_form(action, id, case_id, case_detail_id, legal_problem) 
 			if (legal_problem == 'Others' || legal_problem == 'Single Proprietorship' || legal_problem == 'Corporation Partnership' || legal_problem == 'Unregistered Business, Joint Venture, Consortium etc') {
 				$('#my_business_is').show();
 			}
-			else if (legal_problem != 'Personal' && legal_problem != 'Family' && legal_problem != 'Property' && legal_problem != 'Contractual' && legal_problem != 'Legal Documents' && legal_problem != 'Special Projects/Contracts') {
+			else if (legal_problem != 'Personal' && legal_problem != 'Family' && legal_problem != 'Property' && legal_problem != 'Contractual' && legal_problem != 'Work' && legal_problem != 'Legal Documents' && legal_problem != 'Special Projects/Contracts') {
 				$('#anything_under').show();
 				$('#anything_under').children('input').attr('disabled', false);
 				$('#anything_under').children('input').val(legal_problem);

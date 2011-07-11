@@ -38,34 +38,6 @@
 								<?php
 								foreach ($Legalcases['Legalcasedetail'] as $Legalcasedetail) {
                                     // debug($Legalcasedetail);
-									
-									// Check if user reached up to 'questions' form. This will trigger the 'Continue' action
-									if ($Legalcasedetail['questions']) {
-                                        $action = 'Pay Now';
-									}
-									else {
-									    $action = 'Continue';
-									}
-									
-									// Check if legal_service is Video or Office. This will trigger the action to 'Letter of Intent' page
-                                    // if ($Legalcasedetail['legal_service'] == 'Video Conference' || $Legalcasedetail['legal_service'] == 'Office Conference') {
-                                        // $action = 'Continue Conference';
-                                    // }
-                                    
-                                    switch ($Legalcasedetail['legal_service']){
-										case "Per Query":
-											$legal_service = 'perquery';
-											break;
-										case "Video Conference":
-											$legal_service = 'video';
-											$action        = 'Continue Conference';
-											break;
-										case "Office Conference":
-											$legal_service = 'office';
-											$action        = 'Continue Conference';
-											break;	
-									}
-									
 								?>
 								<tr>
 									<td><?php echo $Legalcasedetail['id'];?></td>
@@ -95,22 +67,51 @@
 									<td class="actions">
 										<?php
 										
-										if ($action == 'Pay Now') {
-                                            echo $this->Html->link(__('Pay Now', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
-                                            echo '<br />';
-										}
-										elseif ($action == 'Continue') {
-                                            echo $this->Html->link(__('Continue', true), array('action' => 'legal_problem', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
-                                            echo '<br />';
-										}
-										elseif ($action == 'Continue Conference') {
-                                            // echo 'conference';
-                                            // echo $this->Html->link(__('Continue', true), array('action' => 'letter_of_intent', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
-                                            echo '<br />';
-										}
+										// Check if user reached up to 'questions' form. This will trigger the 'Continue' action.
+    									if ($Legalcasedetail['questions']) {
+    									    if (empty($payment_status)) {
+    									        echo $this->Html->link(__('Pay Now', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
+                                                echo '<br />';
+    									    }
+                                            
+                                            $continue = false;
+    									}
+    									else {
+    									    $continue = true;
+    									}
+    									
+    									//Check Legal Service Type
+    									switch ($Legalcasedetail['legal_service']){
+    										case "Per Query":
+    											$legal_service = 'perquery';
+    											
+    											if ($continue) {
+    											    echo $this->Html->link(__('Continue', true), array('action' => 'legal_problem', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
+                                                    echo '<br />';
+    											}
+    											
+    											break;
+    										case "Video Conference":
+    											$legal_service = 'video';
+    											
+    											if ($continue) {
+                                                    echo $this->Html->link(__('Continue', true), array('action' => 'letter_of_intent', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $legal_service, $Legalcasedetail['id']));
+                                                    echo '<br />';
+                                                }
+                                                
+    											break;
+    										case "Office Conference":
+    										    $legal_service = 'office';
+    										    
+    										    if ($continue) {
+                                                    echo $this->Html->link(__('Continue', true), array('action' => 'letter_of_intent', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $legal_service, $Legalcasedetail['id']));
+                                                    echo '<br />';
+                                                }
+                                                
+    											break;	
+    									}
 										
-											echo $this->Html->link(__('View', true), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view', $legal_service));
-
+										echo $this->Html->link(__('View', true), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view', $legal_service));
 										?>
 									</td>
 								</tr>

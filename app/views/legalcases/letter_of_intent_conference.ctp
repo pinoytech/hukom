@@ -140,15 +140,17 @@ function redirect(){
         success: function(msg) {   
 			if (msg) {
 				<?php
-			    if ($auth_user_type == 'personal') {
-			        $profile_action = 'personal_info';
-			    }
-			    elseif ($auth_user_type == 'corporation') {
-			        $profile_action = 'corporate_partnership_representative_info';
-			    }
+                // if ($auth_user_type == 'personal') {
+                //     $profile_action = 'personal_info';
+                // }
+                // elseif ($auth_user_type == 'corporation') {
+                //     $profile_action = 'corporate_partnership_representative_info';
+                // }
 			    ?>
-			
-				window.location = '/users/<?php echo $profile_action; ?>/<?php echo "$id/$case_id"?>';
+
+                // window.location = '/users/<?php //echo $profile_action; ?>/<?php //echo "$id/$case_id"?>';
+                
+				window.location = '/legalcases/legal_problem/<?php echo "$id/$case_id/$case_detail_id"?>';
 			}
         },
         error: function() {
