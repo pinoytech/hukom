@@ -24,10 +24,16 @@ class LegalcasesController extends AppController {
 		$conditions = array('Legalcase.status' => 'active', 'Legalcase.user_id' => $this->Auth_user['User']['id']);
 		
 		$this->Legalcase->recursive = 1;		
-		$this->paginate['conditions'][] = $conditions;
-		$this->paginate['sort'][] = array('Legalcase.id' => 'asc');
-		$this->paginate['limit'] = 5;
-		$this->set('Legalcase', $this->paginate());
+        $this->paginate['conditions'][] = $conditions;
+        // $this->paginate['sort'][] = array('Legalcase.id' => 'desc');
+        $this->paginate['limit'] = 5;
+        $this->set('Legalcase', $this->paginate());
+        
+        // $this->paginate = array('conditions' => array('Legalcase.status' => 'active', 'Legalcase.user_id' => $this->Auth_user['User']['id']),
+        //     'sort' => array('Legalcase.id' => 'desc'),
+        //     'limit' => 5
+        // );
+        // $this->set('Legalcase', $this->paginate());
 	}
 
 	function admin_index($id=null) {
@@ -50,6 +56,7 @@ class LegalcasesController extends AppController {
 		
 		$this->Legalcase->recursive = 0;		
 		$this->paginate['conditions'][] = $conditions;
+        // $this->paginate['sort'][] = array('Legalcase.id' => 'desc');
 		$this->set('Legalcase', $this->paginate());
 	}
 	
@@ -456,8 +463,14 @@ class LegalcasesController extends AppController {
 		
 		//Update Events - insert case_detail_id
 		if ($this->Session->read('TempEvent.id')) {
+            // debug($case_detail_id);
+            // exit;
             
-			$this->loadModel('TempEvent');
+            //Delete duplicate events via case detail id
+            $this->loadModel('Event');
+            $this->Event->deleteAll(array('Event.case_detail_id' => $case_detail_id));
+            
+            $this->loadModel('TempEvent');
 			$TempEvent = $this->TempEvent->findById($this->Session->read('TempEvent.id'));
 			
 			// debug($TempEvent);
@@ -610,10 +623,31 @@ class LegalcasesController extends AppController {
 	}
     
     // Description: User request a reschedule of conference
-    function request_reschedule_conference($id=null, $case_id=null, $case_detail_id=null, $event_id=null) {
+    function request_reschedule_conference($id=null, $case_id=null, $case_detail_id=null, $event_id=null, $conference=null) {
         if (!empty($this->data)) {
-            //Send Email to Admin			
-            $this->_send_request_reschedule_conference($this->data['Legalcase']['user_id'], $this->data['Legalcase']['event_id']);
+            
+            //Delete Event
+            $this->loadModel('Event');
+            $this->Event->delete($this->data['Legalcase']['event_id']);
+            
+            //Save Data
+            $data = array(
+				'RequestReschedule' => array(
+                    'user_id'        => $this->data['Legalcase']['user_id'],
+                    'case_id'        => $this->data['Legalcase']['case_id'],
+                    'case_detail_id' => $this->data['Legalcase']['case_detail_id'],
+                    'event_id'       => $this->data['Legalcase']['event_id'],
+                    'date'           => $this->data['Legalcase']['date'],
+                    'notes'          => $this->data['Legalcase']['notes'],
+                    'start'          => $this->data['Legalcase']['start'],
+                    'end'            => $this->data['Legalcase']['end'],
+				));
+
+			$this->loadModel('RequestReschedule');
+			$this->RequestReschedule->save($data);
+
+            //Send Email to Admin		
+            $this->_send_request_reschedule_conference($this->data['Legalcase']['user_id'], $this->RequestReschedule->id);
 			
 			//Redirect if sucessful
 			$this->redirect(array('controller' => 'pages', 'action' => 'request_reschedule_conference_sent'));
@@ -623,14 +657,15 @@ class LegalcasesController extends AppController {
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('event_id', $event_id);
+		$this->set('conference', $conference);
     }
     
-    function _send_request_reschedule_conference($id, $event_id) {
+    function _send_request_reschedule_conference($id, $request_reschedule_id) {
 		$this->loadModel('User');
 		$this->loadModel('Event');
 
 		$User                  = $this->User->read(null,$id);
-		$Event                 = $this->Event->read(null,$event_id);
+		$RequestReschedule     = $this->RequestReschedule->read(null,$request_reschedule_id);
 		
 		$this->Email->to       = $this->admin_email;
 		$this->Email->subject  = "E-Lawyers Online - Request to Reschedule Conference";
@@ -642,7 +677,7 @@ class LegalcasesController extends AppController {
 		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
 	    //Set view variables as normal
 	    $this->set('User', $User);
-	    $this->set('Event', $Event);
+	    $this->set('RequestReschedule', $RequestReschedule);
 	    //Do not pass any args to send()
 	    $this->Email->send();
 	

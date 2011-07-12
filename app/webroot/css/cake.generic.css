@@ -26,7 +26,7 @@ body {
 	background: #003d4c;
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
-	font-size:90%;
+	font-size:75%;
 	margin: 0;
 }
 a {
@@ -98,7 +98,7 @@ ul, li {
 	background: #fff;
 	clear: both;
 	color: #333;
-	padding: 10px 20px 40px 20px;
+	padding: 5px 20px 40px 5px;
 	overflow: auto;
 }
 #footer {
@@ -112,13 +112,13 @@ div.form,
 div.index,
 div.view {
 	float:right;
-	width:76%;
+	width:74%;
 	border-left:1px solid #666;
 	padding:10px 2%;
 }
 div.actions {
 	float:left;
-	width:16%;
+	width:18%;
 	padding:10px 1.5%;
 }
 div.actions h3 {
@@ -411,6 +411,7 @@ div.actions ul li a:hover {
 input[type=submit],
 div.actions ul li a,
 td.actions a {
+  /*font-size: 12px;*/
 	font-weight:normal;
 	padding: 4px 8px;
 	background:#e6e49f;

@@ -2,7 +2,7 @@ Dear <?php echo $User['PersonalInfo']['first_name']. ' ' . $User['PersonalInfo']
 <br/>
 <br/>
 
-Your request to reset your schedule has been approved.
+Your request to reset your schedule has been approved, please check your new schedule in your Dashboard. 
 <br/>
 <br/>
 

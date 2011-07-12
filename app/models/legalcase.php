@@ -2,6 +2,7 @@
 class Legalcase extends AppModel {
 	var $name = 'Legalcase';
 	var $useTable = 'legal_cases';
+	var $order = "Legalcase.id DESC";
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	
 	var $hasMany = array(

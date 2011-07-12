@@ -13,18 +13,22 @@
 					<td><?php echo $Legalcase['Legalcase']['legal_problem'];?></td>
 				</tr>
 				<tr>
-					<td colspan="2">---------------------------------------------------------------------------------------------------------------------------------------------------</td>
+					<td colspan="2"><hr /></td>
 				</tr>
 				<?php
 				// debug($Legalcase);
 				foreach ($Legalcase['Legalcasedetail'] as $Legalcasedetail) {
 				?>
 				<tr>
+					<td class="label">Case Detail ID:</td>
+					<td><?php echo $Legalcasedetail['id'];?></td>
+				</tr>
+				<tr>
 					<td class="label">Legal Service via:</td>
 					<td><?php echo $Legalcasedetail['legal_service'];?></td>
 				</tr>
 				<?php
-				if ($Event) {
+				if (isset($Event)) {
 				    $event_id = $Event['Event']['id'];
                 ?>
 					<?php
@@ -126,7 +130,19 @@
 					<td>Php <?php echo $fee;?></td>
 				</tr>
 				<tr>
-					<td colspan="2">---------------------------------------------------------------------------------------------------------------------------------------------------</td>
+				    <td colspan="2">
+				        <?php
+            			//Display Reschedule Conference Button
+            			if ($Legalcasedetail['status'] != 'Closed') {
+    			        ?>
+            			    <input type="button" class="request_reschdule_conference" id="<?php echo $Event['conference'];?>" value="Request to Reschedule Conference" />
+            			<?php
+        			    }
+            			?>
+				    </td>
+				</tr>
+				<tr>
+					<td colspan="2"><hr /></td>
 				</tr>
 				<?php
 				}
@@ -142,14 +158,6 @@
         		?>
     		        <td>
         				<input type="button" id="back-to-case-index" class="back-to-case-list" />
-        				<?php
-            			//Display Reschedule Conference Button
-            			if ($legal_service == 'video' || $legal_service == 'office') {
-    			        ?>
-            			    <input type="button" id="request_reschdule_conference" value="Request to Reschedule Conference" />
-            			<?php
-        			    }
-            			?>
         			</td>
         		<?php
         		}
@@ -190,7 +198,6 @@
                 ?>
             	</tr>
     		</table>
-							
 		</div>
 	</div>
 </div>

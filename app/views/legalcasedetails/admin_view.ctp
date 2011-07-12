@@ -51,17 +51,17 @@
 		
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Status'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $Legalcasedetail['Legalcase']['status']; ?>
+			<?php echo $Legalcasedetail['Legalcasedetail']['status']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $Legalcasedetail['Legalcase']['created']; ?>
+			<?php echo $Legalcasedetail['Legalcasedetail']['created']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modified'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $Legalcasedetail['Legalcase']['modified']; ?>
+			<?php echo $Legalcasedetail['Legalcasedetail']['modified']; ?>
 			&nbsp;
 		</dd>
 	</dl>

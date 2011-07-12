@@ -18,7 +18,7 @@
 					<td><?php echo $this->Paginator->sort('Legal Problem', 'Legalcase.legal_problem');?></td>
 				</tr>
 				<?php
-                // debug($Legalcase);   
+                // debug($Legalcase);
 				foreach ($Legalcase as $Legalcases) {
 				?>
 				<tr>
@@ -41,7 +41,20 @@
 								?>
 								<tr>
 									<td><?php echo $Legalcasedetail['id'];?></td>
-									<td><?php echo $Legalcasedetail['legal_service'];?></td>
+									<td><?php echo $Legalcasedetail['legal_service'];?>
+									    <?php
+									    //Display Event Details
+                                        foreach ($Legalcases['Event'] as $Event) {
+                                            if ($Event['case_detail_id'] == $Legalcasedetail['id']) {
+                                                echo '<br />';
+                                                echo '<span class="event_details">' . date('F d, Y', strtotime($Event['start'])) . '</span>';
+                                                echo '<br />';
+                                                echo '<span class="event_details">' . date('h:i A', strtotime($Event['start'])) . ' - ' . date('h:i A', strtotime($Event['end'])) . '</span>';
+                                            }
+                                        }
+
+									    ?>
+									</td>
 									<td><?php echo $Legalcasedetail['status'];?></td>
 									<td><?php echo substr($Legalcasedetail['created'], 0, 11);?></td>
 									<td>
@@ -50,17 +63,16 @@
 											$payment_status = '';
                                             // $action         = 'Pay Now';
 											
-											if (isset($Legalcases['Payment'])) {
-												foreach ($Legalcases['Payment'] as $Payment) {
-													if ($Payment['case_detail_id'] == $Legalcasedetail['id']) {
-														echo $Payment['option'];
-														$payment_option = 'bank_deposit';
-														$payment_id     = $Payment['id'];
-														$payment_status = $Payment['status'];
-														$action         = '';
-													}
+											foreach ($Legalcases['Payment'] as $Payment) {
+												if ($Payment['case_detail_id'] == $Legalcasedetail['id']) {
+													echo $Payment['option'];
+													$payment_option = 'bank_deposit';
+													$payment_id     = $Payment['id'];
+													$payment_status = $Payment['status'];
+													$action         = '';
 												}
 											}
+
 										?>
 									</td>
 									<td><?php echo ucfirst($payment_status); ?></td>

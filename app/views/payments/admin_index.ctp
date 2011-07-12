@@ -6,6 +6,8 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
+			<th><?php echo $this->Paginator->sort('Case ID');?></th>
+			<th><?php echo $this->Paginator->sort('Case Detail ID');?></th>
 			<th><?php echo $this->Paginator->sort('Username', 'User.username');?></th>
 			<th><?php echo $this->Paginator->sort('Legal Service', 'Legalcasedetail.legal_service');?></th>
 			<th><?php echo $this->Paginator->sort('option');?></th>
@@ -26,6 +28,8 @@
 	?>
 	<tr<?php echo $class;?>>
 		<td><?php echo $Payment['Payment']['id']; ?>&nbsp;</td>
+		<td><?php echo $Payment['Payment']['case_id']; ?>&nbsp;</td>
+		<td><?php echo $Payment['Payment']['case_detail_id']; ?>&nbsp;</td>
 		<td><?php echo $Payment['User']['username']; ?>&nbsp;</td>
 		<td><?php echo $Payment['Legalcasedetail']['legal_service']; ?>&nbsp;</td>
 		<td><?php echo $Payment['Payment']['option']; ?>&nbsp;</td>

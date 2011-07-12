@@ -150,7 +150,18 @@ function redirect(){
 
                 // window.location = '/users/<?php //echo $profile_action; ?>/<?php //echo "$id/$case_id"?>';
                 
-				window.location = '/legalcases/legal_problem/<?php echo "$id/$case_id/$case_detail_id"?>';
+                <?php
+                if ($case_detail_id == 'new_facts') {
+                ?>
+                    window.location = '/legalcases/summary_of_facts/<?php echo "$id/$case_id/"?>';
+                <?php
+                }
+                else{
+                ?>
+				    window.location = '/legalcases/legal_problem/<?php echo "$id/$case_id/$case_detail_id"?>';
+				<?php
+			    }
+				?>
 			}
         },
         error: function() {

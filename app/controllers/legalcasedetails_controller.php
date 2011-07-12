@@ -20,6 +20,14 @@ class LegalcasedetailsController extends AppController {
 
 		$this->set('Legalcasedetails', $Legalcasedetails);
 	}
+	
+	//List Incomplete Cases
+	function admin_incomplete() {
+		$this->Legalcasedetail->recursive = 0;
+		$this->paginate['conditions'][] = array('Legalcase.status' => 'active', 'Legalcasedetail.status' => 'Incomplete');
+		$this->paginate['order'][] = array('Legalcasedetail.id' => 'DESC');
+		$this->set('Legalcasedetails', $this->paginate());
+	}
 
 	function admin_index($id) {
 

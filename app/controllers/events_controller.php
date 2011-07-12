@@ -31,6 +31,99 @@ class EventsController extends AppController {
 		$this->set('case_id', 1);
 	}
 	
+	function admin_request_reschedule_conference() {
+	    $this->loadModel('RequestReschedule');
+        $this->RequestReschedule->recursive = 0;
+        $this->paginate['limit'] = 10;
+		$this->set('RequestReschedules', $this->paginate('RequestReschedule'));
+	}
+	
+	function admin_delete_request_reschedule_conference($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid id for user', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		
+		$this->loadModel('RequestReschedule');
+		
+		if ($this->RequestReschedule->delete($id)) {
+			$this->Session->setFlash(__('Request deleted', true));
+		}
+		else {
+	        $this->Session->setFlash(__('Request was not deleted', true));
+		}
+				
+		$this->redirect(array('action' => 'admin_request_reschedule_conference'));
+	}
+	
+	//List overdued schdule 3 days after the reserved data versus date today 
+	function admin_late_payments() {
+	    
+        $this->paginate = array('joins' => array(
+		    array('table' => 'payments',
+		        'alias' => 'Payment',
+		        'type' => 'LEFT',
+		        'conditions' => array(
+		            'Payment.case_detail_id = Event.case_detail_id',
+		        )
+		    )),
+		    'conditions' => array(
+                'DATE_ADD(Event.start, INTERVAL 4 DAY) <= NOW()',
+    			'Event.case_detail_id !=' => null,
+    			'Payment.case_detail_id ' => null,
+    			array(
+    				'OR' => array(
+    					array('Event.conference LIKE' => 'video'),
+    					array('Event.conference LIKE' => 'office')
+    				),
+    			)),
+    		'limit' => 10
+    	);
+        
+        $Events = $this->paginate('Event');
+        
+        $this->set('Events', $Events);
+	}
+	
+	//List On Time Payments with Payment Status of Pending or Confirmed
+	function admin_on_time_payments_list() {
+	    
+	    $this->paginate = array('joins' => array(
+		    array('table' => 'payments',
+		        'alias' => 'Payment',
+		        'type' => 'LEFT',
+		        'conditions' => array(
+		            'Payment.case_detail_id = Event.case_detail_id',
+		        )
+		    )),
+		    'conditions' => array(
+		        'OR' => array(
+        			array('Payment.status' => 'Pending'),
+        			array('Payment.status' => 'Confirmed'),
+    			),
+    		),
+    		'limit' => 10
+    	);
+        
+        $Events = $this->paginate('Event');
+        
+        $this->set('Events', $Events);
+	}
+	
+	//Delete function via List
+	function admin_delete_event() {
+	    if (!$id) {
+			$this->Session->setFlash(__('Invalid id for user', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		if ($this->Event->delete($id)) {
+			$this->Session->setFlash(__('Conference deleted', true));
+			$this->redirect(array('action'=>'late_payments'));
+		}
+		$this->Session->setFlash(__('Conference not deleted', true));
+		$this->redirect(array('action' => 'late_payments'));
+	}
+	
 	function calendar_dialog($id, $case_id) {
 	    $this->set('dialog', true);
 	    $this->set('id', $id);
@@ -272,6 +365,7 @@ class EventsController extends AppController {
     }
 	*/
 	
+	//Leter Of Intent: Save to temp_event
 	function add_event() {
 
         if (!empty($_POST)) {

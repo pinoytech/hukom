@@ -537,16 +537,16 @@ function summary_of_information_form(id, case_id, case_detail_id, event_id) {
 		
 		//New Facts for Video and Office
 		$('#new-video-conference').click(function() {
-			window.location = '/legalcases/letter_of_intent/' + id + '/' + case_id + '/video';
+			window.location = '/legalcases/letter_of_intent/' + id + '/' + case_id + '/video/new_facts';
 		});
 		
 		$('#new-office-conference').click(function() {
-			window.location = '/legalcases/letter_of_intent/' + id + '/' + case_id + '/office';
+			window.location = '/legalcases/letter_of_intent/' + id + '/' + case_id + '/office/new_facts';
 		});
 		
 		//Reschedule Conference Form Controller
-		$('#request_reschdule_conference').click(function() {
-			window.location = '/legalcases/request_reschedule_conference/' + id + '/' + case_id + '/' + case_detail_id + '/' + event_id;
+		$('.request_reschdule_conference').click(function() {
+			window.location = '/legalcases/request_reschedule_conference/' + id + '/' + case_id + '/' + case_detail_id + '/' + event_id + '/' + $(this).attr('id');
 		});
 	});
 }
@@ -1037,7 +1037,30 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 	});	
 }
 
-function request_reschedule_conference(id, case_id, case_detail_id) {
+function confirm_request_reschedule_conference(){ 
+
+  $("#reschedule_warning").dialog({
+		autoOpen: false,
+		width: 450,
+		height: 250,
+		modal: true,
+		resizable: false,
+		buttons: {
+		  Continue: function() {
+			  document.forms['LegalcaseRequestRescheduleConferenceForm'].submit();
+			},
+			Cancel: function() {
+				$(this).dialog("close");
+			},
+		}
+  });		
+
+  $("#reschedule_warning").dialog("open");
+
+}
+
+
+function request_reschedule_conference(id, case_id, case_detail_id) {  
 	$(document).ready(function() {
 		//jQuery Valdidate
 		$("#LegalcaseRequestRescheduleConferenceForm").validate();
