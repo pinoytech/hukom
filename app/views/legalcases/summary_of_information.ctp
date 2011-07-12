@@ -16,7 +16,7 @@
 					<td colspan="2"><hr /></td>
 				</tr>
 				<?php
-				// debug($Legalcase);
+                // debug($Legalcase);
 				foreach ($Legalcase['Legalcasedetail'] as $Legalcasedetail) {
 				?>
 				<tr>
@@ -28,36 +28,13 @@
 					<td><?php echo $Legalcasedetail['legal_service'];?></td>
 				</tr>
 				<?php
-				if (isset($Event)) {
+				if (isset($Event['Event']['id'])) {
 				    $event_id = $Event['Event']['id'];
-                ?>
-					<?php
-					if ($Event['Event']['conference'] == 'video') {
-					?>
-		                <tr>
-							<td class="label"><?php echo ucfirst($Event['Event']['messenger_type']);?> ID:</td>
-							<td><?php echo $Event['Event']['messenger_username'];?></td>
-						</tr>
-					<?php
-	                }
-	                ?>					
-					<tr>
-						<td class="label">No. of Hours:</td>
-						<td><?php echo $no_of_hours;?></td>
-					</tr>
-					<tr>
-						<td class="label">Preferred Date:</td>
-						<td><?php echo date('F d, Y', strtotime($Event['Event']['start']));?></td>
-					</tr>
-					<tr>
-						<td class="label">Preferred Time:</td>
-						<td><?php echo date('h:i a', strtotime($Event['Event']['start'])) . ' to ' . date('h:i a', strtotime($Event['Event']['end']));?></td>
-					</tr>
-                <?php
                 }
-				else {
-				    $event_id = false;
-                ?>
+                else{
+                    $event_id = false;
+                }
+				?>
 
 				<?php
 				//From Closed Confirmation Email
@@ -81,7 +58,16 @@
 					</tr>
 					<tr>
 						<td class="label">Preferred Date:</td>
-						<td><?php echo date('F d, Y', strtotime($Event['start']));?></td>
+						<td>
+						    <?php echo date('F d, Y', strtotime($Event['start']));?>
+						    <?php
+                			if ($Legalcasedetail['status'] != 'Closed') {
+        			        ?>
+                                <input type="button" class="request_reschdule_conference" id="<?php echo $Event['conference'];?>" value="Request to Reschedule Conference" />
+                			<?php
+            			    }
+                			?>
+						</td>
 					</tr>
 					<tr>
 						<td class="label">Preferred Time:</td>
@@ -91,7 +77,6 @@
 						}
 					}
                 }
-				}
                 ?>
 
 				<tr>
@@ -110,10 +95,14 @@
 					<td class="label">Attached Document/s:</td>
 					<td class="actions">
 				    	<?php
-						// echo debug($files);
-						foreach ($files as $key => $value) {
-							echo '<a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a><br />';
-						}
+				    	$upload_folder = '/app/webroot/uploads/' . $Legalcasedetail['user_id'] . '/' . $Legalcasedetail['case_id'] . '/' . $Legalcasedetail['id'];
+						$files = $custom->show_files($upload_folder);
+                        // echo debug($files);
+						
+                        foreach ($files as $key => $value) {
+                            echo '<a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a><br />';
+                        }
+                        
 						?>    					
 					</td>
 				</tr>
@@ -122,24 +111,12 @@
 					<td><?php echo ucfirst($Legalcasedetail['status']);?></td>
 				</tr>
 				<tr>
-					<td class="label">Date:</td>
-					<td><?php echo substr($Legalcasedetail['created'], 0, 10);?></td>
+					<td class="label">Date Created:</td>
+					<td><?php echo date('F d, Y', strtotime($Legalcasedetail['created']));?></td>
 				</tr>
 				<tr>
 					<td class="label">Professional Fee:</td>
 					<td>Php <?php echo $fee;?></td>
-				</tr>
-				<tr>
-				    <td colspan="2">
-				        <?php
-            			//Display Reschedule Conference Button
-            			if ($Legalcasedetail['status'] != 'Closed') {
-    			        ?>
-            			    <input type="button" class="request_reschdule_conference" id="<?php echo $Event['conference'];?>" value="Request to Reschedule Conference" />
-            			<?php
-        			    }
-            			?>
-				    </td>
 				</tr>
 				<tr>
 					<td colspan="2"><hr /></td>

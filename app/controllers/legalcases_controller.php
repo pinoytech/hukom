@@ -541,18 +541,16 @@ class LegalcasesController extends AppController {
 		
 		// Will get all legal_case_details data
 		$Legalcase = $this->Legalcase->find('first', array('conditions' => array('Legalcase.id' => $case_id)));
-		//, 'order' => array('Legalcasedetail.id' => 'DESC')
-		// debug($Legalcase);
         
-        $upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id";
+        // $upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id";
         
 		$this->set('Legalcase', $Legalcase);
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('type', $type);
-		$this->set('upload_folder', $upload_folder);
-		$this->set('files', $this->Custom->show_files($upload_folder));
+        // $this->set('upload_folder', $upload_folder);
+        // $this->set('files', $this->Custom->show_files($upload_folder));
 		$this->set('no_of_hours', '');
 		$this->set('legal_service', $legal_service);
 		
@@ -561,6 +559,7 @@ class LegalcasesController extends AppController {
 		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
 		$this->set('fee', $Legalservice['Legalservice']['fee']);
 		
+		/*
 		//Get Event Data
         $this->loadModel('Event');        
         $Event = $this->Event->findByCaseDetailId($case_detail_id);		
@@ -575,6 +574,7 @@ class LegalcasesController extends AppController {
         else {
             $this->set('Event', false);
         }
+        */
         //end Event
 	}
 

@@ -486,10 +486,6 @@ class UsersController extends AppController {
 				}
 			}
 			
-			//Update users.profile_complete to 1
-			$this->User->id = $this->data['ChildrenInfo']['user_id'];
-            $this->User->saveField('profile_complete', 1);
-
 			//Redirect Controller
 			if ($goto == 'legal_problem') {
 				$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
@@ -596,11 +592,7 @@ class UsersController extends AppController {
 			if (!$this->CorporatePartnershipInfo->saveAll($this->data)) {
 			    $this->Session->setFlash(__('Corporate/Partnership Information could not be saved. Please, try again.', true));
 			}
-            
-            //Update users.profile_complete to 1
-			$this->User->id = $this->data['CorporatePartnershipInfo']['user_id'];
-            $this->User->saveField('profile_complete', 1);
-            
+                        
             // $this->redirect(array('action' => 'board_of_directors', $this->data['User']['id'], $this->data['User']['case_id']));
             
             //Redirect control

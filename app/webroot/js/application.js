@@ -329,13 +329,8 @@ function online_legal_consultation_form() {
 	});
 }
 
-//Letter of Intent
-function redirect_form_legal_problem(id, case_id, case_detail_id) {
-	window.location = '/legalcases/legal_problem/' + id + '/' + case_id + '/' + case_detail_id;
-}
-
 function redirect_form(action, id, case_id, case_detail_id) {
- window.location = '/users/' + action + '/' + id + '/' + case_id + '/' + case_detail_id;
+  window.location = '/users/' + action + '/' + id + '/' + case_id + '/' + case_detail_id;
 }
 
 function legal_problem_form(action, id, case_id, case_detail_id, legal_problem) {
@@ -440,22 +435,9 @@ function summary_of_facts_form(id, case_id, case_detail_id, upload_folder) {
 			$('#goto').val('objectives_questions');
 			$('form').submit();
 		});
-
-		$('#file_upload').uploadify({
-			'uploader'  : '/uploadify/uploadify.swf',
-			'script'    : '/uploadify/uploadify.php',
-			'cancelImg' : '/uploadify/cancel.png',
-			'buttonImg' : '/img/selectButton_up.png',
-			'wmode'     : 'transparent',
-			'folder'    : upload_folder,
-			'auto'      : true,
-			'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
-			'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
-			'sizeLimit' : 2097152,
-			'onComplete' : function(event, ID, fileObj, response, data) {
-				append_files(fileObj)
-			}
-		});
+    
+    uploadify_init(upload_folder);
+		
 	});
 	
 	$('.remove_file').live('click', function(e) {
@@ -477,9 +459,28 @@ function summary_of_facts_form(id, case_id, case_detail_id, upload_folder) {
 	});
 }
 
+//Initialize Uploadify
+function uploadify_init(upload_folder) {
+  $('#file_upload').uploadify({
+		'uploader'  : '/uploadify/uploadify.swf',
+		'script'    : '/uploadify/uploadify.php',
+		'cancelImg' : '/uploadify/cancel.png',
+		'buttonImg' : '/img/selectButton_up.png',
+		'wmode'     : 'transparent',
+		'folder'    : upload_folder,
+		'auto'      : true,
+		'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
+		'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
+		'sizeLimit' : 2097152,
+		'onComplete' : function(event, ID, fileObj, response, data) {
+			append_files(fileObj)
+		}
+	});
+}
+
 function append_files(fileObj) {
 	name = fileObj.name;
-	$('#file-list').append('<li class="actions">'+name+' <a class="remove_file" id="'+fileObj.filePath+'" >Remove</a></li>');
+	$('#file-list').append('<li class="actions"><a href="'+fileObj.filePath+'" target="_blank">'+name+'</a> <a class="remove_file" id="'+fileObj.filePath+'" >Remove</a></li>');
 }
 
 function objectives_questions_form(id, case_id, case_detail_id) {
@@ -619,10 +620,7 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option) {
 				  modal: true,
 					resizable: false,
 				  buttons: {
-				  	'Pay Later': function() {
-							window.location = '/dashboard/';
-						},
-						'Proceed Payment': function() {
+				  	'Proceed Payment': function() {
 							// Save Paypal details to Payment
 							if (option_value == 'paypal') {
 								$.ajax({
@@ -640,7 +638,10 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option) {
 							else {
 				      	document.forms['PaymentModeOfPaymentForm'].submit();
 							}
-						}
+						},
+						'Pay Later': function() {
+							window.location = '/dashboard/';
+						},
 					}
 				});
 
@@ -706,21 +707,7 @@ function bank_deposit_form(id, case_id, case_detail_id, upload_folder) {
 			$('form').submit();
 		});
 
-		$('#file_upload').uploadify({
-			'uploader'  : '/uploadify/uploadify.swf',
-			'script'    : '/uploadify/uploadify.php',
-			'cancelImg' : '/uploadify/cancel.png',
-			'folder'    : upload_folder,
-			'buttonImg' : '/img/selectButton_up.png',
-			'wmode'     : 'transparent',
-			'auto'      : true,
-			'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
-			'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
-			'sizeLimit' : 2097152,
-			'onComplete' : function(event, ID, fileObj, response, data) {
-				append_files(fileObj)
-			 }
-		});
+    uploadify_init(upload_folder);
 
 		$('.remove_file').live('click', function(e) {
 			var parent = $(this).parent();
@@ -915,22 +902,26 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 	  });
 
 	  //Uploadify
-		$('#file_upload').uploadify({
-	    'uploader'  : '/uploadify/uploadify.swf',
-	    'script'    : '/uploadify/uploadify.php',
-	    'cancelImg' : '/uploadify/cancel.png',
-	    'buttonImg' : '/img/selectButton_up.png',
-	    'wmode'     : 'transparent',
-	    'folder'    : upload_folder,
-	    'auto'      : true,
-	    'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
-	    'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
-	    'sizeLimit' : 2097152,
-			'onComplete' : function(event, ID, fileObj, response, data) {
-			append_files(fileObj);
-				$('#file-upload-validate').val(1);
-		  }
-		});
+    // $('#file_upload').uploadify({
+    //      'uploader'  : '/uploadify/uploadify.swf',
+    //      'script'    : '/uploadify/uploadify.php',
+    //      'cancelImg' : '/uploadify/cancel.png',
+    //      'buttonImg' : '/img/selectButton_up.png',
+    //      'wmode'     : 'transparent',
+    //      'folder'    : upload_folder,
+    //      'auto'      : true,
+    //      'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
+    //      'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
+    //      'sizeLimit' : 2097152,
+    //  'onComplete' : function(event, ID, fileObj, response, data) {
+    //    append_files(fileObj);
+    //    $('#file-upload-validate').val(1);
+    //   }
+    // });
+		
+		if(uploadify_init(upload_folder)) {
+		  $('#file-upload-validate').val(1);
+		}
 
 		//Remove Files
 		$('.remove_file').live('click', function(e) {

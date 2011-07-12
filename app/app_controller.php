@@ -2,8 +2,8 @@
 class AppController extends Controller {
     var $components = array('Acl', 'Auth', 'Session');
     var $helpers = array('Html', 'Form', 'Session');
-    // var $admin_email = array('gino.carlo.cortez@gmail.com');
-    var $admin_email = array('gino.carlo.cortez@gmail.com', 'attyvalderama@gmail.com', 'redgfernandez@yahoo.com', 'redgfernandez@gmail.com');
+    var $admin_email = array('gino.carlo.cortez@gmail.com');
+    // var $admin_email = array('gino.carlo.cortez@gmail.com', 'attyvalderama@gmail.com', 'redgfernandez@yahoo.com', 'redgfernandez@gmail.com');
 	
 	function beforeFilter() {
         //Configure AuthComponent
@@ -38,10 +38,7 @@ class AppController extends Controller {
 		//Set global user variable for View (i.e. navigation)
 		$this->set('auth_user_type', $this->Auth_user['User']['type']);
 		$this->set('auth_user_id', $this->Auth_user['User']['id']);
-	
-	    //Profile Complet Flag
-		$this->set('auth_user_profile_complete', $this->Auth_user['User']['profile_complete']);		
-		
+			
     }
 
 	// Redirect admin to admin_index of controller

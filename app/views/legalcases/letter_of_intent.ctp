@@ -8,23 +8,15 @@
 		<div class="form-title">Client's Letter of Intent</div>
 		<div class="form-holder">
 		
-		    <?php				
-                // debug($auth_user_profile_complete);
-                if ($auth_user_profile_complete) {
-                    echo $this->Form->create('User', array('onsubmit' => "redirect_form_legal_problem('$id', '$case_id', ''); return false;"));
+		        <?php				
+                if ($auth_user_type == 'personal') {
+                    $profile_action = 'personal_info';
                 }
-                else {
-                    if ($auth_user_type == 'personal') {
-                         $profile_action = 'personal_info';
-                     }
-                     elseif ($auth_user_type == 'corporation') {
-                         $profile_action = 'corporate_partnership_representative_info';
-                     }
-                                        
-                    echo $this->Form->create('User', array('onsubmit' => "redirect_form('$profile_action', '$id', '$case_id', ''); return false;"));
+                elseif ($auth_user_type == 'corporation') {
+                    $profile_action = 'corporate_partnership_representative_info';
                 }
-                
 
+                echo $this->Form->create('User', array('onsubmit' => "redirect_form('$profile_action', '$id', '$case_id', ''); return false;"));
 				?>
 				<p>
 					<?php echo date('F d, Y');?>

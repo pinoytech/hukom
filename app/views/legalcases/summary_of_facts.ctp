@@ -41,7 +41,7 @@
 				<br />
 				<p>Select a file (jpeg, pdf, word) on your computer (2MB max).</p>
 				<!-- <a href="javascript:$('#file_upload').uploadifyUpload()">Upload Files</a> -->
-				
+
 				<ul id="file-list">
 					<?php
 					foreach ($files as $key => $value) {

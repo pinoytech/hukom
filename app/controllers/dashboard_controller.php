@@ -9,7 +9,7 @@ class DashboardController extends AppController {
 	    'limit'      => 10,
 	    'conditions' => array('Legalcase.status' => 'active'),
 	    'recursive'  => 1,
-	    'order'      => array('Legalcase.id' => 'asc'),
+	    'order'      => array('Legalcase.id' => 'desc'),
 	    );
 	
 	function beforeFilter() {
