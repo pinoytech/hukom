@@ -901,28 +901,24 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 	    }
 	  });
 
-	  //Uploadify
-    // $('#file_upload').uploadify({
-    //      'uploader'  : '/uploadify/uploadify.swf',
-    //      'script'    : '/uploadify/uploadify.php',
-    //      'cancelImg' : '/uploadify/cancel.png',
-    //      'buttonImg' : '/img/selectButton_up.png',
-    //      'wmode'     : 'transparent',
-    //      'folder'    : upload_folder,
-    //      'auto'      : true,
-    //      'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
-    //      'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
-    //      'sizeLimit' : 2097152,
-    //  'onComplete' : function(event, ID, fileObj, response, data) {
-    //    append_files(fileObj);
-    //    $('#file-upload-validate').val(1);
-    //   }
-    // });
+    // Uploadify
+    $('#file_upload').uploadify({
+         'uploader'  : '/uploadify/uploadify.swf',
+         'script'    : '/uploadify/uploadify.php',
+         'cancelImg' : '/uploadify/cancel.png',
+         'buttonImg' : '/img/selectButton_up.png',
+         'wmode'     : 'transparent',
+         'folder'    : upload_folder,
+         'auto'      : true,
+         'fileExt'   : '*.jpg;*.gif;*.png;*.doc;*.docx;*.pdf',
+         'fileDesc'  : 'Image Files (JPG, GIF, PNG); Document Files (PDF, Word Doc)',
+         'sizeLimit' : 2097152,
+     'onComplete' : function(event, ID, fileObj, response, data) {
+       append_files(fileObj);
+       $('#file-upload-validate').val(1);
+      }
+    });
 		
-		if(uploadify_init(upload_folder)) {
-		  $('#file-upload-validate').val(1);
-		}
-
 		//Remove Files
 		$('.remove_file').live('click', function(e) {
 			var parent = $(this).parent();
