@@ -797,7 +797,17 @@ table.dashboard td {
 }
 
 
-a {cursor: pointer; cursor: hand;}
+a,
+.prev-button,
+.next-button,
+.button-submit,
+.button-next,
+.button-back,
+.back-to-case-list,
+.reschedule-button
+{
+  cursor: pointer; cursor: hand;
+}
 
 .form-link {
 	color: #118CD5;
@@ -881,3 +891,20 @@ a {cursor: pointer; cursor: hand;}
   color: #737373;
 }
 
+.avail-button-holder {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#file-list li {
+  margin-bottom: 5px;
+}
+
+.preferred-date-holder {
+  float: left;
+}
+
+
+.reschedule-button-holder {
+  margin-top: -10px;
+}

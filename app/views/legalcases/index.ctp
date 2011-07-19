@@ -8,7 +8,7 @@
 		<div class="form-title">My Cases</div>
 		<div class="form-holder">
 			
-			<div class="actions">
+			<div class="actions avail-button-holder">
 				<?php echo $this->Html->link($this->Html->image('/img/availButton_up.png', array('border' => '0')), array('action' => 'online_legal_consultation', $id), array('class' => 'avail-button', 'escape' => false)); ?>
 			</div>
 			
@@ -51,8 +51,19 @@
                                                 echo '<br />';
                                                 echo '<span class="event_details">' . date('h:i A', strtotime($Event['start'])) . ' - ' . date('h:i A', strtotime($Event['end'])) . '</span>';
                                             }
+                                        }    
+                                    
+                                        //Display Reschedule for Approval
+                                        if (isset($Legalcases['RequestReschedule']) && empty($Legalcases['Event'])) {
+                                            foreach ($Legalcases['RequestReschedule'] as $RequestReschedule) {
+                                                if ($RequestReschedule['case_detail_id'] == $Legalcasedetail['id']) {
+                                                    echo '<br />';
+                                                    echo '<span class="event_details"><nobr>(Reschedule for Approval)</nobr></span>';
+                                                    break;
+                                                }
+                                            }
                                         }
-
+                                        
 									    ?>
 									</td>
 									<td><?php echo $Legalcasedetail['status'];?></td>
@@ -82,7 +93,7 @@
 										// Check if user reached up to 'questions' form. This will trigger the 'Continue' action.
     									if ($Legalcasedetail['questions']) {
     									    if (empty($payment_status)) {
-    									        echo $this->Html->link(__('Pay Now', true), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
+    									        echo $this->Html->link($this->Html->image('/img/paynowButton_up.png', array('class' => 'pay-now-button')), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
                                                 echo '<br />';
     									    }
                                             
@@ -98,7 +109,7 @@
     											$legal_service = 'perquery';
     											
     											if ($continue) {
-    											    echo $this->Html->link(__('Continue', true), array('action' => 'legal_problem', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']));
+    											    echo $this->Html->link($this->Html->image('/img/Continuebutton_up.png', array('class' => 'continue-button')), array('action' => 'legal_problem', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
                                                     echo '<br />';
     											}
     											
@@ -107,7 +118,7 @@
     											$legal_service = 'video';
     											
     											if ($continue) {
-                                                    echo $this->Html->link(__('Continue', true), array('action' => 'letter_of_intent', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $legal_service, $Legalcasedetail['id']));
+                                                    echo $this->Html->link($this->Html->image('/img/Continuebutton_up.png', array('class' => 'continue-button')), array('action' => 'letter_of_intent', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $legal_service, $Legalcasedetail['id']), array('escape' => false));
                                                     echo '<br />';
                                                 }
                                                 
@@ -116,14 +127,14 @@
     										    $legal_service = 'office';
     										    
     										    if ($continue) {
-                                                    echo $this->Html->link(__('Continue', true), array('action' => 'letter_of_intent', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $legal_service, $Legalcasedetail['id']));
+                                                    echo $this->Html->link($this->Html->image('/img/Continuebutton_up.png', array('class' => 'continue-button')), array('action' => 'letter_of_intent', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $legal_service, $Legalcasedetail['id']), array('escape' => false));
                                                     echo '<br />';
                                                 }
                                                 
     											break;	
     									}
 										
-										echo $this->Html->link(__('View', true), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view', $legal_service));
+										echo $this->Html->link($this->Html->image('/img/viewButton_up.png', array('class' => 'view-button')), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view', $legal_service), array('escape' => false));
 										?>
 									</td>
 								</tr>

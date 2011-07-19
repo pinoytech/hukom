@@ -24,7 +24,7 @@
 				</p>
 				
 				<ol>
-					<li>I will pay the amount of Php <?php echo $fee;?> as professional fee. This fee for online legal consultation service shall cover only the subject matter discussed herein and to no other.</li>
+					<li>I will pay the amount of <b>Php <?php echo $fee;?></b> as professional fee. This fee for online legal consultation service shall cover only the subject matter discussed herein and to no other.</li>
 					<li>I understand that the result of this consultation is for internal, personal and non-commercial purpose and I shall use the same not for any other purpose.</li>
 					<li>Any and all information that will be given by me shall be treated as private and strictly confidential. I certify that all information given is true and correct and/or based on authentic documents.</li>
 					<li>I expressly acknowledge that the legal advise obtained herein does not assure success of litigation as the same is based on the evidence presented and as appreciated by the courts of law;</li>

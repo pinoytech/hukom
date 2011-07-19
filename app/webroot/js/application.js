@@ -26,6 +26,16 @@ jQuery([
   '/img/previousButton_up.png',
   '/img/nextButton_down.png',
   '/img/nextButton_up.png',
+  '/img/paynowButton_up.png',
+  '/img/paynowButton_down.png',
+  '/img/viewButton_up.png',
+  '/img/viewButton_down.png',
+  '/img/addchildButton_up.png',
+  '/img/addchildButton_down.png',
+  '/img/Continuebutton_down.png',
+  '/img/Continuebutton_up.png',
+  '/img/ReschedButton_down.png',
+  '/img/ReschedButton_up.png',
 ]).preload();
 
 function login_form() {
@@ -263,28 +273,54 @@ function children_info_form() {
 			jQuery('#goto').val('profilesave');
 			jQuery('form').submit();
 		});
+		
+		$('.add-child-button').mouseover(function() {
+		  $(this).attr('src', '/img/addchildButton_down.png');
+		}).mouseout(function(){
+		  $(this).attr('src', '/img/addchildButton_up.png');
+		});
+		
 	});
 }
 
 function legalcases_index() {
 	$(document).ready(function() {
-		jQuery('.avail-button > img').mouseover(function() {
-		  jQuery(this).attr('src', '/img/availButton_down.png');
+		$('.avail-button > img').mouseover(function() {
+		  $(this).attr('src', '/img/availButton_down.png');
 		}).mouseout(function(){
-		  jQuery(this).attr('src', '/img/availButton_up.png');
+		  $(this).attr('src', '/img/availButton_up.png');
 		});
 
-		jQuery('.prev-button').mouseover(function() {
-		  jQuery(this).attr('src', '/img/previousButton_down.png');
+		$('.prev-button').mouseover(function() {
+		  $(this).attr('src', '/img/previousButton_down.png');
 		}).mouseout(function(){
-		  jQuery(this).attr('src', '/img/previousButton_up.png');
+		  $(this).attr('src', '/img/previousButton_up.png');
 		});
 
-		jQuery('.next-button').mouseover(function() {
-		  jQuery(this).attr('src', '/img/nextButton_down.png');
+		$('.next-button').mouseover(function() {
+		  $(this).attr('src', '/img/nextButton_down.png');
 		}).mouseout(function(){
-		  jQuery(this).attr('src', '/img/nextButton_up.png');
+		  $(this).attr('src', '/img/nextButton_up.png');
 		});
+		
+		$('.pay-now-button').mouseover(function() {
+		  $(this).attr('src', '/img/paynowButton_down.png');
+		}).mouseout(function(){
+		  $(this).attr('src', '/img/paynowButton_up.png');
+		});
+		
+		$('.view-button').mouseover(function() {
+		  $(this).attr('src', '/img/viewButton_down.png');
+		}).mouseout(function(){
+		  $(this).attr('src', '/img/viewButton_up.png');
+		});
+		
+		$('.continue-button').mouseover(function() {
+		  $(this).attr('src', '/img/Continuebutton_down.png');
+		}).mouseout(function(){
+		  $(this).attr('src', '/img/Continuebutton_up.png');
+		});
+				
 	});
 }
 
@@ -410,6 +446,12 @@ function legal_problem_form(action, id, case_id, case_detail_id, legal_problem) 
 function summary_of_facts_form(id, case_id, case_detail_id, upload_folder) {
 	$('document').ready(function() {
 
+    $('.remove-button').mouseover(function() {
+  	  $(this).attr('src', '/img/removeButton_down.png');
+  	}).mouseout(function(){
+  	  $(this).attr('src', '/img/removeButton_up.png');
+  	});
+
 		//jQuery Valdidate
 		$("#LegalcaseSummaryOfFactsForm").validate();
 
@@ -457,6 +499,7 @@ function summary_of_facts_form(id, case_id, case_detail_id, upload_folder) {
 			}
 		 });
 	});
+	
 }
 
 //Initialize Uploadify
@@ -480,7 +523,7 @@ function uploadify_init(upload_folder) {
 
 function append_files(fileObj) {
 	name = fileObj.name;
-	$('#file-list').append('<li class="actions"><a href="'+fileObj.filePath+'" target="_blank">'+name+'</a> <a class="remove_file" id="'+fileObj.filePath+'" >Remove</a></li>');
+	$('#file-list').append('<li class="actions"><a href="'+fileObj.filePath+'" target="_blank">'+name+'</a> <a class="remove_file" id="'+fileObj.filePath+'" ><img src="/img/removeButton_up.png" class="remove-button" border="0" align="absbottom"></a></li>');
 }
 
 function objectives_questions_form(id, case_id, case_detail_id) {
@@ -547,7 +590,13 @@ function summary_of_information_form(id, case_id, case_detail_id, event_id) {
 		
 		//Reschedule Conference Form Controller
 		$('.request_reschdule_conference').click(function() {
-			window.location = '/legalcases/request_reschedule_conference/' + id + '/' + case_id + '/' + case_detail_id + '/' + event_id + '/' + $(this).attr('id');
+			window.location = '/legalcases/request_reschedule_conference/' + id + '/' + case_id + '/' + case_detail_id + '/' + $(this).attr('id');
+		});
+		
+		$('.reschedule-button').mouseover(function() {
+		  $(this).attr('src', '/img/ReschedButton_down.png');
+		}).mouseout(function(){
+		  $(this).attr('src', '/img/ReschedButton_up.png');
 		});
 	});
 }
@@ -733,7 +782,7 @@ function bank_deposit_summary(id, case_id, case_detail_id, payment_id) {
 	$('document').ready(function() {
 
 		$('#back').click(function() {
-			window.location = '/payments/bank_deposit/' + id + '/' + case_id + '/' + case_detail_id;
+			window.location = '/payments/bank_deposit/' + id + '/' + case_id + '/' + case_detail_id + '/' + payment_id;
 		});
 
 		$('#next').click(function() {

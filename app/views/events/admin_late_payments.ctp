@@ -13,7 +13,7 @@
 			<th><?php echo $this->Paginator->sort('Date');?></th>
 			<th><?php echo $this->Paginator->sort('Start Time');?></th>
 			<th><?php echo $this->Paginator->sort('End Time');?></th>
-			<th><?php echo $this->Paginator->sort('created');?></th>
+			<th><?php echo $this->Paginator->sort('LOI Date', 'Legalcasedetail.created');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -35,7 +35,7 @@
 		<td><?php echo date('F d, Y', strtotime($Event['Event']['start'])); ?>&nbsp;</td>
 		<td><?php echo date('h:i A', strtotime($Event['Event']['start'])); ?>&nbsp;</td>
 		<td><?php echo date('h:i A', strtotime($Event['Event']['end'])); ?>&nbsp;</td>
-		<td><?php echo $Event['Event']['created']; ?>&nbsp;</td>
+		<td><?php echo date('F d, Y', strtotime($Event['Legalcasedetail']['created'])); ?>&nbsp;</td>
 		<td class="actions">
 			<?php //echo $this->Html->link(__('Delete', true), array('action' => 'delete_event', $Event['Event']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $Event['Event']['id'])); ?>
 		</td>

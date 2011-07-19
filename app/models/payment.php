@@ -71,7 +71,7 @@ class Payment extends AppModel {
     		'notempty' => array(
     			'rule' => array('notempty'),
     			'message' => '',
-				'allowEmpty' => false,
+				'allowEmpty' => true,
 				'required' => false,
     		)
     	),

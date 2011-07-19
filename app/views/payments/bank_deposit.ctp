@@ -32,7 +32,7 @@
 				echo $this->Form->input('Payment.bank_branch', array('class' => 'required'));
 				echo $this->Form->input('Payment.bank_country', array('class' => 'required', 'label' => 'Country'));
 				echo $this->Form->input('Payment.amount', array('class' => 'required decimal'));
-				echo $this->Form->input('Payment.reference_no', array('class' => 'required'));
+				echo $this->Form->input('Payment.reference_no');
 			?>
 			<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>
 
@@ -44,7 +44,7 @@
 					<ul id="file-list">
 						<?php
 						foreach ($files as $key => $value) {
-							echo '<li class="actions"><a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a>' . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '">Remove</a></li>';
+							echo '<li class="actions"><a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a>' . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '"><img src="/img/removeButton_up.png" class="remove-button" border="0" align="absbottom"></a></li>';
 						}
 						?>
 					</ul>

@@ -35,50 +35,78 @@
                     $event_id = false;
                 }
 				?>
-
 				<?php
 				//From Closed Confirmation Email
 				if ($Legalcase['Event']) {
 					foreach ($Legalcase['Event'] as $Event) {
 						if ($Event['case_detail_id'] == $Legalcasedetail['id']) {
                 ?>
-					<?php
-					if ($Event['conference'] == 'video') {
-					?>
-		                <tr>
-							<td class="label"><?php echo ucfirst($Event['messenger_type']);?> ID:</td>
-							<td><?php echo $Event['messenger_username'];?></td>
-						</tr>
-					<?php
-	                }
-	                ?>					
-					<tr>
-						<td class="label">No. of Hours:</td>
-						<td><?php echo $custom->date_difference($Event['start'], $Event['end'], 'h');;?></td>
-					</tr>
-					<tr>
-						<td class="label">Preferred Date:</td>
-						<td>
-						    <?php echo date('F d, Y', strtotime($Event['start']));?>
-						    <?php
-                			if ($Legalcasedetail['status'] != 'Closed') {
-        			        ?>
-                                <input type="button" class="request_reschdule_conference" id="<?php echo $Event['conference'];?>" value="Request to Reschedule Conference" />
-                			<?php
-            			    }
-                			?>
-						</td>
-					</tr>
-					<tr>
-						<td class="label">Preferred Time:</td>
-						<td><?php echo date('h:i a', strtotime($Event['start'])) . ' to ' . date('h:i a', strtotime($Event['end']));?></td>
-					</tr>
-                <?php
+    					    <?php
+        					if ($Event['conference'] == 'video') {
+        					?>
+        		                <tr>
+        							<td class="label"><?php echo ucfirst($Event['messenger_type']);?> ID:</td>
+        							<td><?php echo $Event['messenger_username'];?></td>
+        						</tr>
+        					<?php
+        	                }
+        	                ?>					
+        					<tr>
+        						<td class="label">No. of Hours:</td>
+        						<td><?php echo $no_of_hours = $custom->date_difference($Event['start'], $Event['end'], 'h');;?></td>
+        					</tr>
+        					<tr>
+        						<td class="label">Preferred Date:</td>
+        						<td>
+        						    
+        						    <?php if (condition): ?>
+        						      
+        						    <?php endif ?>
+        						    
+        						    <div class="preferred-date-holder" style="margin-top: 6px;">
+        						    <?php echo date('F d, Y', strtotime($Event['start']));?>
+        						    </div>
+        						    <?php
+        						    if ($type) {
+                        			    if ($Legalcasedetail['status'] != 'Closed') {
+                			        ?>
+                			            <div class="reschedule-button-holder" style="margin-top: 0;">
+                			                <a id="<?php echo $Event['id'] . "/" . $Event['conference'];?>" class="request_reschdule_conference"><img src="/img/ReschedButton_up.png" class="reschedule-button" border="0" ></a>
+                			            </div>
+                                        <!-- <input type="button"  id="<?php echo $Event['conference'];?>" value="Request to Reschedule Conference" /> -->
+                        			<?php
+                    			        }
+                    			    }
+                        			?>
+        						</td>
+        					</tr>
+        					<tr>
+        						<td class="label">Preferred Time:</td>
+        						<td><?php echo date('h:i a', strtotime($Event['start'])) . ' to ' . date('h:i a', strtotime($Event['end']));?></td>
+        					</tr>
+                <?php   
 						}
 					}
                 }
                 ?>
-
+                
+                <?php
+                //Display Reschedule for Approval
+			    if (isset($Legalcase['RequestReschedule']) && empty($Legalcase['Event'])) {
+                    foreach ($Legalcase['RequestReschedule'] as $RequestReschedule) {
+                        if ($RequestReschedule['case_detail_id'] == $Legalcasedetail['id']) {
+                ?>
+                            <tr>
+        						<td class="label">Preferred Date:</td>
+        						<td>(Reschedule for Approval)</td>
+        					</tr>
+        		<?php
+                            break;
+                        }
+                    }
+                }
+			    ?>
+                
 				<tr>
 					<td class="label">Summary of Facts:</td>
 					<td><?php echo $Legalcasedetail['summary'];?></td>
@@ -116,7 +144,21 @@
 				</tr>
 				<tr>
 					<td class="label">Professional Fee:</td>
-					<td>Php <?php echo $fee;?></td>
+					<td>Php
+					<?php
+					//Get Fee
+                    foreach ($Legalservices as $Legalservice) {
+                        if ($Legalservice['Legalservice']['name'] == $Legalcasedetail['legal_service']) {
+                            if ($no_of_hours) {
+                                echo $no_of_hours * $Legalservice['Legalservice']['fee'];
+                            }
+                            else {
+                                echo $Legalservice['Legalservice']['fee'];
+                            }
+                        }
+                    }
+					?>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2"><hr /></td>
@@ -125,9 +167,7 @@
 				}
 				?>
 			</table>
-			
 			<br />
-
     		<table>
     			<tr>
                 <?php
@@ -178,5 +218,4 @@
 		</div>
 	</div>
 </div>
-
 <?php $html->scriptBlock("summary_of_information_form('$id', '$case_id', '$case_detail_id', '$event_id');", array('inline'=>false));?>

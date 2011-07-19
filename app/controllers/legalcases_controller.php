@@ -556,8 +556,12 @@ class LegalcasesController extends AppController {
 		
 		//Get Legalservice fee
 		$this->loadModel('Legalservice');
-		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
-		$this->set('fee', $Legalservice['Legalservice']['fee']);
+		//$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
+		//$this->set('fee', $Legalservice['Legalservice']['fee']);
+		
+		//Get Legal Services
+		$Legalservice = $this->Legalservice->find('all');
+		$this->set('Legalservices', $Legalservice);
 		
 		/*
 		//Get Event Data

@@ -40,7 +40,7 @@
 				<br /><br />
 				
 				<div>
-					<a id="add-child" class="form-link">Click here to add a child</a>
+					<a id="add-child" class="form-link"><img src="/img/addchildButton_up.png" border="0" class="add-child-button"></a>
 				</div>
 				
 				<br />

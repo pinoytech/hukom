@@ -45,7 +45,7 @@
 				<ul id="file-list">
 					<?php
 					foreach ($files as $key => $value) {
-						echo '<li class="actions"><a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a>' . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '">Remove</a></li>';
+						echo '<li class="actions"><a href="' . $upload_folder . '/' . $value . '" target="_blank">' . $value . '</a>' . ' <a class="remove_file" id="' . $upload_folder . '/' . $value . '"><img src="/img/removeButton_up.png" class="remove-button" border="0" align="absbottom"></a></li>';
 					}
 					?>
 				</ul>

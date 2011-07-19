@@ -22,6 +22,14 @@ class Legalcase extends AppModel {
 			'foreignKey' => 'case_id',
 			'dependent'    => true
 		),
+		'RequestReschedule' => array(
+			'className' => 'RequestReschedule',
+			'foreignKey' => 'case_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		
 	);
 	
 	var $belongsTo = array(

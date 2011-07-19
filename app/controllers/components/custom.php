@@ -101,7 +101,5 @@ class CustomComponent extends Object {
         
         //printf("%d years, %d months, %d days, %d hours, %d minuts\n, %d seconds\n", $years, $months, $days, $hours, $minuts, $seconds);
     }
-    
-    
 }
 ?>

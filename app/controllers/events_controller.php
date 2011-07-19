@@ -56,19 +56,25 @@ class EventsController extends AppController {
 		$this->redirect(array('action' => 'admin_request_reschedule_conference'));
 	}
 	
-	//List overdued schdule 3 days after the reserved data versus date today 
+	//List for Late Payment - 3 days after the reserving the date (date of LOI creation) (ex: if crated today (plus 3 days))
 	function admin_late_payments() {
 	    
         $this->paginate = array('joins' => array(
+            array('table' => 'legal_case_details',
+		        'type' => 'LEFT',
+		        'conditions' => array(
+		            'legal_case_details.id = Event.case_detail_id',
+		        )),
 		    array('table' => 'payments',
 		        'alias' => 'Payment',
 		        'type' => 'LEFT',
 		        'conditions' => array(
 		            'Payment.case_detail_id = Event.case_detail_id',
-		        )
-		    )),
+		        ))
+		    ),
 		    'conditions' => array(
-                'DATE_ADD(Event.start, INTERVAL 4 DAY) <= NOW()',
+                // 'DATE_ADD(Legalcasedetail.created, INTERVAL 4 DAY) <= NOW()',
+                'DATE_ADD(legal_case_details.created, INTERVAL 4 DAY) <= NOW()',
     			'Event.case_detail_id !=' => null,
     			'Payment.case_detail_id ' => null,
     			array(
@@ -80,7 +86,7 @@ class EventsController extends AppController {
     		'limit' => 10
     	);
         
-        $Events = $this->paginate('Event');
+        $Events = $this->paginate();
         
         $this->set('Events', $Events);
 	}
