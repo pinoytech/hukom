@@ -44,10 +44,12 @@
 		<td class="actions">
 		    
 		    <?php
-		    if (isset($RequestReschedule['RequestReschedule']['messenger_type'])) {
+		    if ($RequestReschedule['RequestReschedule']['messenger_type']) {
+		        echo '1';
                 $messenger_values = ':'. $RequestReschedule['RequestReschedule']['messenger_type'] .':'. $RequestReschedule['RequestReschedule']['messenger_username'];
 		    }
 		    else {
+		        cho '2';
 		        $messenger_values = null;
 		    }
 		    ?>
