@@ -168,6 +168,7 @@ class PaymentsController extends AppController {
 	}
 	
 	function gcash($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
+
 	    $this->_save_payment_details($this->data, $id, $case_id, $case_detail_id, $payment_id, 'gcash');
 	    
 		//Get Events
