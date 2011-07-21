@@ -645,6 +645,7 @@ class LegalcasesController extends AppController {
                     'case_id'        => $this->data['Legalcase']['case_id'],
                     'case_detail_id' => $this->data['Legalcase']['case_detail_id'],
                     'event_id'       => $this->data['Legalcase']['event_id'],
+                    'conference'     => $this->data['Legalcase']['conference'],
                     'date'           => $this->data['Legalcase']['date'],
                     'notes'          => $this->data['Legalcase']['notes'],
                     'start'          => $this->data['Legalcase']['start'],

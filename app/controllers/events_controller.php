@@ -393,7 +393,7 @@ class EventsController extends AppController {
 			$this->data['TempEvent']['color']              = $_POST['EventColor'];
 			$this->data['TempEvent']['messenger_type']     = $_POST['messenger_type'];
 			$this->data['TempEvent']['messenger_username'] = $_POST['messenger_username'];
-
+            
             $this->TempEvent->save($this->data);
 
 			$this->Session->write('TempEvent.id', $this->TempEvent->id);
@@ -426,7 +426,12 @@ class EventsController extends AppController {
 			$this->data['Event']['color']              = $_POST['EventColor'];
 			$this->data['Event']['messenger_type']     = $_POST['messenger_type'];
 			$this->data['Event']['messenger_username'] = $_POST['messenger_username'];
-
+            
+            if ($_POST['old_event_id']) {
+                $this->loadModel('RequestReschedule');
+                $this->RequestReschedule->deleteAll(array('RequestReschedule.event_id' => $_POST['old_event_id']));
+            }
+            
             $this->Event->save($this->data);
             
 			Configure::write('debug', 0);
