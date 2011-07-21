@@ -139,16 +139,9 @@ function redirect(){
         data: $('#event_input_data').val() + messenger_values,
         success: function(msg) {   
 			if (msg) {
-				<?php
-                // if ($auth_user_type == 'personal') {
-                //     $profile_action = 'personal_info';
-                // }
-                // elseif ($auth_user_type == 'corporation') {
-                //     $profile_action = 'corporate_partnership_representative_info';
-                // }
-			    ?>
+				
 
-                // window.location = '/users/<?php //echo $profile_action; ?>/<?php //echo "$id/$case_id"?>';
+                
                 
                 <?php
                 if ($case_detail_id == 'new_facts') {
@@ -158,7 +151,19 @@ function redirect(){
                 }
                 else{
                 ?>
-				    window.location = '/legalcases/legal_problem/<?php echo "$id/$case_id/$case_detail_id"?>';
+                    // window.location = '/legalcases/legal_problem/<?php echo "$id/$case_id/$case_detail_id"?>';
+                    
+                    <?php
+                    if ($auth_user_type == 'personal') {
+                        $profile_action = 'personal_info';
+                    }
+                    elseif ($auth_user_type == 'corporation') {
+                        $profile_action = 'corporate_partnership_representative_info';
+                    }
+    			    ?>
+                    
+                    window.location = '/users/<?php echo $profile_action; ?>/<?php echo "$id/$case_id"?>';
+                    
 				<?php
 			    }
 				?>
