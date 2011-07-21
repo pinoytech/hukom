@@ -11,7 +11,8 @@
                 Please select date and fill-up notes.
 			</p>
 				    
-			<?php echo $this->Form->create('Legalcase', array('onsubmit' => 'confirm_request_reschedule_conference(); return false;'));?>
+			<?php //echo $this->Form->create('Legalcase', array('onsubmit' => "confirm_request_reschedule_conference(); return false;"));?>
+			<?php echo $this->Form->create('Legalcase');?>
 			<?php
 				echo $this->Form->input('Legalcase.id');
 				echo $this->Form->input('Legalcase.user_id', array('type' => 'hidden', 'value' => $id));
@@ -34,5 +35,5 @@
     Please be informed that your request for re-scheduling of your video/office conference will automatically open your original schedule to other clients and e-lawyers online shall not guarantee its availability on the said date again upon submission of your request. If you are sure of your request for re-scheduling, please click “Continue”.
 </div>
 
-<?php $html->scriptBlock("request_reschedule_conference('$id', '$case_id', '$case_detail_id');", array('inline'=>false));?>
+<?php $html->scriptBlock("request_reschedule_conference('$id', '$case_id', '$case_detail_id', '$total_time');", array('inline'=>false));?>
 <?php echo $html->script('form-hacks', array('inline'=>false));?>

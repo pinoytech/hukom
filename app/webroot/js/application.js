@@ -1074,33 +1074,104 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 }
 
 function confirm_request_reschedule_conference(){ 
-
-  $("#reschedule_warning").dialog({
-		autoOpen: false,
-		width: 450,
-		height: 250,
-		modal: true,
-		resizable: false,
-		buttons: {
-		  Continue: function() {
-			  document.forms['LegalcaseRequestRescheduleConferenceForm'].submit();
-			},
-			Cancel: function() {
-				$(this).dialog("close");
-			},
-		}
-  });		
-
-  $("#reschedule_warning").dialog("open");
-
+  
 }
 
 
-function request_reschedule_conference(id, case_id, case_detail_id) {  
+function request_reschedule_conference(id, case_id, case_detail_id, total_time) {  
 	$(document).ready(function() {
+	  
+	  $("#reschedule_warning").dialog({
+  		autoOpen: false,
+  		width: 450,
+  		height: 250,
+  		modal: true,
+  		resizable: false,
+  		buttons: {
+  		  Continue: function() {
+  			  document.forms['LegalcaseRequestRescheduleConferenceForm'].submit();
+  			},
+  			Cancel: function() {
+  				$(this).dialog("close");
+  			},
+  		}
+    });		
+
 		//jQuery Valdidate
-		$("#LegalcaseRequestRescheduleConferenceForm").validate();
+		$("#LegalcaseRequestRescheduleConferenceForm").validate({
+	    submitHandler: function(form) {
+	      
+        time_diffrence = (time_diff_military_time(convert_to_military_time($("#LegalcaseStart").val()), convert_to_military_time($("#LegalcaseEnd").val())));
+    	  time_diffrence_split = time_diffrence.split(':');
+
+    	  if (time_diffrence_split[0] != total_time) {
+          alert("You're allowed to select " + total_time + " hour(s) only.");
+    	  }
+    	  else
+    	  {
+    	     $("#reschedule_warning").dialog("open");
+    	  }
+		  			  
+        // form.submit();
+		  }
+		});
+		
 	});	
+}
+
+function convert_to_military_time(time) {
+  switch(time) {
+  	case '08:00 am':
+  	  value = '8:00'
+  	  break;
+    case '09:00 am':
+  	  value = '9:00'
+  	  break;
+    case '10:00 am':
+  	  value = '10:00'
+  	  break;	  
+    case '11:00 am':
+  	  value = '11:00'
+  	  break;
+    case '12:00 pm':
+  	  value = '12:00'
+  	  break;
+    case '01:00 pm':
+  	  value = '13:00'
+  	  break;
+    case '02:00 pm':
+  	  value = '14:00'
+  	  break;
+    case '03:00 pm':
+  	  value = '15:00'
+  	  break;
+    case '04:00 pm':
+  	  value = '16:00'
+  	  break;
+    case '05:00 pm':
+  	  value = '17:00'
+  	  break;
+    case '06:00 pm':
+  	  value = '18:00'
+  	  break;
+    case '07:00 pm':
+  	  value = '19:00'
+  	  break;
+    case '08:00 pm':
+  	  value = '20:00'
+  	  break;
+    case '09:00 pm':
+  	  value = '21:00'
+  	  break;
+    case '10:00 pm':
+  	  value = '22:00'
+  	  break;
+    case '11:00 pm':
+  	  value = '23:00'
+  	  break;
+	}
+	
+	return value;
 }
 
 function calendar_dialogs() {

@@ -628,10 +628,14 @@ class LegalcasesController extends AppController {
     
     // Description: User request a reschedule of conference
     function request_reschedule_conference($id=null, $case_id=null, $case_detail_id=null, $event_id=null, $conference=null) {
+        
+        $this->loadModel('Event');
+        $Event = $this->Event->find('first', array('fields' => array('TIMEDIFF(Event.end, Event.start) as total_time'), 'conditions' => array('Event.id' => $event_id)));
+        $total_time = explode(':', $Event[0]['total_time']);
+        
         if (!empty($this->data)) {
             
             //Delete Event
-            $this->loadModel('Event');
             $this->Event->delete($this->data['Legalcase']['event_id']);
             
             //Save Data
@@ -662,6 +666,7 @@ class LegalcasesController extends AppController {
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('event_id', $event_id);
 		$this->set('conference', $conference);
+		$this->set('total_time', ltrim($total_time[0], '0'));
     }
     
     function _send_request_reschedule_conference($id, $request_reschedule_id) {

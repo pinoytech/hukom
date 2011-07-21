@@ -58,11 +58,6 @@
         					<tr>
         						<td class="label">Preferred Date:</td>
         						<td>
-        						    
-        						    <?php if (condition): ?>
-        						      
-        						    <?php endif ?>
-        						    
         						    <div class="preferred-date-holder" style="margin-top: 6px;">
         						    <?php echo date('F d, Y', strtotime($Event['start']));?>
         						    </div>
