@@ -49,7 +49,7 @@
                 $messenger_values = ':'. $RequestReschedule['RequestReschedule']['messenger_type'] .':'. $RequestReschedule['RequestReschedule']['messenger_username'];
 		    }
 		    else {
-		        cho '2';
+		        echo '2';
 		        $messenger_values = null;
 		    }
 		    ?>
