@@ -45,11 +45,11 @@
 		    
 		    <?php
 		    if ($RequestReschedule['RequestReschedule']['messenger_type']) {
-		        echo '1';
+
                 $messenger_values = ':'. $RequestReschedule['RequestReschedule']['messenger_type'] .':'. $RequestReschedule['RequestReschedule']['messenger_username'];
 		    }
 		    else {
-		        echo '2';
+
 		        $messenger_values = null;
 		    }
 		    ?>
