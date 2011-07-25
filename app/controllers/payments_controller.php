@@ -168,13 +168,12 @@ class PaymentsController extends AppController {
 	}
 	
 	function gcash($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
-
 	    $this->_save_payment_details($this->data, $id, $case_id, $case_detail_id, $payment_id, 'gcash');
 	    
 		//Get Events
 		$this->loadModel('Event');        
-        $Event = $this->Event->findByCaseDetailId($case_detail_id);		
-        
+        $Event = $this->Event->findByCaseDetailId($case_detail_id);
+
         if ($Event) {
 	    	$no_of_hours = $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
 			$this->set('fee', (float)$this->_get_legal_service_fee($case_detail_id) * $no_of_hours);
@@ -182,7 +181,6 @@ class PaymentsController extends AppController {
 		else {
 			$this->set('fee', $this->_get_legal_service_fee($case_detail_id));
 		}
-	
 
 	}
 	

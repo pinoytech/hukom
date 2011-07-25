@@ -3,7 +3,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('User.username');?></th>
+			<th><?php echo $this->Paginator->sort('Username', 'User.username');?></th>
 			<th><?php echo $this->Paginator->sort('legal_problem');?></th>
 			<th><?php echo $this->Paginator->sort('status');?></th>
 			<th><?php echo $this->Paginator->sort('created');?></th>

@@ -99,10 +99,10 @@ class LegalcasesController extends AppController {
 			$this->Session->setFlash(__('Invalid id for user', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		
+
 		//Get User_id
 		$Legalcase = $this->Legalcase->find('first', array('condtions' => array('Legalcase.id' => $id)));
-		
+
 		$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $Legalcase['Legalcase']['user_id'] . '/' . $id;
 
 		if ($this->Legalcase->delete($id)) {
@@ -195,7 +195,7 @@ class LegalcasesController extends AppController {
 		$this->set('id', $id);
 	}
 
-	function letter_of_intent($id, $case_id, $conference = null, $case_detail_id = null){
+	function letter_of_intent($id, $case_id, $conference = null, $case_detail_id = null, $option = null){
 		$this->loadModel('PersonalInfo');
 		$this->loadModel('Legalservice');
 		
@@ -225,6 +225,7 @@ class LegalcasesController extends AppController {
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
+		$this->set('option', $option);
 		
 		if ($conference) {
 		    $this->set('legal_service', $Legalservice['Legalservice']['name']);
@@ -421,6 +422,30 @@ class LegalcasesController extends AppController {
 			$this->data = $this->Legalcasedetail->read(null, $case_detail_id);
 		}
 		
+		/*
+		//If new facts create case_detail_id
+		if ($type == 'new_facts') {
+		    
+		    $legal_service_id = $case_detail_id;
+		    
+		    //Get Service
+		    $this->loadModel('Legalservice');
+		    $Legalservice = $this->Legalservice->find($legal_service_id);
+		    
+		    //Create legal_case_detail
+	        $legal_case_detail_data = array(
+				'Legalcasedetail' => array(
+					'user_id'       => $id,
+					'case_id'       => $case_id,
+					'legal_service' => $Legalservice['Legalservice']['name'],
+					'status'        => 'Pending',
+				)
+			);
+			
+            $this->Legalcasedetail->save($legal_case_detail_data);
+		}
+		*/
+		
 		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id";
 		
 		$this->set('id', $id);
@@ -518,7 +543,48 @@ class LegalcasesController extends AppController {
 		$this->set('case_detail_id', $case_detail_id);
 	}
 
-	function summary_of_information($id, $case_id=null, $case_detail_id=null, $type=null, $legal_service=null){
+	function summary_of_information($id=null, $case_id=null, $case_detail_id=null, $type=null, $legal_service=null){
+		
+		$this->Session->write('new_facts', '');
+		
+		//This block is for new facts
+		if (!empty($this->data)) {
+    		//Create Case Detail ID
+    		$data['Legalcasedetail'] = array(
+    			'user_id' => $this->data['Legalcasedetail']['user_id'],
+    			'case_id' => $this->data['Legalcasedetail']['case_id'],
+    			'legal_service' => $this->Session->read('Legalcase.legal_service')
+    			);
+
+    		$this->loadModel('Legalcasedetail');
+    		$this->Legalcasedetail->validate = array(); //Remove model validation
+    		$this->Legalcasedetail->create();
+    		$this->Legalcasedetail->save($data);
+    		$case_detail_id = $this->Legalcasedetail->id;
+    		
+    		//Create Legalcase_id Folder
+			$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcasedetail']['user_id'] . '/' . $this->data['Legalcasedetail']['case_id'] . '/' . $case_detail_id; 
+			if (!file_exists($file)) {
+				mkdir($file);
+				chmod($file, 0755);
+			}
+			
+			$this->Session->write('new_facts', true);
+			
+			//Redirect Controller
+			if ($this->Session->read('Legalcase.legal_service') == 'Per Query') {
+			    //Redirect to summary of facts
+    			$this->redirect(array('action' => 'summary_of_facts', $this->data['Legalcasedetail']['user_id'], $this->data['Legalcasedetail']['case_id'], $case_detail_id));
+			}
+			elseif ($this->Session->read('Legalcase.legal_service') == 'Video Conference') {
+			    //Redirect to letter of intent
+			    $this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcasedetail']['user_id'], $this->data['Legalcasedetail']['case_id'], $this->data['Legalcasedetail']['legal_service'], $case_detail_id, 'new_facts'));
+			}
+			elseif ($this->Session->read('Legalcase.legal_service') == 'Office Conference') {
+			    //Redirect to letter of intent
+			    $this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcasedetail']['user_id'], $this->data['Legalcasedetail']['case_id'], $this->data['Legalcasedetail']['legal_service'], $case_detail_id, 'new_facts'));
+		    }
+	    }
 		
 		//Assign Legal Service Session
 		if ($legal_service == 'perquery') {
@@ -533,53 +599,35 @@ class LegalcasesController extends AppController {
 			$this->Session->write('Legalcase.legal_service', 'Office Conference');
 		}
 		//end assign
-		
+
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
 		}
+
+		$this->loadModel('Legalcasedetail');
 		
-		// Will get all legal_case_details data
-		$Legalcase = $this->Legalcase->find('first', array('conditions' => array('Legalcase.id' => $case_id)));
-        
-        // $upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id";
-        
-		$this->set('Legalcase', $Legalcase);
+		if ($type == 'view') {
+		    $options = array('conditions' => array('Legalcasedetail.id' => $case_detail_id));
+		}
+		else {
+		    $options = array('conditions' => array('Legalcasedetail.case_id' => $case_id), 'order' => array('Legalcasedetail.id DESC'));
+		}
+		
+		$Legalcasedetail = $this->Legalcasedetail->find('all', $options);
+
+        $this->set('Legalcasedetails', $Legalcasedetail);
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('type', $type);
-        // $this->set('upload_folder', $upload_folder);
-        // $this->set('files', $this->Custom->show_files($upload_folder));
 		$this->set('no_of_hours', '');
 		$this->set('legal_service', $legal_service);
 		
 		//Get Legalservice fee
 		$this->loadModel('Legalservice');
-		//$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
-		//$this->set('fee', $Legalservice['Legalservice']['fee']);
-		
-		//Get Legal Services
 		$Legalservice = $this->Legalservice->find('all');
 		$this->set('Legalservices', $Legalservice);
-		
-		/*
-		//Get Event Data
-        $this->loadModel('Event');        
-        $Event = $this->Event->findByCaseDetailId($case_detail_id);		
-        
-        if ($Event) {
-            $no_of_hours = $this->Custom->date_difference($Event['Event']['start'], $Event['Event']['end'], 'h');
-			
-			$this->set('Event', $Event);
-			$this->set('no_of_hours', $no_of_hours);
-			$this->set('fee', (float)$Legalservice['Legalservice']['fee'] * $no_of_hours);
-        }
-        else {
-            $this->set('Event', false);
-        }
-        */
-        //end Event
 	}
 
 	function online_legal_consultation_agreement($id, $case_id=null, $case_detail_id=null){ //$id = user_id

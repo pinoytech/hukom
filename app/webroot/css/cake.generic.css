@@ -141,6 +141,7 @@ th {
 	border-bottom:2px solid #555;
 	text-align: left;
 	padding:4px;
+	white-space:nowrap;
 }
 th a {
 	display: block;
@@ -159,6 +160,7 @@ table tr td {
 	text-align: left;
 	vertical-align: top;
 	border-bottom:1px solid #ddd;
+	white-space:nowrap;
 }
 table tr:nth-child(2n) td {
 	background: #f5f5f5;
@@ -181,6 +183,7 @@ table td.actions a {
 	padding: 4px 8px;
 	text-align: left;
 	font-family: Monaco, Consolas, "Courier New", monospaced;
+	white-space:normal;
 }
 .cake-sql-log caption {
 	color:#fff;

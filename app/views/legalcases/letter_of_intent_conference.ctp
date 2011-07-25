@@ -138,22 +138,14 @@ function redirect(){
         url: '/events/add_event',
         data: $('#event_input_data').val() + messenger_values,
         success: function(msg) {   
-			if (msg) {
-				
-
-                
-                
+			if (msg) {                
                 <?php
-                if ($case_detail_id == 'new_facts') {
+                if ($option == 'new_facts') {
                 ?>
-                    window.location = '/legalcases/summary_of_facts/<?php echo "$id/$case_id/"?>';
+                    window.location = '/legalcases/summary_of_facts/<?php echo "$id/$case_id/$case_detail_id"?>';
                 <?php
                 }
-                else{
-                ?>
-                    // window.location = '/legalcases/legal_problem/<?php echo "$id/$case_id/$case_detail_id"?>';
-                    
-                    <?php
+                else {
                     if ($auth_user_type == 'personal') {
                         $profile_action = 'personal_info';
                     }
@@ -161,9 +153,7 @@ function redirect(){
                         $profile_action = 'corporate_partnership_representative_info';
                     }
     			    ?>
-                    
                     window.location = '/users/<?php echo $profile_action; ?>/<?php echo "$id/$case_id"?>';
-                    
 				<?php
 			    }
 				?>

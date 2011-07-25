@@ -102,7 +102,7 @@ class CustomHelper extends AppHelper {
             'Grade School'                          => 'Grade School',
             'High School'                           => 'High School',
             'Vocational/Short Course'               => 'Vocational/Short Course',
-            "Bachelor's/College Degree"             => "Bachelor's College Degree",
+            "Bachelor's/College Degree"             => "Bachelor's/College Degree",
             "Post Graduate Diploma/Master's Degree" => "Post Graduate Diploma/Master's Degree",
             'Professional License'                  => 'Professional License',
             'Doctorate Degree'                      => 'Doctorate Degree'

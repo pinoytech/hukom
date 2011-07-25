@@ -36,6 +36,8 @@ jQuery([
   '/img/Continuebutton_up.png',
   '/img/ReschedButton_down.png',
   '/img/ReschedButton_up.png',
+  '/img/addNewFactsButton_up.png',
+  '/img/addNewFactsButton_down.png',
 ]).preload();
 
 function login_form() {
@@ -571,12 +573,16 @@ function summary_of_information_form(id, case_id, case_detail_id, event_id) {
 			window.location = '/legalcases/online_legal_consultation_agreement/' + id + '/' + case_id + '/' + case_detail_id;
 		});
 
-		$('#new-facts').click(function() {
-			window.location = '/legalcases/summary_of_facts/' + id + '/' + case_id;
-		});
-
+		
 	  $('#back-to-case-index').click(function() {
 			window.location = '/legalcases/index/' + id;
+		});
+		
+		//New Facts - Per Query
+		$('#new-facts').click(function() {
+		  //Third paramater is Legalservice.id (after case_id)
+      // window.location = '/legalcases/summary_of_facts/' + id + '/' + case_id + '/1/new_facts';
+      window.location = '/legalcases/legal_problem/' + id + '/' + case_id;
 		});
 		
 		//New Facts for Video and Office

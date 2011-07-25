@@ -804,7 +804,8 @@ a,
 .button-next,
 .button-back,
 .back-to-case-list,
-.reschedule-button
+.reschedule-button,
+.new-facts-button
 {
   cursor: pointer; cursor: hand;
 }
@@ -824,6 +825,12 @@ a,
 	height: 22px;
 	border: none;
 	margin-top: 10px;
+}
+
+.new-facts-button {
+  width: 125px;
+	height: 30px;
+	border: none;
 }
 
 .button-submit {
@@ -849,6 +856,15 @@ a,
 .button-back:hover {
 	background: url(../img/backButton_down.png) no-repeat;
 }
+
+.new-facts-button {
+	background: url(../img/addNewFactsButton_up.png) no-repeat;
+}
+
+.new-facts-button:hover {
+	background: url(../img/addNewFactsButton_down.png) no-repeat;
+}
+
 
 .back-to-case-list { 
 	width: 124px;

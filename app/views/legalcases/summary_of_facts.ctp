@@ -15,7 +15,6 @@
 				echo $this->Form->input('Legalcasedetail.id', array('type' => 'hidden'));
 				echo $this->Form->input('Legalcasedetail.case_id', array('type' => 'hidden', 'value' => $case_id));
 				echo $this->Form->input('Legalcasedetail.user_id', array('type' => 'hidden', 'value' => $id));
-				echo $this->Form->input('Legalcasedetail.legal_service', array('type' => 'hidden', 'value' => $legal_service));
 			?>
 				<div>
 					<p>
@@ -58,9 +57,16 @@
 			<br />
             <table>
 				<tr>
-					<td>
-						<input type="button" id="back" class="button-back" value="" />
-					</td>
+				    <?php
+				    //Disable back button on New Facts
+                    if (!$this->Session->read('new_facts')) {
+                    ?>
+                    <td>
+                        <input type="button" id="back" class="button-back" value="" />
+                    </td>
+                    <?php
+                    }
+                    ?>
 					<td>
 						<input type="button" id="next" class="button-next" value="" />
 					</td>

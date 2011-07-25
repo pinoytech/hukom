@@ -6,17 +6,17 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><nobr><?php echo $this->Paginator->sort('Username', 'User.username');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('User ID');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('Case ID');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('Case Detail ID');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('Event ID');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('Conference');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('Date');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('Start Time');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('End Time');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('Notes');?></nobr></th>
-			<th><nobr><?php echo $this->Paginator->sort('created');?></nobr></th>
+			<th><?php echo $this->Paginator->sort('Username', 'User.username');?></nobr></th>
+			<th><?php echo $this->Paginator->sort('User ID');?></th>
+			<th><?php echo $this->Paginator->sort('Case ID');?></th>
+			<th><?php echo $this->Paginator->sort('Case Detail ID');?></th>
+			<th><?php echo $this->Paginator->sort('Event ID');?></th>
+			<th><?php echo $this->Paginator->sort('Conference');?></th>
+			<th><?php echo $this->Paginator->sort('Date');?></th>
+			<th><?php echo $this->Paginator->sort('Start Time');?></th>
+			<th><?php echo $this->Paginator->sort('End Time');?></th>
+			<th><?php echo $this->Paginator->sort('Notes');?></th>
+			<th><?php echo $this->Paginator->sort('created');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
