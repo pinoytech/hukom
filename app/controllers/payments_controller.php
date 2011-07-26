@@ -204,6 +204,7 @@ class PaymentsController extends AppController {
         // debug($payment_option);
         // debug($data);
         // exit;
+        // debug($this->params);
 	    
 	    if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
@@ -233,8 +234,14 @@ class PaymentsController extends AppController {
 			$this->data = $this->Payment->read(null, $payment_id);
 
 		}
+		
 		if (empty($this->data)) {
-			$this->data = $this->Payment->read(null, $payment_id);
+		    
+		    if (!empty($payment_id)) {
+		      $this->data = $this->Payment->read(null, $payment_id);
+		    }
+			
+            // debug($this->data);
 		}
 		
 		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id/bankdeposit";
