@@ -32,7 +32,17 @@ class AppController extends Controller {
 			}
 		}
 		else {
-			$this->Auth->loginRedirect = array('controller' => 'home', 'action' => 'index');
+		    
+		    //Redirect from close confirmation email
+    	    if (isset($this->params['url']['to'])) {
+    	        $this->Auth->logout();
+                header("location:" . $this->params['url']['to']);
+                $this->Auth->logoutRedirect = array('controller' => 'users', 'action' => 'login');
+    	    }
+            else {
+                $this->Auth->loginRedirect = array('controller' => 'home', 'action' => 'index');
+            }
+			
 		}
 		
 		//Set global user variable for View (i.e. navigation)
@@ -41,13 +51,7 @@ class AppController extends Controller {
 			
     }
     
-    function afterFilter() {
-        //Redirect from close confirmation email
-	    if (isset($this->params['url']['to'])) {
-            // debug($this->params['url']['to']);
-            header("location:" . $this->params['url']['to']);
-	    }
-        
+    function afterFilter() {        
     }
 
 	// Redirect admin to admin_index of controller
