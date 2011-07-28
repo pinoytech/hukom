@@ -32,6 +32,12 @@ class AppController extends Controller {
 			}
 		}
 		else {
+		    //Redirect from close confirmation email
+		    if (isset($this->params['url']['to'])) {
+                // debug($this->params['url']['to']);
+                header("location:" . $this->params['url']['to']);
+		    }
+		    
 			$this->Auth->loginRedirect = array('controller' => 'home', 'action' => 'index');
 		}
 		
