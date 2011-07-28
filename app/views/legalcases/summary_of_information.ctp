@@ -70,11 +70,9 @@
 						    <?php
                 			    if ($Legalcasedetail['Legalcasedetail']['status'] != 'Closed') {
         			        ?>
-        			        
-            			            <div class="reschedule-button-holder" style="margin-top: 0;">
-            			                <a id="<?php echo $Legalcasedetail['Event']['id'] . "/" . $Legalcasedetail['Event']['conference'];?>" class="request_reschdule_conference"><img src="/img/ReschedButton_up.png" class="reschedule-button" border="0" ></a>
-            			            </div>
-            			            
+        			            <div class="reschedule-button-holder" style="margin-top: 0;">
+        			                <a id="<?php echo $Legalcasedetail['Event']['id'] . "/" . $Legalcasedetail['Event']['conference'];?>" class="request_reschdule_conference"><img src="/img/ReschedButton_up.png" class="reschedule-button" border="0" ></a>
+        			            </div>
                 			<?php
             			        }
             			    }

@@ -54,7 +54,7 @@
 		    }
 		    ?>
 		    
-			<a href="#" class="open-calendar" id="<?php echo $RequestReschedule['RequestReschedule']['event_id'] .':'. $RequestReschedule['RequestReschedule']['user_id'] .':'. $RequestReschedule['RequestReschedule']['case_id'] .':'. $RequestReschedule['RequestReschedule']['case_detail_id'] .':'. $RequestReschedule['RequestReschedule']['conference'] . $messenger_values; ?>">Calendar</a>
+			<a href="#" class="open-calendar" id="<?php echo $RequestReschedule['RequestReschedule']['event_id'] .':'. $RequestReschedule['RequestReschedule']['user_id'] .':'. $RequestReschedule['RequestReschedule']['case_id'] .':'. $RequestReschedule['RequestReschedule']['case_detail_id'] .':'. $RequestReschedule['RequestReschedule']['conference'] .':'. $RequestReschedule['RequestReschedule']['case_id'] .' '. $custom->get_first_last_name($RequestReschedule['RequestReschedule']['user_id']) . $messenger_values; ?>">Calendar</a>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete_request_reschedule_conference', $RequestReschedule['RequestReschedule']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $RequestReschedule['RequestReschedule']['id'])); ?>
 		</td>
 	</tr>
@@ -89,13 +89,13 @@
     echo $form->input('start', array('options' => $custom->calendar_time_select()));
     echo $form->input('end', array('options' => $custom->calendar_time_select()));
     echo $form->input('allday', array('type'=>'hidden', 'value' => 0));
-    echo $form->input('event_id', array('type'=>'text'));
-    echo $form->input('user_id', array('type'=>'text'));
-    echo $form->input('case_id', array('type'=>'text'));
-    echo $form->input('case_detail_id', array('type'=>'text'));
-    echo $form->input('conference', array('type'=>'text'));
-    echo $form->input('messenger_type', array('type'=>'text'));
-    echo $form->input('messenger_username', array('type'=>'text'));
+    echo $form->input('event_id', array('type'=>'hidden'));
+    echo $form->input('user_id', array('type'=>'hidden'));
+    echo $form->input('case_id', array('type'=>'hidden'));
+    echo $form->input('case_detail_id', array('type'=>'hidden'));
+    echo $form->input('conference', array('type'=>'hidden'));
+    echo $form->input('messenger_type', array('type'=>'hidden'));
+    echo $form->input('messenger_username', array('type'=>'hidden'));
     echo $form->input('calendar_id', array('type'=>'hidden', 'value' => $this->Session->read('Event.calendar_id')));
     ?>
 </div>
@@ -149,7 +149,9 @@
 
 $(document).ready(function() {
 	
-	$(".open-calendar").click(function() {        
+	$(".open-calendar").click(function() {
+        var parent_row = $(this).parent().parent();
+
 	    request_ids = $(this).attr('id').split(':');
 	    
         $("#event-calendar").dialog({
@@ -298,6 +300,9 @@ $(document).ready(function() {
         				                                            data: event_input_data,
         				                                            success: function(msg) {
         				                                                calendar.fullCalendar('refetchEvents');
+        				                                                
+        				                                                //Remove Parent Row
+        				                                                parent_row.remove().fadeOut();
         				                                            },
         				                                            error: function() {
         				                                                alert("An error occured while updating. Try again in a while");
@@ -329,22 +334,22 @@ $(document).ready(function() {
         	                            }
 
                                         $('#EventDate').val($.fullCalendar.formatDate(date, "yyyy-MM-dd"));
-                                        $('#EventTitle').val(request_ids[1] + '-' + request_ids[2]);
+                                        $('#EventTitle').val(request_ids[5]);
                                         $('#EventEventId').val(request_ids[0]);
                                         $('#EventUserId').val(request_ids[1]);
                                         $('#EventCaseId').val(request_ids[2]);
                                         $('#EventCaseDetailId').val(request_ids[3]);
                                         $('#EventConference').val(request_ids[4]);
                                         
-                                        if (request_ids[5]) {
-                                            $('#EventMessengerType').val(request_ids[5]);
+                                        if (request_ids[6]) {
+                                            $('#EventMessengerType').val(request_ids[6]);
                                         }
                                         else {
                                             $('#EventMessengerType').val('');
                                         }
                                         
-                                        if (request_ids[6]) {
-                                            $('#EventMessengerUsername').val(request_ids[6]);
+                                        if (request_ids[7]) {
+                                            $('#EventMessengerUsername').val(request_ids[7]);
                                         }
                                         else {
                                             $('#EventMessengerUsername').val('');

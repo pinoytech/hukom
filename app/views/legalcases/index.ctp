@@ -14,7 +14,7 @@
 			
 			<table class="dashboard" cellpadding="5" cellspacing="0" >
 				<tr class="label">
-					<td><?php echo $this->Paginator->sort('Case ID', 'Legalcase.id');?></td>
+					<td><?php echo $this->Paginator->sort('CID', 'Legalcase.id');?></td>
 					<td><?php echo $this->Paginator->sort('Legal Problem', 'Legalcase.legal_problem');?></td>
 				</tr>
 				<?php
@@ -27,7 +27,7 @@
 						<div>
 							<table class="dashboard" cellpadding="5" cellspacing="0" >
 								<tr class="label">
-									<td>Details ID</td>
+									<td>CDID</td>
 									<td>Legal Service</td>
 									<td>Status</td>
 									<td>Date</td>
@@ -41,7 +41,7 @@
 								?>
 								<tr>
 									<td><?php echo $Legalcasedetail['id'];?></td>
-									<td><?php echo $Legalcasedetail['legal_service'];?>
+									<td style="white-space:nowrap;"><?php echo $Legalcasedetail['legal_service'];?>
 									    <?php
 									    //Display Event Details
                                         foreach ($Legalcases['Event'] as $Event) {
@@ -67,7 +67,7 @@
 									    ?>
 									</td>
 									<td><?php echo $Legalcasedetail['status'];?></td>
-									<td><?php echo substr($Legalcasedetail['created'], 0, 11);?></td>
+									<td style="white-space:nowrap;"><?php echo date('F d, Y', strtotime($Legalcasedetail['created']));?></td>
 									<td>
 										<?php
 											$payment_option = 'mode_of_payment';
