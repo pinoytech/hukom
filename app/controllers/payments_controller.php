@@ -14,6 +14,7 @@ class PaymentsController extends AppController {
 		
 		$this->Payment->recursive = 0;		
         // $this->paginate['conditions'][] = $conditions;
+        $this->paginate['order'][] = array('Payment.id' => 'desc');
 		$this->set('Payments', $this->paginate());
 	}
 	

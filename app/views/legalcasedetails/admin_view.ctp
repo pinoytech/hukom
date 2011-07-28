@@ -68,7 +68,7 @@
 	
 	<br />
 	<div>
-		<?php echo $this->Html->link(__('Edit Case Details', true), array('admin' => true, 'action' => 'edit', $Legalcasedetail['Legalcasedetail']['id'])); ?>
+		<?php echo $this->Html->link(__('Edit', true), array('admin' => true, 'action' => 'edit', $Legalcasedetail['Legalcasedetail']['id'])); ?>
 		|
 		<?php echo $this->Html->link(__('Back to Case List', true), array('admin' => true, 'action' => 'index', $Legalcasedetail['Legalcase']['id'])); ?>
 		|

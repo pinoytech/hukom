@@ -3,6 +3,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
+			<th><?php echo $this->Paginator->sort('User ID', 'id');?></th>
 			<th><?php echo $this->Paginator->sort('legal_service');?></th>
 			<th><?php echo $this->Paginator->sort('status');?></th>
 			<th><?php echo $this->Paginator->sort('created');?></th>
@@ -19,12 +20,13 @@
 	?>
 	<tr<?php echo $class;?>>
 		<td><?php echo $Legalcasedetail['Legalcasedetail']['id']; ?>&nbsp;</td>
+		<td><?php echo $Legalcasedetail['Legalcasedetail']['user_id']; ?>&nbsp;</td>
 		<td><?php echo $Legalcasedetail['Legalcasedetail']['legal_service']; ?>&nbsp;</td>
 		<td><?php echo $Legalcasedetail['Legalcasedetail']['status']; ?>&nbsp;</td>
 		<td><?php echo $Legalcasedetail['Legalcasedetail']['created']; ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View Case Details', true), array('action' => 'view', $Legalcasedetail['Legalcasedetail']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit Case Details', true), array('action' => 'edit', $Legalcasedetail['Legalcasedetail']['id'])); ?>
+			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $Legalcasedetail['Legalcasedetail']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $Legalcasedetail['Legalcasedetail']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $Legalcasedetail['Legalcasedetail']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $Legalcasedetail['Legalcasedetail']['id'])); ?>
 		</td>
 	</tr>
