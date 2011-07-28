@@ -4,7 +4,7 @@ class HomeController extends AppController {
 	var $name = 'Home';
 	var $helpers = array('Html', 'Form');
 	
-	function beforeFilter() {
+	function beforeFilter() {	    
 		parent::beforeFilter(); 
 		$this->Auth->allowedActions = array('index');
 	}

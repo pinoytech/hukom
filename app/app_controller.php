@@ -32,12 +32,6 @@ class AppController extends Controller {
 			}
 		}
 		else {
-		    //Redirect from close confirmation email
-		    if (isset($this->params['url']['to'])) {
-                // debug($this->params['url']['to']);
-                header("location:" . $this->params['url']['to']);
-		    }
-		    
 			$this->Auth->loginRedirect = array('controller' => 'home', 'action' => 'index');
 		}
 		
@@ -45,6 +39,15 @@ class AppController extends Controller {
 		$this->set('auth_user_type', $this->Auth_user['User']['type']);
 		$this->set('auth_user_id', $this->Auth_user['User']['id']);
 			
+    }
+    
+    function afterFilter() {
+        //Redirect from close confirmation email
+	    if (isset($this->params['url']['to'])) {
+            // debug($this->params['url']['to']);
+            header("location:" . $this->params['url']['to']);
+	    }
+        
     }
 
 	// Redirect admin to admin_index of controller
