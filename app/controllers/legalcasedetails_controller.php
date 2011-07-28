@@ -77,6 +77,13 @@ class LegalcasedetailsController extends AppController {
 					
 				}
 			}
+			
+			// Incomplete Status
+			if ($this->data['Legalcasedetail']['status'] == 'Incomplete') {
+				//Send Thank You Email
+				$this->_send_incomplete_confirmation($this->data['Legalcasedetail']['user_id'], $this->data['Legalcasedetail']['case_id']);
+				$email_sent_alert = ' and incomplete confirmation email is sent to the user';
+			}
 
 			//Update case data
 			$this->Legalcasedetail->id = $this->data['Legalcasedetail']['id'];
@@ -117,6 +124,26 @@ class LegalcasedetailsController extends AppController {
 	    //Do not pass any args to send()
 	    $this->Email->send();
 	 }
+	 
+	 function _send_incomplete_confirmation($id, $case_id) {
+ 		$this->loadModel('User');
+
+ 		$User                  = $this->User->read(null,$id);
+ 		$this->Email->to       = $User['User']['username'];
+ 		$this->Email->bcc      = $this->admin_email;  
+ 		$this->Email->subject  = 'E-Lawyers Online - Incomplete Confirmation';
+ 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+ 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+ 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+ 		$this->Email->template = 'incomplete_confirmation'; // note no '.ctp'
+ 		//Send as 'html', 'text' or 'both' (default is 'text')
+ 		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+ 	    //Set view variables as normal
+ 	    $this->set('User', $User);
+ 	    $this->set('case_id', $case_id);
+ 	    //Do not pass any args to send()
+ 	    $this->Email->send();
+ 	 }
 	
 	function admin_delete($id = null) {
 		if (!$id) {

@@ -23,7 +23,7 @@
 					<?php
 					}
 					?>
-					on <em>(check calendar for available schedule)</em> <input type="text" id="event_date" value="<?php echo $event_date;?>" size="15" readonly /><a id="open-calendar"><img src="/img/Calendar-32.png" width="16" style="vertical-align:text-top;"></a> from <input type="text" id="event_start" value="<?php echo $event_start;?>" size="10" readonly /> to <input type="text" id="event_end" value="<?php echo $event_end;?>" size="10" readonly /> for <input type="text" id="event_hours" value="<?php echo $event_hours;?>" size="2" readonly /> no. of hours.
+					on <em>(check calendar for available schedule)</em> <input type="text" id="event_date" class="open-calendar" value="<?php echo $event_date;?>" size="15" readonly /><!-- <a class="open-calendar"><img src="/img/Calendar-32.png" width="16" style="vertical-align:text-top;"></a> --> from <input type="text" id="event_start" value="<?php echo $event_start;?>" size="10" readonly /> to <input type="text" id="event_end" value="<?php echo $event_end;?>" size="10" readonly /> for <input type="text" id="event_hours" value="<?php echo $event_hours;?>" size="2" readonly /> no. of hours.
 				</p>
 				
 				<p>
@@ -168,7 +168,7 @@ function redirect(){
 
 $(document).ready(function() {
 	
-	$("#open-calendar").click(function() {        
+	$(".open-calendar").click(function() {        
         // var url = '<?php echo Dispatcher::baseUrl();?>/events/calendar_dialog/<?php echo "$id/$case_id"?>';
         // $("#event-calendar").load(url).dialog({
 	

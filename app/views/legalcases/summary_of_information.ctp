@@ -189,8 +189,9 @@
         			</td>
         		<?php
         		}
-        		elseif ($type == 'add') {
-	
+
+        		if ($type == 'add' || $type == 'view') {
+	                // Add new facts
 					if ($legal_service == 'video') {
 						$new_facts_id = 'new-video-conference';
 					}

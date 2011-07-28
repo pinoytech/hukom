@@ -112,7 +112,7 @@
 		
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Referred By'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php //echo $Payment['Payment']['option']; ?>
+			<?php echo $Payment['User']['referred_by']; ?>
 			&nbsp;
 		</dd>
 		
@@ -135,7 +135,7 @@
 	
 	<br />
 	<div>
-		<?php echo $this->Html->link(__('Edit Payment Status', true), array('admin' => true, 'action' => 'edit', $Payment['Payment']['id'])); ?>
+		<?php echo $this->Html->link(__('Edit', true), array('admin' => true, 'action' => 'edit', $Payment['Payment']['id'])); ?>
 		|
 		<?php echo $this->Html->link(__('Payments List', true), array('admin' => true, 'controller' => 'payments', 'action' => 'index', $Payment['Payment']['id'])); ?>
 		|

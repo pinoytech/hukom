@@ -33,13 +33,13 @@
 		<td><?php echo $Payment['User']['username']; ?>&nbsp;</td>
 		<td><?php echo $Payment['Legalcasedetail']['legal_service']; ?>&nbsp;</td>
 		<td><?php echo $Payment['Payment']['option']; ?>&nbsp;</td>
-		<td>&nbsp;</td>
+		<td><?php echo $Payment['User']['referred_by']; ?></td>
 		<td><?php echo $Payment['Payment']['status']; ?>&nbsp;</td>
 		<td><?php echo $Payment['Payment']['amount']; ?>&nbsp;</td>
 		<td><?php echo $Payment['Payment']['created']; ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View Payment Details', true), array('action' => 'view', $Payment['Payment']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit Payment Status', true), array('action' => 'edit', $Payment['Payment']['id'])); ?>
+			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $Payment['Payment']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $Payment['Payment']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $Payment['Payment']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $Payment['Legalcase']['id'])); ?>
 		</td>
 	</tr>

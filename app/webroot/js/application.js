@@ -908,7 +908,7 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 		if ($('.attach_fill_out:checked').val() == 'fill out') {
 			$('#fill-out-form').show();
 		}
-
+		
 		//Disable fill-out-form fields to avoid validation when attach-form is selected
 		var fill_out_form  = $('#fill-out-form');
 		var fill_out_radio = $('#fill-out-radio');
@@ -941,19 +941,28 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 					}
 				});
 
-        fill_out_form_inputs.attr("disabled", true);
+        $('#fill-out-form').find("input, textarea").attr("disabled", true);
         $('#file-upload-validate').attr("disabled", false);
 	    }
 
 	    if ($(this).val() == 'fill out') {
+        // alert(fill_out_form_inputs);
         $('#fill-out-form').show();
         $('#attach-form').hide();
         fields_arranger();
 				add_board();
         add_stock();
-        fill_out_form_inputs.attr("disabled", false);
+        $('#fill-out-form').find("input, textarea").attr("disabled", false);
         $('#file-upload-validate').attr("disabled", true);
 	    }
+	    
+	    // If Stock Corporation or Non Stock Corporation - disable Managing Partners field
+  		if ($('.type:checked').val() == 'Stock Corporation' || $('.type:checked').val() == 'Non-Stock') {
+  			$('#CorporatePartnershipInfoManagingPartners').attr("disabled", true);
+  		}
+  		else {
+  		  $('#CorporatePartnershipInfoManagingPartners').attr("disabled", false);
+  		}
 	  });
 
     // Uploadify
@@ -1030,7 +1039,7 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 		function add_stock() {
 			//Count no. of rows
 			total_rows = $('#stock-list > tbody').size();
-			console.log(total_rows);
+      // console.log(total_rows);
 			//Check stockholder_type
       if ($('.stockholder_type:checked').val() == 'Publicly Listed') {
       	if (total_rows > 10) {

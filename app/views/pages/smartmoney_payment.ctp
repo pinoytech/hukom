@@ -1,5 +1,8 @@
 <div id="full-content">
 	<div id="main">
+	    
+	    <?php echo $this->element('navigation');?>
+	    
 	    <h1>SmartMoney Payment</h1>
         <br />
         

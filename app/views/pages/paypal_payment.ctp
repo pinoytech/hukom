@@ -1,5 +1,8 @@
 <div id="full-content">
 	<div id="main">
+	    
+	    <?php echo $this->element('navigation');?>
+	    
         <h1>Paypal Payment</h1>
         <br />
         <p>PayPal registration process for new client needs a valid e-mail address and a valid credit card.</p>

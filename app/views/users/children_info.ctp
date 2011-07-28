@@ -31,7 +31,7 @@
 					
 					
 					echo '<div class="row two-field">';
-					echo $this->Form->input('ChildrenInfo.no_of_children', array('class' => 'no-of-children', 'readonly' => true));
+					echo $this->Form->input('ChildrenInfo.no_of_children', array('class' => 'no-of-children', 'readonly' => true, 'label' => 'No. of Children'));
 					$options=array('with us' => 'with us', 'with you' => 'with you', 'with spouse' => 'with spouse', 'with relative' => ' with relative',); //, 'default' => $this->data['ChildrenInfo']['custody']
 					echo $this->Form->input('ChildrenInfo.custody', array('type' => 'select', 'options'=>$options, 'class' => 'required', 'label' => 'Custody of Children', 'disabled' => true, 'empty' => 'Select'));
 					echo '</div>';
