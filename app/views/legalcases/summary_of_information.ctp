@@ -189,16 +189,19 @@
         		}
 
         		if ($type == 'add' || $type == 'view') {
-	                // Add new facts
-					if ($legal_service == 'video') {
-						$new_facts_id = 'new-video-conference';
-					}
-					elseif ($legal_service == 'office') {
-						$new_facts_id = 'new-office-conference';
-					}
-					else {
-						$new_facts_id = 'new-facts';
-					}
+        		    
+        		    if ($Legalcasedetail['Legalcasedetail']['status'] == 'Closed') {
+        		    
+	                    // Add new facts
+    					if ($legal_service == 'video') {
+    						$new_facts_id = 'new-video-conference';
+    					}
+    					elseif ($legal_service == 'office') {
+    						$new_facts_id = 'new-office-conference';
+    					}
+    					else {
+    						$new_facts_id = 'new-facts';
+    					}
         		?>
         			<td>
         			    <?php echo $this->Form->create('Legalcase');?>
@@ -212,6 +215,7 @@
         				<?php echo $this->Form->end();?>
         			</td>
         		<?php
+    		        }
         	    }
 				elseif ($type == 'reschedule') {
         		?>

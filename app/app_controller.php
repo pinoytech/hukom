@@ -2,8 +2,8 @@
 class AppController extends Controller {
     var $components = array('Acl', 'Auth', 'Session');
     var $helpers = array('Html', 'Form', 'Session');
-    // var $admin_email = array('gino.carlo.cortez@gmail.com');
-    var $admin_email = array('gino.carlo.cortez@gmail.com', 'attyvalderama@gmail.com', 'redgfernandez@yahoo.com', 'redgfernandez@gmail.com');
+    var $admin_email = array('gino.carlo.cortez@gmail.com');
+    // var $admin_email = array('gino.carlo.cortez@gmail.com', 'attyvalderama@gmail.com', 'redgfernandez@yahoo.com', 'redgfernandez@gmail.com');
 	
 	function beforeFilter() {
         //Configure AuthComponent
@@ -32,7 +32,19 @@ class AppController extends Controller {
 			}
 		}
 		else {
-		    
+            // debug($this->params);
+            
+		    //Logout User if User ID accesed is not valid
+		    /*
+		    if (isset($this->params['pass'][0])) {
+                // debug('here');
+                if ($this->params['pass'][0] != $this->Auth_user['User']['id']) {
+                    $this->Session->setFlash(__('Invalid User. Please try again.', true));
+                    $this->Auth->logout();
+    		    }
+		    }
+		    */
+		                
 		    //Redirect from close confirmation email
     	    if (isset($this->params['url']['to'])) {
     	        $this->Auth->logout();

@@ -958,11 +958,24 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 	    
 	    // If Stock Corporation or Non Stock Corporation - disable Managing Partners field
   		if ($('.type:checked').val() == 'Stock Corporation' || $('.type:checked').val() == 'Non-Stock') {
+  		  console.log(1);
   			$('#CorporatePartnershipInfoManagingPartners').attr("disabled", true);
   		}
   		else {
+  		  console.log(2);
   		  $('#CorporatePartnershipInfoManagingPartners').attr("disabled", false);
   		}
+  		
+  		$('.type').change(function() {
+  		  if ($(this).val() == 'Stock Corporation' || $(this).val() == 'Non-Stock') {
+    			$('#CorporatePartnershipInfoManagingPartners').attr("disabled", true);
+    			$('#CorporatePartnershipInfoManagingPartners').val('');
+    		}
+    		else {
+    		  $('#CorporatePartnershipInfoManagingPartners').attr("disabled", false);
+    		}
+  		});
+  		
 	  });
 
     // Uploadify

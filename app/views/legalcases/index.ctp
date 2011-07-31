@@ -20,6 +20,7 @@
 				<?php
                 // debug($Legalcase);
 				foreach ($Legalcase as $Legalcases) {
+                // debug($Legalcases);
 				?>
 				<tr>
 					<td><?php echo $Legalcases['Legalcase']['id'];?></td>
@@ -54,7 +55,7 @@
                                         }    
                                     
                                         //Display Reschedule for Approval
-                                        if (isset($Legalcases['RequestReschedule']) && empty($Legalcases['Event'])) {
+                                        if (isset($Legalcases['RequestReschedule'])) {
                                             foreach ($Legalcases['RequestReschedule'] as $RequestReschedule) {
                                                 if ($RequestReschedule['case_detail_id'] == $Legalcasedetail['id']) {
                                                     echo '<br />';
