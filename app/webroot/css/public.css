@@ -925,3 +925,35 @@ a,
 .reschedule-button-holder {
   margin-top: -10px;
 }
+
+/*Case Retainer*/
+#case_container, #project_container {
+  display: block;
+  margin-left: 40px;
+}
+
+
+#pending_case_new, #pending_project_new {
+  display: block;
+  margin-left: 80px;
+}
+
+#new_case_old,
+#pending_case_old,
+#new_project_old,
+#pending_project_old
+{
+  display: block;
+  margin-left: 120px;
+}
+
+#new_case_old_type_yes,
+#pending_case_old_type_yes,
+#pending_case_old_type_no,
+#pending_project_old_type_no,
+#new_project_old_type_yes,
+#pending_project_old_type_yes
+{
+  display: block;
+  margin-left: 10px;
+}

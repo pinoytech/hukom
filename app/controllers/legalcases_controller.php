@@ -179,6 +179,9 @@ class LegalcasesController extends AppController {
 				elseif ($this->data['Legalcase']['legal_service'] == 'Monthly Retainer') {
 				    $legal_service = 'monthly';
 				}
+				elseif ($this->data['Legalcase']['legal_service'] == 'Case/Project Retainer') {
+				    $legal_service = 'case_project';
+				}
 				else {
 				    $legal_service = false;
 				}
@@ -198,7 +201,7 @@ class LegalcasesController extends AppController {
 		$this->set('id', $id);
 	}
 
-	function letter_of_intent($id, $case_id, $legal_service = null, $case_detail_id = null, $option = null){
+	function letter_of_intent($id = null, $case_id = null, $legal_service = null, $case_detail_id = null, $option = null){
 		$this->loadModel('PersonalInfo');
 		$this->loadModel('Legalservice');
 		
@@ -216,13 +219,53 @@ class LegalcasesController extends AppController {
 		    case "monthly":
 			    $this->Session->write('Legalcase.legal_service', 'Monthly Retainer');
 			    break;
+		    case "case_project":
+			    $this->Session->write('Legalcase.legal_service', 'Case/Project Retainer');
+			    break;
 		}
 		
 		$Legalservice = $this->Legalservice->find('first', array('conditions' => array('Legalservice.name' => $this->Session->read('Legalcase.legal_service'))));
 		// debug($Legalservice['Legalservice']['fee']);
 		
 		if (!empty($this->data)) {
-			$this->redirect(array('controller' => 'LegalCases', 'action' => 'add'));
+		    
+            // $this->redirect(array('controller' => 'LegalCases', 'action' => 'add'));
+            
+            
+            //Case Retainer
+            $mother_case_id = (isset($this->data['Legalcase']['mother_case_id']) ? $this->data['Legalcase']['mother_case_id'] : $this->data['Legalcase']['case_id']);
+            
+            //Create Case Retainer
+            $data['CaseRetainer'] = array(
+                'user_id'           => $this->data['Legalcase']['user_id'],
+                'case_id'           => $mother_case_id,
+                'client_type'       => $this->data['Legalcase']['client_type'],
+                'handle_type'       => $this->data['Legalcase']['handle_type'],
+                'case_project_type' => $this->data['Legalcase']['case_project_type'],
+                'new_pending_type'  => (isset($this->data['Legalcase']['new_pending_type'])) ? $this->data['Legalcase']['new_pending_type'] : null,
+                'case_title'        => (isset($this->data['Legalcase']['case_title'])) ? $this->data['Legalcase']['case_title'] : null,
+                'case_no'           => (isset($this->data['Legalcase']['case_no'])) ? $this->data['Legalcase']['case_no'] : null,
+                'court_filed'       => (isset($this->data['Legalcase']['court_filed'])) ? $this->data['Legalcase']['court_filed'] : null,
+                'branch_no'         => (isset($this->data['Legalcase']['branch_no'])) ? $this->data['Legalcase']['branch_no'] : null,
+                'project_title'     => (isset($this->data['Legalcase']['project_title'])) ? $this->data['Legalcase']['project_title'] : null,
+                'location'          => (isset($this->data['Legalcase']['location'])) ? $this->data['Legalcase']['location'] : null,
+			);
+        
+            $this->loadModel('CaseRetainer');
+            $this->CaseRetainer->create();
+            $this->CaseRetainer->save($data);
+			
+		    //Send Email to Admin		
+            $this->_send_case_retainer_details($this->data['Legalcase']['user_id'], $this->CaseRetainer->id);
+					    
+		    if ($this->Auth_user['User']['type'] == 'personal') {
+                $action = 'personal_info';
+		    }
+		    else {
+		        $action = 'corporate_partnership_representative_info';
+		    }
+			
+            $this->redirect(array('controller' => 'users', 'action' => $action, $this->data['Legalcase']['user_id'], $mother_case_id));
 		}
 
 		$this->set('user_full_name', $user_full_name);
@@ -248,6 +291,17 @@ class LegalcasesController extends AppController {
 		//Monthly Retainer
 		if ($legal_service == 'monthly') {
 		    $this->render('letter_of_intent_monthly');
+	    }
+	    
+	    //Case/Project Retainer
+	    if ($legal_service == 'case_project') {
+	        
+	        //Get all cases
+	        $case_id_list = $this->Legalcase->find('list', array('fields' => 'Legalcase.id', 'conditions' => array('Legalcase.user_id' => $id, 'Legalcase.status' => 'active')));
+            // debug($case_id_list);
+            
+            $this->set('case_id_list', $case_id_list);
+		    $this->render('letter_of_intent_case_project');
 	    }
 	}
 	
@@ -295,6 +349,9 @@ class LegalcasesController extends AppController {
 				$this->Legalcasedetail->create();
 				$this->Legalcasedetail->save($data);
 				$case_detail_id = $this->Legalcasedetail->id;
+				
+				//Send Email to Admin		
+                $this->_send_monthly_retainer_details($this->data['Legalcase']['user_id'], $this->Legalcasedetail->id);
 				
                 $this->redirect(array('controller' => 'pages', 'action' => 'thankyou_monthly'));
                 // exit;
@@ -814,6 +871,52 @@ class LegalcasesController extends AppController {
 	    //Set view variables as normal
 	    $this->set('User', $User);
 	    $this->set('RequestReschedule', $RequestReschedule);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	
+	}
+	
+	function _send_monthly_retainer_details($id, $case_detail_id) {
+		$this->loadModel('User');
+		$this->loadModel('Legalcasedetail');
+
+		$User                  = $this->User->read(null,$id);
+		$Legalcasedetail          = $this->Legalcasedetail->read(null,$case_detail_id);
+		
+		$this->Email->to       = $this->admin_email;
+		$this->Email->subject  = "E-Lawyers Online - Monthly Retainer Details";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'monthly_retainer_details'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Legalcasedetail', $Legalcasedetail);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	
+	}
+	
+	function _send_case_retainer_details($id, $case_retainer_id) {
+		$this->loadModel('User');
+		$this->loadModel('CaseRetainer');
+
+		$User                  = $this->User->read(null,$id);
+		$CaseRetainer          = $this->CaseRetainer->read(null,$case_retainer_id);
+		
+		$this->Email->to       = $this->admin_email;
+		$this->Email->subject  = "E-Lawyers Online - Case Retainer Details";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'case_retainer_details'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('CaseRetainer', $CaseRetainer);
 	    //Do not pass any args to send()
 	    $this->Email->send();
 	
