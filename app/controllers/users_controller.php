@@ -34,6 +34,7 @@ class UsersController extends AppController {
 	function admin_index() {
 		$this->User->recursive = 0;
         $this->paginate['conditions'][] = array('Group.id !=' => 1);
+        $this->paginate['order'][] = 'User.id DESC';
 		$this->set('users', $this->paginate());
 	}
 
@@ -490,6 +491,12 @@ class UsersController extends AppController {
 			
 			//Redirect Controller
 			if ($goto == 'legal_problem') {
+			    
+			    //Monthly Retainer
+			    if ($this->Session->read('Legalcase.legal_service') == 'Monthly Retainer') {
+                    $goto = 'scope_of_monthly_legal_service';
+			    }
+			    
 				$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
 			}
 			
@@ -607,6 +614,12 @@ class UsersController extends AppController {
     		}
     		
     		if ($goto == 'legal_problem') {
+    		    
+                //Monthly Retainer
+			    if ($this->Session->read('Legalcase.legal_service') == 'Monthly Retainer') {
+                    $goto = 'scope_of_monthly_legal_service';
+			    }
+    		    
     			$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['CorporatePartnershipInfo']['user_id'], $case_id, $case_detail_id));
     		}
     		
@@ -686,6 +699,7 @@ class UsersController extends AppController {
 		$this->Acl->allow($group, 'controllers/Payments/bank_deposit_summary');
 		$this->Acl->allow($group, 'controllers/Payments/gcash');
 		$this->Acl->allow($group, 'controllers/Payments/smartmoney');
+		$this->Acl->allow($group, 'controllers/Payments/check_cash');
 		$this->Acl->allow($group, 'controllers/Payments/create_paypal_payment');
 		$this->Acl->allow($group, 'controllers/Events');
 		$this->Acl->allow($group, 'controllers/Events/feed');

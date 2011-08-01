@@ -91,7 +91,46 @@ class Payment extends AppModel {
 				'required' => false,
 			)
 		),
-		
+		'check_cash_date_of_pick_up' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => '',
+				'allowEmpty' => false,
+				'required' => false,
+			)
+		),
+	    'check_cash_date_of_pick_up' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => '',
+				'allowEmpty' => false,
+				'required' => false,
+			)
+		),
+		'check_cash_address' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => '',
+				'allowEmpty' => false,
+				'required' => false,
+			)
+		),
+		'check_cash_contact_person' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => '',
+				'allowEmpty' => false,
+				'required' => false,
+			)
+		),
+		'telephone_no' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => '',
+				'allowEmpty' => false,
+				'required' => false,
+			)
+		),
 	);
 
 	var $belongsTo = array(

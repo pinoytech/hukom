@@ -49,6 +49,12 @@
 			&nbsp;
 		</dd>
 		
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Monthly Scope'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $Legalcasedetail['Legalcasedetail']['monthly_scope']; ?>
+			&nbsp;
+		</dd>
+		
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Status'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $Legalcasedetail['Legalcasedetail']['status']; ?>

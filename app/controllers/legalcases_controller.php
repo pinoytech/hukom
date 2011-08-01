@@ -167,20 +167,23 @@ class LegalcasesController extends AppController {
 					
 					switch ($this->data['Legalcase']['legal_service']){
 						case "Video Conference":
-							$conference = 'video';
+							$legal_service = 'video';
 							break;
 						case "Office Conference":
-							$conference = 'office';
+							$legal_service = 'office';
 							break;	
 					}
 
 				    //$this->Session->write('Event.calendar_id', time());
 				}
+				elseif ($this->data['Legalcase']['legal_service'] == 'Monthly Retainer') {
+				    $legal_service = 'monthly';
+				}
 				else {
-				    $conference = false;
+				    $legal_service = false;
 				}
 
-				$this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $conference));
+				$this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $legal_service));
 
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
@@ -195,7 +198,7 @@ class LegalcasesController extends AppController {
 		$this->set('id', $id);
 	}
 
-	function letter_of_intent($id, $case_id, $conference = null, $case_detail_id = null, $option = null){
+	function letter_of_intent($id, $case_id, $legal_service = null, $case_detail_id = null, $option = null){
 		$this->loadModel('PersonalInfo');
 		$this->loadModel('Legalservice');
 		
@@ -203,12 +206,15 @@ class LegalcasesController extends AppController {
 		
 		$user_full_name = $PersonalInfo['PersonalInfo']['first_name'].' '.$PersonalInfo['PersonalInfo']['last_name'];
 		
-		switch ($conference){
+		switch ($legal_service){
 			case "video":
 			    $this->Session->write('Legalcase.legal_service', 'Video Conference');
 				break;
 			case "office":
 			    $this->Session->write('Legalcase.legal_service', 'Office Conference');
+			    break;
+		    case "monthly":
+			    $this->Session->write('Legalcase.legal_service', 'Monthly Retainer');
 			    break;
 		}
 		
@@ -227,16 +233,88 @@ class LegalcasesController extends AppController {
 		$this->set('case_detail_id', $case_detail_id);
 		$this->set('option', $option);
 		
-		if ($conference) {
+		//Video or Office Conference
+		if ($legal_service == 'video' || $legal_service == 'office') {
 		    $this->set('legal_service', $Legalservice['Legalservice']['name']);
 		    $this->set('event_hours', '');
 		    $this->set('event_date', '');
 		    $this->set('event_start', '');
 		    $this->set('event_end', '');
-		    $this->set('conference', $conference);
+		    $this->set('conference', $legal_service);
 		    $this->set('conference_fee', $Legalservice['Legalservice']['fee']);
 		    $this->render('letter_of_intent_conference');
 		}
+		
+		//Monthly Retainer
+		if ($legal_service == 'monthly') {
+		    $this->render('letter_of_intent_monthly');
+	    }
+	}
+	
+	function scope_of_monthly_legal_service($id, $case_id = null, $case_detail_id = null) {
+        if (!$id && empty($this->data)) {
+			$this->Session->setFlash(__('Invalid user', true));
+			$this->redirect(array('action' => 'index'));
+		}
+		
+        
+		// Update Case Details
+		if (!empty($this->data)) {
+		    
+            // debug($this->data);
+
+            $monthly_scope_values = '';
+
+		    foreach ($this->data['Legalcase']['monthly_scope'] as $monthly_scope) {
+		        
+		        if ($monthly_scope == 'other') {
+                    $monthly_scope = 'Other Services: '. $this->data['Legalcase']['other_services'];
+		        }
+		        
+                $monthly_scope_values .= $monthly_scope;
+		    }
+		    
+            // debug($monthly_scope_values);
+            // exit;
+            
+		    $this->loadModel('Legalcasedetail');
+		    
+		    $this->Legalcase->id = $this->data['Legalcase']['id'];
+						
+			if ($this->Legalcase->save($this->data)) {
+				
+				//Create Case Detail ID
+				$data['Legalcasedetail'] = array(
+					'user_id' => $this->data['Legalcase']['user_id'],
+					'case_id' => $this->Legalcase->id,
+					'legal_service' => $this->Session->read('Legalcase.legal_service'),
+					'monthly_scope' => $monthly_scope_values
+					);
+				//Remove model validation
+				$this->Legalcasedetail->validate = array();
+				$this->Legalcasedetail->create();
+				$this->Legalcasedetail->save($data);
+				$case_detail_id = $this->Legalcasedetail->id;
+				
+                $this->redirect(array('controller' => 'pages', 'action' => 'thankyou_monthly'));
+                // exit;
+								
+			} else {
+				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
+			}
+			
+			$this->data = $this->Legalcase->read(null, $this->Legalcase->id);
+
+		}
+		
+		if (empty($this->data)) {
+			$this->data = $this->Legalcase->read(null, $case_id);
+			// debug($this->data);
+		}
+
+		$this->set('id', $id);
+		$this->set('case_id', $case_id);
+		$this->set('case_detail_id', $case_detail_id);
 	}
 	
 	function reschedule_conference($event_id, $reschedule_type = null){

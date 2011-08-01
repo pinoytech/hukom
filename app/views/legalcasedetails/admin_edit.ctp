@@ -15,6 +15,7 @@
 		echo $this->Form->input('Legalcasedetail.summary', array('type' => 'textarea'));
 		echo $this->Form->input('Legalcasedetail.objectives', array('type' => 'textarea'));
 		echo $this->Form->input('Legalcasedetail.questions', array('type' => 'textarea'));
+		echo $this->Form->input('Legalcasedetail.monthly_scope', array('type' => 'textarea'));
 		
 		$options = array('Pending' => 'Pending', 'For Review' => 'For Review', 'Incomplete' => 'Incomplete', 'Closed' => 'Closed');
 		echo $this->Form->input('Legalcasedetail.status', array('type' => 'select', 'options' => $options));

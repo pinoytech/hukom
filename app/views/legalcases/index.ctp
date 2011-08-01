@@ -133,6 +133,22 @@
                                                 }
                                                 
     											break;	
+									        case "Monthly Retainer":
+    											$legal_service = 'monthly';
+                                                
+                                                /*
+    											if ($continue) {
+    											    echo $this->Html->link($this->Html->image('/img/Continuebutton_up.png', array('class' => 'continue-button')), array('action' => 'legal_problem', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
+                                                    echo '<br />';
+    											}
+    											*/
+    											
+    											if (empty($payment_status)) {
+        									        echo $this->Html->link($this->Html->image('/img/paynowButton_up.png', array('class' => 'pay-now-button')), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
+                                                    echo '<br />';
+        									    }
+
+    											break;
     									}
 										
 										echo $this->Html->link($this->Html->image('/img/viewButton_up.png', array('class' => 'view-button')), array('controller' => 'legalcases', 'action' => 'summary_of_information', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id'], 'view', $legal_service), array('escape' => false));

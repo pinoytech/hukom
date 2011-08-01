@@ -136,11 +136,11 @@ class PaymentsController extends AppController {
     }
     
 	function mode_of_payment($id=null, $case_id=null, $case_detail_id=null) { //$id = user_id
-		
+        // debug($this->data);
 		// Update Payment Details
 		if (!empty($this->data)) {			
 			// debug($this->data);
-			// exit;
+			// exit;    
 			// $this->redirect(array('action' => $this->data['Payment']['option'], $this->data['Payment']['user_id'], $this->data['Payment']['case_id'], $this->data['Payment']['deposit_id']));
 			$this->redirect(array('action' => $this->data['Payment']['option'], $this->data['Payment']['user_id'], $this->data['Payment']['case_id'], $this->data['Payment']['case_detail_id']));
 		}
@@ -161,6 +161,11 @@ class PaymentsController extends AppController {
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
         $this->set('base_url', 'http://'.$_SERVER['SERVER_NAME'].Router::url('/'));
+        
+        //Get Service Type
+        $this->loadModel('Legalcasedetail');
+        $Legalcasedetail = $this->Legalcasedetail->findById($case_detail_id);
+        $this->set('legal_service', $Legalcasedetail['Legalcasedetail']['legal_service']);
 
 	}
 	
@@ -199,6 +204,10 @@ class PaymentsController extends AppController {
 		else {
 			$this->set('fee', $this->_get_legal_service_fee($case_detail_id));
 		}
+	}
+	
+	function check_cash($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
+	    $this->_save_payment_details($this->data, $id, $case_id, $case_detail_id, $payment_id, 'check_cash');	  
 	}
 	
 	function _save_payment_details($data, $id=null, $case_id=null, $case_detail_id=null, $payment_id=null, $payment_option=null) {
@@ -274,9 +283,13 @@ class PaymentsController extends AppController {
         elseif ($payment_option == 'paypal') {
             $payment_option_name = 'Paypal';
         }
+        elseif ($payment_option == 'check_cash') {
+            $payment_option_name = 'Check/Cash Pick up';
+        }
         		
 		$this->set('id', $id);
 		$this->set('payment_option_name', $payment_option_name);
+		$this->set('payment_option', $payment_option);
 	}
 		
 	function bank_deposit_summary($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
@@ -330,6 +343,9 @@ class PaymentsController extends AppController {
 		}
 		elseif ($payment_option == 'paypal') {
             $subject = 'Paypal Payment';
+		}
+		elseif ($payment_option == 'check_cash') {
+            $subject = 'Check/Cash Pick up Payment';
 		}
 		
 		$User                          = $this->User->read(null,$id);

@@ -1,4 +1,10 @@
 <?php
+$check_cash_payment_instructions = 
+'
+Instructions here.
+';
+
+
 $bank_deposit_payment_instructions = 
 '
 <p>You selected Bank Deposit payment option for online legal consultation. Please carefully READ and TAKE NOTE of the following payment instructions:</p>
@@ -116,6 +122,12 @@ $smartmoney_payment_instructions =
 	</p>
 </div>
 
+<div id="check_cash_holder" class="hidden" title="Check/Cash Pick up Instructions">
+	<p style="padding-top:20px; text-align:center;">
+	    <?php echo $check_cash_payment_instructions; ?>
+	</p>
+</div>
+
 
 <div id="full-content">
 	<div id="main">
@@ -147,10 +159,17 @@ $smartmoney_payment_instructions =
 			<div style="text-align:center">
 				<div style="font-weight:bold">Please select your preferred payment option below:</div>
 				<div>
-					<input type="radio" class="option_radio" value="bank_deposit" name="data[Payment][option]" >Bank Deposit
+                    <input type="radio" class="option_radio" value="bank_deposit" name="data[Payment][option]" >Bank Deposit
 					<input type="radio" class="option_radio" value="paypal" name="data[Payment][option]">Paypal
 					<input type="radio" class="option_radio" value="gcash" name="data[Payment][option]">G-Cash
 					<input type="radio" class="option_radio" value="smartmoney" name="data[Payment][option]">SmartMoney
+					<?php
+				    if ($legal_service == 'Monthly Retainer') {
+				    ?>
+				    <input type="radio" class="option_radio" value="check_cash" name="data[Payment][option]" >Check/Cash Pick up
+				    <?php
+			        }
+				    ?>
 				</div>
 			</div>
 			
@@ -190,6 +209,13 @@ $smartmoney_payment_instructions =
             		<li><a href="#tabs-2">Paypal</a></li>
             		<li><a href="#tabs-3">G-Cash</a></li>
             		<li><a href="#tabs-4">SmartMoney</a></li>
+            		<?php
+				    if ($legal_service == 'Monthly Retainer') {
+				    ?>
+				    <li><a href="#tabs-5">Check/Cash Pick up</a></li>
+				    <?php
+			        }
+				    ?>
             	</ul>
             	<div id="tabs-1">
             		<p><?php echo $bank_deposit_payment_instructions; ?></p>
@@ -202,6 +228,9 @@ $smartmoney_payment_instructions =
             	</div>
             	<div id="tabs-4">
             		<p><?php echo $smartmoney_payment_instructions; ?></p>        	
+            	</div>
+            	<div id="tabs-5">
+            		<p><?php echo $check_cash_payment_instructions; ?></p>        	
             	</div>
             </div>
         

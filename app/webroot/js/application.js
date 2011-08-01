@@ -445,6 +445,27 @@ function legal_problem_form(action, id, case_id, case_detail_id, legal_problem) 
 	});
 }
 
+function scope_of_monthly_legal_service_form(action, id, case_id) {
+	$(document).ready(function() {
+		$("#LegalcaseScopeOfMonthlyLegalServiceForm").validate({
+			rules: {
+				"data[Legalcase][monthly_scope][]" : {
+					required: true
+				}
+			},
+			submitHandler: function(form) {
+				form.submit();
+			}
+		});	
+		
+		//Submit button logic
+		$('#back').click(function() {
+			window.location = '/users/' + action + '/' + id + '/' + case_id;
+		});
+		
+	});
+}
+
 function summary_of_facts_form(id, case_id, case_detail_id, upload_folder) {
 	$('document').ready(function() {
 
@@ -726,6 +747,9 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option) {
 				case 'smartmoney':
 				  payment_instructions_tabs.tabs({ selected: 3 });
 				  break;				
+			  case 'check_cash':
+				  payment_instructions_tabs.tabs({ selected: 4 });
+				  break;
 				default:
 				  payment_instructions_tabs.tabs({ selected: 0 });
 				}
@@ -811,6 +835,37 @@ function gcash_form(id, case_id, case_detail_id) {
 	$('document').ready(function() {
 		//jQuery Valdidate
 		$("#PaymentGcashForm").validate();
+
+		$('#back').click(function() {
+			$('#goto').val('mode_of_payment');
+
+			if ($('#PaymentId').val() == '') {
+				var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
+				
+				if (agree){                        
+		    	window.location = '/payments/mode_of_payment/' + id + '/' + case_id + '/' + case_detail_id;
+				}
+		    else{
+		    	return false;
+				}
+			}
+			else{
+				$('form').submit();
+			}
+		});
+
+		$('#next').click(function() {
+			$('#goto').val('payment_confirmation');
+			$('form').submit();
+		});
+
+	});
+}
+
+function check_cash_form(id, case_id, case_detail_id) {
+	$('document').ready(function() {
+		//jQuery Valdidate
+		$("#PaymentCheckCashForm").validate();
 
 		$('#back').click(function() {
 			$('#goto').val('mode_of_payment');
@@ -958,11 +1013,11 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 	    
 	    // If Stock Corporation or Non Stock Corporation - disable Managing Partners field
   		if ($('.type:checked').val() == 'Stock Corporation' || $('.type:checked').val() == 'Non-Stock') {
-  		  console.log(1);
+        // console.log(1);
   			$('#CorporatePartnershipInfoManagingPartners').attr("disabled", true);
   		}
   		else {
-  		  console.log(2);
+        // console.log(2);
   		  $('#CorporatePartnershipInfoManagingPartners').attr("disabled", false);
   		}
   		

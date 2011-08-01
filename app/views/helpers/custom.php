@@ -61,10 +61,11 @@ class CustomHelper extends AppHelper {
     //List Payment Options
     function list_payment_option() {
         return array(
-            'Bank Deposit' => 'Bank Deposit', 
-            'Paypal'       => 'Paypal', 
-            'GCash'        => 'GCash', 
-            'SmartMoney'   => 'SmartMoney'
+            'Bank Deposit'       => 'Bank Deposit', 
+            'Paypal'             => 'Paypal', 
+            'GCash'              => 'GCash', 
+            'SmartMoney'         => 'SmartMoney',
+            "Check/Cash Pick up" => "Check/Cash Pick up"
         );
     }
     
