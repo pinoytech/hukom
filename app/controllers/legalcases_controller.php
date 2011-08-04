@@ -297,8 +297,8 @@ class LegalcasesController extends AppController {
 	    if ($legal_service == 'case_project') {
 	        
 	        //Get all cases
-	        $case_id_list = $this->Legalcase->find('list', array('fields' => 'Legalcase.id', 'conditions' => array('Legalcase.user_id' => $id, 'Legalcase.status' => 'active')));
-            // debug($case_id_list);
+	        $case_id_list = $this->Legalcase->find('list', array('fields' => array('case_retainer'), 'conditions' => array('Legalcase.user_id' => $id, 'Legalcase.status' => 'active')));
+            debug($case_id_list);
             
             $this->set('case_id_list', $case_id_list);
 		    $this->render('letter_of_intent_case_project');

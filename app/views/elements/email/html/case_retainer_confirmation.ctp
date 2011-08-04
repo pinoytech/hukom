@@ -1,10 +1,10 @@
 Dear <?php echo $User['PersonalInfo']['first_name']. ' ' . $User['PersonalInfo']['last_name'] ?>,
 <br/>
 <br/>
-Greetings!
+Thank you for expressing your interest of handling to E-Lawyers Online your case/project for case/project retainer service.
 <br/>
 <br/>
-We greatly appreciate your trust and confidence on us by giving opportunity to E-Lawyers Online to render service for you. We will make a review of your case and service requirements and send you our "Proposed Case/Project Retainer Agreement." If you have further questions, feel free to call us or meet us to discuss the same.
+We will prepare a "Proposed Case/Project Retainer Agreement" for the handling of the said case/project and for rendering legal service and send the same to your e-mail for your review and acceptance.
 <br />
 <br />
 Very truly yours,

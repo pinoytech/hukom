@@ -85,9 +85,10 @@
 					                    <div id="pending_case_old_type_yes">
 					                        Case ID: <select name="data[Legalcase][mother_case_id]">
 					                        <?php
-					                        foreach ($case_id_list as $case_id_lists) {
+					                        					                        
+					                        foreach ($case_id_list as $key => $value) {
 					                        ?>
-					                            <option value="<?php echo $case_id_lists ;?>"><?php echo $case_id_lists ;?></option>
+					                            <option value="<?php echo $key ;?>"><?php echo $value ;?></option>
 					                        <?php
 					                        }
 					                        ?>

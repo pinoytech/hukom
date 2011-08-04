@@ -500,7 +500,19 @@ class UsersController extends AppController {
 			    //Case Retainer
 			    if ($this->Session->read('Legalcase.legal_service') == 'Case/Project Retainer') {
                     $case_detail_id = $this->_create_case_detail($this->data['ChildrenInfo']['user_id'], $case_id);
-                    $goto = 'summary_of_facts';
+                    
+                    $this->loadModel('CaseRetainer');
+                    $CaseRetainer = $this->CaseRetainer->find('first', array('conditions' => array('CaseRetainer.user_id' => $this->data['ChildrenInfo']['user_id'], 'CaseRetainer.case_id' => $case_id)));
+
+                    // debug($CaseRetainer);
+                    // exit;
+                    
+                    if ($CaseRetainer['CaseRetainer']['new_pending_type'] == 'yes') {
+                        $goto = 'summary_of_facts';
+                    }
+                    else {
+                        $goto = 'legal_problem';
+                    }                    
 			    }
 			    
 				$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['ChildrenInfo']['user_id'], $case_id, $case_detail_id));
