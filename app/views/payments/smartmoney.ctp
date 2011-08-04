@@ -10,7 +10,14 @@
 		<div class="form-title">SmartMoney</div>
 		<div class="form-holder form-registration">
 		    <p>
-			    You have chosen to pay through <b>Smart Money</b>, your professional fee is <b>Php <?php echo $fee;?></b>.
+			    You have chosen to pay through <b>Smart Money</b>
+			    <?php
+			    if ($this->Session->read('Legalcase.legal_service') != 'Monthly Retainer' && $this->Session->read('Legalcase.legal_service') != 'Case/Project Retainer') {
+			    ?>
+			    , your professional fee is <b>Php <?php echo $fee; ?></b>.
+			    <?php
+		        }
+			    ?>
             </p>
 		
 			<p>
