@@ -492,7 +492,7 @@ class UsersController extends AppController {
 			//Redirect Controller
 			if ($goto == 'legal_problem') {
 			    
-			    //Monthly Retainer
+			    //Monthly Retainer - redirect to scope
 			    if ($this->Session->read('Legalcase.legal_service') == 'Monthly Retainer') {
                     $goto = 'scope_of_monthly_legal_service';
 			    }

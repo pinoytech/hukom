@@ -12,8 +12,7 @@
 		if ($payment_option == 'check_cash') {
         ?>
             <p>
-    			Thank you for all the information you provided. Your <strong><?php echo $payment_option_name; ?> Payment</strong> will be picked up by our E-Lawyers Online Representative on your preferred date. 
-                We greatly appreciate your trust and confidence on us by giving opportunity to E-Lawyers Online to render service for you. We will send our written legal advice via e-mail to your preferred email address.
+    			Thank you for all the information you provided. Your <b>Check/Cash payment</b> will be picked up by our E-Lawyers Online Representative on your preferred date, time, and address. We greatly appreciate your trust and confidence on us by giving opportunity to E-Lawyers Online to render service for you. We will advice you further of our subsequent action/proceedings on your case/project.
     		</p>
         <?php
         }

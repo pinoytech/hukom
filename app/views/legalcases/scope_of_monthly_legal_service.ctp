@@ -20,24 +20,26 @@
 				?>
 				
 				<div class="input radio">
-					<input type="checkbox" name="data[Legalcase][monthly_scope][]" value="All legal services in the nature of legal consulations, legal opinion and legal advice required in the ordinary course of business;<br />">
-					All legal services in the nature of legal consulations, legal opinion and legal advice required in the ordinary course of business;
+					<div style="float:left;"><input type="checkbox" name="data[Legalcase][monthly_scope][]" value="All legal services in the nature of legal, legal opinion, and legal advice required in the ordinary course of business;<br />"></div>
+					<div class="scope-text">All legal services in the nature of legal, legal opinion, and legal advice required in the ordinary course of business;</div>
 					<br />
 					<br />
-					<input type="checkbox" name="data[Legalcase][monthly_scope][]" value="Preparation and review of legal papers, affidavits, contracts, deeds, and simple agreements for the day-to-day activtities of the business;<br />">
-					Preparation and review of legal papers, affidavits, contracts, deeds, and simple agreements for the day-to-day activtities of the business;
+					<div style="float:left;"><input type="checkbox" name="data[Legalcase][monthly_scope][]" value="Preparation and review of legal papers, affidavits, contracts, deeds, and simple agreements for the day-to-day activities of the business;<br />"></div>
+					<div class="scope-text">Preparation and review of legal papers, affidavits, contracts, deeds, and simple agreements for the day-to-day activities of the business;</div>
+					<br />
 					<br />
 					<br />
 					<input type="checkbox" name="data[Legalcase][monthly_scope][]" value="Representation/attendance in all board meetings/conferences where lawyer's presence may be required;<br />">
-					Representation/attendance in all board meetings/conferences where lawyer's presence may be required
+					Representation/attendance in all board meetings/conferences where lawyer's presence may be required;
 					<br />
 					<br />
-					<input type="checkbox" name="data[Legalcase][monthly_scope][]" value="Reperesentation, negotation and liaison with govenrment agencies and instrumentalities;<br />">
-					Reperesentation, negotation and liaison with govenrment agencies and instrumentalities;
+					<input type="checkbox" name="data[Legalcase][monthly_scope][]" value="Representation, negotiation and liaison with governent agencies and instrumentalities;<br />">
+					Representation, negotiation and liaison with governent agencies and instrumentalities;
 					<br />
 					<br />
-					<input type="checkbox"  name="data[Legalcase][monthly_scope][]" value="other">Other Services
-					<input type="text" name="data[Legalcase][other_services]" style="width:80%;">
+					<input type="checkbox" id="other_services"  name="data[Legalcase][monthly_scope][]" value="other">Other Services
+					<input type="text" id="other_services_text" name="data[Legalcase][other_services]" class="required" style="width:80%;">
+                    
 				</div>
 				<div style="display:block;padding-left:290px;">
 					<label for="data[Legalcase][monthly_scope][]" class="error" style="display:none">Please select scope of services</label> 

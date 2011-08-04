@@ -105,3 +105,15 @@ elseif ($auth_user_type == 'corporation') {
 
 <?php $html->scriptBlock("legal_problem_form('$profile_action', '$id', '$case_id', '$case_detail_id', '" . $this->data['Legalcase']['legal_problem'] . "');", array('inline'=>false)); ?>
 <?php echo $html->script('form-hacks', array('inline'=>false));?>
+
+<?php
+if ($this->Session->read('Legalcase.legal_service') == 'Case/Project Retainer') {
+?>
+<script type="text/javascript">
+    $('document').ready(function() {
+        $('input[type=radio]').attr('disabled', true);
+    });
+</script>
+<?php
+}
+?>

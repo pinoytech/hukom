@@ -21,9 +21,10 @@
 				echo $this->Form->input('Payment.option', array('type' => 'hidden','value' => 'Check/Cash Pick up'));
 
 				echo $this->Form->input('Payment.check_cash_date_of_pick_up', array('type' => 'text', 'class' => 'required birth_date', 'label' => 'Date of Pick up'));
-                echo $this->Form->input('Payment.check_cash_address', array('class' => 'required', 'style' => 'width:158px; height:100px;'));
+                echo $this->Form->input('Payment.check_cash_address', array('class' => 'required', 'style' => 'width:158px; height:100px;', 'label' => 'Address'));
 				echo $this->Form->input('Payment.check_cash_contact_person', array('class' => 'required', 'label' => 'Contact Person'));
-				echo $this->Form->input('Payment.telephone_no', array('class' => 'required', 'label' => 'Telephone No.'));
+				echo $this->Form->input('Payment.telephone_no', array('class' => 'required digits', 'label' => 'Telephone No.'));
+				echo $this->Form->input('Payment.cellphone_no', array('class' => 'required digits', 'label' => 'Cellphone No.'));
                 // echo $this->Form->input('Payment.cellphone_no', array('class' => 'required', 'label' => 'Cellphone No.'));
 			?>
 			<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>

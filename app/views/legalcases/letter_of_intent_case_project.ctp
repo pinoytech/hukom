@@ -48,6 +48,7 @@
 					        <div id="case_container">
 					            <input type="radio" class="case_type" value="new" name="data[Legalcase][case_project_type]"><span class="label">New Case</span> - (those which are not yet filed in court or in government agencies or project not yet started)
 					                <div id="new_case_old">
+					                    <b>Is the "New Case" previously submitted to E-Lawyers Online for Consultation?</b><br /><br />
 					                    <input type="radio" class="new_case_old_type" name="data[Legalcase][new_pending_type]" value="yes">YES <input type="radio" class="new_case_old_type" name="data[Legalcase][new_pending_type]" value="no">NO
 					                    <div id="new_case_old_type_yes">
 					                        Case ID: <select name="data[Legalcase][mother_case_id]">
@@ -79,6 +80,7 @@
 					                </div>
 					                
 					                <div id="pending_case_old">
+					                    <b>Is the "Pending Case" previously submitted to E-Lawyers Online for Consultation?</b><br /><br />
 					                    <input type="radio" class="pending_case_old_type" name="data[Legalcase][new_pending_type]" value="yes">YES <input type="radio" class="pending_case_old_type" name="data[Legalcase][new_pending_type]" value="no">NO
 					                    <div id="pending_case_old_type_yes">
 					                        Case ID: <select name="data[Legalcase][mother_case_id]">
@@ -117,6 +119,7 @@
     					    <div id="project_container">
 					            <input type="radio" class="project_type" value="new" name="data[Legalcase][case_project_type]"><span class="label">New Project</span> - (those which are not yet filed in court or in government agencies or project not yet started)
 					            <div id="new_project_old">
+					                <b>Is the "New Project" previously submitted to E-Lawyers Online for Consultation?</b><br /><br />
 				                    <input type="radio" class="new_project_old_type" name="data[Legalcase][new_pending_type]" value="yes">YES <input type="radio" class="new_project_old_type" name="data[Legalcase][new_pending_type]" value="no">NO
 				                    <div id="new_project_old_type_yes">
 				                        Case ID: <select name="data[Legalcase][mother_case_id]">
@@ -144,6 +147,7 @@
 					                </div>
 					                
 					                <div id="pending_project_old">
+					                    <b>Is the "Pending Project" previously submitted to E-Lawyers Online for Consultation?</b><br /><br />
 					                    <input type="radio" class="pending_project_old_type" name="data[Legalcase][new_pending_type]" value="yes">YES <input type="radio" class="pending_project_old_type" name="data[Legalcase][new_pending_type]" value="no">NO
 					                    <div id="pending_project_old_type_yes">
 					                        Case ID: <select name="data[Legalcase][mother_case_id]">

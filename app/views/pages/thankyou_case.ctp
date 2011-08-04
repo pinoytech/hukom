@@ -6,7 +6,7 @@
 	    
 	    <p>
 		Thank you for your trust and confidence with E-Lawyers Online. We will make a review of your requirements and send you our
-		<b>Proposed Monthly Retainer Agreement</b> through email.
+		<b>Proposed Case/Project Retainer Agreement</b> through email.
 	    </p>
 	    
 	    <div style="text-align:center;">

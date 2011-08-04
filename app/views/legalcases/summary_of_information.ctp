@@ -115,7 +115,10 @@
                     }
                 }
 			    ?>
-                
+                <?php
+                //Check if legal_service is Video Conference/Office Conference
+                if ($Legalcasedetail['Legalcasedetail']['legal_service'] != 'Monthly Retainer' && $Legalcasedetail['Legalcasedetail']['legal_service'] != 'Case/Project Retainer') {
+                ?>
 				<tr>
 					<td class="label">Summary of Facts:</td>
 					<td><?php echo $Legalcasedetail['Legalcasedetail']['summary'];?></td>
@@ -143,6 +146,9 @@
 						?>    					
 					</td>
 				</tr>
+				<?php
+		        } // if Monthly Retainer/Case/Project Retainer
+				?>
 				<tr>
 					<td class="label">Status:</td>
 					<td><?php echo ucfirst($Legalcasedetail['Legalcasedetail']['status']);?></td>
@@ -153,17 +159,38 @@
 				</tr>
 				<tr>
 					<td class="label">Professional Fee:</td>
-					<td>Php
+					<td>
 					<?php
-					//Get Fee
-                    foreach ($Legalservices as $Legalservice) {
-                        if ($Legalservice['Legalservice']['name'] == $Legalcasedetail['Legalcasedetail']['legal_service']) {
-                            if ($no_of_hours) {
-                                echo $no_of_hours * $Legalservice['Legalservice']['fee'];
+					//Check if legal_service is Video Conference/Office Conference
+                    if ($Legalcasedetail['Legalcasedetail']['legal_service'] != 'Monthly Retainer' && $Legalcasedetail['Legalcasedetail']['legal_service'] != 'Case/Project Retainer') {
+                    
+    					//Get Fee
+                        foreach ($Legalservices as $Legalservice) {
+                            if ($Legalservice['Legalservice']['name'] == $Legalcasedetail['Legalcasedetail']['legal_service']) {
+                                if ($no_of_hours) {
+                                    echo 'Php ' . $no_of_hours * $Legalservice['Legalservice']['fee'];
+                                }
+                                else {
+                                    echo 'Php ' . $Legalservice['Legalservice']['fee'];
+                                }
                             }
-                            else {
-                                echo $Legalservice['Legalservice']['fee'];
-                            }
+                        }
+                    }
+                    else {
+                        if (isset($Legalcasedetail['Payment'])) {
+                            $monthly_case_amount = 'To be determined';
+
+                            //Get amount from payments
+                            foreach ($Legalcasedetail['Payment'] as $Payment) {
+                                if ($Legalcasedetail['Legalcasedetail']['id'] == $Payment['case_detail_id']) {
+                                    $monthly_case_amount = 'Php ' . $Payment['amount'];
+                                }
+    					    }
+
+    					    echo $monthly_case_amount;
+                        }
+                        else {
+                            
                         }
                     }
 					?>
@@ -229,9 +256,24 @@
                     <td>
                         <input type="button" id="back" class="button-back" />
                     </td>
+                    <?php
+					//Check if legal_service is Case/Project Retainer
+                    if ($Legalcasedetail['Legalcasedetail']['legal_service'] == 'Case/Project Retainer') {
+                    ?>
+                    <td>
+                        <input type="button" id="next-case-thankyou" class="button-next" />
+                    </td>
+                    <?php
+                    }
+                    else
+                    {
+                    ?>
                     <td>
                         <input type="button" id="next" class="button-next" />
                     </td>
+                    <?php
+                    }
+                    ?>
         		<?php
         		}
                 ?>

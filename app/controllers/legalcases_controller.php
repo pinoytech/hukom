@@ -350,8 +350,16 @@ class LegalcasesController extends AppController {
 				$this->Legalcasedetail->save($data);
 				$case_detail_id = $this->Legalcasedetail->id;
 				
+				//Create Legalcase_id Folder
+				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id . '/' . $case_detail_id; 
+				if (!file_exists($file)) {
+					mkdir($file);
+					chmod($file, 0755);
+				}
+				
 				//Send Email to Admin		
                 $this->_send_monthly_retainer_details($this->data['Legalcase']['user_id'], $this->Legalcasedetail->id);
+                $this->_send_monthly_retainer_confirmation($this->data['Legalcase']['user_id'], $this->Legalcasedetail->id);
 				
                 $this->redirect(array('controller' => 'pages', 'action' => 'thankyou_monthly'));
                 // exit;
@@ -613,12 +621,20 @@ class LegalcasesController extends AppController {
 
 			if ($this->Legalcasedetail->save($this->data)) {
 				// $this->Session->setFlash(__('Case Information has been saved', true));
+				
+				//Send Case/Project Retainer Email Confirmation
+    			if ($this->Session->read('Legalcase.legal_service') == 'Case/Project Retainer') {
+    			    $this->_send_case_retainer_confirmation($this->data['Legalcase']['user_id'], $this->Legalcasedetail->id);
+    			}
+    			
 				$this->redirect(array('action' => $this->data['Legalcase']['goto'], $this->data['Legalcasedetail']['user_id'], $this->data['Legalcasedetail']['case_id'], $this->Legalcasedetail->id));
+				
 			} else {
 				$this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
 			}
 
 			$this->data = $this->Legalcasedetail->read(null, $this->data['Legalcasedetail']['case_id']);
+			
 		}
 		
 		//Update Events - insert case_detail_id
@@ -899,6 +915,30 @@ class LegalcasesController extends AppController {
 	
 	}
 	
+	function _send_monthly_retainer_confirmation($id, $case_detail_id) {
+		$this->loadModel('User');
+		$this->loadModel('Legalcasedetail');
+        
+		$User                  = $this->User->read(null,$id);
+		$Legalcasedetail       = $this->Legalcasedetail->read(null,$case_detail_id);
+		
+		$this->Email->to       = $User['User']['username'];
+        $this->Email->bcc      = $this->admin_email;
+		$this->Email->subject  = "E-Lawyers Online - Monthly Retainer Confirmation";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'monthly_retainer_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Legalcasedetail', $Legalcasedetail);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	
+	}
+	
 	function _send_case_retainer_details($id, $case_retainer_id) {
 		$this->loadModel('User');
 		$this->loadModel('CaseRetainer');
@@ -917,6 +957,29 @@ class LegalcasesController extends AppController {
 	    //Set view variables as normal
 	    $this->set('User', $User);
 	    $this->set('CaseRetainer', $CaseRetainer);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
+	
+	function _send_case_retainer_confirmation($id, $case_detail_id) {
+		$this->loadModel('User');
+		$this->loadModel('Legalcasedetail');
+        
+		$User                  = $this->User->read(null,$id);
+		$Legalcasedetail       = $this->Legalcasedetail->read(null,$case_detail_id);
+		
+		$this->Email->to       = $User['User']['username'];
+        $this->Email->bcc      = $this->admin_email;
+		$this->Email->subject  = "E-Lawyers Online - Case/Project Retainer Confirmation";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'case_retainer_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Legalcasedetail', $Legalcasedetail);
 	    //Do not pass any args to send()
 	    $this->Email->send();
 	

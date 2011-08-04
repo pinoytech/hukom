@@ -1,7 +1,16 @@
 <?php
 $check_cash_payment_instructions = 
 '
-Instructions here.
+<p>You selected Check/Cash Pick-Up payment option for Monthly Retainer or Case/Project Retainer, whichever is applicable. Please carefully READ and TAKE NOTE of the following payment instructions:</p>
+<ol>
+<li>E-Lawyers Online assumes that you or your office is located within Metro Manila, Philippines. For this purpose, please input the date and complete address of the place of pick-up of payment, the contact person and the telephone number, in the succeeding payment page.</li>
+<li>You shall pay E-Lawyers Online for the agreed Monthly Retainer Fee or Case/Project Retainer Fee <b>BY CHECK</b> or <b>IN CASH (Phil. Peso)</b> as payment for your requested legal services.</li>
+<li>You shall only pay in cash to the authorized collector/representative of E-Lawyers Online who shall first confirm the date and place of pick-up of payment, with appropriate security measures and Identification Card and who will issue to you the appropriate acknowledgment receipt.</li>
+<li>You shall make the check payable to <b>"ATTY. MARLON P. VALDERAMA"</b> only and to no other. Payment or deposit in check or other mercantile document shall be accepted only upon clearing and crediting to the bank account of E-Lawyers Online.</li>
+<li>Upon receipt of the check/cash of the abovesaid amount, we will confirm your payment with our bank/collector. Please give us 1-2 days for this confirmation. To expedite confirmation of payment, you can log in to E-Lawyers Online after your payment and click in your Dashboard <b>"PAYMENT SECTION"</b> and the Website shall guide you through the payment confirmation process.</li>
+<li>You will receive an email from E-Lawyers Online upon confirmation of your payment and subsequently the legal services requested.</li>
+<li>In case of failure to pay the required fee on the agreed timeframe, E-Lawyers Online reserves its right to delete the information you supplied and in such a case, the filling-up of the forms shall not be construed as a lawyer-client relationship.</li>
+</ol>
 ';
 
 
@@ -164,7 +173,7 @@ $smartmoney_payment_instructions =
 					<input type="radio" class="option_radio" value="gcash" name="data[Payment][option]">G-Cash
 					<input type="radio" class="option_radio" value="smartmoney" name="data[Payment][option]">SmartMoney
 					<?php
-				    if ($legal_service == 'Monthly Retainer') {
+				    if ($legal_service == 'Monthly Retainer' || $legal_service == 'Case/Project Retainer') {
 				    ?>
 				    <input type="radio" class="option_radio" value="check_cash" name="data[Payment][option]" >Check/Cash Pick up
 				    <?php

@@ -458,6 +458,18 @@ function scope_of_monthly_legal_service_form(action, id, case_id) {
 			}
 		});	
 		
+		$('#other_services_text').attr('disabled', true);
+		
+		$('#other_services').click(function() {
+		  if($(this).is(":checked")){
+				$('#other_services_text').attr('disabled', false);
+			}
+			else {
+			  $('#other_services_text').attr('disabled', true);
+			  $('#other_services_text').val('');
+			}
+		});
+		
 		//Submit button logic
 		$('#back').click(function() {
 			window.location = '/users/' + action + '/' + id + '/' + case_id;
@@ -594,6 +606,11 @@ function summary_of_information_form(id, case_id, case_detail_id, event_id) {
 			window.location = '/legalcases/online_legal_consultation_agreement/' + id + '/' + case_id + '/' + case_detail_id;
 		});
 
+    //Case/Project Retainer
+    $('#next-case-thankyou').click(function() {
+			window.location = '/pages/thankyou_case';
+		});
+    
 		
 	  $('#back-to-case-index').click(function() {
 			window.location = '/legalcases/index/' + id;

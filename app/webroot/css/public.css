@@ -944,7 +944,7 @@ a,
 #pending_project_old
 {
   display: block;
-  margin-left: 120px;
+  margin-left: 60px;
 }
 
 #new_case_old_type_yes,
@@ -956,4 +956,11 @@ a,
 {
   display: block;
   margin-left: 10px;
+}
+
+/*Scope*/
+.scope-text {
+  float: left;
+  padding-left: 5px;
+  width: 95%;
 }

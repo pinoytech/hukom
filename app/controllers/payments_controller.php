@@ -58,7 +58,17 @@ class PaymentsController extends AppController {
 					$email_sent_alert = ' and payment confirmation email is sent to the user';
 				}
 			}
-
+            
+            //Monthly/Case Overdue
+            if ($this->data['Payment']['status'] == 'Overdue') {
+                if ($this->data['Legalcasedetail']['legal_service'] == 'Monthly Retainer' || $this->data['Legalcasedetail']['legal_service'] == 'Case/Project Retainer') {
+                    //Send Overdue Email
+                    // exit;
+                    $this->_send_overdue_confirmation($this->data['Payment']['user_id'], $this->data['Payment']['case_detail_id']);                    
+                    $email_sent_alert = ' and payment overdue confirmation email is sent to the user';
+                }
+            }
+            
 			unset($this->data['Legalcasedetail']);
 
 			$this->Payment->validate = array();
@@ -220,7 +230,7 @@ class PaymentsController extends AppController {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		
+
 		// Update Payment Details
 		if (!empty($this->data)) {
 			
@@ -244,7 +254,7 @@ class PaymentsController extends AppController {
 			$this->data = $this->Payment->read(null, $payment_id);
 
 		}
-		
+
 		if (empty($this->data)) {
 		    
 		    if (!empty($payment_id)) {
@@ -262,7 +272,7 @@ class PaymentsController extends AppController {
 		$this->set('upload_folder', $upload_folder);
 		$this->set('files', $this->Custom->show_files($upload_folder));
 	}
-		
+
 	function payment_confirmation($id=null, $case_id=null, $case_detail_id=null, $payment_id=null, $payment_option){
 		
 		//Clear Legalcase.legal_service Session
@@ -313,7 +323,7 @@ class PaymentsController extends AppController {
 		$this->set('upload_folder', $upload_folder);
 		$this->set('files', $this->Custom->show_files($upload_folder));
 	}
-	
+
 	/*
 	function bank_deposit_confirmation($id=null, $case_id=null, $case_detail_id=null, $payment_id=null){
 		
@@ -328,7 +338,7 @@ class PaymentsController extends AppController {
 		$this->set('id', $id);
 	}
 	*/
-	
+
 	function _send_admin_payment_confirmation($id, $payment_option) {
 		$this->loadModel('User');
 		
@@ -366,6 +376,39 @@ class PaymentsController extends AppController {
 	    $this->Email->send();
 	}
 	
+	//Mailer
+	function _send_overdue_confirmation($id, $case_detail_id) {		
+		$this->loadModel('User');
+		$this->loadModel('Legalcasedetail');
+
+		$User                  = $this->User->read(null,$id);
+		$Legalcasedetail       = $this->Legalcasedetail->read(null,$case_detail_id);
+        
+		if ($Legalcasedetail['Legalcasedetail']['legal_service'] == 'Monthly Retainer') {
+		    $subject  = 'Monthly Retainer Overdue Confirmation';
+		    $template = 'overdue_monthly';
+		}
+		elseif ($Legalcasedetail['Legalcasedetail']['legal_service'] == 'Case/Project Retainer') {
+		    $subject  = 'Case/Project Retainer Overdue Confirmation';
+		    $template = 'overdue_case';
+		}
+
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = "E-Lawyers Online - $subject";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = $template; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Legalcasedetail', $Legalcasedetail);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
+
 	function create_paypal_payment() {
 
         //Create Payment Details
@@ -384,7 +427,7 @@ class PaymentsController extends AppController {
 		// Save Bank Details
 		$this->Payment->create();
 		$this->Payment->save($data);
-	    
+
 	    $this->autoRender=false;
 	}
 }

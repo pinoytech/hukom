@@ -33,7 +33,7 @@ class Legalcasedetail extends AppModel {
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
+				'allowEmpty' => true,
 				'required' => true,
 			),
 		),
@@ -41,24 +41,32 @@ class Legalcasedetail extends AppModel {
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
+				'allowEmpty' => true,
+				'required' => false,
 			),
 		),
 		'objectives' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
+				'allowEmpty' => true,
+				'required' => false,
 			),
 		),
 		'questions' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Field must not be empty',
-				'allowEmpty' => false,
-				'required' => true,
+				'allowEmpty' => true,
+				'required' => false,
+			),
+		),
+		'monthly_scope' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Field must not be empty',
+				'allowEmpty' => true,
+				'required' => false,
 			),
 		),
 	);
