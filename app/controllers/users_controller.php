@@ -619,6 +619,35 @@ class UsersController extends AppController {
 			    if ($this->Session->read('Legalcase.legal_service') == 'Monthly Retainer') {
                     $goto = 'scope_of_monthly_legal_service';
 			    }
+			    
+			    //Monthly Retainer
+			    if ($this->Session->read('Legalcase.legal_service') == 'Case/Project Retainer') {
+                    // debug($this->data);
+                    // exit;
+                    
+			        //Create Case Detail ID
+					$data['Legalcasedetail'] = array(
+						'user_id' => $this->data['CorporatePartnershipInfo']['user_id'],
+						'case_id' => $case_id,
+						'legal_service' => $this->Session->read('Legalcase.legal_service')
+						);
+					//Remove model validation
+					$this->loadModel('Legalcasedetail');
+					$this->Legalcasedetail->validate = array();
+					$this->Legalcasedetail->create();
+					$this->Legalcasedetail->save($data);
+					$case_detail_id = $this->Legalcasedetail->id;
+					
+					//Create Legalcase_id Folder
+    				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['CorporatePartnershipInfo']['user_id'] . '/' . $case_id . '/' . $case_detail_id; 
+    				if (!file_exists($file)) {
+    					mkdir($file);
+    					chmod($file, 0755);
+    				}
+
+                    $goto = 'summary_of_facts';
+			    }
+                
     		    
     			$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['CorporatePartnershipInfo']['user_id'], $case_id, $case_detail_id));
     		}
