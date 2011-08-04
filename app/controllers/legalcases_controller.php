@@ -624,7 +624,7 @@ class LegalcasesController extends AppController {
 				
 				//Send Case/Project Retainer Email Confirmation
     			if ($this->Session->read('Legalcase.legal_service') == 'Case/Project Retainer') {
-    			    $this->_send_case_retainer_confirmation($this->data['Legalcase']['user_id'], $this->Legalcasedetail->id);
+    			    $this->_send_case_retainer_confirmation($this->data['Legalcasedetail']['user_id'], $this->Legalcasedetail->id);
     			}
     			
 				$this->redirect(array('action' => $this->data['Legalcase']['goto'], $this->data['Legalcasedetail']['user_id'], $this->data['Legalcasedetail']['case_id'], $this->Legalcasedetail->id));
