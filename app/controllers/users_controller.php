@@ -699,10 +699,7 @@ class UsersController extends AppController {
 		
 		//Create Legalcase_id Folder
 		$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $user_id . '/' . $case_id . '/' . $case_detail_id; 
-		if (!file_exists($file)) {
-			mkdir($file);
-			chmod($file, 0755);
-		}
+		$this->Custom->create_folder($file);
 		
 		return $case_detail_id;
 	}

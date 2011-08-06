@@ -138,6 +138,7 @@ class LegalcasesController extends AppController {
 	*/
 	
 	function online_legal_consultation($id=null){
+
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
@@ -156,10 +157,7 @@ class LegalcasesController extends AppController {
 				
 				//Create Legalcase_id Folder
 				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id; 
-				if (!file_exists($file)) {
-					mkdir($file);
-					chmod($file, 0755);
-				}
+				$this->Custom->create_folder($file);
 				
 				// $this->Session->setFlash(__('Case Information has been saved', true));
 				
@@ -298,7 +296,7 @@ class LegalcasesController extends AppController {
 	        
 	        //Get all cases
 	        $case_id_list = $this->Legalcase->find('list', array('fields' => array('case_retainer'), 'conditions' => array('Legalcase.user_id' => $id, 'Legalcase.status' => 'active')));
-            debug($case_id_list);
+            // debug($case_id_list);
             
             $this->set('case_id_list', $case_id_list);
 		    $this->render('letter_of_intent_case_project');
@@ -311,7 +309,6 @@ class LegalcasesController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		
-        
 		// Update Case Details
 		if (!empty($this->data)) {
 		    
@@ -352,10 +349,7 @@ class LegalcasesController extends AppController {
 				
 				//Create Legalcase_id Folder
 				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id . '/' . $case_detail_id; 
-				if (!file_exists($file)) {
-					mkdir($file);
-					chmod($file, 0755);
-				}
+				$this->Custom->create_folder($file);
 				
 				//Send Email to Admin		
                 $this->_send_monthly_retainer_details($this->data['Legalcase']['user_id'], $this->Legalcasedetail->id);
@@ -380,6 +374,15 @@ class LegalcasesController extends AppController {
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
+		
+		//Assign legal_problem
+	    if ($this->Auth_user['User']['type'] == 'corporation') {
+            $this->set('legal_problem', 'Corporate/Partnership');
+	    }
+	    elseif ($this->Auth_user['User']['type'] == 'personal') {
+	        $this->set('legal_problem', 'Individual');
+	    }
+        
 	}
 	
 	function reschedule_conference($event_id, $reschedule_type = null){
@@ -507,10 +510,7 @@ class LegalcasesController extends AppController {
 				
 				//Create Legalcase_id Folder
 				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id . '/' . $case_detail_id; 
-				if (!file_exists($file)) {
-					mkdir($file);
-					chmod($file, 0755);
-				}
+				$this->Custom->create_folder($file);
 				
 				$this->redirect(array('action' => 'summary_of_facts', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $case_detail_id));
 				
@@ -715,10 +715,7 @@ class LegalcasesController extends AppController {
     		
     		//Create Legalcase_id Folder
 			$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcasedetail']['user_id'] . '/' . $this->data['Legalcasedetail']['case_id'] . '/' . $case_detail_id; 
-			if (!file_exists($file)) {
-				mkdir($file);
-				chmod($file, 0755);
-			}
+			$this->Custom->create_folder($file);
 			
 			$this->Session->write('new_facts', true);
 			

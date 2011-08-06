@@ -195,10 +195,11 @@ class CustomHelper extends AppHelper {
 		
 		//Create Legalcase_id Folder
 		$file = $_SERVER{'DOCUMENT_ROOT'} . $upload_folder; 
-		if (!file_exists($file)) {
-			mkdir($file);
-			chmod($file, 0755);
-		}
+		// if (!file_exists($file)) {
+		//            mkdir($file);
+		//            chmod($file, 0755);
+		//        }
+		$this->create_folder($file);
 		
 		//Show files
 		$folder = $_SERVER['DOCUMENT_ROOT'] . $upload_folder;
@@ -267,5 +268,13 @@ class CustomHelper extends AppHelper {
             '11:00 pm'  => '11:00 pm',
         );
 	}
+	
+	function create_folder($file) {
+        if (!file_exists($file)) {
+			mkdir($file);
+			chmod($file, 0755);
+		}
+    }
+    
 }
 ?>

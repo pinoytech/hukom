@@ -17,11 +17,12 @@
 					echo $this->Form->input('Legalcase.id');
 					echo $this->Form->input('Legalcase.user_id', array('type' => 'hidden', 'value' => $id));
 					echo $this->Form->input('Legalcase.status', array('type' => 'hidden', 'value' => 'active'));
+					echo $this->Form->input('Legalcase.legal_problem', array('type' => 'hidden', 'value' => $legal_problem));
 				?>
 				
 				<div class="input radio">
-					<div style="float:left;"><input type="checkbox" name="data[Legalcase][monthly_scope][]" value="All legal services in the nature of legal, legal opinion, and legal advice required in the ordinary course of business;<br />"></div>
-					<div class="scope-text">All legal services in the nature of legal, legal opinion, and legal advice required in the ordinary course of business;</div>
+					<div style="float:left;"><input type="checkbox" name="data[Legalcase][monthly_scope][]" value="All legal services in the nature of legal opinion, and legal advice required in the ordinary course of business;<br />"></div>
+					<div class="scope-text">All legal services in the nature of legal opinion, and legal advice required in the ordinary course of business;</div>
 					<br />
 					<br />
 					<div style="float:left;"><input type="checkbox" name="data[Legalcase][monthly_scope][]" value="Preparation and review of legal papers, affidavits, contracts, deeds, and simple agreements for the day-to-day activities of the business;<br />"></div>
@@ -33,8 +34,8 @@
 					Representation/attendance in all board meetings/conferences where lawyer's presence may be required;
 					<br />
 					<br />
-					<input type="checkbox" name="data[Legalcase][monthly_scope][]" value="Representation, negotiation and liaison with governent agencies and instrumentalities;<br />">
-					Representation, negotiation and liaison with governent agencies and instrumentalities;
+					<input type="checkbox" name="data[Legalcase][monthly_scope][]" value="Representation, negotiation and liaison with government agencies and instrumentalities;<br />">
+					Representation, negotiation and liaison with government agencies and instrumentalities;
 					<br />
 					<br />
 					<input type="checkbox" id="other_services"  name="data[Legalcase][monthly_scope][]" value="other">Other Services

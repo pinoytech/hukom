@@ -50,10 +50,11 @@ class CustomComponent extends Object {
 		
 		//Create Legalcase_id Folder
 		$file = $_SERVER{'DOCUMENT_ROOT'} . $upload_folder; 
-		if (!file_exists($file)) {
-			mkdir($file);
-			chmod($file, 0755);
-		}
+		// if (!file_exists($file)) {
+		//            mkdir($file);
+		//            chmod($file, 0755);
+		//        }
+		$this->create_folder($file);
 		
 		//Show files
 		$folder = $_SERVER['DOCUMENT_ROOT'] . $upload_folder;
@@ -100,6 +101,13 @@ class CustomComponent extends Object {
         }
         
         //printf("%d years, %d months, %d days, %d hours, %d minuts\n, %d seconds\n", $years, $months, $days, $hours, $minuts, $seconds);
+    }
+    
+    function create_folder($file) {
+        if (!file_exists($file)) {
+			mkdir($file);
+			chmod($file, 0755);
+		}
     }
 }
 ?>

@@ -4,7 +4,7 @@ Dear <?php echo $User['PersonalInfo']['first_name']. ' ' . $User['PersonalInfo']
 We received your request to reset your E-Lawyers Online password.
 <br />
 <br />
-To reset your password, please click this <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/users/password_reset/'. $User['User']['id'];?>">link</a>
+To reset your password, please click this <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/users/login?to=' . urlencode('http://'. $_SERVER['SERVER_NAME'] . '/users/password_reset/'. $User['User']['id']);?>">link</a>
 <br />
 <br />
 Best regards,

@@ -975,6 +975,7 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 		//Attach Fill Out Form
 		if ($('.attach_fill_out:checked').val() == 'attach') {
 			$('#attach-form').show();
+			$('#CorporatePartnershipInfoManagingPartners').attr("disabled", true);
 		}
 
 		if ($('.attach_fill_out:checked').val() == 'fill out') {

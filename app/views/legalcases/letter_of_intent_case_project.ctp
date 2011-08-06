@@ -298,7 +298,7 @@ $('document').ready(function() {
                 $('#pending_case_new input').attr('disabled', true);
                 
                 $('#new_case_old').hide();
-                $('#new_case_old input').val('');
+                // $('#new_case_old input').val('');
                 $('#new_case_old input').attr('disabled', true);
             }
             else { //old client
@@ -340,6 +340,7 @@ $('document').ready(function() {
     
     //Old Client New Case Type Toggle
     $('.new_case_old_type').click(function() {
+
         if ($(this).val() == 'yes') {
             $('#new_case_old_type_yes').show();
             $('#new_case_old_type_yes select').attr('disabled', false);
