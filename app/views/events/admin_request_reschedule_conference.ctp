@@ -55,6 +55,7 @@
 		    ?>
 		    
 			<a href="#" class="open-calendar" id="<?php echo $RequestReschedule['RequestReschedule']['event_id'] .':'. $RequestReschedule['RequestReschedule']['user_id'] .':'. $RequestReschedule['RequestReschedule']['case_id'] .':'. $RequestReschedule['RequestReschedule']['case_detail_id'] .':'. $RequestReschedule['RequestReschedule']['conference'] .':'. $RequestReschedule['RequestReschedule']['case_id'] .' '. $custom->get_first_last_name($RequestReschedule['RequestReschedule']['user_id']) . $messenger_values; ?>">Calendar</a>
+			<a href="#" class="not-available" id="<?php echo $RequestReschedule['RequestReschedule']['id'];?>" >Not Available</a>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete_request_reschedule_conference', $RequestReschedule['RequestReschedule']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $RequestReschedule['RequestReschedule']['id'])); ?>
 		</td>
 	</tr>
@@ -148,6 +149,17 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	
+	$(".not-available").click(function() {
+          $.post("/admin/events/not_available_request_reschedule_conference/", { 'id': $(this).attr('id') }, function(data) {
+          // console.log(data);
+          
+          if (data == 'request_sent') {
+              alert('Request Reschedule Not Available Email is sent to user');
+          };
+          
+        });
+	});
 	
 	$(".open-calendar").click(function() {
         var parent_row = $(this).parent().parent();

@@ -20,6 +20,7 @@
 				echo $this->Form->input('Legalcase.case_detail_id', array('type' => 'hidden','value' => $case_detail_id));
 				echo $this->Form->input('Legalcase.event_id', array('type' => 'hidden','value' => $event_id));
 				echo $this->Form->input('Legalcase.conference', array('type' => 'hidden','value' => $conference));
+				echo $this->Form->input('Legalcase.request', array('type' => 'hidden','value' => $request));
 				echo $this->Form->input('Legalcase.date', array('class' => 'required birth_date',));
 				echo $form->input('Legalcase.start', array('options' => $custom->calendar_time_select()));
                 echo $form->input('Legalcase.end', array('options' => $custom->calendar_time_select()));

@@ -731,6 +731,60 @@ class EventsController extends AppController {
 		}
 	}
 	
+	function admin_not_available_request_reschedule_conference() {
+		if (!empty($_POST)) {
+			
+			$this->loadModel('RequestReschedule');
+			
+			$RequestReschedule = $this->RequestReschedule->findById($_POST['id']);
+			
+            // debug($RequestReschedule);
+            // exit;
+			
+            // $this->Email->delivery = 'debug';
+			
+			$this->_send_request_reschedule_not_available_confirmation($RequestReschedule['RequestReschedule']['user_id'], $RequestReschedule['RequestReschedule']['id'], $RequestReschedule['RequestReschedule']['conference']);
+			
+            // debug($this->Session->read('Message.email'));
+			
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+            echo 'request_sent';
+		}
+	}
+	
+	function _send_request_reschedule_not_available_confirmation($id, $request_reschudule_id, $conference) {
+		
+		if ($conference == 'video') {
+			$subject = "Video Conference Reschedule Not Available Confirmation";
+		}
+		elseif ($conference == 'office') {
+			$subject = "Office Conference Reschedule Not Available Confirmation";
+		}
+		
+		$this->loadModel('User');
+		$this->loadModel('RequestReschedule');
+
+		$User                  = $this->User->read(null,$id);
+		$RequestReschedule     = $this->RequestReschedule->read(null,$request_reschudule_id);
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = "E-Lawyers Online - $subject";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'request_reschedule_not_available_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('RequestReschedule', $RequestReschedule);
+	    $this->set('conference', $conference);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	}
+	
 	function _send_not_available_confirmation($id, $event_id, $conference) {
 		
 		if ($conference == 'video') {
