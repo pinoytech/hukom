@@ -4,6 +4,6 @@
 	    
 	    <?php echo $this->element('navigation');?>
 	    
-		Your request to re-schedule your conference has been submitted to E-lawyers Online for approval. An e-mail message will be sent to you for confirmation of your request. Thank you!
+		Your request to re-schedule your conference has been submitted to E-Lawyers Online for approval. An e-mail message will be sent to you for confirmation of your request. Thank you!
 	</div>
 </div>

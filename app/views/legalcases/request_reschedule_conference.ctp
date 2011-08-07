@@ -34,7 +34,7 @@
 </div>
 
 <div id="reschedule_warning" title="Request Reschedule Conference" class="hidden">
-    Please be informed that your request for re-scheduling of your video/office conference will automatically open your original schedule to other clients and E-lawyers Online shall not guarantee its availability on the said date again upon submission of your request. If you are sure of your request for re-scheduling, please click “Continue”.
+    Please be informed that your request for re-scheduling of your video/office conference will automatically open your original schedule to other clients and E-Lawyers Online shall not guarantee its availability on the said date again upon submission of your request. If you are sure of your request for re-scheduling, please click “Continue”.
 </div>
 
 <?php $html->scriptBlock("request_reschedule_conference('$id', '$case_id', '$case_detail_id', '$total_time');", array('inline'=>false));?>
