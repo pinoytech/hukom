@@ -91,39 +91,37 @@
 									<td class="actions">
 										<?php
 										
-										//Display Pay Now Button
 										$pay_now_button = false;
 										
-										// Check if user reached up to 'questions' form. This will trigger the 'Continue' action.
+                                        if ($Legalcasedetail['legal_service'] == 'Monthly Retainer') {
+                                            if ($Legalcasedetail['payment_reminder'] > 0) {
+                                                $pay_now_button = true;
+                                            }
+                                        }
+
+                                        // Check if user reached up to 'questions' form. This will trigger the 'Continue' action.
     									if ($Legalcasedetail['questions']) {
-                                            
-                                            if ($Legalcasedetail['legal_service'] == 'Monthly Retainer' || $Legalcasedetail['legal_service'] == 'Case/Project Retainer') {
+                                            if (empty($payment_status)) {
+                                                $pay_now_button = true;
                                                 
-                                                if ($Legalcasedetail['payment_reminder'] > 0) {
-                                                    $pay_now_button = true;
+                                                if ($Legalcasedetail['legal_service'] == 'Case/Project Retainer') {
+                                                    if ($Legalcasedetail['payment_reminder'] < 1) {
+                                                        $pay_now_button = false;
+                                                    }
                                                 }
-                                                else {
-                                                    $pay_now_button = false;
-                                                }
-                                                
-                                                
-                                            }
-                                            else {
-                                                if (empty($payment_status)) {
-                                                    $pay_now_button = true;
-        									    }
-                                            }
-                                            
-                                            if ($pay_now_button) {
-                                                 echo $this->Html->link($this->Html->image('/img/paynowButton_up.png', array('class' => 'pay-now-button')), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
-                                                echo '<br />';
-                                            }
-                                            
+    									    }
+
                                             $continue = false;
     									}
     									else {
     									    $continue = true;
     									}
+
+										//Display Pay Now Button
+    									if ($pay_now_button) {
+                                            echo $this->Html->link($this->Html->image('/img/paynowButton_up.png', array('class' => 'pay-now-button')), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
+                                            echo '<br />';
+                                        }
     									
     									//Check Legal Service Type
     									switch ($Legalcasedetail['legal_service']){
