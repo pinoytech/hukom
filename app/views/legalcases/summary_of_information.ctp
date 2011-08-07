@@ -14,7 +14,9 @@
 				foreach ($Legalcasedetails as $Legalcasedetail) {
 				    $i++;
 				?>
-				<?php if($i == 1) { ?>
+				<?php if($i == 1) {
+				    $first_loop_legal_service = $Legalcasedetail['Legalcasedetail']['legal_service'];
+				?>
                 <tr>
 					<td class="label"><?php echo ($auth_user_type == 'personal') ? 'My' : 'Our'; ?> Legal Problem is:</td>
 					<td><?php echo $Legalcasedetail['Legalcase']['legal_problem'];?></td>
@@ -117,7 +119,7 @@
 			    ?>
                 <?php
                 //Check if legal_service is Video Conference/Office Conference
-                if ($Legalcasedetail['Legalcasedetail']['legal_service'] != 'Monthly Retainer' && $Legalcasedetail['Legalcasedetail']['legal_service'] != 'Case/Project Retainer') {
+                if ($Legalcasedetail['Legalcasedetail']['legal_service'] != 'Monthly Retainer') {
                 ?>
 				<tr>
 					<td class="label">Summary of Facts:</td>
@@ -258,7 +260,7 @@
                     </td>
                     <?php
 					//Check if legal_service is Case/Project Retainer
-                    if ($Legalcasedetail['Legalcasedetail']['legal_service'] == 'Case/Project Retainer') {
+                    if ($first_loop_legal_service == 'Case/Project Retainer') {
                     ?>
                     <td>
                         <input type="button" id="next-case-thankyou" class="button-next" />
