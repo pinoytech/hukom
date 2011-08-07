@@ -7,7 +7,7 @@ class AppController extends Controller {
     // var $admin_email = array('gino.carlo.cortez@gmail.com');
     var $admin_email = array('gino.carlo.cortez@gmail.com', 'attyvalderama@gmail.com', 'redgfernandez@yahoo.com', 'redgfernandez@gmail.com');
     
-    var $uploads_path = '/app/webroot/uploads/';
+    var $uploads_path = '/production/app/webroot/uploads/';
 	
 	function beforeFilter() {
         //Configure AuthComponent
