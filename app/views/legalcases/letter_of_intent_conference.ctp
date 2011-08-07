@@ -153,7 +153,7 @@ function redirect(){
                         $profile_action = 'corporate_partnership_representative_info';
                     }
     			    ?>
-                    window.location = '/users/<?php echo $profile_action; ?>/<?php echo "$id/$case_id"?>';
+                    window.location = '/users/<?php echo $profile_action; ?>/<?php echo "$id/$case_id/$case_detail_id"?>';
 				<?php
 			    }
 				?>

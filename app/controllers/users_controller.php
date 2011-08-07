@@ -657,8 +657,6 @@ class UsersController extends AppController {
                     // debug($goto);
                     // exit;
 			    }
-			    
-			    
     		    
     			$this->redirect(array('controller' => 'legalcases', 'action' => $goto, $this->data['CorporatePartnershipInfo']['user_id'], $case_id, $case_detail_id));
     		}
