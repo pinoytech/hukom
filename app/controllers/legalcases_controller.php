@@ -892,7 +892,7 @@ class LegalcasesController extends AppController {
 		
 		$this->Email->to       = $this->admin_email;
 		$this->Email->subject  = "E-Lawyers Online - Request to Reschedule Conference";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = 'request_reschedule_conference'; // note no '.ctp'
@@ -915,7 +915,7 @@ class LegalcasesController extends AppController {
 		
 		$this->Email->to       = $this->admin_email;
 		$this->Email->subject  = "E-Lawyers Online - Monthly Retainer Details";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = 'monthly_retainer_details'; // note no '.ctp'
@@ -939,7 +939,7 @@ class LegalcasesController extends AppController {
 		$this->Email->to       = $User['User']['username'];
         $this->Email->bcc      = $this->admin_email;
 		$this->Email->subject  = "E-Lawyers Online - Monthly Retainer Confirmation";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = 'monthly_retainer_confirmation'; // note no '.ctp'
@@ -962,7 +962,7 @@ class LegalcasesController extends AppController {
 		
 		$this->Email->to       = $this->admin_email;
 		$this->Email->subject  = "E-Lawyers Online - Case Retainer Details";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = 'case_retainer_details'; // note no '.ctp'
@@ -985,7 +985,7 @@ class LegalcasesController extends AppController {
 		$this->Email->to       = $User['User']['username'];
         $this->Email->bcc      = $this->admin_email;
 		$this->Email->subject  = "E-Lawyers Online - Case/Project Retainer Confirmation";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = 'case_retainer_confirmation'; // note no '.ctp'

@@ -2,7 +2,7 @@ Dear <?php echo $User['PersonalInfo']['first_name']. ' ' . $User['PersonalInfo']
 <br/>
 <br/>
 
-Your requested schedule is not available, please select your new schedule <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/users/login?to=' . urlencode('http://'. $_SERVER['SERVER_NAME'] . '/legalcases/request_reschedule_conference/'. $RequestReschedule['RequestReschedule']['user_id'] .'/'. $RequestReschedule['RequestReschedule']['case_id'] .'/'. $RequestReschedule['RequestReschedule']['case_detail_id'] .'/'. $RequestReschedule['RequestReschedule']['id'] . '/' .  $conference .'/'. 'request');?>">here</a>.
+Your requested schedule is not available, please select your new schedule <a href="<?php echo $base_url . 'users/login?to=' . urlencode($base_url . 'legalcases/request_reschedule_conference/'. $RequestReschedule['RequestReschedule']['user_id'] .'/'. $RequestReschedule['RequestReschedule']['case_id'] .'/'. $RequestReschedule['RequestReschedule']['case_detail_id'] .'/'. $RequestReschedule['RequestReschedule']['id'] . '/' .  $conference .'/'. 'request');?>">here</a>.
 <br/>
 <br/>
 

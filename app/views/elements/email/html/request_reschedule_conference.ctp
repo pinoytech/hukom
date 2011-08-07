@@ -24,7 +24,7 @@ End Time: <?php echo $RequestReschedule['RequestReschedule']['end'];?>
 Notes: <?php echo $RequestReschedule['RequestReschedule']['notes'];?>
 <br />
 <br />
-<a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/admin/events'?>">Login to Admin</a>
+<a href="<?php echo $base_url . 'admin/events'?>">Login to Admin</a>
 <br />
 <br />
 Regards,

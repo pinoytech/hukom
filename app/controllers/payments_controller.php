@@ -170,7 +170,7 @@ class PaymentsController extends AppController {
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
 		$this->set('case_detail_id', $case_detail_id);
-        $this->set('base_url', 'http://'.$_SERVER['SERVER_NAME'].Router::url('/'));
+        // $this->set('base_url', 'http://'.$_SERVER['SERVER_NAME'].Router::url('/'));
         
         //Get Service Type
         $this->loadModel('Legalcasedetail');

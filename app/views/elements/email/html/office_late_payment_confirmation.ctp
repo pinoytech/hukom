@@ -2,7 +2,7 @@ Dear <?php echo $User['PersonalInfo']['first_name']. ' ' . $User['PersonalInfo']
 <br/>
 <br/>
 
-Please be informed that your selected office conference schedule has been opened to other E-Lawyers Online clients after the 24-hour confirmation limit. To check if your schedule is still available and to reconfirm your original schedule please click this <a href="<?php echo 'http://'. $_SERVER['SERVER_NAME'] . '/users/login?to=' . urlencode('http://'. $_SERVER['SERVER_NAME'] . '/legalcases/reschedule_conference/'. $Event['Event']['id']);?>">link</a>, otherwise please choose a new date and time for our office conference.
+Please be informed that your selected office conference schedule has been opened to other E-Lawyers Online clients after the 24-hour confirmation limit. To check if your schedule is still available and to reconfirm your original schedule please click this <a href="<?php echo $base_url . 'users/login?to=' . urlencode($base_url . 'legalcases/reschedule_conference/'. $Event['Event']['id']);?>">link</a>, otherwise please choose a new date and time for our office conference.
 <br/>
 <br/>
 

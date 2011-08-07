@@ -6,7 +6,7 @@ Greetings!
 <br/> 
 
 <?php
-$payment_form_link = 'http://'. $_SERVER['SERVER_NAME'] . '/users/login?to=' . urlencode('http://'. $_SERVER['SERVER_NAME'] . '/payments/mode_of_payment/' . $Legalcasedetail['Legalcasedetail']['user_id'] . '/' . $Legalcasedetail['Legalcasedetail']['case_id'] . '/' . $Legalcasedetail['Legalcasedetail']['id']);
+$payment_form_link = $base_url . 'users/login?to=' . urlencode($base_url . 'payments/mode_of_payment/' . $Legalcasedetail['Legalcasedetail']['user_id'] . '/' . $Legalcasedetail['Legalcasedetail']['case_id'] . '/' . $Legalcasedetail['Legalcasedetail']['id']);
 ?>
 
 <?php if ($legal_service == 'Case/Project Retainer') { ?>

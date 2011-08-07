@@ -932,6 +932,35 @@ function check_cash_form(id, case_id, case_detail_id) {
 
 function corporate_partnership_info(id, case_id, upload_folder) {
 	$('document').ready(function() {
+	  
+	  function type_change() {
+		  $('.type').change(function() {
+  		  if ($(this).val() == 'Stock Corporation' || $(this).val() == 'Non-Stock') {
+  		    disable_managing_partners();
+    		}
+    		else {
+    		  $('#CorporatePartnershipInfoManagingPartners').attr("disabled", false);
+    		}
+  		});
+		}
+		
+		function check_type_checked_value() {
+		  // If Stock Corporation or Non Stock Corporation - disable Managing Partners field
+  		if ($('.type:checked').val() == 'Stock Corporation' || $('.type:checked').val() == 'Non-Stock') {
+  		  disable_managing_partners();
+  		}
+  		else {
+        $('#CorporatePartnershipInfoManagingPartners').attr("disabled", false);
+  		}
+		}
+		
+		function disable_managing_partners() {
+		  $('#CorporatePartnershipInfoManagingPartners').val('');
+		  $('#CorporatePartnershipInfoManagingPartners').attr("disabled", true);
+		}
+	  
+	  type_change();
+	  
 		//jQuery Valdidate
 		$("#UserCorporatePartnershipInfoForm").validate({
 			rules: {
@@ -974,7 +1003,6 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 
 		});
 
-
 		$('#next').click(function() {
 			$('#goto').val('legal_problem');
       // $('form').submit();
@@ -985,8 +1013,6 @@ function corporate_partnership_info(id, case_id, upload_folder) {
       // $('form').submit();
 		});
     
-    type_change();
-    
 		//Attach Fill Out Form
 		if ($('.attach_fill_out:checked').val() == 'attach') {
 			$('#attach-form').show();
@@ -996,7 +1022,7 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 		if ($('.attach_fill_out:checked').val() == 'fill out') {
 			$('#fill-out-form').show();
 		}
-		
+
 		//Disable fill-out-form fields to avoid validation when attach-form is selected
 		var fill_out_form  = $('#fill-out-form');
 		var fill_out_radio = $('#fill-out-radio');
@@ -1014,10 +1040,11 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 
 		$('.attach_fill_out').change(function() {
 	    if ($(this).val() == 'attach') {
+	      alert(1)
+	      disable_managing_partners();
+	      
 				$('#attach-form').show();
 	      $('#fill-out-form').hide();
-
-        disable_managing_partners();
         
 	      //remove board w/ no data
         $('#board-list tbody tr.row td div input.required').each(function(index) {
@@ -1094,22 +1121,6 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 	 		}
 		});
 		
-		function disable_managing_partners() {
-		  $('#CorporatePartnershipInfoManagingPartners').val('');
-		  $('#CorporatePartnershipInfoManagingPartners').attr("disabled", true);
-		}
-		
-		function type_change() {
-		  $('.type').change(function() {
-  		  if ($(this).val() == 'Stock Corporation' || $(this).val() == 'Non-Stock') {
-  		    disable_managing_partners();
-    		}
-    		else {
-    		  $('#CorporatePartnershipInfoManagingPartners').attr("disabled", false);
-    		}
-  		});
-		}
-
 	  function add_board() {
 	  	//Count no. of rows
 			total_rows = $('#board-list > tbody').size() - 1;
@@ -1190,17 +1201,6 @@ function corporate_partnership_info(id, case_id, upload_folder) {
 		
 		check_type_checked_value();
 		
-		function check_type_checked_value() {
-		  // If Stock Corporation or Non Stock Corporation - disable Managing Partners field
-  		if ($('.type:checked').val() == 'Stock Corporation' || $('.type:checked').val() == 'Non-Stock') {
-  		  disable_managing_partners();
-  		}
-  		else {
-        // console.log(2);
-  		  $('#CorporatePartnershipInfoManagingPartners').attr("disabled", false);
-  		}
-		}
-    
 	});	
 }
 

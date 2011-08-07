@@ -1,6 +1,6 @@
 <?php
 class AppController extends Controller {
-    var $components = array('Acl', 'Auth', 'Session');
+    var $components = array('Acl', 'Auth', 'Session', 'DebugKit.Toolbar');
     var $helpers = array('Html', 'Form', 'Session');
     // var $admin_email = array('gino.carlo.cortez@gmail.com');
     var $admin_email = array('gino.carlo.cortez@gmail.com', 'attyvalderama@gmail.com', 'redgfernandez@yahoo.com', 'redgfernandez@gmail.com');
@@ -60,7 +60,7 @@ class AppController extends Controller {
 		//Set global user variable for View (i.e. navigation)
 		$this->set('auth_user_type', $this->Auth_user['User']['type']);
 		$this->set('auth_user_id', $this->Auth_user['User']['id']);
-			
+		$this->set('base_url', 'https://'.$_SERVER['SERVER_NAME'].Router::url('/'));
     }
     
     function afterFilter() {        
@@ -95,7 +95,7 @@ class AppController extends Controller {
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = "E-Lawyers Online - $subject";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = $template; // note no '.ctp'
