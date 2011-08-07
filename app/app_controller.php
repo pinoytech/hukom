@@ -66,7 +66,7 @@ class AppController extends Controller {
 		//Set global user variable for View (i.e. navigation)
 		$this->set('auth_user_type', $this->Auth_user['User']['type']);
 		$this->set('auth_user_id', $this->Auth_user['User']['id']);
-		$this->set('base_url', 'http://'.$_SERVER['SERVER_NAME'].Router::url('/'));
+		$this->set('base_url', 'https://'.$_SERVER['SERVER_NAME'].Router::url('/'));
 		$this->set('uploads_path', $this->uploads_path);
     }
     
