@@ -4,7 +4,7 @@
 	    
 	    <div class="public-pages">
 	        
-            <h1><strong>Our SERVICES</strong></h1>
+            <h1><strong>Our Services</strong></h1>
             <div>
               <div style="float:left; padding:0 25px 25px 0; width:130px; height:auto;"><img src="/img/ourservices_pic.jpg" width="130" height="196" border="0" /></div>
               <div style="float:left; width:590px; top:auto; text-align: left;">
