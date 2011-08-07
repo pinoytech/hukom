@@ -13,6 +13,7 @@
 		echo $html->script('jquery-1.5.2.min.js');
         echo $html->script('jquery-ui.js');
         echo $html->script('application.js');
+        echo $html->script('jquery.cycle.all.min.js');
 
         if ($this->params['action'] == 'letter_of_intent' || $this->params['action'] == 'reschedule_conference') {
 			echo $html->css('fullcalendar');
@@ -29,7 +30,14 @@
 
 		echo $scripts_for_layout;
 	?>
-	
+	<script type="text/javascript">
+	$('document').ready(function() {
+	    $('.canvas-holder').cycle({
+   			fx: 'fade', 
+   			speed: 1000,
+   		});
+   	});
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -39,12 +47,12 @@
         <!-- Logo -->
         <!-- Navigation -->
         <ul class="main-nav">
-        	<li><a href="#" class="home-selected" title="Home">Home</a></li>
-            <li><a href="#" class="about-us" title="About Us">About Us</a></li>
-            <li><a href="#" class="everyday-law" title="Everyday Law">Everyday Law</a></li>
-            <li><a href="#" class="law-society" title="Law & Society">Law & Society</a></li>
-            <li><a href="#" class="law-updates" title="Law Updates">Law Updates</a></li>
-            <li><a href="#" class="online-legal-consultation" title="Online Legal Consultation">Online Legal Consultation</a></li>
+        	<li><a href="/home" class="home-selected" title="Home">Home</a></li>
+            <li><a href="/pages/about_us" class="about-us" title="About Us">About Us</a></li>
+            <li><a href="/pages/everyday_law" class="everyday-law" title="Everyday Law">Everyday Law</a></li>
+            <li><a href="/pages/law_and_society" class="law-society" title="Law & Society">Law & Society</a></li>
+            <li><a href="/pages/law_updates" class="law-updates" title="Law Updates">Law Updates</a></li>
+            <li><a href="/legalcases/index/<?php echo $auth_user_id;?>" class="online-legal-consultation" title="Online Legal Consultation">Online Legal Consultation</a></li>
         </ul>
         <!-- Navigation -->
 	<br class="clear" />
@@ -55,18 +63,20 @@
     <div class="banner">
         <!-- Sub Nav -->
         <ul class="sub-nav fl">
-            <li><a href="#" class="lawyers-profile-selected" title="Lawyer's Profile">Lawyer's Profile</a></li>
-            <li><a href="#" class="our-services" title="Our Services">Our Services</a></li>
-            <li><a href="#" class="outrageous-laws" title="Outrageous Laws & Lawsuits">Outrageous Laws & Lawsuits</a></li>
-            <li><a href="#" class="lawyers-quotes" title="Lawyer's Quotes">Lawyer's Quotes</a></li>
-            <li><a href="#" class="case-studies" title="Case Studies">Case Studies</a></li>
-            <li><a href="#" class="elegal-news" title="E-Legal News">E-Legal News</a></li>
-            <li><a href="#" class="contact-us" title="Contact Us">Contact Us</a></li>
+            <li><a href="/pages/lawyers_profile" class="lawyers-profile-selected" title="Lawyer's Profile">Lawyer's Profile</a></li>
+            <li><a href="/pages/services" class="our-services" title="Our Services">Our Services</a></li>
+            <li><a href="/pages/outrageous_laws" class="outrageous-laws" title="Outrageous Laws & Lawsuits">Outrageous Laws & Lawsuits</a></li>
+            <li><a href="/pages/lawyers_quotes" class="lawyers-quotes" title="Lawyer's Quotes">Lawyer's Quotes</a></li>
+            <li><a href="/pages/case_studies" class="case-studies" title="Case Studies">Case Studies</a></li>
+            <li><a href="/pages/elegal_news" class="elegal-news" title="E-Legal News">E-Legal News</a></li>
+            <li><a href="/pages/contact_us" class="contact-us" title="Contact Us">Contact Us</a></li>
         </ul>
         <!-- Sub Nav -->
         <!-- Canvas -->
         <div class="canvas-holder fl">
-            <img src="/img/canvas.jpg" alt="canvas" title="Needs Legal Advice but lacks time to visit a Lawyer?" />
+            <a href="/legalcases/index/<?php $auth_user_id;?>"><img src="/img/banner_1.png" alt="canvas" title="Needs Legal Advice but lacks time to visit a Lawyer?" /></a>
+            <a href="/legalcases/index/<?php $auth_user_id;?>"><img src="/img/banner_2.png" alt="canvas" title="Needs Legal Advice but lacks time to visit a Lawyer?" /></a>
+            <a href="/legalcases/index/<?php $auth_user_id;?>"><img src="/img/banner_3.png" alt="canvas" title="Needs Legal Advice but lacks time to visit a Lawyer?" /></a>
             <!-- <a href="#" class="legal-consultation fl ab textindent" title="Online Legal Consultation">Online Legal Consultation</a> -->
         </div>
         <!-- Canvas -->
@@ -100,6 +110,20 @@
     	&copy; Copyright 2011 e-Lawyersonline. All Rights Reserved.
     </div>
     <!-- Footer -->
+    
+    <script type="text/javascript">
+
+     var _gaq = _gaq || [];
+     _gaq.push(['_setAccount', 'UA-21143225-1']);
+     _gaq.push(['_trackPageview']);
+
+     (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+     })();
+
+    </script>
     <?php //echo $this->element('sql_dump'); ?>
 </body>
 </html>

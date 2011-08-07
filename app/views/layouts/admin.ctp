@@ -57,7 +57,7 @@
 <body>
 	<div id="container">
 		<div id="header" class="position-relative">
-			<h1><?php echo $this->Html->link(__('E-Lawyers Online', true), 'http://e-laywersonline.com'); ?></h1>
+			<h1><?php echo $this->Html->link(__('E-Lawyers Online', true), 'http://e-lawyersonline.com'); ?></h1>
 		
 			<div class="login">
 			<?php  if (isset($_SESSION['Auth']) && isset($_SESSION['Auth']['User']) && strlen($_SESSION['Auth']['User']['username']) > 0) { 

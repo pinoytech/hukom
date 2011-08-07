@@ -16,7 +16,7 @@
 					Hi, <?php echo $User['PersonalInfo']['first_name'];?> [<?php echo $this->Html->link('Logout', '/users/logout', array()); ?>]
 				</li>
 				<li>
-					<?php echo $this->Html->link('Go to your dashboard', '/dashboard', array()); ?>
+					<?php echo $this->Html->link('Go to your cases', '/legalcases/index/'.$auth_user_id, array()); ?>
 				</li>
 				<?php
 				}
@@ -73,10 +73,14 @@
 		<div class="left-main fl">
 			<div class="everyday-holder">
 		   		<div class="everyday-content">
-		        	<h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit!</h2><br />
-		            Sed at massa libero, imperdiet tincidunt sem. Nam rutrum elementum lacus, a pretium dui ultricies quis. Aenean vestibulum tortor nec lacus dictum in gravida orci volutpat. 
+		        	<h2>Annulment of Marriage, in the Philippines!</h2>
+		        	<br />
+		        	<em>ATTY.! Ayaw pumayag pumirma ng mister ko sa agreement para sa annulment ng kasal namin! Paano gagawin ko? </em>
+		        	<br />
+		        	<br />
+		        	This is a common misconception among Filipinos regarding the legal concept of marriage and annulment here in the Philippines. My answer is that you cannot do that here in the Philippines. We sometimes encounter or hear this discussion from our relatives, friends and acquaintance with troubled marriages giving the notion that it is allowed under Philippine law for the parties to simply agree on the &#8220;hiwalayan&#8221; or dissolution of their marriage. To state it again, this is not allowed under Philippine law.
 		        </div>
-		        <a href="#" class="read-more fr textindent">read more</a>
+		        <a href="pages/everyday_law" class="read-more fr textindent">read more</a>
 		    </div>
 		</div>
 		<!-- Left Main -->
@@ -84,18 +88,22 @@
 		<div class="right-main fl">
 			<div class="law-society-holder">
 		   		<div class="law-content">
-		        	<h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit!</h2><br />
-		            Sed at massa libero, imperdiet tincidunt sem. Nam rutrum elementum lacus, a pretium dui ultricies quis.
+		            <h2>You, Facebook and the Law...</h2>
+		            <br />
+		            <br />
+		            <em>&quot;Atty., my officemate commented in my Facebook account that &quot;I&#8217;m a whore!&quot;, can I sue her? </em>
 		        </div>
-		        <a href="#" class="read-more fr textindent">read more</a>
+		        <a href="pages/law_and_society" class="read-more fr textindent">read more</a>
 		    </div>
 
 		    <div class="law-updates-holder">
 		   		<div class="law-content">
-		        	<h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit!</h2><br />
-		            Sed at massa libero, imperdiet tincidunt sem. Nam rutrum elementum lacus, a pretium dui ultricies quis.
+		        	<h2>Can  your text message or e-mail message be used as evidence in court?</h2>
+		        	<br />
+                      Before  the advent of computer age, we have been familiar with the use of documentary...
+
 		        </div>
-		        <a href="#" class="read-more fr textindent">read more</a>
+		        <a href="pages/law_updates" class="read-more fr textindent">read more</a>
 		    </div>
 		</div>
 		<!-- Right Main -->

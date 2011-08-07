@@ -964,3 +964,11 @@ a,
   padding-left: 5px;
   width: 95%;
 }
+
+.public-pages {
+  padding: 10px 20px 10px 20px;
+}
+
+.public-pages img{
+  padding-top: 10px;
+}

@@ -274,7 +274,7 @@ class PaymentsController extends AppController {
 	}
 
 	function payment_confirmation($id=null, $case_id=null, $case_detail_id=null, $payment_id=null, $payment_option){
-		
+
 		//Clear Legalcase.legal_service Session
 		$this->Session->write('Legalcase.legal_service', '');
         
