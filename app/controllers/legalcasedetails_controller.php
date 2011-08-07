@@ -144,7 +144,7 @@ class LegalcasedetailsController extends AppController {
  	    //Do not pass any args to send()
  	    $this->Email->send();
  	 }
-	
+ 	 	
 	function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for user', true));
@@ -157,5 +157,58 @@ class LegalcasedetailsController extends AppController {
 		$this->Session->setFlash(__('Case Details was not deleted', true));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	function admin_payment_reminder() {
+	    if (!empty($_POST)) {
+            $Legalcasedetail = $this->Legalcasedetail->findById($_POST['id']);
+            
+            // $this->Email->delivery = 'debug';
+            
+            //Send Email
+            $this->_send_payment_reminder_confirmation($Legalcasedetail['Legalcasedetail']['user_id'], $Legalcasedetail['Legalcasedetail']['id'], $Legalcasedetail['Legalcasedetail']['legal_service']);
+            
+            // debug($this->Session->read('Message.email'));
+            
+            //Trigger Payment Reminder
+            $this->Legalcasedetail->updateAll(
+    	        array('Legalcasedetail.payment_reminder' => $Legalcasedetail['Legalcasedetail']['payment_reminder'] + 1),
+    	        array('Legalcasedetail.id' => $Legalcasedetail['Legalcasedetail']['id'])
+    	    );    	    
+            
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->autoLayout = false;
+            echo 'reminder_sent';
+	    }
+	}
+	
+	 function _send_payment_reminder_confirmation($id, $case_detail_id, $legal_service) {
+		$this->loadModel('User');
+		
+		if ($legal_service == 'Monthly Retainer') {
+           $subject = "$legal_service Payment Reminder";
+		}
+		elseif ($legal_service == 'Case/Project Retainer') {
+           $subject = "$legal_service Payment Reminder";
+		}
+
+		$User                  = $this->User->read(null,$id);
+		$Legalcasedetail       = $this->Legalcasedetail->read(null,$case_detail_id);
+		$this->Email->to       = $User['User']['username'];
+		$this->Email->bcc      = $this->admin_email;  
+		$this->Email->subject  = "E-Lawyers Online - $subject";
+		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
+		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
+		$this->Email->template = 'payment_reminder_confirmation'; // note no '.ctp'
+		//Send as 'html', 'text' or 'both' (default is 'text')
+		$this->Email->sendAs   = 'html'; // because we like to send pretty mail
+	    //Set view variables as normal
+	    $this->set('User', $User);
+	    $this->set('Legalcasedetail', $Legalcasedetail);
+	    $this->set('legal_service', $legal_service);
+	    //Do not pass any args to send()
+	    $this->Email->send();
+	 }
 }
 ?>
