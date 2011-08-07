@@ -33,7 +33,7 @@
 			
 			if ($Legalcasedetail['Legalcasedetail']['legal_service'] == 'Case/Project Retainer' || $Legalcasedetail['Legalcasedetail']['legal_service'] == 'Monthly Retainer') {
 			    
-			    if ($Legalcasedetail['Legalcasedetail']['payment_reminder'] >= 1 && $Legalcasedetail['Legalcasedetail']['legal_service'] == 'Monthly Retainer') {
+			    if ($Legalcasedetail['Legalcasedetail']['payment_reminder'] >= 1 && $Legalcasedetail['Legalcasedetail']['legal_service'] == 'Case/Project Retainer') {
                     $show_payment_reminder = false;
 			    }
             ?>  

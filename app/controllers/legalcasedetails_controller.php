@@ -163,17 +163,17 @@ class LegalcasedetailsController extends AppController {
             $Legalcasedetail = $this->Legalcasedetail->findById($_POST['id']);
             
             // $this->Email->delivery = 'debug';
-            
             //Send Email
             $this->_send_payment_reminder_confirmation($Legalcasedetail['Legalcasedetail']['user_id'], $Legalcasedetail['Legalcasedetail']['id'], $Legalcasedetail['Legalcasedetail']['legal_service']);
-            
             // debug($this->Session->read('Message.email'));
             
             //Trigger Payment Reminder
+/*
             $this->Legalcasedetail->updateAll(
-    	        array('Legalcasedetail.payment_reminder' => $Legalcasedetail['Legalcasedetail']['payment_reminder'] + 1),
-    	        array('Legalcasedetail.id' => $Legalcasedetail['Legalcasedetail']['id'])
-    	    );    	    
+                array('Legalcasedetail.payment_reminder' => $Legalcasedetail['Legalcasedetail']['payment_reminder'] + 1),
+                array('Legalcasedetail.id' => $Legalcasedetail['Legalcasedetail']['id'])
+            );          
+*/
             
             Configure::write('debug', 0);
             $this->autoRender = false;
