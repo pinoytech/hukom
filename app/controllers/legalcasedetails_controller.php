@@ -112,7 +112,7 @@ class LegalcasedetailsController extends AppController {
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = 'E-Lawyers Online - Closed Confirmation';
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = 'closed_confirmation'; // note no '.ctp'
@@ -132,7 +132,7 @@ class LegalcasedetailsController extends AppController {
  		$this->Email->to       = $User['User']['username'];
  		$this->Email->bcc      = $this->admin_email;  
  		$this->Email->subject  = 'E-Lawyers Online - Incomplete Confirmation';
- 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+ 		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
  		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
  		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
  		$this->Email->template = 'incomplete_confirmation'; // note no '.ctp'
@@ -166,15 +166,14 @@ class LegalcasedetailsController extends AppController {
             //Send Email
             $this->_send_payment_reminder_confirmation($Legalcasedetail['Legalcasedetail']['user_id'], $Legalcasedetail['Legalcasedetail']['id'], $Legalcasedetail['Legalcasedetail']['legal_service']);
             // debug($this->Session->read('Message.email'));
-            
+
             //Trigger Payment Reminder
-/*
+
             $this->Legalcasedetail->updateAll(
                 array('Legalcasedetail.payment_reminder' => $Legalcasedetail['Legalcasedetail']['payment_reminder'] + 1),
                 array('Legalcasedetail.id' => $Legalcasedetail['Legalcasedetail']['id'])
-            );          
-*/
-            
+            );
+
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->autoLayout = false;
@@ -197,7 +196,7 @@ class LegalcasedetailsController extends AppController {
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = "E-Lawyers Online - $subject";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = 'payment_reminder_confirmation'; // note no '.ctp'
