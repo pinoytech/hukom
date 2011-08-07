@@ -134,7 +134,7 @@
     											$legal_service = 'perquery';
     											
     											if ($continue) {
-    											    echo $this->Html->link($this->Html->image('/img/Continuebutton_up.png', array('class' => 'continue-button')), array('action' => 'legal_problem', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
+    											    echo $this->Html->link($this->Html->image('/img/Continuebutton_up.png', array('class' => 'continue-button')), array('action' => 'summary_of_facts', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
                                                     echo '<br />';
     											}
     											
@@ -180,7 +180,7 @@
 
                                                 
                                                 if ($continue) {
-                                                    echo $this->Html->link($this->Html->image('/img/Continuebutton_up.png', array('class' => 'continue-button')), array('action' => 'legal_problem', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
+                                                    echo $this->Html->link($this->Html->image('/img/Continuebutton_up.png', array('class' => 'continue-button')), array('action' => 'summary_of_facts', $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
                                                     echo '<br />';
                                                 }                                                
 

@@ -167,6 +167,21 @@ class User extends AppModel {
 			'className' => 'Event',
 			'foreignKey' => 'user_id',
 			'dependent' => true,
+		),
+		'CaseRetainer' => array(
+			'className' => 'CaseRetainer',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
+		),
+		'TempEvent' => array(
+			'className' => 'TempEvent',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
+		),
+		'RequestReschedule' => array(
+			'className' => 'RequestReschedule',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
 		)
 	);
 	

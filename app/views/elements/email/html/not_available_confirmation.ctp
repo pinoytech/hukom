@@ -2,7 +2,7 @@ Dear <?php echo $User['PersonalInfo']['first_name']. ' ' . $User['PersonalInfo']
 <br/>
 <br/>
 
-Your requested schedule is not available, please select your new schedule <a href="<?php echo $base_url . 'users/login?to=' . urlencode($base_url . 'legalcases/reschedule_conference/'. $Event['Event']['id'] . '/not_available');?>">here</a>.$base_url . '
+Your requested schedule is not available, please select your new schedule <a href="<?php echo $base_url . 'users/login?to=' . urlencode($base_url . 'legalcases/reschedule_conference/'. $Event['Event']['id'] . '/not_available');?>">here</a>.'
 <br/>
 <br/>
 
