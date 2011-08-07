@@ -100,7 +100,7 @@ class PaymentsController extends AppController {
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = 'E-Lawyers Online - Per Query Payment Confirmation';
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = 'payment_confirmation'; // note no '.ctp'
@@ -362,7 +362,7 @@ class PaymentsController extends AppController {
 		$this->Email->to               = $this->admin_email;
 		//$this->Email->bcc              = array('gino.carlo.cortez@gmail.com'); 
 		$this->Email->subject          = 'E-Lawyers Online - ' . $subject;
-		$this->Email->replyTo          = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo          = 'no-reply@e-lawyersonline.com';
 		$this->Email->from             = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template         = 'admin_payment_confirmation'; // note no '.ctp'
@@ -396,7 +396,7 @@ class PaymentsController extends AppController {
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = "E-Lawyers Online - $subject";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = $template; // note no '.ctp'
@@ -421,7 +421,7 @@ class PaymentsController extends AppController {
 			'case_id' => $_POST['case_id'],
 			'case_detail_id' => $_POST['case_detail_id'],
 			'option' => 'Paypal',
-			'amount' => $this->_get_legal_service_fee($_POST['case_detail_id'])
+			'amount' => $_POST['amount']
 			);
 		
 		// Save Bank Details

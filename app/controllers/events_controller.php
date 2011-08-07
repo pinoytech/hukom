@@ -605,7 +605,7 @@ class EventsController extends AppController {
 	// 		$this->Email->to       = $User['User']['username'];
 	// 		$this->Email->bcc      = $this->admin_email;  
 	// 		$this->Email->subject  = "E-Lawyers Online - $subject";
-	// 		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+	// 		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 	// 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 	// 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 	// 		$this->Email->template = $template; // note no '.ctp'
@@ -658,7 +658,7 @@ class EventsController extends AppController {
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = "E-Lawyers Online - $subject";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = $template; // note no '.ctp'
@@ -704,7 +704,7 @@ class EventsController extends AppController {
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = "E-Lawyers Online - $subject";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = $template; // note no '.ctp'
@@ -771,7 +771,7 @@ class EventsController extends AppController {
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = "E-Lawyers Online - $subject";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = 'request_reschedule_not_available_confirmation'; // note no '.ctp'
@@ -803,7 +803,7 @@ class EventsController extends AppController {
 		$this->Email->to       = $User['User']['username'];
 		$this->Email->bcc      = $this->admin_email;  
 		$this->Email->subject  = "E-Lawyers Online - $subject";
-		$this->Email->replyTo  = 'no-reply@e-laywersonline.com';
+		$this->Email->replyTo  = 'no-reply@e-lawyersonline.com';
 		$this->Email->from     = 'E-Lawyers Online <info@e-lawyersonline.com>';
 		$this->Email->additionalParams = '-finfo@e-lawyersonline.com';
 		$this->Email->template = $template; // note no '.ctp'

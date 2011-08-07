@@ -683,10 +683,11 @@ function online_legal_consulation_agreement_form(id, case_id, case_detail_id) {
 				$('#accept').attr('checked', false);
 			}
 		});
+		
 	});
 }
 
-function mode_of_payment_form(id, case_id, case_detail_id, payment_option) {
+function mode_of_payment_form(id, case_id, case_detail_id, payment_option, legal_service) {
 	$('document').ready(function() {
 		//Assign radio value
 		$('.option_radio').filter('[value="' + payment_option + '"]').attr('checked', true);
@@ -710,17 +711,36 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option) {
 				  	'Proceed Payment': function() {
 							// Save Paypal details to Payment
 							if (option_value == 'paypal') {
-								$.ajax({
-				        	type: "POST", 
-				          url: "/payments/create_paypal_payment",
-				          data: 'id=' + id + '&case_id=' + case_id + '&case_detail_id=' + case_detail_id,
-				          success: function(msg) {
-										document.forms['payment_summary'].submit(); 
-				          },
-				          error: function() {
-										alert("An error occured while updating. Try again in a while");
-				          }
-								});
+
+                if (legal_service == 'Monthly Retainer' || legal_service == 'Case/Project Retainer') {
+                                    
+                  $('#monthly_case_payment_input').dialog({
+          					autoOpen: false,
+          					width: 500,
+          					height: 200,
+          				  modal: true,
+          					resizable: false,
+          					buttons: {
+          					  'OK': function() {
+          					    
+          					    if ($('#paypal_amount').val() != '') {
+          					      $('#amount_1').val($('#paypal_amount').val());
+          					      submit_to_paypal(id, case_id, case_detail_id, $('#amount_1').val());
+          					    }
+          					    else {
+          					      alert('Please input amount');
+          					    }
+        					    }
+          					}
+          				});
+
+  							  $("#monthly_case_payment_input").dialog("open");
+
+                }
+                else {
+                  submit_to_paypal(id, case_id, case_detail_id, $('#amount_1').val());
+                }
+
 							}
 							else {
 				      	document.forms['PaymentModeOfPaymentForm'].submit();
@@ -736,6 +756,20 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option) {
 			
 			}
 		});
+		
+		function submit_to_paypal(id, case_id, case_detail_id, amount) {
+		  $.ajax({
+        type: "POST", 
+        url: "/payments/create_paypal_payment",
+        data: 'id=' + id + '&case_id=' + case_id + '&case_detail_id=' + case_detail_id + '&amount=' + amount,
+        success: function(msg) {
+          document.forms['payment_summary'].submit(); 
+        },
+        error: function() {
+          alert("An error occured while updating. Try again in a while");
+        }
+      });
+		}
 
 		// $('#payment-instructions').tabs();
 		
@@ -766,6 +800,7 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option) {
 				}
 		});
 		
+    
 	});
 }
 
@@ -1310,3 +1345,14 @@ function time_diff_military_time(start, end) {
 
 	return diff;
 }
+
+function numeralsOnly(evt) {
+       evt = (evt) ? evt : event;
+      var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode :
+         ((evt.which) ? evt.which : 0));
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+         alert("Enter numerals only in this field.");
+         return false;
+        }
+         return true;
+ }

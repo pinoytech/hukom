@@ -56,6 +56,7 @@ $paypal_payment_instructions =
 <li>After our acceptance of payment, you will also receive an email from E-Lawyers Online of the confirmation of your payment and subsequently the legal services requested.</li>
 <li>If you do not have a PAYPAL ACCOUNT, please click <a style="color:blue" href="/pages/paypal_payment/" target="_blank">here</a> to know more about creating a PayPal Account.</li>
 </ol>
+
 ';
 
 $gcash_payment_instructions =
@@ -138,6 +139,15 @@ $smartmoney_payment_instructions =
 </div>
 
 
+<div id="monthly_case_payment_input" class="hidden" title="Input Retainer Amount">
+    <div style="padding-top:20px;">
+	<center>
+	    <p>Please input the agreed amount of <?php echo $legal_service;?> Fee</p>
+        Php <input type="text" name="paypal_amount" id="paypal_amount" onkeypress="return numeralsOnly(event)">
+	</center>
+	</div>
+</div>
+
 <div id="full-content">
 	<div id="main">
 		
@@ -202,7 +212,7 @@ $smartmoney_payment_instructions =
                 <input type="hidden" name="return" id="return" value="<?php echo $base_url;?>/payments/payment_confirmation/<?php echo $id . '/' . $case_id . '/' . $case_detail_id . '/' . 'null/paypal'; ?>">
                 <input type="hidden" name="rm" value="2">
                 <input type="hidden" name="no_shipping" value="1">
-                <input type="hidden" name="item_name_1" value="E-Laywers Online">
+                <input type="hidden" name="item_name_1" value="E-Lawyers Online">
                 <input type="hidden" name="amount_1" id="amount_1" value="<?php echo $fee; ?>">
                 <input type="hidden" name="quantity_1" value="1">
                 <!-- <input type="hidden" name="image_url" value="<?php echo $base_url;?>registration/paypal-banner.jpg"> -->
@@ -256,5 +266,5 @@ $smartmoney_payment_instructions =
 
 <?php
 $payment_option = $this->data['Payment']['option'];
-$html->scriptBlock("mode_of_payment_form('$id', '$case_id', '$case_detail_id', '$payment_option');", array('inline'=>false));
+$html->scriptBlock("mode_of_payment_form('$id', '$case_id', '$case_detail_id', '$payment_option', '$legal_service');", array('inline'=>false));
 ?>
