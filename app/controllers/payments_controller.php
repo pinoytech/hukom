@@ -264,7 +264,7 @@ class PaymentsController extends AppController {
             // debug($this->data);
 		}
 		
-		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id/bankdeposit";
+		$upload_folder = $this->uploads_path . "$id/$case_id/$case_detail_id/bankdeposit";
 		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
@@ -313,7 +313,7 @@ class PaymentsController extends AppController {
 
 		// debug($Legalcase);
 		
-		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id/bankdeposit";
+		$upload_folder = $this->uploads_path . "$id/$case_id/$case_detail_id/bankdeposit";
 
 		$this->set('Payment', $Payment);
 		$this->set('id', $id);

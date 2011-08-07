@@ -100,16 +100,13 @@ class UsersController extends AppController {
 				$this->_sendNewUserMail( $this->User->id );
 				
 				//Create User_ID Folder 
-				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->User->id; 
+				$file = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path . $this->User->id; 
 				mkdir($file);
 				chmod($file, 0755);
-				
-				debug($file);
-				exit;
-				
+								
 				if ($this->data['User']['type'] == 'corporation') {
 				    //Create Attachments Folder for Corporate Accounts
-    				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->User->id . '/attachments'; 
+    				$file = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path . $this->User->id . '/attachments'; 
     				mkdir($file);
     				chmod($file, 0755);
 				}
@@ -674,7 +671,7 @@ class UsersController extends AppController {
 		
         // debug($this->data);
 		
-		$upload_folder = "/app/webroot/uploads/$id/attachments";
+		$upload_folder = $this->uploads_path . "$id/attachments";
 		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
@@ -716,7 +713,7 @@ class UsersController extends AppController {
 		$case_detail_id = $this->Legalcasedetail->id;
 		
 		//Create Legalcase_id Folder
-		$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $user_id . '/' . $case_id . '/' . $case_detail_id; 
+		$file = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path . $user_id . '/' . $case_id . '/' . $case_detail_id; 
 		$this->Custom->create_folder($file);
 		
 		return $case_detail_id;

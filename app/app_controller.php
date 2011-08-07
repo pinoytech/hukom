@@ -2,9 +2,12 @@
 class AppController extends Controller {
     // var $components = array('Acl', 'Auth', 'Session', 'DebugKit.Toolbar');
     var $components = array('Acl', 'Auth', 'Session');
+    // var $components = array('Acl', 'Auth', 'Session');
     var $helpers = array('Html', 'Form', 'Session');
     // var $admin_email = array('gino.carlo.cortez@gmail.com');
     var $admin_email = array('gino.carlo.cortez@gmail.com', 'attyvalderama@gmail.com', 'redgfernandez@yahoo.com', 'redgfernandez@gmail.com');
+    
+    var $uploads_path = '/app/webroot/uploads/';
 	
 	function beforeFilter() {
         //Configure AuthComponent
@@ -58,10 +61,13 @@ class AppController extends Controller {
 			
 		}
 		
+		
+		
 		//Set global user variable for View (i.e. navigation)
 		$this->set('auth_user_type', $this->Auth_user['User']['type']);
 		$this->set('auth_user_id', $this->Auth_user['User']['id']);
 		$this->set('base_url', 'http://'.$_SERVER['SERVER_NAME'].Router::url('/'));
+		$this->set('uploads_path', $this->uploads_path);
     }
     
     function afterFilter() {        

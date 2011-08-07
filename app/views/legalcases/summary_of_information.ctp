@@ -137,7 +137,7 @@
 					<td class="label">Attached Document/s:</td>
 					<td class="actions">
 				    	<?php
-				    	$upload_folder = '/app/webroot/uploads/' . $Legalcasedetail['Legalcasedetail']['user_id'] . '/' . $Legalcasedetail['Legalcasedetail']['case_id'] . '/' . $Legalcasedetail['Legalcasedetail']['id'];
+				    	$upload_folder = $uploads_path . $Legalcasedetail['Legalcasedetail']['user_id'] . '/' . $Legalcasedetail['Legalcasedetail']['case_id'] . '/' . $Legalcasedetail['Legalcasedetail']['id'];
 						$files = $custom->show_files($upload_folder);
                         // echo debug($files);  
 						

@@ -103,7 +103,7 @@ class LegalcasesController extends AppController {
 		//Get User_id
 		$Legalcase = $this->Legalcase->find('first', array('condtions' => array('Legalcase.id' => $id)));
 
-		$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $Legalcase['Legalcase']['user_id'] . '/' . $id;
+		$file = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path . $Legalcase['Legalcase']['user_id'] . '/' . $id;
 
 		if ($this->Legalcase->delete($id)) {
 			$this->Session->setFlash(__('Case deleted', true));
@@ -156,7 +156,7 @@ class LegalcasesController extends AppController {
 			if ($this->Legalcase->save($this->data)) {
 				
 				//Create Legalcase_id Folder
-				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id; 
+				$file = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id; 
 				$this->Custom->create_folder($file);
 				
 				// $this->Session->setFlash(__('Case Information has been saved', true));
@@ -350,7 +350,7 @@ class LegalcasesController extends AppController {
 				$case_detail_id = $this->Legalcasedetail->id;
 				
 				//Create Legalcase_id Folder
-				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id . '/' . $case_detail_id; 
+				$file = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id . '/' . $case_detail_id; 
 				$this->Custom->create_folder($file);
 				
 				//Send Email to Admin		
@@ -511,7 +511,7 @@ class LegalcasesController extends AppController {
 				}
 				
 				//Create Legalcase_id Folder
-				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id . '/' . $case_detail_id; 
+				$file = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path . $this->data['Legalcase']['user_id'] . '/' . $this->Legalcase->id . '/' . $case_detail_id; 
 				$this->Custom->create_folder($file);
 				
 				$this->redirect(array('action' => 'summary_of_facts', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $case_detail_id));
@@ -591,7 +591,7 @@ class LegalcasesController extends AppController {
 		}
 		*/
 		
-		$upload_folder = "/app/webroot/uploads/$id/$case_id/$case_detail_id";
+		$upload_folder = $this->uploads_path . "$id/$case_id/$case_detail_id";
 		
 		$this->set('id', $id);
 		$this->set('case_id', $case_id);
@@ -716,7 +716,7 @@ class LegalcasesController extends AppController {
     		$case_detail_id = $this->Legalcasedetail->id;
     		
     		//Create Legalcase_id Folder
-			$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->data['Legalcasedetail']['user_id'] . '/' . $this->data['Legalcasedetail']['case_id'] . '/' . $case_detail_id; 
+			$file = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path . $this->data['Legalcasedetail']['user_id'] . '/' . $this->data['Legalcasedetail']['case_id'] . '/' . $case_detail_id; 
 			$this->Custom->create_folder($file);
 			
 			$this->Session->write('new_facts', true);

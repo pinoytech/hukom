@@ -51,7 +51,7 @@ class LegalcasedetailsController extends AppController {
 		
         // debug($Legalcasedetail);
 		
-        $upload_folder = "/app/webroot/uploads/"  . $Legalcasedetail['User']['id'] . "/" . $Legalcasedetail['Legalcasedetail']['case_id'] . "/" . $Legalcasedetail['Legalcasedetail']['id'];
+        $upload_folder = $this->uploads_path . $Legalcasedetail['User']['id'] . "/" . $Legalcasedetail['Legalcasedetail']['case_id'] . "/" . $Legalcasedetail['Legalcasedetail']['id'];
         $this->set('files', $this->Custom->show_files($upload_folder));
         $this->set('upload_folder', $upload_folder);
 	}

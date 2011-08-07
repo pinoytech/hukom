@@ -190,7 +190,7 @@ class DashboardController extends AppController {
         // debug($Legalcasedetail);
         // exit;
         
-        echo $upload_folder = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $Legalcasedetail['Legalcasedetail']['user_id'] . '/' . $Legalcasedetail['Legalcasedetail']['case_id'] . '/' . $Legalcasedetail['Legalcasedetail']['id'];
+        echo $upload_folder = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path . $Legalcasedetail['Legalcasedetail']['user_id'] . '/' . $Legalcasedetail['Legalcasedetail']['case_id'] . '/' . $Legalcasedetail['Legalcasedetail']['id'];
         
         $files = $this->Custom->list_folder_files($upload_folder);
         
@@ -204,11 +204,11 @@ class DashboardController extends AppController {
 
         $this->Zip->create_zip_modified($files_to_zip, 'zip-you.zip', true);
         
-        // $this->Zip->create_zip($files_to_zip, $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/test.zip', true);
+        // $this->Zip->create_zip($files_to_zip, $_SERVER{'DOCUMENT_ROOT'} . 'uploads_pathtest.zip', true);
         
         // $file_names        = $files_to_zip;
         // $archive_file_name = 'zipped.zip';
-        // $file_path         = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/';
+        // $file_path         = $_SERVER{'DOCUMENT_ROOT'} . $this->uploads_path;
 
         // $this->Zip->zipFilesAndDownload($file_names,$archive_file_name,$upload_folder);
         
