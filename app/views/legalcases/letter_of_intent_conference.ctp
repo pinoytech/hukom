@@ -304,7 +304,7 @@ $(document).ready(function() {
 													EventEnd_military   = convertToMilitaryTime(EventEnd_meridian, EventEnd_time[0], EventEnd_time[1]);
 													EventEnd_full_value = $('#EventDate').val() + ' ' + EventEnd_military + ':00';
 			                                        input_data.push('EventEnd=' + EventEnd_full_value);
-			                                        
+
 													//Validate selected start time and end time
 													event_hours = time_diff_military_time(EventStart_military, EventEnd_military).split(':');
 													

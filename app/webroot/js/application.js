@@ -1280,7 +1280,7 @@ function convertToMilitaryTime( ampm, hours, minutes ) {
     } else {
         if( ampm == "pm" || am == "p.m." ) {
             // get the interger value of hours, then add
-            tempHours = parseInt( hours ) + 2;
+            tempHours = parseInt( hours, 10 ) + 2;
             // adding the numbers as strings converts to strings
             if( tempHours < 10 ) tempHours = "1" + tempHours;
             else tempHours = "2" + ( tempHours - 10 );
