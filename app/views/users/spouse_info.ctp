@@ -36,7 +36,7 @@
 					echo '</div>';
 					
 					echo '<div class="row two-field">';
-					echo $this->Form->input('SpouseInfo.birth_date', array('type' => 'text', 'class' => 'required birth_date'));
+					echo $this->Form->input('SpouseInfo.birth_date', array('type' => 'text', 'class' => 'required birth_date', 'readonly' => true));
 					echo $this->Form->input('SpouseInfo.birth_place', array('label' => 'Place of Birth', 'class' => 'required'));
 					echo '</div>';
 					
@@ -77,7 +77,7 @@
 				<table>
     				<tr>
     					<td>
-    						<input type="button" id="back" class="button-back" value="" />
+    						<input type="submit" id="back" class="button-back" value="" />
     					</td>
     					<td>
         				    <?php
@@ -90,7 +90,7 @@
                     		    $button_id = 'save';
                     		}
         				    ?>
-                    		<input type="button" id="<?php echo $button_id;?>" class="next-save <?php echo $button_class;?>" value="" />
+                    		<input type="submit" id="<?php echo $button_id;?>" class="next-save <?php echo $button_class;?>" value="" />
         				</td>
     				</tr>
     			</table>

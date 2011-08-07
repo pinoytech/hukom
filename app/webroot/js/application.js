@@ -172,14 +172,11 @@ function spouse_info_form(id, case_id, case_detail_id) {
 		           return false;
 		        }
 			}
-			else{
-				jQuery('form').submit();
-			}
+		
 		});
 
 		jQuery('.next-save').click(function() {
 			jQuery('#goto').val('children_info');
-			jQuery('form').submit();
 		});
 	});
 }
@@ -263,17 +260,14 @@ function children_info_form() {
 		//Submit button logic
 		jQuery('#back').click(function() {
 			jQuery('#goto').val('personal_info');
-			jQuery('form').submit();
 		});
 	
 		jQuery('#next').click(function() {
 			jQuery('#goto').val('legal_problem');
-			jQuery('form').submit();
 		});
 	
 		jQuery('#save').click(function() {
 			jQuery('#goto').val('profilesave');
-			jQuery('form').submit();
 		});
 		
 		$('.add-child-button').mouseover(function() {
@@ -421,9 +415,9 @@ function legal_problem_form(action, id, case_id, case_detail_id, legal_problem) 
 			window.location = '/users/' + action + '/' + id + '/' + case_id + '/' + case_detail_id;
 		});
 
-		jQuery('#next').click(function() {
-			jQuery('form').submit();
-		});
+		// jQuery('#next').click(function() {
+		//      jQuery('form').submit();
+		//    });
 	
 		jQuery('.legal_problem_radio').click(function() {
 			if (jQuery(this + ':checked')){
@@ -503,14 +497,14 @@ function summary_of_facts_form(id, case_id, case_detail_id, upload_folder) {
 		           return false;
 		        }
 			}
-			else{
-				$('form').submit();
-			}
+
+			$('form').submit();
+
 		});
 
 		$('#next').click(function() {
 			$('#goto').val('objectives_questions');
-			$('form').submit();
+      // $('form').submit();
 		});
     
     uploadify_init(upload_folder);
@@ -580,14 +574,14 @@ function objectives_questions_form(id, case_id, case_detail_id) {
 		    	return false;
 				}
 			}
-			else{
-				$('form').submit();
-			}
+			
+			$('form').submit();
+			
 		});
 
 		$('#next').click(function() {
 			$('#goto').val('summary_of_information');
-			$('form').submit();
+      // $('form').submit();
 		});
 
 	});
@@ -793,14 +787,11 @@ function bank_deposit_form(id, case_id, case_detail_id, upload_folder) {
 					return false;
 				}
 			}
-			else{
-				$('form').submit();
-			}
+
 		});
 
 		$('#next').click(function() {
 			$('#goto').val('bank_deposit_summary');
-			$('form').submit();
 		});
 
     uploadify_init(upload_folder);
@@ -866,14 +857,11 @@ function gcash_form(id, case_id, case_detail_id) {
 		    	return false;
 				}
 			}
-			else{
-				$('form').submit();
-			}
+			
 		});
 
 		$('#next').click(function() {
 			$('#goto').val('payment_confirmation');
-			$('form').submit();
 		});
 
 	});
@@ -897,14 +885,11 @@ function check_cash_form(id, case_id, case_detail_id) {
 		    	return false;
 				}
 			}
-			else{
-				$('form').submit();
-			}
+			
 		});
 
 		$('#next').click(function() {
 			$('#goto').val('payment_confirmation');
-			$('form').submit();
 		});
 
 	});
@@ -951,25 +936,18 @@ function corporate_partnership_info(id, case_id, upload_folder) {
         	return false;
         }
 			}
-			else{
-				$('form').submit();
-			}
+
 		});
 
-		//Submit button logic
-		$('#back').click(function() {
-			$('#goto').val('corporate_partnership_representative_info');
-			$('form').submit();
-		});
 
 		$('#next').click(function() {
 			$('#goto').val('legal_problem');
-			$('form').submit();
+      // $('form').submit();
 		});
 
 		$('#save').click(function() {
 			$('#goto').val('legalcases');
-			$('form').submit();
+      // $('form').submit();
 		});
 
 		//Attach Fill Out Form

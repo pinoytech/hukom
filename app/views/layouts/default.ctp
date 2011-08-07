@@ -100,6 +100,6 @@
     	&copy; Copyright 2011 e-Lawyersonline. All Rights Reserved.
     </div>
     <!-- Footer -->
-    <?php echo $this->element('sql_dump'); ?>
+    <?php //echo $this->element('sql_dump'); ?>
 </body>
 </html>

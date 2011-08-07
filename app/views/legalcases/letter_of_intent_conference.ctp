@@ -50,7 +50,7 @@
 <div id="event-data-add" title="Schedule Conference" class="hidden">
     <?php
     echo $form->create('Event', array('target'=> '_parent'));
-    echo $form->input('title' , array('label' => 'ID', 'type'=>'text', 'value' => $case_id .' '. $custom->get_first_last_name($id), 'readonly' => true));
+    echo $form->input('title' , array('label' => 'ID', 'type'=>'text', 'value' => $id .'-'. $case_id , 'readonly' => true));
     echo $form->input('date', array('type'=>'text', 'readonly' => true));
     echo $form->input('start', array('options' => $custom->calendar_time_select()));
     echo $form->input('end', array('options' => $custom->calendar_time_select()));

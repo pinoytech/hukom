@@ -47,7 +47,7 @@
 						<input type="button" id="back" class="button-back" value="" />
 					</td>
 					<td>
-						<input type="button" id="next" class="button-next" value="" />
+						<input type="submit" id="next" class="button-next" value="" />
 					</td>
 				</tr>
 			</table>
@@ -75,14 +75,10 @@ jQuery('document').ready(function() {
 	           return false;
 	        }
 		}
-		else{
-			jQuery('form').submit();
-		}
 	});
 
 	jQuery('#next').click(function() {
 		jQuery('#goto').val('payment_confirmation');
-		jQuery('form').submit();
 	});
 	
 });

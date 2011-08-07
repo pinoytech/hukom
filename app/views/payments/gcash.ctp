@@ -47,7 +47,7 @@
 						<input type="button" id="back" class="button-back" value="" />
 					</td>
 					<td>
-						<input type="button" id="next" class="button-next" value="" />
+						<input type="submit" id="next" class="button-next" value="" />
 					</td>
 				</tr>
 			</table>

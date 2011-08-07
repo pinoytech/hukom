@@ -334,7 +334,7 @@ $(document).ready(function() {
         	                            }
 
                                         $('#EventDate').val($.fullCalendar.formatDate(date, "yyyy-MM-dd"));
-                                        $('#EventTitle').val(request_ids[5]);
+                                        $('#EventTitle').val(request_ids[1] + '-' + request_ids[2]);
                                         $('#EventEventId').val(request_ids[0]);
                                         $('#EventUserId').val(request_ids[1]);
                                         $('#EventCaseId').val(request_ids[2]);

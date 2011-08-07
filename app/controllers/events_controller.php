@@ -26,6 +26,9 @@ class EventsController extends AppController {
 	}
 	
 	function admin_index() {
+	    
+        // debug($this->Auth_user);
+	    
 		$this->set('id', $this->Auth_user['User']['id']);
 		$this->set('dialog', false);
 		$this->set('case_id', 1);
@@ -139,15 +142,27 @@ class EventsController extends AppController {
 	}
 	
 	function _create_json_array($events) {
+        	    
+        // debug($events);
+        	    
 		$rows = array();
         for ($a=0; count($events)> $a; $a++) {
             //Is it an all day event?
-            $all = ($events[$a]['Event']['allday'] == 1);
+            $all = ($events[$a]['Event']['allDay'] == 1);
+            
+            //Assign Event Title
+            if ($this->Auth_user['User']['group_id'] == 1) {
+                                
+                $title = $events[$a]['Event']['title'] .' ('. ucfirst($events[$a]['PersonalInfo']['first_name'] . ' ' . $events[$a]['PersonalInfo']['last_name'] .')');
+            }
+            else {
+                $title = $events[$a]['Event']['title'];
+            }
 
             //Create an event entry
             $rows[] = array(
 				'id'     => $events[$a]['Event']['id'],
-				'title'  => ucfirst($events[$a]['Event']['title']),
+				'title'  => $title,
 				'start'  => date('Y-m-d H:i', strtotime($events[$a]['Event']['start'])),
 				'end'    => date('Y-m-d H:i',strtotime($events[$a]['Event']['end'])),
 				'allDay' => $all,
@@ -160,18 +175,40 @@ class EventsController extends AppController {
 	}
 	
 	function feed() {
+	    
+	    $options['fields'] = array(
+	       'Event.id',
+	       'Event.title',
+	       'Event.start',
+	       'Event.end',
+	       'Event.allDay',
+	       'Event.color',
+	       'Event.case_detail_id',
+	       'PersonalInfo.first_name',      
+	       'PersonalInfo.last_name',      
+	    );
+	    
+	    $options['joins'] = array(
+		    array('table' => 'personal_infos',
+		        'alias' => 'PersonalInfo',
+		        'type' => 'LEFT',
+		        'conditions' => array(
+		            'PersonalInfo.user_id = Event.user_id',
+		        )
+		    ),
+    	);
+	    
         //1. Transform request parameters to MySQL datetime format.
         $mysqlstart = date( 'Y-m-d H:i:s', $this->params['url']['start']);
         $mysqlend   = date('Y-m-d H:i:s', $this->params['url']['end']);
 
         //2. Get the events corresponding to the time range
-        $conditions = array('Event.start BETWEEN ? AND ?' => array($mysqlstart,$mysqlend), 
-            // 'Event.status' => 'active'
-        );
-
-        $events = $this->Event->find('all',array('conditions' =>$conditions));
+        // $conditions = array('Event.start BETWEEN ? AND ?' => array($mysqlstart,$mysqlend), 
+        $options['conditions'] = array('Event.start BETWEEN ? AND ?' => array($mysqlstart,$mysqlend));
+        
+        $events = $this->Event->find('all', $options);
 		
-		// debug($events);
+        // debug($events);
 		
         //3. Create the json array
         $rows = $this->_create_json_array($events);

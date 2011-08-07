@@ -238,9 +238,15 @@ $smartmoney_payment_instructions =
             	<div id="tabs-4">
             		<p><?php echo $smartmoney_payment_instructions; ?></p>        	
             	</div>
+            	<?php
+			    if ($legal_service == 'Monthly Retainer') {
+			    ?>
             	<div id="tabs-5">
             		<p><?php echo $check_cash_payment_instructions; ?></p>        	
             	</div>
+            	<?php
+		        }
+			    ?>
             </div>
         
         </div>

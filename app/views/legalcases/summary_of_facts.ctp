@@ -31,7 +31,6 @@
 					<em>*You can prepare your summary of facts in Microsoft Word then copy and paste in this text area.</em>
 				</div>
 				<?php echo $this->Form->input('goto', array('type' => 'hidden', 'id' => 'goto'));?>
-			</form>
 			
 			<div>
 				<b>Attach Document/s:</b>&nbsp;
@@ -62,13 +61,13 @@
                     if (!$this->Session->read('new_facts')) {
                     ?>
                     <td>
-                        <input type="button" id="back" class="button-back" value="" />
+                        <input type="submit" id="back" class="button-back" value="" />
                     </td>
                     <?php
                     }
                     ?>
 					<td>
-						<input type="button" id="next" class="button-next" value="" />
+						<input type="submit" id="next" class="button-next" value="" />
 					</td>
 				</tr>
 			</table>			
