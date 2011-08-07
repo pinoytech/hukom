@@ -53,9 +53,9 @@
 					                    <div id="new_case_old_type_yes">
 					                        Case ID: <select name="data[Legalcase][mother_case_id]">
 					                        <?php
-					                        foreach ($case_id_list as $case_id_lists) {
+					                        foreach ($case_id_list as $key => $value) {
 					                        ?>
-					                            <option value="<?php echo $case_id_lists ;?>"><?php echo $case_id_lists ;?></option>
+					                            <option value="<?php echo $key ;?>"><?php echo $value ;?></option>
 					                        <?php
 					                        }
 					                        ?>
@@ -84,14 +84,13 @@
 					                    <input type="radio" class="pending_case_old_type" name="data[Legalcase][new_pending_type]" value="yes">YES <input type="radio" class="pending_case_old_type" name="data[Legalcase][new_pending_type]" value="no">NO
 					                    <div id="pending_case_old_type_yes">
 					                        Case ID: <select name="data[Legalcase][mother_case_id]">
-					                        <?php
-					                        					                        
-					                        foreach ($case_id_list as $key => $value) {
-					                        ?>
-					                            <option value="<?php echo $key ;?>"><?php echo $value ;?></option>
-					                        <?php
-					                        }
-					                        ?>
+					                            <?php
+    					                        foreach ($case_id_list as $key => $value) {
+    					                        ?>
+    					                            <option value="<?php echo $key ;?>"><?php echo $value ;?></option>
+    					                        <?php
+    					                        }
+    					                        ?>
 					                        </select>
 					                    </div>
 					                    <div id="pending_case_old_type_no">
@@ -124,13 +123,13 @@
 				                    <input type="radio" class="new_project_old_type" name="data[Legalcase][new_pending_type]" value="yes">YES <input type="radio" class="new_project_old_type" name="data[Legalcase][new_pending_type]" value="no">NO
 				                    <div id="new_project_old_type_yes">
 				                        Case ID: <select name="data[Legalcase][mother_case_id]">
-				                        <?php
-				                        foreach ($case_id_list as $case_id_lists) {
-				                        ?>
-				                            <option value="<?php echo $case_id_lists ;?>"><?php echo $case_id_lists ;?></option>
-				                        <?php
-				                        }
-				                        ?>
+				                            <?php
+					                        foreach ($case_id_list as $key => $value) {
+					                        ?>
+					                            <option value="<?php echo $key ;?>"><?php echo $value ;?></option>
+					                        <?php
+					                        }
+					                        ?>
 				                        </select>
 				                    </div>
 				                    
@@ -152,13 +151,13 @@
 					                    <input type="radio" class="pending_project_old_type" name="data[Legalcase][new_pending_type]" value="yes">YES <input type="radio" class="pending_project_old_type" name="data[Legalcase][new_pending_type]" value="no">NO
 					                    <div id="pending_project_old_type_yes">
 					                        Case ID: <select name="data[Legalcase][mother_case_id]">
-					                        <?php
-					                        foreach ($case_id_list as $case_id_lists) {
-					                        ?>
-					                            <option value="<?php echo $case_id_lists ;?>"><?php echo $case_id_lists ;?></option>
-					                        <?php
-					                        }
-					                        ?>
+					                            <?php
+    					                        foreach ($case_id_list as $key => $value) {
+    					                        ?>
+    					                            <option value="<?php echo $key ;?>"><?php echo $value ;?></option>
+    					                        <?php
+    					                        }
+    					                        ?>
 					                        </select>
 					                    </div>
 					                    <div id="pending_project_old_type_no">
