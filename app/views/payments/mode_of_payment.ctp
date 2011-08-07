@@ -210,7 +210,7 @@ $smartmoney_payment_instructions =
                 <!-- <input type="hidden" name="business" value="pao_paypal_account@yahoo.com"> -->
                 <input type="hidden" name="upload" value="1">
                 <?php $return_link = $base_url . 'payments/payment_confirmation/' .  $id . '/' . $case_id . '/' . $case_detail_id . '/' . 'null/paypal'; ?>
-                <input type="hidden" name="return" id="return" value="https://e-lawyersonline.com/login?=<?php urlencode($return_link);?>">
+                <input type="hidden" name="return" id="return" value="https://e-lawyersonline.com/login?=<?php echo urlencode($return_link);?>">
                 <input type="hidden" name="rm" value="2">
                 <input type="hidden" name="no_shipping" value="1">
                 <input type="hidden" name="item_name_1" value="E-Lawyers Online">

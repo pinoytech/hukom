@@ -46,13 +46,13 @@
 			}
 			?>
 			<li><br />
-                <a href="#" class="icon-space fr">
+                <a href="http://www.linkedin.com/groups?gid=3995143&trk=hb_side_g" target="_blank" class="icon-space fr">
                     <img src="/img/icon-in.jpg" alt="connect us" title="Connect Us on LinkedIn" />
                 </a>
-                <a href="#" class="icon-space fr">
+                <a href="http://twitter.com/#!/ELawyersOnline" target="_blank" class="icon-space fr">
                     <img src="/img/icon-tw.jpg" alt="follow us" title="Follow Us on Twitter" />
                 </a>
-                <a href="#" class="icon-space fr">
+                <a href="http://www.facebook.com/E.Lawyers.Online" target="_blank" class="icon-space fr">
                     <img src="/img/icon-fb.jpg" alt="like us" title="Like Us on Facebook" />
                 </a>
             </li>
