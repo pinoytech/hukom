@@ -104,6 +104,9 @@ class UsersController extends AppController {
 				mkdir($file);
 				chmod($file, 0755);
 				
+				debug($file);
+				exit;
+				
 				if ($this->data['User']['type'] == 'corporation') {
 				    //Create Attachments Folder for Corporate Accounts
     				$file = $_SERVER{'DOCUMENT_ROOT'} . '/app/webroot/uploads/' . $this->User->id . '/attachments'; 
