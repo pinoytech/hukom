@@ -7,7 +7,7 @@
             <h1><strong>Our SERVICES</strong></h1>
             <div>
               <div style="float:left; padding:0 25px 25px 0; width:130px; height:auto;"><img src="/img/ourservices_pic.jpg" width="130" height="196" border="0" /></div>
-              <div style="float:right; top:auto; text-align: left;">
+              <div style="float:left; width:590px; top:auto; text-align: left;">
                 <h2>The following are our services that we can provide to our clients, to wit:</h2>
                 <p><strong>PERSONAL &amp; FAMILY LAW:</strong></p>
                 <ul>

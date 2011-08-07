@@ -80,7 +80,7 @@
 		        	<br />
 		        	This is a common misconception among Filipinos regarding the legal concept of marriage and annulment here in the Philippines. My answer is that you cannot do that here in the Philippines. We sometimes encounter or hear this discussion from our relatives, friends and acquaintance with troubled marriages giving the notion that it is allowed under Philippine law for the parties to simply agree on the &#8220;hiwalayan&#8221; or dissolution of their marriage. To state it again, this is not allowed under Philippine law.
 		        </div>
-		        <a href="pages/everyday_law" class="read-more fr textindent">read more</a>
+		        <a href="/pages/everyday_law" class="read-more fr textindent">read more</a>
 		    </div>
 		</div>
 		<!-- Left Main -->
@@ -93,7 +93,7 @@
 		            <br />
 		            <em>&quot;Atty., my officemate commented in my Facebook account that &quot;I&#8217;m a whore!&quot;, can I sue her? </em>
 		        </div>
-		        <a href="pages/law_and_society" class="read-more fr textindent">read more</a>
+		        <a href="/pages/law_and_society" class="read-more fr textindent">read more</a>
 		    </div>
 
 		    <div class="law-updates-holder">
@@ -103,7 +103,7 @@
                       Before  the advent of computer age, we have been familiar with the use of documentary...
 
 		        </div>
-		        <a href="pages/law_updates" class="read-more fr textindent">read more</a>
+		        <a href="/pages/law_updates" class="read-more fr textindent">read more</a>
 		    </div>
 		</div>
 		<!-- Right Main -->

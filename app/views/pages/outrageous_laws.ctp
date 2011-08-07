@@ -12,8 +12,11 @@
               <p>It is  illegal to get a fish drunk in Pennsylvania (USA).</p>
               <p>There is a law in France to those wishing to use  a television must apply for a license (France).</p>
             </div><br /><br /><br />
+            <br />
+            <br />
+            <br />
             <div>
-              <h1><strong>OUTRAGEOUS LAWSUIT</strong>S</h1>
+              <h1><strong>OUTRAGEOUS LAWSUITS</h1>
               <h2>Michael Jordan sued by his look-alike for U.S.$892 Million damages</h2>
               <p>In July of 2006, a man claimed to be a Michael Jordan  look-alike by the name of Allen Heckard filed a lawsuit against &quot;His Airness&quot;  alleging that he suffered emotional trauma because of his resemblance to the  said sports idol. He filed his case at the Washington County Court in Oregon claiming  a $832 million dollar damages because of his long suffering of always being  mistaken as Michael Jordan. While he wears Air Jordan shoes, he gave an example  of his suffering being a Jordan look-alike during basketball games wherein his  opponent in the court always expect him to play like Jordan.</p>
               <h2>Robber Sued Homeowner Insurance for Being Trapped  By a Malfunctioning Door</h2>
