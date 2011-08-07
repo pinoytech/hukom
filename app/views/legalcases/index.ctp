@@ -91,12 +91,33 @@
 									<td class="actions">
 										<?php
 										
+										//Display Pay Now Button
+										$pay_now_button = false;
+										
 										// Check if user reached up to 'questions' form. This will trigger the 'Continue' action.
     									if ($Legalcasedetail['questions']) {
-    									    if (empty($payment_status)) {
-    									        echo $this->Html->link($this->Html->image('/img/paynowButton_up.png', array('class' => 'pay-now-button')), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
+                                            
+                                            if ($Legalcasedetail['legal_service'] == 'Monthly Retainer' || $Legalcasedetail['legal_service'] == 'Case/Project Retainer') {
+                                                
+                                                if ($Legalcasedetail['payment_reminder'] > 0) {
+                                                    $pay_now_button = true;
+                                                }
+                                                else {
+                                                    $pay_now_button = false;
+                                                }
+                                                
+                                                
+                                            }
+                                            else {
+                                                if (empty($payment_status)) {
+                                                    $pay_now_button = true;
+        									    }
+                                            }
+                                            
+                                            if ($pay_now_button) {
+                                                 echo $this->Html->link($this->Html->image('/img/paynowButton_up.png', array('class' => 'pay-now-button')), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
                                                 echo '<br />';
-    									    }
+                                            }
                                             
                                             $continue = false;
     									}
@@ -143,10 +164,12 @@
     											}
     											*/
     											
+    											/*
     											if (empty($payment_status)) {
         									        echo $this->Html->link($this->Html->image('/img/paynowButton_up.png', array('class' => 'pay-now-button')), array('controller' => 'payments', 'action' => $payment_option, $Legalcases['User']['id'], $Legalcasedetail['case_id'], $Legalcasedetail['id']), array('escape' => false));
                                                     echo '<br />';
         									    }
+        									    */
 
     											break;
 										    case "Case/Project Retainer":

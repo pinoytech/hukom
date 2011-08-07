@@ -229,6 +229,8 @@ class LegalcasesController extends AppController {
 		    
             // $this->redirect(array('controller' => 'LegalCases', 'action' => 'add'));
             
+            // debug($this->data)
+            // exit;
             
             //Case Retainer
             $mother_case_id = (isset($this->data['Legalcase']['mother_case_id']) ? $this->data['Legalcase']['mother_case_id'] : $this->data['Legalcase']['case_id']);

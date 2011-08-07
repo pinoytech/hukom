@@ -642,6 +642,7 @@ class UsersController extends AppController {
 			    
 			    //Case Retainer
 			    if ($this->Session->read('Legalcase.legal_service') == 'Case/Project Retainer') {
+			        $case_detail_id = $this->_create_case_detail($this->data['CorporatePartnershipInfo']['user_id'], $case_id);
 			        
 			        $this->loadModel('CaseRetainer');
                     $CaseRetainer = $this->CaseRetainer->find('first', array('conditions' => array('CaseRetainer.user_id' => $this->data['CorporatePartnershipInfo']['user_id'], 'CaseRetainer.case_id' => $case_id)));
