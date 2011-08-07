@@ -93,9 +93,14 @@
 										
 										$pay_now_button = false;
 										
+										//Monthly Retainer
                                         if ($Legalcasedetail['legal_service'] == 'Monthly Retainer') {
                                             if ($Legalcasedetail['payment_reminder'] > 0) {
                                                 $pay_now_button = true;
+                                            }
+                                            
+                                            if ($payment_status) {
+                                                $pay_now_button = false;
                                             }
                                         }
 
