@@ -203,11 +203,11 @@ $smartmoney_payment_instructions =
 		    </center>
 		    
 		    <!-- Paypal Form -->
-		    <form name="payment_summary" id="payment_summary" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-            <!-- <form name="payment_summary" id="payment_summary" action="https://www.paypal.com/cgi-bin/webscr" method="post"> -->
+		    <!-- <form name="payment_summary" id="payment_summary" action="https://www.paypal.com/cgi-bin/webscr" method="post"> -->
+            <form name="payment_summary" id="payment_summary" action="https://www.paypal.com/cgi-bin/webscr" method="post">
                 <input type="hidden" name="cmd" value="_cart">
-                <input type="hidden" name="business" value="info_1299852084_biz@e-lawyersonline.com">
-                <!-- <input type="hidden" name="business" value="pao_paypal_account@yahoo.com"> -->
+                <!-- <input type="hidden" name="business" value="info_1299852084_biz@e-lawyersonline.com"> -->
+                <input type="hidden" name="business" value="attyvalderama@yahoo.com">
                 <input type="hidden" name="upload" value="1">
                 <?php $return_link = $base_url . 'payments/payment_confirmation/' .  $id . '/' . $case_id . '/' . $case_detail_id . '/' . 'null/paypal'; ?>
                 <input type="hidden" name="return" id="return" value="https://e-lawyersonline.com/login?=<?php echo urlencode($return_link);?>">
