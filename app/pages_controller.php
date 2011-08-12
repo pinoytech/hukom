@@ -79,6 +79,8 @@ class PagesController extends AppController {
 			$title_for_layout = Inflector::humanize($path[$count - 1]);
 		}
 		
+		if ($page == 'marketing') $this->layout = 'marketing';
+		
 		//Set global user variable for View (i.e. navigation)
 		$this->set('auth_user_type', $this->Auth_user['User']['type']);
 		$this->set('id', $this->Auth_user['User']['id']);

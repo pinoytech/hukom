@@ -2512,7 +2512,7 @@ class DboSource extends DataSource {
 /**
  * Gets the length of a database-native column description, or null if no length
  *
- * @param string $real Real database-layer column type (i.e. "varchar(255)")
+ * @param string $real Real database-lawer column type (i.e. "varchar(255)")
  * @return mixed An integer or string representing the length of the column
  * @access public
  */

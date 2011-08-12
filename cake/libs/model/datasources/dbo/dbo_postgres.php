@@ -706,9 +706,9 @@ class DboPostgres extends DboSource {
 	}
 
 /**
- * Converts database-layer column types to basic types
+ * Converts database-lawer column types to basic types
  *
- * @param string $real Real database-layer column type (i.e. "varchar(255)")
+ * @param string $real Real database-lawer column type (i.e. "varchar(255)")
  * @return string Abstract column type (i.e. "string")
  */
 	function column($real) {
@@ -757,7 +757,7 @@ class DboPostgres extends DboSource {
 /**
  * Gets the length of a database-native column description, or null if no length
  *
- * @param string $real Real database-layer column type (i.e. "varchar(255)")
+ * @param string $real Real database-lawer column type (i.e. "varchar(255)")
  * @return int An integer representing the length of the column
  */
 	function length($real) {

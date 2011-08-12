@@ -371,9 +371,9 @@ class DboSqlite extends DboSource {
 	}
 
 /**
- * Converts database-layer column types to basic types
+ * Converts database-lawer column types to basic types
  *
- * @param string $real Real database-layer column type (i.e. "varchar(255)")
+ * @param string $real Real database-lawer column type (i.e. "varchar(255)")
  * @return string Abstract column type (i.e. "string")
  */
 	function column($real) {
