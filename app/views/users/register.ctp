@@ -51,8 +51,12 @@
 				echo $this->Form->input('User.password_confirm', array('label' => 'Retype Password', 'type' => 'password', 'value' => '', 'class' => 'required'));
 				echo $this->Form->input('PersonalInfo.gender', array('type' => 'select', 'options' => $custom->list_gender(), 'empty' => 'Select', 'class' => 'required'));
 				// echo $this->Form->input('PersonalInfo.birth_date', array('minYear' => '1900', 'maxYear' => date('Y'), 'empty' => 'Select', 'after' => '<input type="hidden" id="birth_date_check" class="required">', 'class' => 'birth_date'));
-				echo $this->Form->input('PersonalInfo.birth_date', array('type' => 'text', 'class' => 'birth_date required'));
-				echo $this->Form->input('User.referred_by', array('type' => 'text', 'div' => 'referred-by'));
+        echo $this->Form->input('PersonalInfo.birth_date', array('type' => 'text', 'class' => 'birth_date required'));
+        echo '<div class="input text" style="margin-top:0;font-size:11px;">
+          <label>&nbsp;</label>
+          (ex: 1974-12-31)
+        </div>';
+        echo $this->Form->input('User.referred_by', array('type' => 'text', 'div' => 'referred-by'));
 			?>
 				<input type="hidden" id="agree-checker">
 				<input type="submit" class="button-submit" value="">
