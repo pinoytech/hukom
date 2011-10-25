@@ -764,6 +764,7 @@ class UsersController extends AppController {
     $this->Acl->allow($group, 'controllers/Payments/smartmoney');
     $this->Acl->allow($group, 'controllers/Payments/check_cash');
     $this->Acl->allow($group, 'controllers/Payments/create_paypal_payment');
+    $this->Acl->allow($group, 'controllers/Payments/create_cashsense_payment');
     $this->Acl->allow($group, 'controllers/Events');
     $this->Acl->allow($group, 'controllers/Events/feed');
     $this->Acl->allow($group, 'controllers/Events/add');
