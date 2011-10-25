@@ -113,8 +113,7 @@ class UsersController extends AppController {
           chmod($file, 0755);
         }
 
-
-        //$this->redirect(array('controller' => 'pages', 'action' => 'thankyou'));
+        $this->redirect(array('controller' => 'pages', 'action' => 'thankyou'));
       } else {
         $this->Session->setFlash(__('Registration could not be completed. Please, try again.', true));
       }
