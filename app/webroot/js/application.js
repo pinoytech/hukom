@@ -687,7 +687,7 @@ function online_legal_consulation_agreement_form(id, case_id, case_detail_id) {
   });
 }
 
-function mode_of_payment_form(id, case_id, case_detail_id, payment_option, legal_service) {
+function mode_of_payment_form(id, case_id, case_detail_id, payment_option, legal_service, amount) {
   $('document').ready(function() {
     //Assign radio value
     $('.option_radio').filter('[value="' + payment_option + '"]').attr('checked', true);
@@ -704,29 +704,21 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option, legal
         var dialog_buttons = {};
         
         if (option_value == 'cashsense') {
-          dialog_buttons['Pay through Cashsense Over The Counter'] = function() {
+          dialog_buttons['Pay with Cashsense Over The Counter'] = function() {
             if (legal_service == 'Monthly Retainer' || legal_service == 'Case/Project Retainer') {
             }
             else {
-             $.get("/pages/create_cashsense_payment", {
-               'id' : id,
-               'case_id' : case_id,
-               'case_detail_id' : case_detail_id,
-               'amount' : ''
-              }, function(data) {});
+              cashsense_type = 'OTC';
+              submit_to_cashsense(id, case_id, case_detail_id, cashsense_type, amount);
             }
           }
 
-          dialog_buttons['Pay through Cashsense eWallet'] = function() {
+          dialog_buttons['Pay with Cashsense eWallet'] = function() {
             if (legal_service == 'Monthly Retainer' || legal_service == 'Case/Project Retainer') {
             }
             else {
-             $.get("/pages/create_cashsense_payment", {
-               'id' : id,
-               'case_id' : case_id,
-               'case_detail_id' : case_detail_id,
-               'amount' : ''
-              }, function(data) {});
+              cashsense_type = 'eWallet';
+              submit_to_cashsense(id, case_id, case_detail_id, cashsense_type, amount);
             }
           }
         }
@@ -798,16 +790,12 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option, legal
       });
     }
 
-    function submit_to_cashsense(id, case_id, case_detail_id, amount) {
-      $.ajax({
-        type: "POST", 
-        url: "/payments/create_cashsense_payment",
-        data: 'id=' + id + '&case_id=' + case_id + '&case_detail_id=' + case_detail_id + '&amount=' + amount,
-        success: function(msg) {
-        },
-        error: function() {
-          alert("An error occured while updating. Try again in a while");
-        }
+    function submit_to_cashsense(id, case_id, case_detail_id, cashsense_type, amount) {
+      var url = '/payments/create_cashsense_payment/' + id + '/'  + case_id + '/' + case_detail_id + '/' + cashsense_type + '/' + amount;
+      $.get(url, {}, function(data) {
+        //Create DOM
+        $('#cashsense_form_wrapper').html(data);
+        document.forms["cashsense_form"].submit();
       });
     }
 
@@ -817,7 +805,7 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option, legal
     var payment_instructions_tabs = $('#payment-instructions');
     payment_instructions_tabs.tabs();
     $('.option_radio').click(function() {
-      console.log($(this).val());
+      //console.log($(this).val());
       switch($(this).val())
       {
         case 'bank_deposit':

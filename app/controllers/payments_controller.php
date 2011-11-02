@@ -431,48 +431,102 @@ class PaymentsController extends AppController {
     $this->autoRender=false;
   }
 
-  function create_cashsense_payment() {
+  function create_cashsense_payment($id, $case_id, $case_detail_id, $cashsense_type, $amount) {
+    //1019/1035/1030
+    //$_POST['id'] = 1019;
+    //$_POST['case_id'] = 1035;
+    //$_POST['case_detail_id'] = 1030-1;
+    //$_POST['amount'] = '100.00';
+
     //Create Payment Details
     $this->Payment->validate = array();
-
-    $this->Payment->deleteAll(array('Payment.case_detail_id' => $_POST['case_detail_id']));
-
+    $this->Payment->deleteAll(array('Payment.case_detail_id' => $case_detail_id));
+    
     $data['Payment'] = array(
-      'user_id' => $_POST['id'],
-      'case_id' => $_POST['case_id'],
-      'case_detail_id' => $_POST['case_detail_id'],
+      'user_id' => $id,
+      'case_id' => $case_id,
+      'case_detail_id' => $case_detail_id,
       'option' => 'Cashsense',
-      'amount' => $_POST['amount']
+      'cashsense_type' => $cashsense_type,
+      'amount' => $amount
     );
 
+    //debug($data['Payment']);
+    
     // Save Bank Details
     $this->Payment->create();
     $this->Payment->save($data);
 
     //Get User Data
-    $user = $this->User->findById($_POST['id']);
-    debug($user);
-    exit;
-    $ch = curl_init('https://merchantapidev.cashsense.com/MerchantFormPost.aspx');
+    $this->loadModel('User');
+    $this->loadModel('Legalcasedetail');
+
+    $User = $this->User->findById($id);
+    $Legalcasedetail = $this->Legalcasedetail->findById($case_detail_id);
+    $fxMerchantID = '1027626';
+    $fcusername = 'elawyer';
+    $fcpassword = 'elawyer';
+    $fxMerchantID = '1027626';
+    $fcusername = 'elawyer';
+    $fcpassword = 'elawyer';
+    $fcCustomerName = $User['PersonalInfo']['first_name'] . '-' . $User['PersonalInfo']['last_name'] ;
+    $fcEmailAddress = $User['User']['username'];
+    $fcMerchantTxnID = $id . '-' . $case_id . '-' . $case_detail_id; 
+    $fxProdID = $case_detail_id;
+    $fcProductCode = $case_id;
+    $fcDescription = $Legalcasedetail['Legalcasedetail']['legal_service'];
+
+    if ($cashsense_type == 'OTC') {
+      $cashsense_post_url = 'https://merchantapidev.cashsense.com/MerchantFormPost.aspx';
+    }
+    elseif ($cashsense_type == 'eWallet') {
+      $cashsense_post_url = 'https://merchantapidev.cashsense.com/MerchantFormPostWallet.aspx';
+    }
+    
+    //debug($this->params);
+    //debug($User);
+    //debug($Legalcasedetail);
+    //exit;
+
+    //Cashsense Stuff
+    /*
+    $ch = curl_init($cashsense_post_url);
     curl_setopt ($ch, CURLOPT_POST, 1);
     curl_setopt ($ch, CURLOPT_POSTFIELDS,
-      'fxMerchantID='.$_POST['id'].
-      '&fcusername='.'elawyer' .
-      '&fcpassword='.'elawyer'.
-      '&fcCustomerName='.'Gino Cortez'.
-      '&fcEmailAddress='.'gino.carlo.cortez@gmail.com'.
-      '&fnAmount='.'100.00'.
-      '&fcMerchantTxnID='.''.
-      '&fxProdID='.'1234'.
-      '&fcProductCode='.'abcd'.
+      'fxMerchantID='.$fxMerchantID.
+      '&fcusername='.$fcusername .
+      '&fcpassword='.$fcpassword.
+      '&fcCustomerName='.$fcCustomerName.
+      '&fcEmailAddress='.$fcEmailAddress.
+      '&fnAmount='.$amount.
+      '&fcMerchantTxnID='.$fcMerchantTxnID.
+      '&fxProdID='.$fxProdID.
+      '&fcProductCode='.$fcProductCode.
       '&fnProdQty='.'1'.
-      '&fcDescription='.'this is a test'
+      '&fcDescription='.$fcDescription
     );
     curl_exec ($ch);
     curl_close ($ch);
+    */
 
-    $this->autoRender=false;
- 
+    $cashsense_form = '<form action="'.$cashsense_post_url.'" method="post" id="cashsense_form" name="cashsense_form">
+    Merchant ID: <input id="fxMerchantID" type="hidden" name="fxMerchantID" value="'.$fxMerchantID.'" /><br>
+    Username: <input id="fcusername" type="hidden" name="fcusername" value="'.$fcusername.'"/><br>
+    Password: <input id="fcpassword" type="hidden" name="fcpassword" value="'.$fcpassword.'"/><br>
+    Customer Name: <input id="fcCustomerName" type="hidden" name="fcCustomerName" value="'.$fcCustomerName.'" /><br>
+    Email: <input id="Text1" type="hidden" name="fcEmailAddress" value="'.$fcEmailAddress.'" /><br>
+    Amount: <input id="fnAmount" type="hidden" name="fnAmount" value="'.$amount.'"/><br> <br>
+    Merchant Transaction ID: <input id="fcMerchantTxnID" type="text" name="fcMerchantTxnID" value="'.$fcMerchantTxnID.'"/><br>
+    Product ID: <input id="fxProdID" type="hidden" name="fxProdID" value="'.$fxProdID.'"/><br>
+    Product Code: <input id="fcProductCode" type="hidden" name="fcProductCode" value="'.$fcProductCode.'" /><br>
+    Product Quantity: <input id="fnProdQty" type="hidden" name="fnProdQty" value="1" /><br>
+    Product Description: <input id="fcDescription" type="hidden" name="fcDescription" value="'.$fcDescription.'"/><br>
+    </form>';
+    
+    Configure::write('debug', 0);
+    $this->autoRender = false;
+    $this->autoLayout = false;
+    echo $cashsense_form;
   }
 }
 ?>

@@ -231,6 +231,8 @@ $cashsense_payment_instructions =
                 <input type="hidden" name="currency_code" value="PHP">
         </form>
 
+        <div id="cashsense_form_wrapper"></div>
+
         <div><b>Payment Instructions:</b></div>
 
         <div id="payment-instructions">
@@ -282,5 +284,5 @@ $cashsense_payment_instructions =
 
 <?php
 $payment_option = $this->data['Payment']['option'];
-$html->scriptBlock("mode_of_payment_form('$id', '$case_id', '$case_detail_id', '$payment_option', '$legal_service');", array('inline'=>false));
+$html->scriptBlock("mode_of_payment_form('$id', '$case_id', '$case_detail_id', '$payment_option', '$legal_service', '$fee');", array('inline'=>false));
 ?>
