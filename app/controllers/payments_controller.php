@@ -7,7 +7,7 @@ class PaymentsController extends AppController {
 
   function beforeFilter() {
     parent::beforeFilter(); 
-    // $this->Auth->allowedActions = array('index', 'view');
+    $this->Auth->allowedActions = array('cashsense_receiving_page');
   }
 
   function admin_index($id=null) {
@@ -474,7 +474,7 @@ class PaymentsController extends AppController {
     $fcMerchantTxnID = $id . '-' . $case_id . '-' . $case_detail_id; 
     $fxProdID = $case_detail_id;
     $fcProductCode = $case_id;
-    $fcDescription = $Legalcasedetail['Legalcasedetail']['legal_service'];
+    $fcDescription = 'E-Lawyers Online - ' . $Legalcasedetail['Legalcase']['legal_problem'] . ' - ' . $Legalcasedetail['Legalcasedetail']['legal_service'];
 
     if ($cashsense_type == 'OTC') {
       $cashsense_post_url = 'https://merchantapidev.cashsense.com/MerchantFormPost.aspx';
@@ -516,7 +516,7 @@ class PaymentsController extends AppController {
     Customer Name: <input id="fcCustomerName" type="hidden" name="fcCustomerName" value="'.$fcCustomerName.'" /><br>
     Email: <input id="Text1" type="hidden" name="fcEmailAddress" value="'.$fcEmailAddress.'" /><br>
     Amount: <input id="fnAmount" type="hidden" name="fnAmount" value="'.$amount.'"/><br> <br>
-    Merchant Transaction ID: <input id="fcMerchantTxnID" type="text" name="fcMerchantTxnID" value="'.$fcMerchantTxnID.'"/><br>
+    Merchant Transaction ID: <input id="fcMerchantTxnID" type="hidden" name="fcMerchantTxnID" value="'.$fcMerchantTxnID.'"/><br>
     Product ID: <input id="fxProdID" type="hidden" name="fxProdID" value="'.$fxProdID.'"/><br>
     Product Code: <input id="fcProductCode" type="hidden" name="fcProductCode" value="'.$fcProductCode.'" /><br>
     Product Quantity: <input id="fnProdQty" type="hidden" name="fnProdQty" value="1" /><br>
@@ -527,6 +527,27 @@ class PaymentsController extends AppController {
     $this->autoRender = false;
     $this->autoLayout = false;
     echo $cashsense_form;
+  }
+
+  function cashsense_receiving_page(){
+    if ($_POST) {
+      /*
+      echo 'sRespCode = ' . $_POST['sRespCode'];
+      echo '<br>';
+      echo 'sRespCode = ' .$_POST['sCSTxnID'];
+      echo '<br>';
+      echo 'sRespCode = ' .$_POST['sMerchantTxnID'];
+      echo '<br>';
+      echo 'sRespCode = ' .$_POST['isPaid'];
+      */
+    }
+    
+    $this->set('id', $this->Auth_user['User']['id']);
+    $this->set('sRespCode', $_POST['sRespCode']);
+    $this->set('sCSTxnID', $_POST['sCSTxnID']);
+    $this->set('sMerchantTxnID', $_POST['sMerchantTxnID']);
+    $this->set('isPaid', $_POST['isPaid']);
+
   }
 }
 ?>

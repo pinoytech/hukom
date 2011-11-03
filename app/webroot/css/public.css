@@ -801,7 +801,8 @@ a,
 .button-back,
 .back-to-case-list,
 .reschedule-button,
-.new-facts-button
+.new-facts-button,
+.back-to-home
 {
   cursor: pointer; cursor: hand;
 }
@@ -876,6 +877,21 @@ a,
 
 .back-to-case-list:hover {
 	background: url(../img/backCaseListButton_down.png) no-repeat;
+}
+
+.back-to-home { 
+	width: 100px;
+	height: 30px;
+	border: none;
+	margin-top: 10px;
+}
+
+.back-to-home {
+	background: url(../img/homeButton_up.png) no-repeat;
+}
+
+.back-to-home:hover {
+	background: url(../img/homeButton_down.png) no-repeat;
 }
 
 
