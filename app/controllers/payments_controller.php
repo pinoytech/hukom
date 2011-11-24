@@ -463,12 +463,11 @@ class PaymentsController extends AppController {
 
         $User = $this->User->findById($id);
         $Legalcasedetail = $this->Legalcasedetail->findById($case_detail_id);
-        $fxMerchantID = '1027626';
-        $fcusername = 'elawyer';
-        $fcpassword = 'elawyer';
-        $fxMerchantID = '1027626';
-        $fcusername = 'elawyer';
-        $fcpassword = 'elawyer';
+        //$fxMerchantID = '1027626'; //Dev
+        $fxMerchantID = '1031505'; //Live
+        //$fcpassword = 'elawyer'; //Dev
+        $fcusername = 'elawyers'; //Live
+        $fcpassword = 'YwXzes'; //Live
         $fcCustomerName = $User['PersonalInfo']['first_name'] . '-' . $User['PersonalInfo']['last_name'] ;
         $fcEmailAddress = $User['User']['username'];
         $fcMerchantTxnID = $id . '-' . $case_id . '-' . $case_detail_id; 
@@ -477,10 +476,12 @@ class PaymentsController extends AppController {
         $fcDescription = 'E-Lawyers Online - ' . $Legalcasedetail['Legalcase']['legal_problem'] . ' - ' . $Legalcasedetail['Legalcasedetail']['legal_service'];
 
         if ($cashsense_type == 'OTC') {
-            $cashsense_post_url = 'https://merchantapidev.cashsense.com/MerchantFormPost.aspx';
+            //$cashsense_post_url = 'https://merchantapidev.cashsense.com/MerchantFormPost.aspx'; //Dev
+            $cashsense_post_url = 'https://merchantapi.cashsense.com/MerchantFormPost.aspx'; //Live
         }
         elseif ($cashsense_type == 'eWallet') {
-            $cashsense_post_url = 'https://merchantapidev.cashsense.com/MerchantFormPostWallet.aspx';
+            //$cashsense_post_url = 'https://merchantapidev.cashsense.com/MerchantFormPostWallet.aspx'; //Dev
+            $cashsense_post_url = 'https://merchantapi.cashsense.com/MerchantFormPostWallet.aspx';
         }
 
         //debug($this->params);
