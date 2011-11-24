@@ -66,7 +66,7 @@ $gcash_payment_instructions =
   <li>By selecting G-CASH payment option, we assume that you are a GLOBE OR TOUCH MOBILE SUBSCRIBER and REGISTERED G-CASH USER. If you have a ready and sufficient amount of G-Cash load, please proceed to the G-CASH Payment Process of E-Lawyers Online Website by clicking “CONTINUE”.</li>
   <li>You will be directed to G-CASH Payment Page and you will be asked to select from the three (3) kinds of G-Cash Type of transaction (GCash Mobile, GCash Online or GCash Remit) for the payment of your requested online legal services.</li>
   <li>Then, a Summary of the legal service that you intend to obtain from E-Lawyers Online and the corresponding fee will appear and you will be asked to send the G-CASH money to <b>2882+(09279845404)</b>: (Amount to be Sent) (M-PIN) (Name of Client and Email Address). You will receive a text message from G-Cash confirming the sending of your G-Cash to E-Lawyers Online.</li>
-  <li>Finally, you will be shown the Confirmation of Payment Form of E-Lawyers Online Website and you will required to fill-up the <b>Name of Client</b> and <b>E-mail Address</b>, <b>Mobile Phone Number</b> (used in sending payment) <b>Reference Number</b> (Confirmation from Globe). After completing the form, please click “SUBMIT” and you will be directed to the Home Page.</li>
+  <li>Finally, you will be shown the Confirmation of Payment Form of E-Lawyers Online Website and you will required to fill-up the <b>Name of Client</b> and <b>E-mail Address</b>, <b>Mobile Phone Number</b> (used in sending payment) <b>Reference Number</b> (Confirmation from Globe). After completing the form, please click "SUBMIT" and you will be directed to the Home Page.</li>
   <li>You will receive an email from E-Lawyers Online upon confirmation of your payment and subsequently the legal services requested.</li>
   <li>If you are new or not familiar to G-CASH, please click <a style="color:blue" href="/pages/gcash_payment/" target="_blank">here</a> to know more about G-CASH.</li>
   </ol>
@@ -109,7 +109,15 @@ $smartmoney_payment_instructions =
 
 $cashsense_payment_instructions =
   '
-  <p>Cashsense instructions here</p>
+  <p>You selected Cashsense payment option. Please carefully READ and TAKE NOTE of the following payment instructions:</p>
+  <ol>
+  <li>Client may choose to pay cash over the counter (OTC) at convenience stores in the Philippines, which requires no registration. E-Lawyers Online client can pay cash over-the-counter at any 7-Eleven or MLhuillier Pawnshop branch nationwide and other partner establishments.</li>
+  <li>Client may also opt to pay using eWallet. Anyone inside or outside of the Philippines like OFW and foreigners can register as a remitter at <a href="http://remit.cashsense.com/" target="_blank">http://remit.cashsense.com/</a> and obtain an eWallet. This may be funded by bank deposit or via pay-in outlets and may then be used for making payments to E-Lawyers Online and other billers.</li>
+  <li>Client who selected to pay over-the-counter at any 7-Eleven stores or MLhullier will given a reference number displayed at online checkout and will be carried to the cashier at the convenience store. This identifier will form the basis of the data exchange/transaction and will include the "Customer name", "Reference number" and "Total amount to pay".</li>
+  <li>After payment either OTC or through eWallet, proceed to your Dashboard and click "Pay Now" for the Confirmation of Payment Form of E-Lawyers Online Website and you will be required to fill-up the <b>Name of Client</b> and <b>E-mail Address, Reference Number, Amount Paid</b>. After completing the form, please click “SUBMIT” and you will be directed to the Home Page.</li>
+  <li>You will receive an email from E-Lawyers Online upon confirmation of your payment and subsequently the legal services requested.</li>
+  <li>If you are new or not familiar with Cashsense, please click here (<a href="http://www.cashsense.com/pages/faq">http://www.cashsense.com/pages/faq</a>) to know more about Cashsense.</li>
+  </ol>
   ';
 ?>
 

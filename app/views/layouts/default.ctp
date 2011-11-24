@@ -35,7 +35,13 @@
 	    $('.canvas-holder').cycle({
    			fx: 'fade', 
    			speed: 1000,
-   		});
+        });
+
+	    $('.right-rail-footer').cycle({
+   			fx: 'fade', 
+   			speed: 1000,
+        });
+
    	});
     </script>
 </head>
@@ -96,8 +102,8 @@
                 Advertisement<br />Placement
             </div>
             <div class="right-rail-footer fl">
-            	<br /><br /><br />
-                Advertisement<br />Placement
+                <a href="/pages/services"><img src="/img/e-Lawyers_597x150.jpg" alt="canvas" title="Cashsense" /></a>
+                <a href="/pages/services"><img src="/img/e-Lawyers_597x150_eWallet.jpg" alt="canvas" title="Cashsense" /></a>
             </div>
             <br class="clear" />
         </div>
@@ -107,7 +113,7 @@
 
 	<!-- Footer -->
     <div class="footer">
-    	&copy; Copyright 2011 e-Lawyersonline. All Rights Reserved.
+    	&copy; Copyright 2011 e-Lawyersonline. All Rights Reserved. Powered by <a href="http://www.etgdes.com/" target="_blank">ETG Design Solutions</a>.
     </div>
     <!-- Footer -->
     
