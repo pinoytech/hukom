@@ -1,7 +1,9 @@
 <?php $this->viewVars['title_for_layout'] = "Services" ?>
 <div id="full-content">
 	<div id="main">
-	    
+
+        <?php echo $this->element('adsense_leaderboard'); ?>
+
 	    <div class="public-pages">
 	        
             <h1><strong>Our Services</strong></h1>

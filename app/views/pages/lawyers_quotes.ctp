@@ -1,7 +1,9 @@
 <?php $this->viewVars['title_for_layout'] = "Contact Us" ?>
 <div id="full-content">
 	<div id="main">
-	    
+	
+        <?php echo $this->element('adsense_leaderboard'); ?>
+
 	    <div class="public-pages">
 	        
 	        <h1><strong>Lawyer's Quotes</strong></h1>

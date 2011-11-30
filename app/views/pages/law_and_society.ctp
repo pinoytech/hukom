@@ -2,6 +2,8 @@
 <div id="full-content">
 	<div id="main">
 	    
+        <?php echo $this->element('adsense_leaderboard'); ?>
+
 	    <div class="public-pages">
 	    
 	        <h1><strong>Law and Society</strong></h1>

@@ -98,8 +98,19 @@
         <!-- Advertise Footer -->
         <div class="advertise-footer">
             <div class="left-rail-footer fl">
-            	<br /><br /><br />
-                Advertisement<br />Placement
+                <center>
+                    <script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-2816057159808392";
+                    /* 180 x 150 Small Rectangle */
+                    google_ad_slot = "0861771301";
+                    google_ad_width = 180;
+                    google_ad_height = 150;
+                    //-->
+                    </script>
+                    <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+                </center>
             </div>
             <div class="right-rail-footer fl">
                 <a href="/pages/services"><img src="/img/e-Lawyers_597x150.jpg" alt="canvas" title="Cashsense" /></a>

@@ -1,6 +1,8 @@
 <?php $this->viewVars['title_for_layout'] = "Everyday Law" ?>
 <div id="full-content">
 	<div id="main">
+
+        <?php echo $this->element('adsense_leaderboard'); ?>
 	    
 	    <div class="public-pages">
 	    
