@@ -62,9 +62,9 @@
         <div class="advertise-white">
             <center>
                 <script type="text/javascript"><!--
-                google_ad_client = "ca-pub-2816057159808392";
-                /* 200 x 200 - Small Square */
-                google_ad_slot = "9447608444";
+                google_ad_client = "ca-pub-9098289255033755";
+                /* Left Lower Add */
+                google_ad_slot = "0230079627";
                 google_ad_width = 200;
                 google_ad_height = 200;
                 //-->

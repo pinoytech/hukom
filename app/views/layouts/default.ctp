@@ -100,9 +100,9 @@
             <div class="left-rail-footer fl">
                 <center>
                     <script type="text/javascript"><!--
-                    google_ad_client = "ca-pub-2816057159808392";
-                    /* 180 x 150 Small Rectangle */
-                    google_ad_slot = "0861771301";
+                    google_ad_client = "ca-pub-9098289255033755";
+                    /* Left Upper Add */
+                    google_ad_slot = "9159887380";
                     google_ad_width = 180;
                     google_ad_height = 150;
                     //-->
