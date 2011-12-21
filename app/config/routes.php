@@ -37,3 +37,4 @@
     Router::connect('/register', array('controller' => 'users', 'action' => 'register'));
     Router::connect('/login', array('controller' => 'users', 'action' => 'login'));
     Router::connect('/logout', array('controller' => 'users', 'action' => 'logout'));
+    Router::connect('/initial_legal_assessment', array('controller' => 'legalcases', 'action' => 'initial_assessment'));

@@ -60,19 +60,16 @@
         <!-- Login -->
         <!-- Advertise White -->
         <div class="advertise-white">
-            <center>
-                <script type="text/javascript"><!--
-                google_ad_client = "ca-pub-9098289255033755";
-                /* Left Lower Add */
-                google_ad_slot = "0230079627";
-                google_ad_width = 200;
-                google_ad_height = 200;
-                //-->
-                </script>
-                <script type="text/javascript"
-                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                </script>
-            </center>
+            <br />
+            <div>OUR ONLINE<br/>LEGAL SERVICES</div>
+            <ul id="consultation-services">
+                <li><a href="/legalcases/initial_assessment">&raquo;Initial Legal Assessment</a></li>
+                <li><a>&raquo;Legal Advice By E-mail</a></li>
+                <li><a>&raquo;Video Conference w/ a Lawyer</a></li>
+                <li><a>&raquo;Office Conference w/ a Lawyer</a></li>
+                <li><a>&raquo;Monthly Retainer</a></li>
+                <li><a>&raquo;Per Case/Project Retainer</a></li>
+            </ul>
         </div>
         <!-- Advertise White -->
     </div>

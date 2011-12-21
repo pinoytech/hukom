@@ -174,13 +174,19 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 			/* Left Adertise */
 			.advertise-white {
 				background:#fefbee;
-				color:#b7b7b7;
-				font-size:15px;
+				color:#292424;
+				font-size:12px;
 				min-height:229px;
-				text-align:center;
-				text-transform:uppercase;
 				width:211px;
-				}
+			 	}
+			
+			.advertise-white div {
+			  color: #166CCE;
+			  margin-left: 10px;
+			  font-weight: bold;
+			  font-size: 14px;
+			}
+			 
 			/* Left Adertise */	
 		
 		/* Right Rail */
@@ -250,7 +256,7 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 		width:810px;
 		}
 		.left-rail-footer {
-			background:#898989;
+			background:#ffffff;
 			min-height:150px;
 			width:211px;
 			}
@@ -320,7 +326,7 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 /** Full Content **/
 #full-content{
 	margin:0 auto;
-	width:810px;
+	width:809px;
 	background: #fff;
 	clear: both;
 	color: #333;
@@ -1005,4 +1011,31 @@ table.public td {
 table.public td.label {
   font-weight: bold;
   width: 95px;
+}
+
+#consultation-services {
+  padding-left: 10px;
+}
+
+#consultation-services li {
+  list-style-type: none;
+}
+
+#consultation-services li a:hover {
+  color: #FE6A24; 
+}
+
+/** Initial Assessment Form **/
+.form-initial-assessment div label {
+	width: 100px;
+}
+
+.form-initial-assessment div label.error {
+	display: block;
+	float: right;
+	width: 240px;
+}
+
+.form-initial-assessment div input, .form-initial-assessment div textarea {
+	width: 400px;
 }

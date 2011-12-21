@@ -755,6 +755,7 @@ class UsersController extends AppController {
     $this->Acl->allow($group, 'controllers/Legalcases/online_legal_consultation');
     $this->Acl->allow($group, 'controllers/Legalcases/letter_of_intent');
     $this->Acl->allow($group, 'controllers/Legalcases/show_uploaded_files');
+    $this->Acl->allow($group, 'controllers/Legalcases/initial_assessment');
     $this->Acl->allow($group, 'controllers/Payments/mode_of_payment');
     $this->Acl->allow($group, 'controllers/Payments/bank_deposit');
     $this->Acl->allow($group, 'controllers/Payments/payment_confirmation');

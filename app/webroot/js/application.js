@@ -1404,3 +1404,10 @@ function numeralsOnly(evt) {
     }
     return true;
 }
+
+function initial_legal_assessment_form() {
+    $(document).ready(function() {
+        $("#LegalcasesInitialAssessmentForm").validate();
+    });
+}
+
