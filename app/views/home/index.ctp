@@ -63,12 +63,23 @@
             <br />
             <div>OUR ONLINE<br/>LEGAL SERVICES</div>
             <ul id="consultation-services">
-                <li><a href="/legalcases/initial_assessment">&raquo;Initial Legal Assessment</a></li>
-                <li><a>&raquo;Legal Advice By E-mail</a></li>
-                <li><a>&raquo;Video Conference w/ a Lawyer</a></li>
-                <li><a>&raquo;Office Conference w/ a Lawyer</a></li>
-                <li><a>&raquo;Monthly Retainer</a></li>
-                <li><a>&raquo;Per Case/Project Retainer</a></li>
+                <li>
+                    <?php echo $this->Html->link("&raquo;Initial Legal Assessment", array('controller' => 'legalcases', 'action' => 'initial_assessment'), array('escape' => false)); ?>
+                <li>
+                    <?php echo $this->Html->link("&raquo;Legal Advice By E-mail", array('controller' => 'legalcases', 'action' => 'online_legal_consultation', $auth_user_id, 'from' => 'home', 'legal_service' => 'Per Query'), array('escape' => false)); ?>
+                </li>
+                <li>
+                    <?php echo $this->Html->link("&raquo;Video Conference w/ a Lawyer", array('controller' => 'legalcases', 'action' => 'online_legal_consultation', $auth_user_id, 'from' => 'home', 'legal_service' => 'Video Conference'), array('escape' => false)); ?>
+                </li>
+                <li>
+                    <?php echo $this->Html->link("&raquo;Office Conference w/ a Lawyer", array('controller' => 'legalcases', 'action' => 'online_legal_consultation', $auth_user_id, 'from' => 'home', 'legal_service' => 'Office Conference'), array('escape' => false)); ?>
+                </li>
+                <li>
+                    <?php echo $this->Html->link("&raquo;Monthly Retainer", array('controller' => 'legalcases', 'action' => 'online_legal_consultation', $auth_user_id, 'from' => 'home', 'legal_service' => 'Monthly Retainer'), array('escape' => false)); ?>
+                </li>
+                <li>
+                    <?php echo $this->Html->link("&raquo;Per Case/Project Retainer", array('controller' => 'legalcases', 'action' => 'online_legal_consultation', $auth_user_id, 'from' => 'home', 'legal_service' => 'Case or Project Retainer'), array('escape' => false)); ?>
+                </li>
             </ul>
         </div>
         <!-- Advertise White -->

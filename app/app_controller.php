@@ -1,7 +1,7 @@
 <?php
 class AppController extends Controller {
     // var $components = array('Acl', 'Auth', 'Session', 'DebugKit.Toolbar');
-    var $components = array('Acl', 'Auth', 'Session');
+    var $components = array('Acl', 'Auth', 'Session', 'RequestHandler');
     // var $components = array('Acl', 'Auth', 'Session');
     var $helpers = array('Html', 'Form', 'Session');
     var $admin_email = array('gino.carlo.cortez@gmail.com');
@@ -60,14 +60,26 @@ class AppController extends Controller {
             }
 
         }
-
-
+        
+        // check for mobile devices
+        if ($this->RequestHandler->isMobile()) {
+            // if device is mobile, change layout to mobile
+            $this->layout = 'mobile';
+            // and if a mobile view file has been created for the action, serve it instead of the default view file
+            $mobileViewFile = VIEWS . strtolower($this->params['controller']) . '/mobile/' . $this->params['action'] . '.ctp';
+            if (file_exists($mobileViewFile)) {
+                $mobileView = strtolower($this->params['controller']) . '/mobile/';
+                $this->viewPath = $mobileView;
+            }
+        }
 
         //Set global user variable for View (i.e. navigation)
         $this->set('auth_user_type', $this->Auth_user['User']['type']);
         $this->set('auth_user_id', $this->Auth_user['User']['id']);
         $this->set('base_url', 'https://'.$_SERVER['SERVER_NAME'].Router::url('/'));
         $this->set('uploads_path', $this->uploads_path);
+        
+
     }
 
     function afterFilter() {        

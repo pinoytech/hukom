@@ -1,0 +1,229 @@
+body {
+	background:#000000 url(../img/bg-header.jpg) top center repeat-x;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:12px;
+	margin:0;
+	padding:0;
+	color:#000000;
+	/*font-weight:100;*/
+	}
+
+a img {border:none; outline:none;}
+Object { outline:none; }
+img {border:none;}
+p {margin-top:0;}
+.fl {float:left;}
+.fr {float:right;}
+.re {position:relative;}
+.ab {position:absolute;}
+.block {display:block;}
+.textindent {text-indent:-99999px;}
+.clear {clear: both; height: 0; line-height: 0.0; font-size: 0;}
+.vhidden {visibility:hidden;}
+.dnone {display:none;}
+
+/** Heading Style **/
+h1, h2, h3, h4, h5, h6 {margin:0; padding:0; font-weight:normal;}
+
+/** Link Style **/
+a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
+
+/* Header */
+.header {
+	margin:0 auto;
+	width:810px;
+	}
+	.logo {
+		background:url(../img/logo.jpg) no-repeat;
+		height:93px;
+		padding-left:30px;
+    	top:17px;
+		width:263px;
+		}
+		
+		ul.main-nav {
+			float:left;
+			list-style-type:none;
+			margin:0;
+			padding:0;
+			}
+			ul.main-nav li {
+				float:left;
+				display:block;
+				}	
+				ul.main-nav li a {
+					float:left;
+					display:block;
+					text-indent:-99999px;
+					}
+					/* Link */
+					a.home {background:url(../img/navigation.jpg) 0 0 no-repeat; width:84px; height:121px;}
+					a.about-us {background:url(../img/navigation.jpg) -84px 0 no-repeat; width:82px; height:121px;}
+					a.everyday-law {background:url(../img/navigation.jpg) -166px 0 no-repeat; width:84px; height:121px;}
+					a.law-society {background:url(../img/navigation.jpg) -250px 0 no-repeat; width:85px; height:121px;}
+					a.law-updates {background:url(../img/navigation.jpg) -335px 0 no-repeat; width:84px; height:121px;}
+					a.online-legal-consultation {background:url(../img/navigation.jpg) -419px 0 no-repeat; width:97px; height:121px;}
+					/* Hover and Selected */
+					a.home-selected, a.home:hover {background:url(../img/navigation.jpg) 0 -121px no-repeat; width:84px; height:121px;}
+					a.about-us-selected, a.about-us:hover {background:url(../img/navigation.jpg) -84px -121px no-repeat; width:82px; height:121px;}
+					a.everyday-law-selected, a.everyday-law:hover {background:url(../img/navigation.jpg) -166px -121px no-repeat; width:84px; height:121px;}
+					a.law-society-selected, a.law-society:hover {background:url(../img/navigation.jpg) -250px -121px no-repeat; width:85px; height:121px;}
+					a.law-updates-selected, a.law-updates:hover {background:url(../img/navigation.jpg) -335px -121px no-repeat; width:84px; height:121px;}
+					a.online-legal-consultation-selected, a.online-legal-consultation:hover {background:url(../img/navigation.jpg) -419px -121px no-repeat; width:97px; height:121px;}
+/* Header */
+
+/* Others*/
+.hidden {
+	display: none;
+}
+
+.banner {
+	margin:0 auto 6px;
+	height: 198px;
+}
+
+/* Footer */
+.footer {
+	background:#fed614;
+	color:#534741;
+	font-size:11px;
+	padding: 10px 0;
+	text-align:center;
+	}
+/* Footer */
+
+
+.wrapper {
+	background:url(../img/main-bg.jpg) repeat;
+	height:auto;
+}
+
+#full-content{
+	margin:0 auto;
+	background: #fff;
+	clear: both;
+	color: #333;
+	padding: 10px 0 40px 0;
+	overflow: auto;
+}
+
+#main {
+	padding: 10px 10px 40px 10px;
+}
+
+/** Custom Forms **/
+.form-title {
+	background-color: #118CD5;
+	padding: 10px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #ffffff;
+}
+
+/** Form Holder **/
+
+.form-holder {
+	background-color: #EBD9C1;
+	padding: 20px;
+}
+
+.form-holder div {
+	margin-top: 10px;
+}
+
+.form-holder div.full-field div input {
+	/*width: 600px;*/
+	
+}
+
+.form-holder div input[type="text"], .form-holder div input[type="password"], .form-holder div select {
+	border: 1px solid #A7AFB9;
+}
+
+.form-holder textarea {
+	width: 100%;
+	height: 200px;
+}
+
+.form-holder div label {
+	display: block;
+	float: left;
+	font-weight: bold;
+}
+
+.form-holder div label.error {
+	font-weight: normal;
+}
+
+.form-holder div label span {
+	color: #118CD5;
+}
+
+.form-holder div span.label {
+	font-weight: bold;
+}
+
+/** Registration Form **/
+.form-registration div label {
+	width: 210px;
+}
+
+.form-registration div label.error {
+	display: block;
+	float: right;
+	width: 360px;
+}
+
+.form-registration div.date label.error {
+	width: 290px;
+}
+
+.form-registration div input, .form-registration div select  {
+	width: 158px;
+}
+
+a,
+.prev-button,
+.next-button,
+.button-submit,
+.button-next,
+.button-back,
+.back-to-case-list,
+.reschedule-button,
+.new-facts-button,
+.back-to-home
+{
+  cursor: pointer; cursor: hand;
+}
+
+.form-link {
+	color: #118CD5;
+}
+
+.form-link-red {
+	color: red;
+}
+
+/* Buttons */
+
+.button-submit, .button-next, .button-back { 
+	width: 70px;
+	height: 22px;
+	border: none;
+	margin-top: 10px;
+}
+
+.new-facts-button {
+  width: 125px;
+	height: 30px;
+	border: none;
+	margin: 10px 0 0 0;
+}
+
+.button-submit {
+	background: url(../img/submitButton_up.png) no-repeat;
+}
+
+.button-submit:hover {
+	background: url(../img/submitButton_down.png) no-repeat;
+}

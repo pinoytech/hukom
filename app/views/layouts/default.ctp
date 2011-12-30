@@ -6,6 +6,7 @@
 		<?php __('E-Lawyers Online:'); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
+	<meta name="viewport" content="initial-scale=1.0">
 	<?php
 		echo $html->meta('icon');
         echo $html->css('public');
@@ -55,7 +56,7 @@
         <ul class="main-nav">
         	<li><a href="/home" class="home-selected" title="Home">Home</a></li>
             <li><a href="/pages/about_us" class="about-us" title="About Us">About Us</a></li>
-            <li><a href="/pages/everyday_law" class="everyday-law" title="Everyday Law">Everyday Law</a></li>
+            <li><a href="/pages/you_and_the_law" class="you-and-the-law" title="You & The Law">You & The Law</a></li>
             <li><a href="/pages/law_and_society" class="law-society" title="Law & Society">Law & Society</a></li>
             <li><a href="/pages/law_updates" class="law-updates" title="Law Updates">Law Updates</a></li>
             <li><a href="/legalcases/index/<?php echo $auth_user_id;?>" class="online-legal-consultation" title="Online Legal Consultation">Online Legal Consultation</a></li>

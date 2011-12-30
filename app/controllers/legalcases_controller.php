@@ -144,8 +144,27 @@ class LegalcasesController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
 
-        if (!empty($this->data)) {
+        //From Home Links
+        if ($this->params['named']['from'] == 'home') {
+            
+            if ($this->params['named']['legal_service'] == 'Case or Project Retainer') {
+                $this->params['named']['legal_service'] = 'Case/Project Retainer';
+            }
+            
+            $this->data = array(
+                'Legalcase' => array(
+                    'id' => null,
+                    'user_id' => $id,
+                    'legal_service' => $this->params['named']['legal_service'] 
+                ),
+            );
+            
+            // debug($this->data);
+            // exit();
+        }
 
+
+        if (!empty($this->data)) {
             //Assign Sessions
             $this->Session->write('Legalcase.legal_service', $this->data['Legalcase']['legal_service']);
 
@@ -169,7 +188,7 @@ class LegalcasesController extends AppController {
                         break;
                     case "Office Conference":
                         $legal_service = 'office';
-                        break;	
+                        break;
                     }
 
                     //$this->Session->write('Event.calendar_id', time());
@@ -184,7 +203,7 @@ class LegalcasesController extends AppController {
                     $legal_service = false;
                 }
 
-                $this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $legal_service));
+                $this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $legal_service, 'from' => 'home'));
 
             } else {
                 $this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
@@ -200,6 +219,12 @@ class LegalcasesController extends AppController {
     }
 
     function letter_of_intent($id = null, $case_id = null, $legal_service = null, $case_detail_id = null, $option = null){
+
+        //Display description when service is selected form Home
+        if ($this->params['named']['from'] == 'home') {
+            $this->set('service_tip', true);
+        }
+
         $this->loadModel('PersonalInfo');
         $this->loadModel('Legalservice');
 
@@ -265,7 +290,7 @@ class LegalcasesController extends AppController {
                 $action = 'corporate_partnership_representative_info';
             }
 
-            $this->redirect(array('controller' => 'users', 'action' => $action, $this->data['Legalcase']['user_id'], $mother_case_id));
+            $this->redirect(array('controller' => 'users', 'action' => $action, $this->data['Legalcase']['user_id'], $mother_case_id, '?' => array('test', 'test' )));
         }
 
         $this->set('user_full_name', $user_full_name);
@@ -275,10 +300,10 @@ class LegalcasesController extends AppController {
         $this->set('case_id', $case_id);
         $this->set('case_detail_id', $case_detail_id);
         $this->set('option', $option);
+        $this->set('legal_service', $Legalservice['Legalservice']['name']);
 
         //Video or Office Conference
         if ($legal_service == 'video' || $legal_service == 'office') {
-            $this->set('legal_service', $Legalservice['Legalservice']['name']);
             $this->set('event_hours', '');
             $this->set('event_date', '');
             $this->set('event_start', '');
@@ -1015,9 +1040,10 @@ class LegalcasesController extends AppController {
             $this->InitialAssessment->save($this->data);
 
             // Send Email
-            //$this->Email->delivery = 'debug';
+            // $this->Email->delivery = 'debug';
             $this->_send_initial_legal_assessment( $this->data['InitialAssessment'] );    
-            //debug($this->Session->read('Message.email'));
+            // debug($this->Session->read('Message.email'));
+            // exit;
             
             $this->redirect(array('controller' => 'pages', 'action' => 'thankyou_initial_assessment'));
         }

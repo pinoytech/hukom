@@ -59,14 +59,14 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 					/* Link */
 					a.home {background:url(../img/navigation.jpg) 0 0 no-repeat; width:84px; height:121px;}
 					a.about-us {background:url(../img/navigation.jpg) -84px 0 no-repeat; width:82px; height:121px;}
-					a.everyday-law {background:url(../img/navigation.jpg) -166px 0 no-repeat; width:84px; height:121px;}
+					a.you-and-the-law {background:url(../img/navigation.jpg) -166px 0 no-repeat; width:84px; height:121px;}
 					a.law-society {background:url(../img/navigation.jpg) -250px 0 no-repeat; width:85px; height:121px;}
 					a.law-updates {background:url(../img/navigation.jpg) -335px 0 no-repeat; width:84px; height:121px;}
 					a.online-legal-consultation {background:url(../img/navigation.jpg) -419px 0 no-repeat; width:97px; height:121px;}
 					/* Hover and Selected */
 					a.home-selected, a.home:hover {background:url(../img/navigation.jpg) 0 -121px no-repeat; width:84px; height:121px;}
 					a.about-us-selected, a.about-us:hover {background:url(../img/navigation.jpg) -84px -121px no-repeat; width:82px; height:121px;}
-					a.everyday-law-selected, a.everyday-law:hover {background:url(../img/navigation.jpg) -166px -121px no-repeat; width:84px; height:121px;}
+					a.you-and-the-law-selected, a.you-and-the-law:hover {background:url(../img/navigation.jpg) -166px -121px no-repeat; width:84px; height:121px;}
 					a.law-society-selected, a.law-society:hover {background:url(../img/navigation.jpg) -250px -121px no-repeat; width:85px; height:121px;}
 					a.law-updates-selected, a.law-updates:hover {background:url(../img/navigation.jpg) -335px -121px no-repeat; width:84px; height:121px;}
 					a.online-legal-consultation-selected, a.online-legal-consultation:hover {background:url(../img/navigation.jpg) -419px -121px no-repeat; width:97px; height:121px;}
@@ -176,7 +176,7 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 				background:#fefbee;
 				color:#292424;
 				font-size:12px;
-				min-height:229px;
+				height:229px;
 				width:211px;
 			 	}
 			
