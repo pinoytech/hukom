@@ -13,6 +13,7 @@ class HomeController extends AppController {
 		// debug(2);
 		// exit;
 		$this->loadModel('User');
+		$this->loadModel('SiteCopy');
 		$Auth_User = $this->Auth->User();
 		$User = $this->User->find('first', array('conditions' => array('User.id' => $Auth_User['User']['id'])));
 		$this->set(compact('User'));

@@ -242,7 +242,7 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 					background:url(../img/read-more.png) no-repeat;
 					display:block;
 					height:18px;
-					margin: 23px 10px 10px 0;
+					margin: 10px 10px 10px 0;
 					width:86px;
 					}
 	
@@ -335,6 +335,7 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 }
 
 #main {
+  position: relative;
 	padding: 10px 10px 40px 10px;
 }
 
@@ -1038,4 +1039,10 @@ table.public td.label {
 
 .form-initial-assessment div input, .form-initial-assessment div textarea {
 	width: 400px;
+}
+
+.addthis-page {
+  position: absolute;
+  right: 20px;
+  top: 118px;
 }

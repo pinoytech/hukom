@@ -55,10 +55,10 @@
         <!-- Navigation -->
         <ul class="main-nav">
         	<li><a href="/home" class="home-selected" title="Home">Home</a></li>
-            <li><a href="/pages/about_us" class="about-us" title="About Us">About Us</a></li>
-            <li><a href="/pages/you_and_the_law" class="you-and-the-law" title="You & The Law">You & The Law</a></li>
-            <li><a href="/pages/law_and_society" class="law-society" title="Law & Society">Law & Society</a></li>
-            <li><a href="/pages/law_updates" class="law-updates" title="Law Updates">Law Updates</a></li>
+            <li><a href="/static/page/about_us" class="about-us" title="About Us">About Us</a></li>
+            <li><a href="/static/page/you_and_the_law" class="you-and-the-law" title="You & The Law">You & The Law</a></li>
+            <li><a href="/static/page/law_and_society" class="law-society" title="Law & Society">Law & Society</a></li>
+            <li><a href="/static//page/law_updates" class="law-updates" title="Law Updates">Law Updates</a></li>
             <li><a href="/legalcases/index/<?php echo $auth_user_id;?>" class="online-legal-consultation" title="Online Legal Consultation">Online Legal Consultation</a></li>
         </ul>
         <!-- Navigation -->
@@ -70,13 +70,13 @@
     <div class="banner">
         <!-- Sub Nav -->
         <ul class="sub-nav fl">
-            <li><a href="/pages/lawyers_profile" class="lawyers-profile-selected" title="Lawyer's Profile">Lawyer's Profile</a></li>
-            <li><a href="/pages/services" class="our-services" title="Our Services">Our Services</a></li>
-            <li><a href="/pages/outrageous_laws" class="outrageous-laws" title="Outrageous Laws & Lawsuits">Outrageous Laws & Lawsuits</a></li>
-            <li><a href="/pages/lawyers_quotes" class="lawyers-quotes" title="Lawyer's Quotes">Lawyer's Quotes</a></li>
-            <li><a href="/pages/case_studies" class="case-studies" title="Case Studies">Case Studies</a></li>
-            <li><a href="/pages/elegal_news" class="elegal-news" title="E-Legal News">E-Legal News</a></li>
-            <li><a href="/pages/contact_us" class="contact-us" title="Contact Us">Contact Us</a></li>
+            <li><a href="/static/page/lawyers_profile" class="lawyers-profile-selected" title="Lawyer's Profile">Lawyer's Profile</a></li>
+            <li><a href="/static/page/services" class="our-services" title="Our Services">Our Services</a></li>
+            <li><a href="/static/page/outrageous_laws" class="outrageous-laws" title="Outrageous Laws & Lawsuits">Outrageous Laws & Lawsuits</a></li>
+            <li><a href="/static/page/lawyers_quotes" class="lawyers-quotes" title="Lawyer's Quotes">Lawyer's Quotes</a></li>
+            <li><a href="/static/page/case_studies" class="case-studies" title="Case Studies">Case Studies</a></li>
+            <li><a href="/static/page/elegal_news" class="elegal-news" title="E-Legal News">E-Legal News</a></li>
+            <li><a href="/static/page/contact_us" class="contact-us" title="Contact Us">Contact Us</a></li>
         </ul>
         <!-- Sub Nav -->
         <!-- Canvas -->
@@ -109,7 +109,7 @@
                     //-->
                     </script>
                     <script type="text/javascript"
-                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
                     </script>
                 </center>
             </div>

@@ -11,5 +11,7 @@
 		<li><?php echo $this->Html->link(__('Conference Late Payments', true), array('admin' => true, 'controller' => 'events', 'action' => 'late_payments')); ?></li>
 		<li><?php echo $this->Html->link(__('Request Reschedule Conference', true), array('admin' => true, 'controller' => 'events', 'action' => 'request_reschedule_conference')); ?></li>
 		<li><?php echo $this->Html->link(__('Groups', true), array('admin' => true, 'controller' => 'groups', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Initial Assessments', true), array('admin' => true, 'controller' => 'legalcasedetails', 'action' => 'initial_assessments')); ?> </li>
+		<li><?php echo $this->Html->link(__('Site Copies', true), array('admin' => true, 'controller' => 'static', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

@@ -36,7 +36,7 @@
 	            <li class="fr">
 					<?php echo $this->Form->end('login.jpg')?>
 	            </li>
-				<li><br />
+				<li>
 	                <label>Create an<br />Account</label>
 	                <a href="/register" class="fr">
 	                    <img src="/img/sign-up.jpg" alt="create an account" title="Sign Up" />
@@ -87,17 +87,11 @@
     <!-- Left Rail -->
     <!-- Right Rail -->
     <div class="right-rail fl">
-
 		<!-- Left Main -->
 		<div class="left-main fl">
 			<div class="everyday-holder">
 		   		<div class="everyday-content">
-		        	<h2>Annulment of Marriage, in the Philippines!</h2>
-		        	<br />
-		        	<em>ATTY.! Ayaw pumayag pumirma ng mister ko sa agreement para sa annulment ng kasal namin! Paano gagawin ko? </em>
-		        	<br />
-		        	<br />
-		        	This is a common misconception among Filipinos regarding the legal concept of marriage and annulment here in the Philippines. My answer is that you cannot do that here in the Philippines. We sometimes encounter or hear this discussion from our relatives, friends and acquaintance with troubled marriages giving the notion that it is allowed under Philippine law for the parties to simply agree on the &#8220;hiwalayan&#8221; or dissolution of their marriage. To state it again, this is not allowed under Philippine law.
+		   		    <?php echo SiteCopy::excerpt('everyday_law'); ?>
 		        </div>
 		        <a href="/pages/everyday_law" class="read-more fr textindent">read more</a>
 		    </div>
@@ -107,20 +101,14 @@
 		<div class="right-main fl">
 			<div class="law-society-holder">
 		   		<div class="law-content">
-		            <h2>You, Facebook and the Law...</h2>
-		            <br />
-		            <br />
-		            <em>&quot;Atty., my officemate commented in my Facebook account that &quot;I&#8217;m a whore!&quot;, can I sue her? </em>
+		   		    <?php echo SiteCopy::excerpt('law_and_society'); ?>
 		        </div>
-		        <a href="/pages/law_and_society" class="read-more fr textindent">read more</a>
+		        <a href="static/page/law_and_society" class="read-more fr textindent">read more</a>
 		    </div>
 
 		    <div class="law-updates-holder">
 		   		<div class="law-content">
-		        	<h2>Can  your text message or e-mail message be used as evidence in court?</h2>
-		        	<br />
-                      Before  the advent of computer age, we have been familiar with the use of documentary...
-
+                    <?php echo SiteCopy::excerpt('law_updates'); ?>
 		        </div>
 		        <a href="/pages/law_updates" class="read-more fr textindent">read more</a>
 		    </div>
