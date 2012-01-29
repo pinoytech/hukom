@@ -144,25 +144,28 @@ class LegalcasesController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
 
-        //From Home Links
-        if ($this->params['named']['from'] == 'home') {
-            
-            if ($this->params['named']['legal_service'] == 'Case or Project Retainer') {
-                $this->params['named']['legal_service'] = 'Case/Project Retainer';
-            }
-            
-            $this->data = array(
-                'Legalcase' => array(
-                    'id' => null,
-                    'user_id' => $id,
-                    'legal_service' => $this->params['named']['legal_service'] 
-                ),
-            );
-            
-            // debug($this->data);
-            // exit();
-        }
+        //From Home Links - Shortcut links from home
+        if (isset($this->params['named']['from'])) {
+            if ($this->params['named']['from'] == 'home') {
 
+                if ($this->params['named']['legal_service'] == 'Case or Project Retainer') {
+                    $this->params['named']['legal_service'] = 'Case/Project Retainer';
+                }
+
+                $this->data = array(
+                    'Legalcase' => array(
+                        'id' => null,
+                        'user_id' => $id,
+                        'legal_service' => $this->params['named']['legal_service'] 
+                    ),
+                );
+                
+                $from = 'home';
+            }
+        }
+        else {
+            $from = null;
+        }
 
         if (!empty($this->data)) {
             //Assign Sessions
@@ -203,7 +206,7 @@ class LegalcasesController extends AppController {
                     $legal_service = false;
                 }
 
-                $this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $legal_service, 'from' => 'home'));
+                $this->redirect(array('action' => 'letter_of_intent', $this->data['Legalcase']['user_id'], $this->Legalcase->id, $legal_service, 'from' => $from));
 
             } else {
                 $this->Session->setFlash(__('Case Information could not be saved. Please, try again.', true));
@@ -221,8 +224,13 @@ class LegalcasesController extends AppController {
     function letter_of_intent($id = null, $case_id = null, $legal_service = null, $case_detail_id = null, $option = null){
 
         //Display description when service is selected form Home
-        if ($this->params['named']['from'] == 'home') {
-            $this->set('service_tip', true);
+        if (isset($this->params['named']['from'])) {
+            if ($this->params['named']['from'] == 'home') {
+                $this->set('service_tip', true);
+            }
+        }
+        else {
+            $this->set('service_tip', false);
         }
 
         $this->loadModel('PersonalInfo');

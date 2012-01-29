@@ -10,13 +10,7 @@
 			<div class="form-title">Bank Deposit</div>
 			<div class="form-holder form-registration">
 			    
-			<p>
-		        <em>Notes: Choosing this payment option assumes that you have deposited the necessary fees through your preferred bank as discussed in the payment instructions. Otherwise, please make your deposit first before proceeding, or choose another payment option.</em>
-			</p>
-			
-			<p>
-			    You have chosen to pay through Bank Deposit, please fill-out ALL the fields below:
-			</p>
+			<?php echo SiteCopy::body('bank_deposit_form'); ?>
 			
 			<?php echo $this->Form->create('Payment');?>
 			<?php

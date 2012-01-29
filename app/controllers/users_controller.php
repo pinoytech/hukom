@@ -16,11 +16,13 @@ class UsersController extends AppController {
             'register',
             'forgot_password',
             'verification',
-            'password_reset');
+            'password_reset',
+            'facebook'
+            );
     }
 
     function index() {
-        parent::redirect_to_admin_index(); 
+        parent::redirect_to_admin_index();  
 
         // Redirect users out of here
         if (!$this->Session->read('Auth.User')) {
@@ -113,7 +115,7 @@ class UsersController extends AppController {
                     chmod($file, 0755);
                 }
 
-                $this->redirect(array('controller' => 'pages', 'action' => 'thankyou'));
+                $this->redirect(array('controller' => 'static', 'action' => 'page', 'thank_you'));
             } else {
                 $this->Session->setFlash(__('Registration could not be completed. Please, try again.', true));
             }
@@ -194,6 +196,11 @@ class UsersController extends AppController {
     }
 
     function login() {
+        
+        if (isset($this->params['url']['state'])) {
+            $this->redirect(array('controller' => 'home', 'action' => 'index'));
+        }
+        
         //Auth Magic
         if ($this->Session->read('Auth.User')) {
             $this->Session->setFlash('You are logged in!');
@@ -224,6 +231,7 @@ class UsersController extends AppController {
     }
 
     function logout() {
+        
         //Leave empty for now.
         $this->Session->setFlash('You have been successfully logged out. Thank you for visiting E-Lawyers Online');
         $this->redirect($this->Auth->logout());
@@ -280,32 +288,6 @@ class UsersController extends AppController {
             }
         }
     }
-
-    //Generate random strings
-    function generatePassword ($length = 8){
-        // start with a blank password
-        $password = "";
-
-        // define possible characters
-        $possible = "0123456789bcdfghjkmnpqrstvwxyz"; 
-
-        // set up a counter
-        $i = 0; 
-
-        // add random characters to $password until $length is reached
-        while ($i < $length) { 	
-            // pick a random character from the possible ones
-            $char = substr($possible, mt_rand(0, strlen($possible)-1), 1);	        
-            // we don't want this character if it's already in the password
-            if (!strstr($password, $char)) { 
-                $password .= $char;
-                $i++;
-            }	
-        }	
-        // done!
-        return $password;	
-    }
-
 
     function _sendUserForgotPasswordMail($id) {
         $User                          = $this->User->read(null,$id);
@@ -720,6 +702,42 @@ class UsersController extends AppController {
         return $case_detail_id;
     }
 
+    function facebook() {
+        App::import('Vendor', 'facebook', array('file' => 'facebook/facebook.php'));
+        $facebook = new Facebook(array(
+          'appId'  => Configure::read("FB_APP_ID"),
+          'secret' => Configure::read("FB_APP_SECRET"),
+        ));
+
+        $user = $facebook->getUser();
+        var_dump($user);
+        if ($user) {
+          try {
+            // Proceed knowing you have a logged in user who's authenticated.
+            $user_profile = $facebook->api('/me');
+          } catch (FacebookApiException $e) {
+            error_log($e);
+            $user = null;
+          }
+        }
+        
+        // Login or logout url will be needed depending on current user state.
+        if ($user) {
+          $logoutUrl = $facebook->getLogoutUrl();
+        } else {
+          $loginUrl = $facebook->getLoginUrl();
+        }
+        
+        $naitik = $facebook->api('/naitik');
+        
+        $this->set('user', $user);
+        $this->set('user_profile', $user_profile);
+        $this->set('logoutUrl', $logoutUrl);
+        $this->set('loginUrl', $loginUrl);
+        $this->set('naitik', $naitik);
+        $this->layout = null; 
+    }
+
     function initDB() {
         $group =& $this->User->Group;
         //Allow admins to everything
@@ -747,6 +765,7 @@ class UsersController extends AppController {
         $this->Acl->allow($group, 'controllers/Users/children_info');
         $this->Acl->allow($group, 'controllers/Users/corporate_partnership_representative_info');
         $this->Acl->allow($group, 'controllers/Users/corporate_partnership_info');
+        $this->Acl->allow($group, 'controllers/Users/facebook');
         $this->Acl->allow($group, 'controllers/Legalcases/legal_problem');
         $this->Acl->allow($group, 'controllers/Legalcases/summary_of_facts');
         $this->Acl->allow($group, 'controllers/Legalcases/objectives_questions');

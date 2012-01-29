@@ -201,8 +201,7 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 				}			
 				.everyday-holder {
 					background:url(../img/everyday-law.jpg) no-repeat #ffe658;
-					min-height:469px;
-					height:auto;
+					height:469px;
 					}
 					.everyday-content {
 						color:#464646;
@@ -217,11 +216,13 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 							font-weight:bold;
 							}	
 				.law-society-holder {
+            float: left;
 						background:url(../img/law-society.jpg) no-repeat #c1e8fe;
 						min-height:235px;
 						height:auto;
 					}
 				.law-updates-holder {
+            float: left;
 						background:url(../img/law-updates.jpg) no-repeat #ecd9c2;
 						min-height:234px;
 						height:auto;
@@ -1045,4 +1046,8 @@ table.public td.label {
   position: absolute;
   right: 20px;
   top: 118px;
+}
+
+.spacer_five_pxl {
+    margin-top:5px;
 }

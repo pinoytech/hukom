@@ -11,7 +11,18 @@
         echo $this->Form->input('User.password', array('value' => '', 'class' => 'required'));
         echo $this->Form->end('login.jpg');
         ?>
+        
         <br />
+        <p>
+        OR
+        </p>
+        
+        <p>
+            <a onclick="javascript:fb_login();">
+			    <img src="/img/facebook-login-button.png" alt="Login w/ Facebook" title="Login w/ Facebook" />
+			</a>
+		</p>
+		
         <p>
         <?php echo $this->Html->link(__('Forgot your password?', true), array('action' => 'forgot_password')); ?>
         </p>

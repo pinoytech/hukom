@@ -9,20 +9,8 @@
 
 			<div class="form-title">Globe GCash</div>
 		<div class="form-holder form-registration">
-			<p>
-			    You have chosen to pay through <b>Globe GCash</b>
-			    <?php
-			    if ($this->Session->read('Legalcase.legal_service') != 'Monthly Retainer' && $this->Session->read('Legalcase.legal_service') != 'Case/Project Retainer') {
-			    ?>
-			    , your professional fee is <b>Php <?php echo $fee; ?></b>.
-			    <?php
-		        }
-			    ?>
-			</p>
-		
-			<p>
-			    Select the type of GCash payment and send your payment to this Globe cellphone number <b>(+639279845404)</b> and fill out the form below.
-			</p>
+			
+			<?php echo eval('?>' . SiteCopy::body('gcash_form') . '<?php '); ?>
 		    
 			<?php echo $this->Form->create('Payment');?>
 			<?php
@@ -55,6 +43,10 @@
             <?php echo $this->Form->end();?>
 		</div>
 	</div>
+</div>
+
+<div id="discard_data" style="display:none; text-align:center">
+    Data you provided on this form will be discarded. Do you want to continue?
 </div>
 
 <?php $html->scriptBlock("gcash_form('$id', '$case_id', '$case_detail_id');", array('inline'=>false));?>

@@ -4,7 +4,7 @@ tinyMCE.init({
         // General options
         mode : "textareas",
         theme : "advanced",
-        plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+        plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,codeprotect",
 
         // Theme options
         theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
@@ -16,7 +16,14 @@ tinyMCE.init({
         theme_advanced_statusbar_location : "bottom"
 });
 </script>
+
 <div class="posts form">
+    
+	<div>
+		<?php echo $this->Html->link(__('Add Site Copy', true), array('admin' => true, 'action' => 'add')); ?>
+	</div>
+	<br />    
+
 <?php //echo $this->Form->create('SiteCopy', array('url' => array('admin' => true, 'controller' => 'static', 'action' => 'add')));?>
 <?php echo $this->Form->create('SiteCopy', array('url' => array('admin' => true, 'controller' => 'static', 'action' => 'form')));?>
 	<fieldset>

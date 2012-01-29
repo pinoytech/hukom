@@ -13,7 +13,8 @@
 				if (isset($current_user)) {
 				?>
 				<li>
-					Hi, <?php echo $User['PersonalInfo']['first_name'];?> [<?php echo $this->Html->link('Logout', '/users/logout', array()); ?>]
+					Hi, <?php echo $User['PersonalInfo']['first_name'];?>
+					[<a <?php echo (isset($user) ? 'onclick="javascript:fb_logout();"' : 'href="/users/logout"') ?>>Logout</a>]
 				</li>
 				<li>
 					<?php echo $this->Html->link('Go to your cases', '/legalcases/index/'.$auth_user_id, array()); ?>
@@ -28,8 +29,7 @@
             	<li>
 					<?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' =>'login'))); ?>
 	                <?php echo $this->Form->input('User.username', array('label' => 'Email', 'class' => 'text'));?>
-	            </li>
-	            <li>
+	                <div class="spacer_five_pxl"></div>
 	                <?php echo $this->Form->input('User.password', array('class' => 'text'));?>
 					<?php echo $this->Html->link('Forgot your password?', '/users/forgot_password', array('class' => 'forgot-pword fr')); ?>
 	            </li>
@@ -42,10 +42,19 @@
 	                    <img src="/img/sign-up.jpg" alt="create an account" title="Sign Up" />
 	                </a>
 	            </li>
+	            <li>
+	                <div class="spacer_five_pxl"></div>
+	                <center>
+	                    OR&nbsp;
+    					<a onclick="javascript:fb_login();">
+    					    <img src="/img/facebook-login-button.png" alt="Login w/ Facebook" title="Login w/ Facebook" />
+    					</a>
+					</center>
+	            </li>
             <?php
 			}
 			?>
-			<li><br />
+			<li>
                 <a href="http://www.linkedin.com/groups?gid=3995143&trk=hb_side_g" target="_blank" class="icon-space fr">
                     <img src="/img/icon-in.jpg" alt="connect us" title="Connect Us on LinkedIn" />
                 </a>
@@ -105,7 +114,6 @@
 		        </div>
 		        <a href="static/page/law_and_society" class="read-more fr textindent">read more</a>
 		    </div>
-
 		    <div class="law-updates-holder">
 		   		<div class="law-content">
                     <?php echo SiteCopy::excerpt('law_updates'); ?>

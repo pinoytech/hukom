@@ -8,30 +8,7 @@
 		<div class="form-title"><?php echo $payment_option_name; ?> - Confirmation</div>
 		<div class="form-holder">
 		
-		<?php
-		if ($payment_option == 'check_cash') {
-        ?>
-            <p>
-    			Thank you for all the information you provided. Your <b>Check/Cash payment</b> will be picked up by our E-Lawyers Online Representative on your preferred date, time, and address. We greatly appreciate your trust and confidence on us by giving opportunity to E-Lawyers Online to render service for you. We will advice you further of our subsequent action/proceedings on your case/project.
-    		</p>
-        <?php
-        }
-        elseif ($payment_option == 'case') {
-        ?>
-            <p>
-    			case
-    		</p>
-        <?php
-        }
-        else {
-        ?>
-            <p>
-    			Thank you for your <strong><?php echo $payment_option_name; ?> Payment</strong>. We greatly appreciate your trust and confidence on us by giving opportunity to E-Lawyers Online to render service for you. We will send our written legal advice via e-mail to your preferred email address.
-    		</p>
-        <?php
-        }
-		?>
-		
+      <?php echo eval('?>' . SiteCopy::body('payment_confirmation') . '<?php '); ?>
 		<div style="text-align:center;">
 			<input type="button" id="home" class="back-to-case-list" />
 		</div>

@@ -81,10 +81,7 @@
         <!-- Sub Nav -->
         <!-- Canvas -->
         <div class="canvas-holder fl">
-            <a href="/legalcases/index/<?php $auth_user_id;?>"><img src="/img/banner_1.png" alt="canvas" title="Needs Legal Advice but lacks time to visit a Lawyer?" /></a>
-            <a href="/legalcases/index/<?php $auth_user_id;?>"><img src="/img/banner_2.png" alt="canvas" title="Needs Legal Advice but lacks time to visit a Lawyer?" /></a>
-            <a href="/legalcases/index/<?php $auth_user_id;?>"><img src="/img/banner_3.png" alt="canvas" title="Needs Legal Advice but lacks time to visit a Lawyer?" /></a>
-            <!-- <a href="#" class="legal-consultation fl ab textindent" title="Online Legal Consultation">Online Legal Consultation</a> -->
+          <?php echo Advertisement::code('banner');  ?>
         </div>
         <!-- Canvas -->
     <br class="clear" />
@@ -100,22 +97,11 @@
         <div class="advertise-footer">
             <div class="left-rail-footer fl">
                 <center>
-                    <script type="text/javascript"><!--
-                    google_ad_client = "ca-pub-9098289255033755";
-                    /* Left Upper Add */
-                    google_ad_slot = "9159887380";
-                    google_ad_width = 180;
-                    google_ad_height = 150;
-                    //-->
-                    </script>
-                    <script type="text/javascript"
-                    src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
-                    </script>
+                    <?php echo Advertisement::code('lower_left_footer');  ?>
                 </center>
             </div>
             <div class="right-rail-footer fl">
-                <a href="/pages/services"><img src="/img/e-Lawyers_597x150.jpg" alt="canvas" title="Cashsense" /></a>
-                <a href="/pages/services"><img src="/img/e-Lawyers_597x150_eWallet.jpg" alt="canvas" title="Cashsense" /></a>
+                <?php echo Advertisement::code('footer');  ?>
             </div>
             <br class="clear" />
         </div>
@@ -142,6 +128,58 @@
      })();
 
     </script>
-    <?php //echo $this->element('sql_dump'); ?>
+    
+    <div id="fb-root"></div>
+    <script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '<?php echo Configure::read("FB_APP_ID"); ?>', // App ID
+            status     : true, // check login status
+            cookie     : true, // enable cookies to allow the server to access the session
+            xfbml      : true  // parse XFBML
+        });
+
+        // Additional initialization code here
+    };
+
+    // Load the SDK Asynchronously
+    (function(d){
+        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        d.getElementsByTagName('head')[0].appendChild(js);
+    }(document));
+
+    function fb_login() {
+        FB.login(function(response) {
+            if (response.authResponse) {
+                console.log('Welcome!  Fetching your information.... ');
+                FB.api('/me', function(response) {
+                    console.log('Good to see you, ' + response.name + '.');
+                    window.location = '/home';
+                    /*
+                    FB.logout(function(response) {
+                        console.log('Logged out.');
+                    });
+                    */
+                });
+            } else {
+                console.log('User cancelled login or did not fully authorize.');
+            }
+        }, {scope: 'email, user_about_me, user_birthday'});
+    }
+
+    function fb_logout() {
+        FB.logout(function(response) {
+            console.log('Logged out.');
+            window.location = '/users/logout';
+        });
+    }
+       
+    </script>
+    
+    <?php
+        // echo $this->element('sql_dump');
+    ?>
 </body>
 </html>

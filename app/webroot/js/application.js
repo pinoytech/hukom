@@ -646,11 +646,11 @@ function online_legal_consulation_agreement_form(id, case_id, case_detail_id) {
         $("#reject-alert").dialog({
             autoOpen: false,
             width: 350,
-            height: 150,
+            height: 200,
             modal: true,
             resizable: false,
             buttons: {
-                Ok: function() {
+                OK: function() {
                     $(this).dialog('close');
                 }
             }
@@ -758,7 +758,7 @@ function mode_of_payment_form(id, case_id, case_detail_id, payment_option, legal
                 }
 
                 dialog_buttons['Pay Later'] =  function() {
-                    window.location = '/dashboard/';
+                    window.location = '/legalcases';
                 }
 
                 //Payment Instructions and Confirmation Pop-Up
@@ -914,7 +914,8 @@ function gcash_form(id, case_id, case_detail_id) {
             $('#goto').val('mode_of_payment');
 
             if ($('#PaymentId').val() == '') {
-                var agree=confirm("Data you provided on this form will be discarded. Do you want to continue?");
+                /* 
+                var agree=confirm("data you provided on this form will be discarded. do you want to continue?");
 
                 if (agree){                        
                     window.location = '/payments/mode_of_payment/' + id + '/' + case_id + '/' + case_detail_id;
@@ -922,6 +923,8 @@ function gcash_form(id, case_id, case_detail_id) {
                 else{
                     return false;
                 }
+                */
+                discard_data_dialog(id, case_id, case_detail_id);
             }
 
         });
@@ -931,6 +934,42 @@ function gcash_form(id, case_id, case_detail_id) {
         });
 
     });
+}
+
+function smartmoney_form(id, case_id, case_detail_id) {
+    $('document').ready(function() {
+      jQuery("#PaymentSmartmoneyForm").validate();
+      
+      jQuery('#back').click(function() {
+        jQuery('#goto').val('mode_of_payment');
+        
+        if (jQuery('#PaymentId').val() == '') {
+          discard_data_dialog(id, case_id, case_detail_id);
+        }
+      });
+
+      jQuery('#next').click(function() {
+        jQuery('#goto').val('payment_confirmation');
+      });
+    });
+}
+
+function discard_data_dialog(id, case_id, case_detail_id) {
+  $("#discard_data").dialog({
+      autoOpen: true,
+      width: 550,
+      height: 200,
+      modal: true,
+      resizable: false,
+      buttons: {
+          OK: function() {
+            window.location = '/payments/mode_of_payment/' + id + '/' + case_id + '/' + case_detail_id;
+          },
+          Cancel: function() {
+              $(this).dialog("close");
+          },
+      }
+  });		
 }
 
 function check_cash_form(id, case_id, case_detail_id) {

@@ -10,7 +10,6 @@
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('title');?></th>
 			<th><?php echo $this->Paginator->sort('slug');?></th>
-			<th><?php echo $this->Paginator->sort('created');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -26,7 +25,6 @@
 		<td><?php echo $site_copy['SiteCopy']['id']; ?>&nbsp;</td>
 		<td><?php echo $site_copy['SiteCopy']['title']; ?>&nbsp;</td>
 		<td><?php echo $site_copy['SiteCopy']['slug']; ?>&nbsp;</td>
-		<td><?php echo $site_copy['SiteCopy']['created']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $site_copy['SiteCopy']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $site_copy['SiteCopy']['id'])); ?>

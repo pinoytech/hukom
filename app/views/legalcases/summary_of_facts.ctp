@@ -17,13 +17,7 @@
 				echo $this->Form->input('Legalcasedetail.user_id', array('type' => 'hidden', 'value' => $id));
 			?>
 				<div>
-					<p>
-						Describe/Narrate from past to present the clear, complete and specific details/facts of your legal problem by answering the questions of WHO? WHY? WHEN? WHERE? WHAT? AND HOW? If you want to refer to any document, picture or video, you can scan and attach it in this form.
-					</p>
-					
-					<p>
-						Ikuwento nang malinaw, kumpleto at detalyadong pangyayari ang iyong problemang legal mula simula hanggang sa kasalukuyan sa pamamagitan ng pagsagot sa mga katanungang Sino? Bakit? Kailan? Saan? Ano? At Paano? Kung meron ka na papel, dokumento, larawan o video na kasama sa iyong katanungan, kopyahin at isama ito sa aplikasyon na ito.
-					</p>
+					<?php echo SiteCopy::body('summary_of_facts'); ?>
 				</div>
 			    <?php echo $this->Form->textarea('Legalcasedetail.summary', array('label' => false, 'class' => 'required')); ?>
 				
@@ -50,7 +44,7 @@
 			</div>
 			
 			<div>
-			    Voluminous documents should be sent to Suite 10-G, 10th Floor, Strata 100 Condominium, 100 F. Ortigas, Jr. Road, Ortigas Center, Pasig City, Metro Manila, Philippines c/o Atty. Marlon Valderama.
+			    <?php echo SiteCopy::body('summary_of_facts_notes'); ?>
 			</div>
 			
 			<br />

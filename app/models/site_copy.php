@@ -39,6 +39,11 @@ class SiteCopy extends AppModel {
 	    $site_copy = ClassRegistry::init('SiteCopy')->findBySlug($slug);
 	    return $site_copy['SiteCopy']['excerpt'];
 	}
+	
+	function body($slug) {
+	    $site_copy = ClassRegistry::init('SiteCopy')->findBySlug($slug);
+	    return $site_copy['SiteCopy']['body'];
+	}
 		
 }
 ?>
