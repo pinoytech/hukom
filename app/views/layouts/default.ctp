@@ -81,7 +81,7 @@
         <!-- Sub Nav -->
         <!-- Canvas -->
         <div class="canvas-holder fl">
-          <?php echo Advertisement::code('banner');  ?>
+          <?php echo eval('?>' . Advertisement::code('banner') . '<?php '); ?>
         </div>
         <!-- Canvas -->
     <br class="clear" />

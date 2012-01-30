@@ -11,6 +11,7 @@
 				<?php
 				// If logged in
 				if (isset($current_user)) {
+          //var_dump($user);
 				?>
 				<li>
 					Hi, <?php echo $User['PersonalInfo']['first_name'];?>

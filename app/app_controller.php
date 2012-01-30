@@ -78,6 +78,7 @@ class AppController extends Controller {
     $this->set('auth_user_id', $this->Auth_user['User']['id']);
     $this->set('base_url', 'https://'.$_SERVER['SERVER_NAME'].Router::url('/'));
     $this->set('uploads_path', $this->uploads_path);
+    $this->set('facebook_user', $this->facebook_getuser());
     $this->loadModel('SiteCopy');
     $this->loadModel('Advertisement');
   }
@@ -92,8 +93,18 @@ class AppController extends Controller {
       $this->redirect(array('admin' => true, 'action' => 'admin_index'));
     }
   }
-
+  
   //Facebook Stuffs Here
+  function facebook_getuser() {
+    App::import('Vendor', 'facebook', array('file' => 'facebook/facebook.php'));
+    $facebook = new Facebook(array(
+      'appId'  => Configure::read("FB_APP_ID"),
+      'secret' => Configure::read("FB_APP_SECRET"),
+    ));
+
+    return $user = $facebook->getUser();
+  }
+
   function facebook() {
     App::import('Vendor', 'facebook', array('file' => 'facebook/facebook.php'));
     $facebook = new Facebook(array(

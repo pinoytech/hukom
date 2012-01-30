@@ -139,10 +139,10 @@ class LegalcasesController extends AppController {
 
   function online_legal_consultation($id=null){
 
-    if (!$id && empty($this->data)) {
-      $this->Session->setFlash(__('Invalid user', true));
-      $this->redirect(array('action' => 'index'));
-    }
+    //if (!$id && empty($this->data)) {
+      //$this->Session->setFlash(__('Invalid user', true));
+      //$this->redirect(array('action' => 'index'));
+    //}
 
     //From Home Links - Shortcut links from home
     if (isset($this->params['named']['from'])) {

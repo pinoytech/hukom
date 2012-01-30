@@ -1,9 +1,3 @@
-<!-- <ul>
-	<li><?php echo $this->Html->link(__('Dashboard', true), array('controller' => 'dashboard', 'action' => 'index')); ?></li>
-	<li><?php echo $this->Html->link(__('My Cases', true), array('controller' => 'cases', 'action' => 'index')); ?></li>
-	<li><?php echo $this->Html->link('Logout', '/users/logout', array()); ?></li>
-</ul> -->
-
 <div class="dashboard-navigation">
     <?php
     if ($auth_user_type == 'personal') {
@@ -15,7 +9,9 @@
     ?>
 	<?php echo $this->Html->link(__('Profile', true), array('controller' => 'users', 'action' => $profile_action, $id)); ?> | 
 	<?php echo $this->Html->link(__('My Cases', true), array('controller' => 'legalcases', 'action' => 'index', $id)); ?> | 
-	<?php echo $this->Html->link('Logout', '/users/logout', array()); ?>
+  <?php //var_dump($facebook_user); ?>  
+  <?php //echo $this->Html->link('Logout', '/users/logout', array()); ?>
+  <a <?php echo ($facebook_user ? 'onclick="javascript:fb_logout();"' : 'href="/users/logout"') ?>>Logout</a>
 </div>
 
 <div>&nbsp;</div>
