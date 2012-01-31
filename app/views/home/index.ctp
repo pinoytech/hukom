@@ -104,7 +104,7 @@
 		   		<div class="everyday-content">
 		   		    <?php echo SiteCopy::excerpt('everyday_law'); ?>
 		        </div>
-		        <a href="/pages/everyday_law" class="read-more fr textindent">read more</a>
+		        <a href="/static/page/everyday_law" class="read-more fr textindent">read more</a>
 		    </div>
 		</div>
 		<!-- Left Main -->
@@ -120,7 +120,7 @@
 		   		<div class="law-content">
                     <?php echo SiteCopy::excerpt('law_updates'); ?>
 		        </div>
-		        <a href="/pages/law_updates" class="read-more fr textindent">read more</a>
+		        <a href="/static/page/law_updates" class="read-more fr textindent">read more</a>
 		    </div>
 		</div>
 		<!-- Right Main -->
