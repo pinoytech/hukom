@@ -66,4 +66,4 @@ class StaticController extends AppController {
     $this->redirect(array('action' => 'index'));
   }
 }       
-?>      
+?>

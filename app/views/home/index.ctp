@@ -69,6 +69,7 @@
         </ul>
         <!-- Login -->
         <!-- Advertise White -->
+        <?php //var_dump($User);?>
         <div class="advertise-white">
             <br />
             <div>OUR ONLINE<br/>LEGAL SERVICES</div>

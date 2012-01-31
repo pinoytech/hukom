@@ -55,4 +55,4 @@ class AdvertisementsController extends AppController {
     $this->redirect(array('action' => 'index'));
   }
 }       
-?>      
+?>

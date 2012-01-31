@@ -40,4 +40,4 @@ class InitialAssessmentsController extends AppController {
     $this->set('initial_assessment', $initial_assessment);
   }
 }       
-?>      
+?>
