@@ -20,6 +20,24 @@ class UsersController extends AppController {
             'facebook'
             );
     }
+    
+    //Search
+    function admin_search() {
+    		// the page we will redirect to
+    		$url['action'] = 'index';
+
+    		// build a URL will all the search elements in it
+    		// the resulting URL will be 
+    		// example.com/cake/posts/index/Search.keywords:mykeyword/Search.tag_id:3
+    		foreach ($this->data as $k=>$v){ 
+    			foreach ($v as $kk=>$vv){ 
+    				$url[$k.'.'.$kk]=$vv; 
+    			} 
+    		}
+
+    		// redirect the user to the url
+    		$this->redirect($url, null, true);
+  	}
 
     function index() {
         parent::redirect_to_admin_index();  
@@ -28,12 +46,137 @@ class UsersController extends AppController {
         if (!$this->Session->read('Auth.User')) {
             $this->redirect('/', null, false);
         }
-
+        
         $this->User->recursive = 0;
         $this->set('users', $this->paginate());
     }
 
     function admin_index() {
+              
+        //Search
+        // the elements from the url we set above are read  
+    		// automagically by cake into $this->passedArgs[]
+    		// eg:
+    		// $passedArgs['Search.keywords'] = mykeyword
+    		// $passedArgs['Search.tag_id'] = 3
+
+    		// required if you are using Containable
+    		// requires Post to have the Containable behaviour
+    		//$contain = array();  
+
+    		// we want to set a title containing all of the 
+    		// search criteria used (not required)		
+    		$title = array();
+
+    		//
+    		// filter by id
+    		//
+    		if(isset($this->passedArgs['Search.id'])) {
+    			// set the conditions
+    			$this->paginate['conditions'][]['User.id'] = $this->passedArgs['Search.id'];
+
+    			// set the Search data, so the form remembers the option
+    			$this->data['Search']['id'] = $this->passedArgs['Search.id'];
+
+    			// set the Page Title (not required)
+    			$title[] = __('ID',true).': '.$this->passedArgs['Search.id'];
+    		}
+
+    		//
+    		// filter by keywords
+    		//
+    		if(isset($this->passedArgs['Search.keywords'])) {
+    			$keywords = $this->passedArgs['Search.keywords'];
+    			$this->paginate['conditions'][] = array(
+    				'OR' => array(
+    					'User.username LIKE' => "%$keywords%",
+    					'PersonalInfo.first_name LIKE' => "%$keywords%",
+    					'PersonalInfo.last_name LIKE' => "%$keywords%",
+    				)
+    			);
+    			$this->data['Search']['keywords'] = $keywords;
+    			$title[] = __('Keywords',true).': '.$keywords;
+    		}
+
+    		//
+    		// filter by username
+    		//
+    		if(isset($this->passedArgs['Search.username'])) {
+    			$this->paginate['conditions'][]['User.username LIKE'] = str_replace('*','%',$this->passedArgs['Search.username']);
+    			$this->data['Search']['username'] = $this->passedArgs['Search.username'];
+    			$title[] = __('Username',true).': '.$this->passedArgs['Search.username'];
+    		}
+    		
+    		//
+    		// filter by first_name
+    		//
+    		if(isset($this->passedArgs['Search.first_name'])) {
+    			$this->paginate['conditions'][]['PersonalInfo.first_name LIKE'] = str_replace('*','%',$this->passedArgs['Search.first_name']);
+    			$this->data['Search']['first_name'] = $this->passedArgs['Search.first_name'];
+    			$title[] = __('First Name',true).': '.$this->passedArgs['Search.first_name'];
+    		}
+    		
+
+    		//
+    		// filter by type
+    		//
+    		if(isset($this->passedArgs['Search.type'])) {
+    			$this->paginate['conditions'][]['User.type'] = $this->passedArgs['Search.type'];
+    			$this->data['Search']['type'] = $this->passedArgs['Search.type'];
+    			$title[] = __('Type',true).': '.$this->passedArgs['Search.type'];
+    		}
+    		
+    		//
+    		// filter by created
+    		//
+    		if(isset($this->passedArgs['Search.created'])) {
+          $this->paginate['conditions'][] = array("date(User.created) = '".$this->passedArgs['Search.created']."'");
+    			$this->data['Search']['created'] = $this->passedArgs['Search.created'];
+    			$title[] = __('Created',true).': '.$this->passedArgs['Search.created'];
+    		}
+    		
+    		//
+    		// filter by date range
+    		//
+    		if(isset($this->passedArgs['Search.start_date']) && isset($this->passedArgs['Search.end_date'])) {
+          $this->paginate['conditions'][] = array(
+    				'OR' => array(
+    					"User.created >= '".$this->passedArgs['Search.start_date']."'
+    					AND User.created <= '".$this->passedArgs['Search.end_date']."'"
+    				)
+    			);
+    			$this->data['Search']['start_date'] = $this->passedArgs['Search.start_date'];
+    			$this->data['Search']['end_date'] = $this->passedArgs['Search.end_date'];
+    			$title[] = __('Start Date',true).': '.$this->passedArgs['Search.start_date'];
+    			$title[] = __('End Date',true).': '.$this->passedArgs['Search.end_date'];
+    		}
+    		
+
+    		//
+    		// filter by created
+    		// allowing searches starting with <, >, <=, >=
+    		// allow human dates "2 weeks ago", "last thursday"
+    		//
+        // if(isset($this->passedArgs['Search.created'])) {
+        //  $field = '';
+        //  $date = explode(' ',$this->passedArgs['Search.created']);
+        //  if (isset($date[1]) && in_array($date[0],array('<','>','<=','>='))) { 
+        //    $field = ' '.array_shift($date);
+        //  }
+        //  $date = implode(' ',$date);
+        //  $date = date('Y-m-d',strtotime($date));  
+        //  $this->paginate['conditions'][]['User.created'.$field] = $date;
+        //  $this->data['Search']['created'] = $this->passedArgs['Search.created'];
+        //  $title[] = 'Created: '.$this->passedArgs['Search.created'];
+        // }
+
+    		$users = $this->paginate();
+
+    		$title = implode(' | ',$title);
+    		$this->set(compact('title'));
+      
+        // debug($this->passedArgs);
+      
         $this->User->recursive = 0;
         $this->paginate['conditions'][] = array('Group.id !=' => 1);
         $this->paginate['order'][] = 'User.id DESC';
@@ -766,6 +909,7 @@ class UsersController extends AppController {
         $this->Acl->allow($group, 'controllers/Users/corporate_partnership_representative_info');
         $this->Acl->allow($group, 'controllers/Users/corporate_partnership_info');
         $this->Acl->allow($group, 'controllers/Users/facebook');
+        $this->Acl->allow($group, 'controllers/Users/search');
         $this->Acl->allow($group, 'controllers/Legalcases/legal_problem');
         $this->Acl->allow($group, 'controllers/Legalcases/summary_of_facts');
         $this->Acl->allow($group, 'controllers/Legalcases/objectives_questions');

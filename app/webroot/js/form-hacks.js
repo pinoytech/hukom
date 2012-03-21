@@ -81,7 +81,7 @@ jQuery('document').ready(function() {
     dateFormat: 'yy-mm-dd',
     changeMonth: true,
     changeYear: true,
-    yearRange: '1900:2011',
+    yearRange: '1900:2012',
   });
   
 });

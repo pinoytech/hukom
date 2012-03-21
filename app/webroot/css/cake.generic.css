@@ -111,6 +111,7 @@ ul, li {
 div.form,
 div.index,
 div.view {
+  position: relative;
 	float:right;
 	width:74%;
 	border-left:1px solid #666;
@@ -590,4 +591,9 @@ a {
 
 .selected {
 	color: blue;
+}
+
+/* Date Picker */
+.search_date_picker {
+  width: 100px;
 }

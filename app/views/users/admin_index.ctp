@@ -1,5 +1,50 @@
+<?php $paginator->options(array('url' => $this->passedArgs)); ?>
 <div class="users index">
 	<h2><?php __('Users');?></h2>
+	
+	<div id="search-toggle-holder">
+	  <?php echo $html->link(__('Search', true), 'javascript:void(0)', array('class'=>'search-toggle')); ?>
+	</div>
+	
+	<?php
+  
+	if (!empty($title)) {
+	  echo '<b>Search Parameters</b>';
+	  echo '<br />';
+    echo $title;
+    echo '<br />';
+    echo '<br />';
+	}
+	?>
+
+	<?php echo $form->create('Users',array('action'=>'search','class'=>'search-form'));?>
+  	<fieldset>
+   		<legend><?php __('User Search');?></legend>
+    	<?php
+    		echo $form->input('Search.keywords');
+    		echo $form->input('Search.id');
+    		echo $form->input('Search.username',array('after'=>__('wildcard is *',true)));
+    		echo $form->input('Search.first_name',array('after'=>__('wildcard is *',true)));
+    		echo $form->input('Search.last_name',array('after'=>__('wildcard is *',true)));
+    		echo $form->input('Search.type',array(
+    			'empty'=>__('Any',true),
+    			'options'=>array(
+    				'personal'=>__('Personal',true),
+    				'corporation'=>__('Corporation',true),
+    			),
+    		));
+    		echo $form->input('Search.created', array('class' => 'date_picker search_date_picker', 'label' => 'Date Created'));
+        echo '<div class="input text"><label for="SearchCreated">Date Range</label>';
+          echo 'Start Date ';
+      		echo $form->input('Search.start_date', array('class' => 'date_picker search_date_picker', 'label' => false, 'div' => false));
+      		echo ' End Date ';
+      		echo $form->input('Search.end_date', array('class' => 'date_picker search_date_picker', 'label' => false, 'div' => false));
+        echo '</div>';
+    		echo $form->submit('Search');
+    	?>
+  	</fieldset>
+  <?php echo $form->end();?>
+	
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
@@ -63,3 +108,5 @@
 	</div>
 </div>
 <?php echo $this->element('admin_navigation'); ?>
+<?php $html->scriptBlock("search_toggle();", array('inline'=>false));?>
+<?php $html->scriptBlock("date_picker();", array('inline'=>false));?>

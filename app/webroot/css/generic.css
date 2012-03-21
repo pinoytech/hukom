@@ -9,23 +9,29 @@
 /*	padding: 0px 55px;*/
 }
 
-	div.login {
-		position: absolute;
-		top: 28px;
-		right: 20px;
-	}
+div.login {
+	position: absolute;
+	top: 28px;
+	right: 20px;
+}
 
-	div.login a {
-		color: #fff;
-		text-decoration: none;
-	}
-	
-	div.login a:hover {
-		text-decoration: underline;
-	}
-	
-	.userlogged {
-	    margin-left: 440px;
-	    position: absolute;
-	    top: 30px;
-	}
+div.login a {
+	color: #fff;
+	text-decoration: none;
+}
+
+div.login a:hover {
+	text-decoration: underline;
+}
+
+.userlogged {
+    margin-left: 440px;
+    position: absolute;
+    top: 30px;
+}
+
+#search-toggle-holder{
+  position: absolute;
+  top: 24px;
+  right: 28px;
+}

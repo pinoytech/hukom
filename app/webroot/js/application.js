@@ -1450,3 +1450,24 @@ function initial_legal_assessment_form() {
     });
 }
 
+function search_toggle() {
+  $(document).ready(function() {
+    // toggle the search form
+    $('.search-toggle').click(function(){
+    	$('.search-form').toggle();
+    });
+    $('.search-form').hide();
+  });
+}
+
+function date_picker() {
+  $(document).ready(function() {
+    $( ".date_picker" ).datepicker({
+      dateFormat: 'yy-mm-dd',
+      changeMonth: true,
+      changeYear: true,
+      yearRange: '2012:2013',
+    });
+  });
+}
+

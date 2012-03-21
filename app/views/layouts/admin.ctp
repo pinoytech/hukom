@@ -75,7 +75,6 @@
 							//echo "<a href='Users/login'>login</a>&nbsp;";
 							echo $this->Html->link(__('Login', true), array('admin' => true, 'controller' => 'users', 'action' => 'login'));
 					 	}
-					 
 				   }
 			?>
 			</div>
