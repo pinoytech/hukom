@@ -33,5 +33,5 @@ div.login a:hover {
 #search-toggle-holder{
   position: absolute;
   top: 24px;
-  right: 28px;
+  right: 0;
 }

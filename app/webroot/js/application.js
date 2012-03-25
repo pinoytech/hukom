@@ -1456,7 +1456,6 @@ function search_toggle() {
     $('.search-toggle').click(function(){
     	$('.search-form').toggle();
     });
-    $('.search-form').hide();
   });
 }
 

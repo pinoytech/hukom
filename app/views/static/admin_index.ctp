@@ -4,6 +4,23 @@
 	<div>
 		<?php echo $this->Html->link(__('Add Site Copy', true), array('admin' => true, 'action' => 'add')); ?>
 	</div>
+	<br />
+			
+	<?php echo $this->element('admin_search_toggle'); ?>
+	<?php echo $form->create('Static',array('action'=>'search','class'=>'search-form', 'url' => 'search'));?>
+  	<fieldset>
+   		<legend><?php __('Site Copies Search');?></legend>
+    	<?php
+    		echo $form->input('Search.keywords');
+    		echo $form->input('Search.id');
+    		echo $form->input('Search.title');
+    		echo $form->input('Search.slug');
+    		echo $form->input('Search.body');
+    		echo $form->submit('Search');
+    	?>
+  	</fieldset>
+  <?php echo $form->end();?>
+  
 	
 	<table cellpadding="0" cellspacing="0">
 	<tr>
@@ -51,3 +68,5 @@
 		
 </div>
 <?php echo $this->element('admin_navigation'); ?>
+<?php $html->scriptBlock("search_toggle();", array('inline'=>false));?>
+<?php $html->scriptBlock("date_picker();", array('inline'=>false));?>

@@ -36,6 +36,24 @@ class LegalcasesController extends AppController {
     // $this->set('Legalcase', $this->paginate());
   }
 
+  //Search
+  function admin_search() {
+		// the page we will redirect to
+		$url['action'] = 'index';
+
+		// build a URL will all the search elements in it
+		// the resulting URL will be 
+		// example.com/cake/posts/index/Search.keywords:mykeyword/Search.tag_id:3
+		foreach ($this->data as $k=>$v){ 
+			foreach ($v as $kk=>$vv){ 
+				$url[$k.'.'.$kk]=$vv; 
+			} 
+		}
+
+		// redirect the user to the url
+		$this->redirect($url, null, true);
+  }
+
   function admin_index($id=null) {
     // $this->Post->recursive = 0;
     // $this->set('posts', $this->paginate());
@@ -46,7 +64,107 @@ class LegalcasesController extends AppController {
 
     // $this->Legalcase->conditions = array('Legalcase.status' => 'active');
     // $Legalcase = $this->Legalcase->find('all', array('conditions' => array('Legalcase.user_id' => $this->Auth_user['User']['id'])));
+    
+    //Search
+    // the elements from the url we set above are read  
+ 		// automagically by cake into $this->passedArgs[]
+ 		// eg:
+ 		// $passedArgs['Search.keywords'] = mykeyword
+ 		// $passedArgs['Search.tag_id'] = 3
 
+ 		// required if you are using Containable
+ 		// requires Post to have the Containable behaviour
+ 		//$contain = array();  
+
+ 		// we want to set a title containing all of the 
+ 		// search criteria used (not required)		
+ 		$title = array();
+
+ 		//
+ 		// filter by id
+ 		//
+ 		if(isset($this->passedArgs['Search.id'])) {
+ 			// set the conditions
+ 			$this->paginate['conditions'][]['Legalcase.id'] = $this->passedArgs['Search.id'];
+
+ 			// set the Search data, so the form remembers the option
+ 			$this->data['Search']['id'] = $this->passedArgs['Search.id'];
+
+ 			// set the Page Title (not required)
+ 			$title[] = __('ID',true).': '.$this->passedArgs['Search.id'];
+ 		}
+
+ 		//
+ 		// filter by keywords
+ 		//
+ 		if(isset($this->passedArgs['Search.keywords'])) {
+ 			$keywords = $this->passedArgs['Search.keywords'];
+ 			$this->paginate['conditions'][] = array(
+ 				'OR' => array(
+ 					'User.username LIKE' => "%$keywords%",
+ 					'Legalcase.legal_problem LIKE' => "%$keywords%",
+ 				)
+ 			);
+ 			$this->data['Search']['keywords'] = $keywords;
+ 			$title[] = __('Keywords',true).': '.$keywords;
+ 		}
+
+ 		//
+ 		// filter by username
+ 		//
+ 		if(isset($this->passedArgs['Search.username'])) {
+ 			$this->paginate['conditions'][]['User.username LIKE'] = str_replace('*','%',$this->passedArgs['Search.username']);
+ 			$this->data['Search']['username'] = $this->passedArgs['Search.username'];
+ 			$title[] = __('Username',true).': '.$this->passedArgs['Search.username'];
+ 		}
+ 		
+ 		//
+ 		// filter by legal_problem
+ 		//
+ 		if(isset($this->passedArgs['Search.legal_problem'])) {
+ 			$this->paginate['conditions'][]['Legalcase.legal_problem LIKE'] = str_replace('*','%',$this->passedArgs['Search.legal_problem']);
+ 			$this->data['Search']['legal_problem'] = $this->passedArgs['Search.legal_problem'];
+ 			$title[] = __('Legal Problem',true).': '.$this->passedArgs['Search.legal_problem'];
+ 		}
+ 		
+ 		//
+ 		// filter by Anything Under The Sun
+ 		//
+ 		if(isset($this->passedArgs['Search.anything_under_the_sun'])) {
+ 			$this->paginate['conditions'][]['Legalcase.legal_problem LIKE'] = '%'.$this->passedArgs['Search.anything_under_the_sun'].'%';
+ 			$this->data['Search']['legal_problem'] = $this->passedArgs['Search.anything_under_the_sun'];
+ 			$title[] = __('Legal Problem',true).': '.$this->passedArgs['Search.anything_under_the_sun'];
+ 		}
+ 		
+ 		
+ 		//
+ 		// filter by created
+ 		//
+ 		if(isset($this->passedArgs['Search.created'])) {
+      $this->paginate['conditions'][] = array("date(Legalcase.created) = '".$this->passedArgs['Search.created']."'");
+ 			$this->data['Search']['created'] = $this->passedArgs['Search.created'];
+ 			$title[] = __('Created',true).': '.$this->passedArgs['Search.created'];
+ 		}
+ 		
+ 		//
+ 		// filter by date range
+ 		//
+ 		if(isset($this->passedArgs['Search.start_date']) && isset($this->passedArgs['Search.end_date'])) {
+      $this->paginate['conditions'][] = array(
+ 				'OR' => array(
+ 					"Legalcase.created >= '".$this->passedArgs['Search.start_date']."'
+ 					AND Legalcase.created <= '".$this->passedArgs['Search.end_date']."'"
+ 				)
+ 			);
+ 			$this->data['Search']['start_date'] = $this->passedArgs['Search.start_date'];
+ 			$this->data['Search']['end_date'] = $this->passedArgs['Search.end_date'];
+ 			$title[] = __('Start Date',true).': '.$this->passedArgs['Search.start_date'];
+ 			$title[] = __('End Date',true).': '.$this->passedArgs['Search.end_date'];
+ 		}
+ 		
+		$title = implode(' | ',$title);
+		$this->set(compact('title'));
+    
     if ($id) {
       $conditions = array('Legalcase.status' => 'active', 'Legalcase.user_id' => $id);
     }

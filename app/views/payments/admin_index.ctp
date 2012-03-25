@@ -3,6 +3,59 @@
 ?>
 <div class="cases index">
 	<h2><?php __('Payments');?></h2>
+	
+	<?php echo $this->element('admin_search_toggle'); ?>  
+	<?php echo $form->create('Payments',array('action'=>'search','class'=>'search-form'));?>
+  	<fieldset>
+   		<legend><?php __('Payments Search');?></legend>
+    	<?php
+    		echo $form->input('Search.keywords');
+    		echo $form->input('Search.id');
+    		echo $form->input('Search.case_id', array('type' => 'text', 'label' => 'Case ID'));
+    		echo $form->input('Search.case_detail_id', array('type' => 'text', 'label' => 'Case Detail ID'));
+    		echo $form->input('Search.username');
+    		echo $form->input('Search.legal_service',array(
+    			'empty'=>__('Any',true),
+    			'options'=>array(
+    			  'Per Query' => 'Per Query',
+    			  'Video Conference' => 'Video Conference',
+    			  'Office Conference' => 'Office Conference',
+    			  'Monthly Retainer' => 'Monthly Retainer',
+    			  'Case Retainer' => 'Case/Project Retainer',
+    			),
+    		));
+    		echo $form->input('Search.option',array(
+    			'empty'=>__('Any',true),
+    			'options'=>array(
+    			  'Bank Deposit' => 'Bank Deposit',
+    			  'Paypal' => 'Paypal',
+    			  'GCash' => 'GCash',
+    			  'SmartMoney' => 'SmartMoney',
+    			  'Check Cash Pick up' => 'Check/Cash Pick up',
+    			  'Cashsense' => 'Cashsense'
+    			),
+    		));
+    		echo $form->input('Search.status',array(
+    			'empty'=>__('Any',true),
+    			'options'=>array(
+    			  'Pending' => 'Pending',
+    			  'Overdue' => 'Overdue',
+    			  'Confirmed' => 'Confirmed',
+    			),
+    		));
+    		echo $form->input('Search.amount');
+    		echo $form->input('Search.created', array('class' => 'date_picker search_date_picker', 'label' => 'Date Created'));
+        echo '<div class="input text"><label for="SearchCreated">Date Range</label>';
+          echo 'Start Date ';
+      		echo $form->input('Search.start_date', array('class' => 'date_picker search_date_picker', 'label' => false, 'div' => false));
+      		echo ' End Date ';
+      		echo $form->input('Search.end_date', array('class' => 'date_picker search_date_picker', 'label' => false, 'div' => false));
+        echo '</div>';
+    		echo $form->submit('Search');
+    	?>
+  	</fieldset>
+  <?php echo $form->end();?>
+	
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
@@ -60,3 +113,5 @@
 	</div>
 </div>
 <?php echo $this->element('admin_navigation'); ?>
+<?php $html->scriptBlock("search_toggle();", array('inline'=>false));?>
+<?php $html->scriptBlock("date_picker();", array('inline'=>false));?>

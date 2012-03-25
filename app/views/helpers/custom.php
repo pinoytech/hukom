@@ -269,11 +269,24 @@ class CustomHelper extends AppHelper {
         );
 	}
 	
-	function create_folder($file) {
+    function create_folder($file) {
         if (!file_exists($file)) {
 			mkdir($file);
 			chmod($file, 0755);
 		}
+    }
+  
+    function ShortenText($text, $chars) { 
+        // Change to the number of characters you want to display 
+        
+        if (strlen($text) > $chars) {
+            $text = $text." "; 
+            $text = substr($text,0,$chars); 
+            $text = substr($text,0,strrpos($text,' ')); 
+            $text = $text."..."; 
+        }
+        
+        return $text; 
     }
     
 }

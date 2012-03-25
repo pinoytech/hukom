@@ -9,13 +9,188 @@ class PaymentsController extends AppController {
         parent::beforeFilter(); 
         $this->Auth->allowedActions = array('cashsense_receiving_page');
     }
+    
+    //Search
+    function admin_search() {
+  		// the page we will redirect to
+  		$url['action'] = 'index';
+
+  		// build a URL will all the search elements in it
+  		// the resulting URL will be 
+  		// example.com/cake/posts/index/Search.keywords:mykeyword/Search.tag_id:3
+  		foreach ($this->data as $k=>$v){ 
+  			foreach ($v as $kk=>$vv){ 
+  				$url[$k.'.'.$kk]=$vv; 
+  			} 
+  		}
+
+  		// redirect the user to the url
+  		$this->redirect($url, null, true);
+    }
 
     function admin_index($id=null) {
+      
+      // we want to set a title containing all of the 
+   		// search criteria used (not required)		
+   		$title = array();
 
-        $this->Payment->recursive = 0;		
-        // $this->paginate['conditions'][] = $conditions;
-        $this->paginate['order'][] = array('Payment.id' => 'desc');
-        $this->set('Payments', $this->paginate());
+   		//
+   		// filter by id
+   		//
+   		if(isset($this->passedArgs['Search.id'])) {
+   			// set the conditions
+   			$this->paginate['conditions'][]['Payment.id'] = $this->passedArgs['Search.id'];
+
+   			// set the Search data, so the form remembers the option
+   			$this->data['Search']['id'] = $this->passedArgs['Search.id'];
+
+   			// set the Page Title (not required)
+   			$title[] = __('ID',true).': '.$this->passedArgs['Search.id'];
+   		}
+   		
+   		//
+   		// filter by Case ID
+   		//
+   		if(isset($this->passedArgs['Search.case_id'])) {
+   			// set the conditions
+   			$this->paginate['conditions'][]['Legalcase.id'] = $this->passedArgs['Search.case_id'];
+
+   			// set the Search data, so the form remembers the option
+   			$this->data['Search']['case_id'] = $this->passedArgs['Search.case_id'];
+
+   			// set the Page Title (not required)
+   			$title[] = __('Case ID',true).': '.$this->passedArgs['Search.case_id'];
+   		}
+
+   		//
+   		// filter by Case Detail ID
+   		//
+   		if(isset($this->passedArgs['Search.case_detail_id'])) {
+   			// set the conditions
+   			$this->paginate['conditions'][]['Legalcasedetail.id'] = $this->passedArgs['Search.case_detail_id'];
+
+   			// set the Search data, so the form remembers the option
+   			$this->data['Search']['case_detail_id'] = $this->passedArgs['Search.case_detail_id'];
+
+   			// set the Page Title (not required)
+   			$title[] = __('Case Detail ID',true).': '.$this->passedArgs['Search.case_detail_id'];
+   		}   		
+
+   		//
+   		// filter by keywords
+   		//
+   		if(isset($this->passedArgs['Search.keywords'])) {
+   			$keywords = $this->passedArgs['Search.keywords'];
+   			$this->paginate['conditions'][] = array(
+   				'OR' => array(
+   					'User.username LIKE' => "%$keywords%",
+   					'User.referred_by LIKE' => "%$keywords%",
+   					'Legalcasedetail.legal_service LIKE' => "%$keywords%",
+   					'Payment.option LIKE' => "%$keywords%",
+   					'Payment.bank_name LIKE' => "%$keywords%",
+   					'Payment.bank_branch LIKE' => "%$keywords%",
+   					'Payment.bank_country LIKE' => "%$keywords%",
+   					'Payment.amount LIKE' => "%$keywords%",
+   					'Payment.reference_no LIKE' => "%$keywords%",
+   					'Payment.cellphone_no LIKE' => "%$keywords%",
+   					'Payment.gcash_type LIKE' => "%$keywords%",
+   					'Payment.smartmoney_type LIKE' => "%$keywords%",
+   					'Payment.cashsense_type LIKE' => "%$keywords%",
+   					'Payment.check_cash_address LIKE' => "%$keywords%",
+   					'Payment.check_cash_contact_person LIKE' => "%$keywords%",
+   					'Payment.telephone_no LIKE' => "%$keywords%",
+   				)
+   			);
+   			$this->data['Search']['keywords'] = $keywords;
+   			$title[] = __('Keywords',true).': '.$keywords;
+   		}
+
+   		//
+   		// filter by username
+   		//
+   		if(isset($this->passedArgs['Search.username'])) {
+   			$this->paginate['conditions'][]['User.username LIKE'] = '%'.$this->passedArgs['Search.username'].'%';
+   			$this->data['Search']['username'] = $this->passedArgs['Search.username'];
+   			$title[] = __('Username',true).': '.$this->passedArgs['Search.username'];
+   		}
+
+   		//
+   		// filter by legal service
+   		//
+   		if(isset($this->passedArgs['Search.legal_service'])) {
+   		  
+   		  if ($this->passedArgs['Search.legal_service'] == 'Case Retainer') {
+   		    $this->passedArgs['Search.legal_service'] = 'Case/Project Retainer';
+   		  }
+   		  
+   			$this->paginate['conditions'][]['Legalcasedetail.legal_service LIKE'] = $this->passedArgs['Search.legal_service'];
+   			$this->data['Search']['legal_service'] = $this->passedArgs['Search.legal_service'];
+   			$title[] = __('Legal Service',true).': '.$this->passedArgs['Search.legal_service'];
+   		}
+   		
+   		//
+   		// filter by option
+   		//
+   		if(isset($this->passedArgs['Search.option'])) {
+   		  
+   		  if ($this->passedArgs['Search.option'] == 'Check Cash Pick up') {
+   		    $this->passedArgs['Search.option'] = 'Check/Cash Pick up';
+   		  }
+   		  
+   			$this->paginate['conditions'][]['Payment.option LIKE'] = $this->passedArgs['Search.option'];
+   			$this->data['Search']['option'] = $this->passedArgs['Search.option'];
+   			$title[] = __('Option',true).': '.$this->passedArgs['Search.option'];
+   		}
+
+   		//
+   		// filter by status
+   		//
+   		if(isset($this->passedArgs['Search.status'])) {   		  
+   			$this->paginate['conditions'][]['Payment.status LIKE'] = $this->passedArgs['Search.status'];
+   			$this->data['Search']['status'] = $this->passedArgs['Search.status'];
+   			$title[] = __('Status',true).': '.$this->passedArgs['Search.status'];
+   		}
+
+   		//
+   		// filter by Amount
+   		//
+   		if(isset($this->passedArgs['Search.amount'])) {
+   			$this->paginate['conditions'][]['Payment.amount LIKE'] = '%'.$this->passedArgs['Search.amount'].'%';
+   			$this->data['Search']['amount'] = $this->passedArgs['Search.amount'];
+   			$title[] = __('Payment',true).': '.$this->passedArgs['Search.amount'];
+   		}
+
+   		//
+   		// filter by created
+   		//
+   		if(isset($this->passedArgs['Search.created'])) {
+        $this->paginate['conditions'][] = array("date(Payment.created) = '".$this->passedArgs['Search.created']."'");
+   			$this->data['Search']['created'] = $this->passedArgs['Search.created'];
+   			$title[] = __('Created',true).': '.$this->passedArgs['Search.created'];
+   		}
+
+   		//
+   		// filter by date range
+   		//
+   		if(isset($this->passedArgs['Search.start_date']) && isset($this->passedArgs['Search.end_date'])) {
+        $this->paginate['conditions'][] = array(
+   				'OR' => array(
+   					"Payment.created >= '".$this->passedArgs['Search.start_date']."'
+   					AND Payment.created <= '".$this->passedArgs['Search.end_date']."'"
+   				)
+   			);
+   			$this->data['Search']['start_date'] = $this->passedArgs['Search.start_date'];
+   			$this->data['Search']['end_date'] = $this->passedArgs['Search.end_date'];
+   			$title[] = __('Start Date',true).': '.$this->passedArgs['Search.start_date'];
+   			$title[] = __('End Date',true).': '.$this->passedArgs['Search.end_date'];
+   		}
+
+  		$title = implode(' | ',$title);
+  		$this->set(compact('title'));
+
+      $this->Payment->recursive = 0;		
+      $this->paginate['order'][] = array('Payment.id' => 'desc');
+      $this->set('Payments', $this->paginate());
     }
 
     function admin_view($id = null) {

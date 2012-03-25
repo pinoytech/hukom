@@ -597,3 +597,13 @@ a {
 .search_date_picker {
   width: 150px;
 }
+
+/* Search Form */
+.search-form {
+  display: none;
+}
+
+.search-form label {
+  font-weight: bold;
+}
+
