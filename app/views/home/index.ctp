@@ -112,6 +112,9 @@
                 </li>
                 <?php } ?>
             </ul>
+            <div id="payment_logos">
+                <?php echo $this->Html->image('/img/payment-logos.png'); ?>
+            </div>
         </div>
         <!-- Advertise White -->
     </div>
@@ -122,7 +125,7 @@
 		<div class="left-main fl">
 			<div class="everyday-holder">
 		   		<div class="everyday-content">
-		   		    <?php echo SiteCopy::excerpt('everyday_law'); ?>
+		   		    <?php echo SiteCopy::get_latest_everydaw_law('excerpt'); ?>
 		        </div>
 		        <a href="/static/page/everyday_law" class="read-more fr textindent">read more</a>
 		    </div>

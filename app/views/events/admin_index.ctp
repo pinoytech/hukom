@@ -97,20 +97,20 @@ $(document).ready(function() {
 		var calendar = $('#calendar').fullCalendar({
 	        // events: "/events/feed",
 	        events: feed_url,
-			eventRender: function(event, element) {
-		        element.qtip({
-		            content: 'Event ID: ' + event.id + '<br />' + event.title + ' <br /> <a href="/admin/legalcasedetails/view/' + event.case_detail_id + '">View Details</a> <br /> <a id="' + event.id +'" class="on_time">On Time</a> <br /> <a id="' + event.id +'" class="late_payment">Late Payment</a> <br /> <a id="' + event.id +'" class="available">Available</a> <br /> <a id="' + event.id +'" class="not_available">Not Available </a> <br /> <a id="' + event.id +'" class="delete">Delete</a>',
-					position: 'topRight',
-					hide: {
-						fixed: true // Make it fixed so it can be hovered over
-					},
-		        });
-		    },
+			    eventRender: function(event, element) {
+		          element.qtip({
+  		          content: 'Event ID: ' + event.id + '<br />' + event.title + ' <br /> <a href="/admin/legalcasedetails/view/' + event.case_detail_id + '">View Details</a> <br /> <a id="' + event.id +'" class="on_time">On Time</a> <br /> <a id="' + event.id +'" class="late_payment">Late Payment</a> <br /> <a id="' + event.id +'" class="available">Available</a> <br /> <a id="' + event.id +'" class="not_available">Not Available </a> <br /> <a id="' + event.id +'" class="delete">Delete</a>',
+      					position: 'topRight',
+      					hide: {
+      						fixed: true // Make it fixed so it can be hovered over
+      					},
+  		        });
+  		    },
 	        header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},     
+			    	left: 'prev,next today',
+    				center: 'title',
+    				right: 'month,agendaWeek,agendaDay'
+    			},
 	        buttonText: {
 	            prev: '&lt;',
 	            next: '&gt;'

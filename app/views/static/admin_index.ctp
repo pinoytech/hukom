@@ -1,21 +1,23 @@
 <div class="users index">
-	<h2><?php __('Site Copies');?></h2>
+	<h2><?php __(($type == 'page') ? 'Site Copies' : 'Everyday Law Articles');?></h2>
 	
 	<div>
-		<?php echo $this->Html->link(__('Add Site Copy', true), array('admin' => true, 'action' => 'add')); ?>
+		<?php echo $this->Html->link(__('Add Site Copy or Everyday Law Article', true), array('admin' => true, 'action' => 'add')); ?>
 	</div>
 	<br />
 			
 	<?php echo $this->element('admin_search_toggle'); ?>
-	<?php echo $form->create('Static',array('action'=>'search','class'=>'search-form', 'url' => 'search'));?>
+	<?php echo $form->create('Static',array('action'=>'search','class'=>'search-form', 'url' => "search"));?>
   	<fieldset>
-   		<legend><?php __('Site Copies Search');?></legend>
+   		<legend><?php __('Search');?></legend>
     	<?php
-    		echo $form->input('Search.keywords');
+    		echo $form->input('type', array('type' => 'hidden', 'value' => $type));
+            echo $form->input('Search.keywords');
     		echo $form->input('Search.id');
     		echo $form->input('Search.title');
     		echo $form->input('Search.slug');
     		echo $form->input('Search.body');
+            echo $form->input('Search.published', array('type' => 'checkbox', 'value' => 1));
     		echo $form->submit('Search');
     	?>
   	</fieldset>
@@ -27,6 +29,7 @@
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('title');?></th>
 			<th><?php echo $this->Paginator->sort('slug');?></th>
+			<th><?php echo $this->Paginator->sort('published');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -42,10 +45,11 @@
 		<td><?php echo $site_copy['SiteCopy']['id']; ?>&nbsp;</td>
 		<td><?php echo $site_copy['SiteCopy']['title']; ?>&nbsp;</td>
 		<td><?php echo $site_copy['SiteCopy']['slug']; ?>&nbsp;</td>
+		<td><?php echo ($site_copy['SiteCopy']['published']) ? 'Yes' : 'No'; ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $site_copy['SiteCopy']['id'])); ?>
+			<?php echo $this->Html->link(__('View', true), '/static/page/' . $site_copy['SiteCopy']['slug'], array('target' => '_blank')); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $site_copy['SiteCopy']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $site_copy['SiteCopy']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $site_copy['SiteCopy']['id'])); ?>
+			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $site_copy['SiteCopy']['id'], '?' => array('type' => $site_copy['SiteCopy']['type'])), null, sprintf(__('Are you sure you want to delete # %s?', true), $site_copy['SiteCopy']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

@@ -1,4 +1,4 @@
-<?php //$this->viewVars['title_for_layout'] = "About Us" ?>
+<?php $this->viewVars['title_for_layout'] = $title; ?>
 <div id="full-content">
 	<div id="main">
 	    <div class="public-pages">

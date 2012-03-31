@@ -1,0 +1,6 @@
+RELEASE NOTES:
+
+Added column type on site_copies table
+  - Type: enum = 'page','everyday_law'
+Added column published on site_copies table
+  - Type: tinyint

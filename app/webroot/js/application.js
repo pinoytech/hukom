@@ -37,7 +37,7 @@ jQuery([
        '/img/ReschedButton_down.png',
        '/img/ReschedButton_up.png',
        '/img/addNewFactsButton_up.png',
-       '/img/addNewFactsButton_down.png',
+       '/img/addNewFactsButton_down.png'
 ]).preload();
 
 function login_form() {
@@ -73,7 +73,7 @@ function register_form() {
             rules: {
                 "data[User][password_confirm]": {
                     equalTo: '#UserPassword'
-                },
+                }
             },
             submitHandler: function(form) {
                 $("#end-user-form").dialog({
@@ -206,7 +206,7 @@ function children_info_form() {
                 dateFormat: 'yy-mm-dd',
                 changeMonth: true,
                 changeYear: true,
-                yearRange: '1900:2011',
+                yearRange: '1900:2011'
             })
             // .fadeIn();
 
@@ -254,7 +254,7 @@ function children_info_form() {
         jQuery("#UserChildrenInfoForm").validate();
 
         jQuery.extend(jQuery.validator.messages, {
-            required: "Required",
+            required: "Required"
         });
 
         //Submit button logic
@@ -967,7 +967,7 @@ function discard_data_dialog(id, case_id, case_detail_id) {
           },
           Cancel: function() {
               $(this).dialog("close");
-          },
+          }
       }
   });		
 }
@@ -1294,7 +1294,7 @@ function request_reschedule_conference(id, case_id, case_detail_id, total_time) 
                 },
                 Cancel: function() {
                     $(this).dialog("close");
-                },
+                }
             }
         });		
 
@@ -1465,8 +1465,24 @@ function date_picker() {
       dateFormat: 'yy-mm-dd',
       changeMonth: true,
       changeYear: true,
-      yearRange: '2012:2013',
+      yearRange: '2012:2013'
     });
   });
 }
+
+function create_slug() {
+    $('#SiteCopyTitle').live('blur', function(e) {
+        $('#SiteCopyTitle').val();
+
+        slug = blacklist_chars($('#SiteCopyTitle').val());
+        slug = slug.replace(/ /g,'_');
+        slug = slug.toLowerCase();
+        $('#SiteCopySlug').val(slug);
+    });
+}
+
+function blacklist_chars(stringToReplace) {
+    return desired = stringToReplace.replace(/['`~!@#$%^&*()_|+-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
+}
+
 

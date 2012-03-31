@@ -173,6 +173,7 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 			
 			/* Left Adertise */
 			.advertise-white {
+			    position: relative;
 				background:#fefbee;
 				color:#292424;
 				font-size:12px;
@@ -1051,3 +1052,30 @@ table.public td.label {
 .spacer_five_pxl {
     margin-top:5px;
 }
+
+/* Blog Navigation */
+.blog_navigation {
+    float: left;
+    width: 100%;
+}
+
+.blog_navigation #previous {
+    float: left;
+}
+
+.blog_navigation #next {
+    float: right;
+}
+
+.blog_navigation div a {
+    color: #118CD5;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#payment_logos {
+    position: absolute;
+    bottom: 3px;
+    left: 18px;
+}
+

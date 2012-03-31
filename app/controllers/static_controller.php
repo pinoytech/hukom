@@ -1,24 +1,48 @@
 <?php
 class StaticController extends AppController {
-  var $uses = array('SiteCopy');
-  var $name = 'Static';
-  var $helpers = array('Html', 'TinyMce.TinyMce');
+    var $uses = array('SiteCopy');
+    var $name = 'Static';
+    var $helpers = array('Html', 'TinyMce.TinyMce');
 
-  function beforeFilter() {	    
-    parent::beforeFilter(); 
-    $this->Auth->allowedActions = array('page');
-  }
+    function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allowedActions = array('page');
+    }
+    
+    //Control Static Pages
+    function page($slug=null) {
+        
+        if ($slug == 'everyday_law') { 
+            //Get recent everyday_law articles
+            $site_copy = $this->SiteCopy->get_recent_published_eveyday_law();
+        }
+        else {
+            $site_copy = $this->SiteCopy->findBySlug($slug);
+        }
+        
+        $this->set('title', $site_copy['SiteCopy']['title']);        
+        $this->set('body', $site_copy['SiteCopy']['body']);
+        
+        if ($site_copy['SiteCopy']['type'] == 'everyday_law') {
+            
+            
+            //Get previous id
+            $this->set('previous', $this->SiteCopy->get_previous_published_eveyday_law($site_copy['SiteCopy']['id']));
+            
+            //Get next id
+            $this->set('next', $this->SiteCopy->get_next_published_eveyday_law($site_copy['SiteCopy']['id']));
+        }
+        
+        //Render Everyday Law Template
+        if ($this->params['pass'][0] == 'everyday_law' || $site_copy['SiteCopy']['type'] == 'everyday_law') { 
+            $this->render('everyday_law');
+        }
+    }
 
-  function page($slug=null) {
-    $site_copy = $this->SiteCopy->findBySlug($slug);
-    $this->set('title', $site_copy['SiteCopy']['title']);
-    $this->set('body', $site_copy['SiteCopy']['body']);
-  }	
-
-  //Search
-  function admin_search() {
+    //Search
+    function admin_search() {
 		// the page we will redirect to
-		$url['action'] = 'index';
+		$url['action'] = 'index/'.$this->data['Static']['type'];
 
 		// build a URL will all the search elements in it
 		// the resulting URL will be 
@@ -31,12 +55,12 @@ class StaticController extends AppController {
 
 		// redirect the user to the url
 		$this->redirect($url, null, true);
-  }
+    }
 
-  //Admin Methods
-  function admin_index() {
+    //Admin Methods
+    function admin_index($type) {
     
-    // we want to set a title containing all of the 
+        // we want to set a title containing all of the
  		// search criteria used (not required)		
  		$title = array();
 
@@ -101,7 +125,7 @@ class StaticController extends AppController {
  		// filter by created
  		//
  		if(isset($this->passedArgs['Search.created'])) {
-      $this->paginate['conditions'][] = array("date(Payment.created) = '".$this->passedArgs['Search.created']."'");
+            $this->paginate['conditions'][] = array("date(Payment.created) = '".$this->passedArgs['Search.created']."'");
  			$this->data['Search']['created'] = $this->passedArgs['Search.created'];
  			$title[] = __('Created',true).': '.$this->passedArgs['Search.created'];
  		}
@@ -110,7 +134,7 @@ class StaticController extends AppController {
  		// filter by date range
  		//
  		if(isset($this->passedArgs['Search.start_date']) && isset($this->passedArgs['Search.end_date'])) {
-      $this->paginate['conditions'][] = array(
+            $this->paginate['conditions'][] = array(
  				'OR' => array(
  					"Payment.created >= '".$this->passedArgs['Search.start_date']."'
  					AND Payment.created <= '".$this->passedArgs['Search.end_date']."'"
@@ -124,53 +148,54 @@ class StaticController extends AppController {
 
 		$title = implode(' | ',$title);
 		$this->set(compact('title'));
-    
-    
-    $this->SiteCopy->recursive = 0;
-    $this->paginate['order'][] = array('id' => 'desc');
-    $this->set('site_copies', $this->paginate());
-  }
+        $this->SiteCopy->recursive = 0;
+        $this->paginate['conditions'][] = array('type' => $type);
+        $this->paginate['order'][] = array('id' => 'desc');
+        $this->set('site_copies', $this->paginate());
+        $this->set('type', $type);
+     }
 
-  function admin_add() {
-    $this->render('admin_form');
-  }   
-
-  function admin_edit($id) {
-    $this->data = $this->SiteCopy->read(null, $id);
-    $this->render('admin_form');
-  }   
-
-  function admin_form() {
-
-    if (!empty($this->data)) {
-      if (!$this->data['SiteCopy']['id']) {
-        $this->SiteCopy->create();
-      }
-
-      if ($this->data['SiteCopy']['post_to_facebook']) {
-      }
-
-      if ($this->SiteCopy->save($this->data)) {
-        $this->Session->setFlash(__('The site copy has been saved', true));
-        //$this->redirect(array('action' => 'index'));
-        $this->redirect(array('action' => 'edit', $this->SiteCopy->id));
-      } else {
-        $this->Session->setFlash(__('The site copy could not be saved. Please, try again.', true));
-      }
+    function admin_add() {
+        $this->render('admin_form');
     }
-  }
 
-  function admin_delete($id = null) {
-    if (!$id) {
-      $this->Session->setFlash(__('Invalid id for site copy', true));
-      $this->redirect(array('action'=>'index'));
+    function admin_edit($id) {
+        $this->data = $this->SiteCopy->read(null, $id);
+        $this->render('admin_form');
     }
-    if ($this->SiteCopy->delete($id)) {
-      $this->Session->setFlash(__('Site Copy deleted', true));
-      $this->redirect(array('action'=>'index'));
+
+    function admin_form() {
+
+        if (!empty($this->data)) {
+          if (!$this->data['SiteCopy']['id']) {
+            $this->SiteCopy->create();
+          }
+
+          if ($this->data['SiteCopy']['post_to_facebook']) {
+          }
+
+          if ($this->SiteCopy->save($this->data)) {
+            $this->Session->setFlash(__('The site copy has been saved', true));
+            //$this->redirect(array('action' => 'index'));
+            $this->redirect(array('action' => 'edit', $this->SiteCopy->id));
+          } else {
+            $this->Session->setFlash(__('The site copy could not be saved. Please, try again.', true));
+          }
+        }
     }
-    $this->Session->setFlash(__('Site Copy was not deleted', true));
-    $this->redirect(array('action' => 'index'));
-  }
+
+    function admin_delete($id = null) {
+        if (!$id) {
+          $this->Session->setFlash(__('Invalid id for site copy', true));
+          $this->redirect(array('action'=>'index/'.$this->params['url']['type']));
+        }
+        if ($this->SiteCopy->delete($id)) {
+          $this->Session->setFlash(__('Site Copy deleted', true));
+          $this->redirect(array('action'=>'index/'.$this->params['url']['type']));
+        }
+
+        $this->Session->setFlash(__('Site Copy was not deleted', true));
+        $this->redirect(array('action' => 'index/'.$this->params['url']['type']));
+    }
 }       
 ?>

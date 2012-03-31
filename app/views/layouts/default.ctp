@@ -35,12 +35,12 @@
 	$('document').ready(function() {
 	    $('.canvas-holder').cycle({
    			fx: 'fade', 
-   			speed: 1000,
+   			speed: 8000
         });
 
 	    $('.right-rail-footer').cycle({
    			fx: 'fade', 
-   			speed: 1000,
+   			speed: 8000
         });
 
    	});
