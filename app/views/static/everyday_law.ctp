@@ -4,7 +4,7 @@
 	    <div class="public-pages">
 	        <!-- <h1><?php echo $title; ?></h1> -->
 	        
-	        <h1>Everyday Law</h1>	        
+	        <h1><strong>Everyday Law</strong></h1>	        
 	        <br />
 	        
             <?php echo eval('?>' . $body . '<?php '); ?>

@@ -56,10 +56,10 @@ class SiteCopy extends AppModel {
 	}
 	
 	function get_recent_published_eveyday_law() {
-	    $site_copy = $this->find('first',array(
+	    $site_copy = $this->find('all',array(
             'conditions' => array('SiteCopy.type' => 'everyday_law', 'SiteCopy.published' => 1),
             'order'      => array('SiteCopy.created ASC'),
-            'limit'      => 1)
+            )
 	    );
 	    return $site_copy;
 	}

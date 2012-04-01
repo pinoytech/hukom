@@ -1006,6 +1006,10 @@ a,
   font-weight: bold;
 }
 
+.public-pages a {
+    color: #118CD5;
+    text-decoration: underline;
+}
 
 table.public td {
   vertical-align: top;
@@ -1071,6 +1075,7 @@ table.public td.label {
     color: #118CD5;
     font-size: 13px;
     font-weight: bold;
+    text-decoration: none;
 }
 
 #payment_logos {
