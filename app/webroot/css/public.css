@@ -232,7 +232,7 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 						color:#464646;
 						font-size:11px;
 						margin:0 auto;
-						padding-top:70px;
+						padding-top:51px;
 						width:90%;
 						}
 						.law-content h2 {
@@ -1079,8 +1079,6 @@ table.public td.label {
 }
 
 #payment_logos {
-    position: absolute;
-    bottom: 3px;
-    left: 18px;
+    text-align: center;
 }
 

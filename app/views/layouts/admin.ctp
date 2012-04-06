@@ -50,6 +50,7 @@
         echo $html->script('fullcalendar.min.js');
         
         echo $html->script('jquery.qtip-1.0.0-rc3.min.js');
+        echo $html->script('tiny_mce/jquery.tinymce.js');
         
 		echo $scripts_for_layout;
 	?>

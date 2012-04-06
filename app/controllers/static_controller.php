@@ -2,7 +2,8 @@
 class StaticController extends AppController {
     var $uses = array('SiteCopy');
     var $name = 'Static';
-    var $helpers = array('Html', 'TinyMce.TinyMce');
+    // var $helpers = array('Html', 'TinyMce.TinyMce');
+    var $helpers = array('Html', 'Tinymce');
 
     function beforeFilter() {
         parent::beforeFilter();

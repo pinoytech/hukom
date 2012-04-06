@@ -8,21 +8,21 @@
 			if (isset($_SESSION['Auth']) && isset($_SESSION['Auth']['User']) && strlen($_SESSION['Auth']['User']['username']) > 0) { 
 				$current_user = $_SESSION['Auth']['User']['username'];
 			?>
-				<?php
-				// If logged in
-				if (isset($current_user)) {
-          //var_dump($user);
-				?>
-				<li>
-					Hi, <?php echo $User['PersonalInfo']['first_name'];?>
-					[<a <?php echo (isset($user) ? 'onclick="javascript:fb_logout();"' : 'href="/users/logout"') ?>>Logout</a>]
-				</li>
-				<li>
-					<?php echo $this->Html->link('Go to your cases', '/legalcases/index/'.$auth_user_id, array()); ?>
-				</li>
-				<?php
-				}
-				?>
+			<?php
+			// If logged in
+			if (isset($current_user)) {
+                //var_dump($user);
+			?>
+    			<li>
+    				Hi, <?php echo $User['PersonalInfo']['first_name'];?>
+    				[<a <?php echo (isset($user) ? 'onclick = "javascript:fb_logout();"' : 'href="/users/logout"') ?>>Logout</a>]
+    			</li>
+    			<li>
+    				<?php echo $this->Html->link('Go to your cases', '/legalcases/index/'.$auth_user_id, array()); ?>
+    			</li>
+			<?php
+			}
+			?>
 			<?php
 			}
 			else {
@@ -112,9 +112,6 @@
                 </li>
                 <?php } ?>
             </ul>
-            <div id="payment_logos">
-                <?php echo $this->Html->image('/img/payment-logos.png'); ?>
-            </div>
         </div>
         <!-- Advertise White -->
     </div>
@@ -128,6 +125,10 @@
 		   		    <?php echo SiteCopy::get_latest_everydaw_law('excerpt'); ?>
 		        </div>
 		        <a href="/static/page/everyday_law" class="read-more fr textindent">read more</a>
+                <br class="clear" />
+		        <div id="payment_logos">
+                    <?php echo $this->Html->image('/img/payment-logos-wide.png'); ?>
+                </div>
 		    </div>
 		</div>
 		<!-- Left Main -->

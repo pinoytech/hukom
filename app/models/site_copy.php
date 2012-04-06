@@ -49,16 +49,16 @@ class SiteCopy extends AppModel {
 	function get_latest_everydaw_law($type) {
 	    $site_copy = ClassRegistry::init('SiteCopy')->find('first',array(
             'conditions' => array('SiteCopy.type' => 'everyday_law', 'SiteCopy.published' => 1),
-            'order'      => array('SiteCopy.created ASC'),
-            'limit'      => 1)
-	        );
+            'order'      => array('SiteCopy.id DESC')
+            )
+	    );
 	    return $site_copy['SiteCopy'][$type];
 	}
 	
 	function get_recent_published_eveyday_law() {
-	    $site_copy = $this->find('all',array(
+	    $site_copy = $this->find('first',array(
             'conditions' => array('SiteCopy.type' => 'everyday_law', 'SiteCopy.published' => 1),
-            'order'      => array('SiteCopy.created ASC'),
+            'order'      => array('SiteCopy.id DESC')
             )
 	    );
 	    return $site_copy;
