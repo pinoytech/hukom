@@ -172,8 +172,8 @@ class StaticController extends AppController {
             $this->SiteCopy->create();
           }
 
-          if ($this->data['SiteCopy']['post_to_facebook']) {
-          }
+          // if ($this->data['SiteCopy']['post_to_facebook']) {
+          // }
 
           if ($this->SiteCopy->save($this->data)) {
             $this->Session->setFlash(__('The site copy has been saved', true));

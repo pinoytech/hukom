@@ -201,6 +201,7 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 				width: 295px;
 				}			
 				.everyday-holder {
+				    position: relative;
 					background:url(../img/everyday-law.jpg) no-repeat #ffe658;
 					height:469px;
 					}
@@ -217,16 +218,16 @@ a {outline:none; outline-style:none; color:#737373; text-decoration:none;}
 							font-weight:bold;
 							}	
 				.law-society-holder {
-            float: left;
-						background:url(../img/law-society.jpg) no-repeat #c1e8fe;
-						min-height:235px;
-						height:auto;
+                    float: left;
+					background:url(../img/law-society.jpg) no-repeat #c1e8fe;
+					min-height:235px;
+					height:auto;
 					}
 				.law-updates-holder {
-            float: left;
-						background:url(../img/law-updates.jpg) no-repeat #ecd9c2;
-						min-height:234px;
-						height:auto;
+                    float: left;
+    				background:url(../img/law-updates.jpg) no-repeat #ecd9c2;
+    				min-height:234px;
+    				height:auto;
 					}
 					.law-content {
 						color:#464646;
@@ -1079,6 +1080,8 @@ table.public td.label {
 }
 
 #payment_logos {
-    text-align: center;
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
 }
 
