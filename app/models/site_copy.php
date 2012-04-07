@@ -71,7 +71,8 @@ class SiteCopy extends AppModel {
                     'SiteCopy.type'      => 'everyday_law',
                     'SiteCopy.published' => 1
                 ),
-                'limit'      => '1')
+                'limit'      => '1',
+                'order'      => array('SiteCopy.id DESC'))
         );
         
         return $site_copy;

@@ -25,10 +25,9 @@
                     </div>
                 <?php } ?>
             </div>
-            
-            <br />
-            
+                        
 	    </div> <!-- public pages -->
+	    
 	    <?php echo $this->element('adsense_leaderboard'); ?>
 	</div>
 </div>

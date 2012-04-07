@@ -1062,6 +1062,7 @@ table.public td.label {
 .blog_navigation {
     float: left;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .blog_navigation #previous {
@@ -1083,5 +1084,10 @@ table.public td.label {
     position: absolute;
     bottom: 4px;
     left: 4px;
+}
+
+.canvas-holder {
+    width: 597px;
+    height: 190px;
 }
 

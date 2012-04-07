@@ -32,20 +32,6 @@
 		echo $scripts_for_layout;
 	?>
 	<script type="text/javascript">
-	$('document').ready(function() {
-	    $('.canvas-holder').cycle({
-   			fx: 'scrollLeft', 
-   			speed: 1000,
-   			timeout: 8000
-        });
-
-	    $('.right-rail-footer').cycle({
-   			fx: 'fade', 
-   			speed: 1000,
-   			timeout: 8000
-        });
-
-   	});
     </script>
 </head>
 <body>
@@ -118,7 +104,22 @@
     <!-- Footer -->
     
     <script type="text/javascript">
+    
+    $('document').ready(function() {
+	    $('.canvas-holder').cycle({
+   			fx: 'scrollLeft', 
+   			speed: 1000,
+   			timeout: 8000
+        });
 
+	    $('.right-rail-footer').cycle({
+   			fx: 'fade', 
+   			speed: 1000,
+   			timeout: 8000
+        });
+
+   	});
+    
      var _gaq = _gaq || [];
      _gaq.push(['_setAccount', 'UA-21143225-1']);
      _gaq.push(['_trackPageview']);
