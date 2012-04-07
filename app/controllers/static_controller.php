@@ -171,7 +171,7 @@ class StaticController extends AppController {
           if (!$this->data['SiteCopy']['id']) {
             $this->SiteCopy->create();
           }
-
+ 
           // if ($this->data['SiteCopy']['post_to_facebook']) {
           // }
 

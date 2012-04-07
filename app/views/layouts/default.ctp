@@ -34,13 +34,15 @@
 	<script type="text/javascript">
 	$('document').ready(function() {
 	    $('.canvas-holder').cycle({
-   			fx: 'fade', 
-   			speed: 8000
+   			fx: 'scrollLeft', 
+   			speed: 1000,
+   			timeout: 8000
         });
 
 	    $('.right-rail-footer').cycle({
    			fx: 'fade', 
-   			speed: 8000
+   			speed: 1000,
+   			timeout: 8000
         });
 
    	});
